@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Appointment - MediCare Hospital & Queue System</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Pulsing Page Loader -->
+  <div id="page-loader">
+    <div class="pulse-loader-ring"></div>
+    <div style="font-weight: 700; color: var(--deep-blue); font-size: 1.1rem;">
+      <span style="color: var(--deep-blue);">Medi</span><span style="color: var(--teal);">Care</span>
+    </div>
+  </div>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> 24/7 Helpline: <strong>+91 98765 43210</strong></span>
+      </div>
+      <div class="top-bar-right">
+        <div class="online-indicator">
+          <span class="online-dot"></span>
+          <span class="online-status-text">Online</span>
+        </div>
+        <select id="lang-select" class="lang-selector">
+          <option value="en">English (EN)</option>
+          <option value="hi">हिन्दी (HI)</option>
+          <option value="mr">मराठी (MR)</option>
+        </select>
+        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()">
+          <i class="fas fa-question-circle"></i> Help
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon-tile">M</div>
+        <div class="logo-text-box">
+          <span class="logo-text"><span class="medi">Medi</span><span class="care">Care</span></span>
+          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="doctors.html" class="nav-link">Doctors</a>
+        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> Live Queue</a>
+        <a href="booking.html" class="nav-link active">Book Appointment</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+
+      <div class="header-actions">
+        <div id="header-auth-container"></div>
+        <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Banner (Mandated Design) -->
+  <section class="hero-section organic-bg-shapes" style="padding: 3.5rem 0 4rem; text-align: center;">
+    <div class="container" style="position: relative; z-index: 2;">
+      <span class="tag-mint" style="margin-bottom: 0.5rem;"><i class="fas fa-calendar-check"></i> Instant Doctor Slot Reservation</span>
+      <h1 style="color: var(--white); font-size: 2.4rem; margin: 0.5rem 0;">Book Doctor Appointment</h1>
+      <p style="color: rgba(255,255,255,0.85); margin: 0 auto; max-width: 600px;">
+        Select your specialist department, choose your doctor and preferred date, and choose any available slot for an instant token and WhatsApp confirmation.
+      </p>
+    </div>
+  </section>
+
+  <!-- Booking Flow Main Section -->
+  <section class="section" style="padding: 4rem 0 6rem;">
+    <div class="container" style="max-width: 1040px;">
+
+      <!-- Cascading Filter Card -->
+      <div class="card" style="margin-bottom: 2.5rem; padding: 2rem;">
+        <h3 style="font-size: 1.25rem; color: var(--deep-blue); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.6rem;">
+          <i class="fas fa-filter" style="color: var(--teal);"></i> 1. Select Department, Doctor & Date
+        </h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label">Medical Department</label>
+            <select id="book-department" class="form-control" style="padding-right: 1.5rem;">
+              <option value="">Loading departments...</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label">Specialist Doctor</label>
+            <select id="book-doctor" class="form-control" style="padding-right: 1.5rem;">
+              <option value="">-- Choose Specialist Doctor --</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin: 0;">
+            <label class="form-label">Consultation Date</label>
+            <input type="date" id="book-date" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <!-- Doctor Summary Header -->
+      <div id="doctor-summary-box" style="margin-bottom: 1.5rem;"></div>
+
+      <!-- Slots Matrix Card -->
+      <div class="card" style="padding: 2.2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid var(--light-gray); padding-bottom: 1.25rem;">
+          <div>
+            <h3 style="font-size: 1.25rem; color: var(--deep-blue); display: flex; align-items: center; gap: 0.5rem;">
+              <i class="fas fa-clock" style="color: var(--teal);"></i> 2. Available Time Slots
+            </h3>
+            <p style="font-size: 0.85rem; margin-top: 2px;">Click on any <strong>Available</strong> slot to book and receive your token.</p>
+          </div>
+
+          <!-- Color-Coded Status Legend (as Mandated in Spec) -->
+          <div class="slot-legend">
+            <div class="legend-item">
+              <span class="legend-box" style="background: var(--status-available);"></span>
+              <span>Available</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-box" style="background: var(--status-booked);"></span>
+              <span>Booked</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-box" style="background: var(--status-missed);"></span>
+              <span>Missed / Past</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loading spinner -->
+        <div id="slots-loading" style="display: none; text-align: center; padding: 3rem;">
+          <i class="fas fa-spinner fa-spin" style="font-size: 2.2rem; color: var(--teal); margin-bottom: 0.75rem;"></i>
+          <p>Retrieving real-time time slots...</p>
+        </div>
+
+        <!-- Slots Grid Container -->
+        <div id="slots-container" style="min-height: 180px;">
+          <p style="text-align: center; color: var(--charcoal-light); padding: 3rem;">
+            Please select a doctor to display today's time slots.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom-bar" style="border: none; padding: 0; justify-content: center;">
+        <div>&copy; 2026 MediCare Hospital. All Rights Reserved. Tagline: <em>"Health Today. Brighter Tomorrow."</em></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Chat Assistant -->
+  <div class="chat-fab" id="chat-fab-btn" title="MediCare AI Voice Assistant">
+    <i class="fas fa-robot" style="font-size: 1.4rem;"></i>
+  </div>
+
+  <div class="chat-widget-box" id="chat-widget-box">
+    <div class="chat-widget-header">
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <i class="fas fa-robot"></i>
+        <strong>MediCare AI Voice Assistant</strong>
+      </div>
+      <button id="chat-close-btn" style="background: none; border: none; color: #FFF; font-size: 1.2rem; cursor: pointer;">&times;</button>
+    </div>
+    <div class="chat-messages" id="chat-messages-container">
+      <div class="chat-msg chat-msg-bot">
+        Hello! Need help choosing a doctor or department? Ask me anytime!
+      </div>
+    </div>
+    <div class="chat-input-bar">
+      <button id="chat-mic-btn" type="button" style="background: none; border: none; color: var(--teal); font-size: 1.15rem; cursor: pointer;">
+        <i class="fas fa-microphone"></i>
+      </button>
+      <input type="text" id="chat-input-text" class="form-control" style="padding: 0.5rem 0.75rem;" placeholder="Type or speak symptoms...">
+      <button id="chat-send-btn" type="button" class="btn btn-sm btn-primary">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/booking.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact MediCare - We're Connected All Time</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> Helpline: <strong>+91 98765 43210</strong></span>
+      </div>
+      <div class="top-bar-right">
+        <div class="online-indicator"><span class="online-dot"></span> <span class="online-status-text">Online</span></div>
+        <select id="lang-select" class="lang-selector">
+          <option value="en">English (EN)</option>
+          <option value="hi">हिन्दी (HI)</option>
+          <option value="mr">मराठी (MR)</option>
+        </select>
+        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()"><i class="fas fa-question-circle"></i> Help</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon-tile">M</div>
+        <div class="logo-text-box">
+          <span class="logo-text"><span class="medi">Medi</span><span class="care">Care</span></span>
+          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+        </div>
+      </a>
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="doctors.html" class="nav-link">Doctors</a>
+        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> Live Queue</a>
+        <a href="booking.html" class="nav-link">Book Appointment</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <div id="header-auth-container"></div>
+        <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Slot</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Banner -->
+  <section class="hero-section organic-bg-shapes" style="padding: 3.5rem 0 4rem; text-align: center;">
+    <div class="container" style="position: relative; z-index: 2;">
+      <span class="tag-mint" style="margin-bottom: 0.5rem;">24/7 Patient Help Desk</span>
+      <h1 style="color: var(--white); font-size: 2.4rem; margin: 0.5rem 0;">We're Connected All Time To Help Our Patients</h1>
+      <p style="color: rgba(255,255,255,0.85); margin: 0 auto; max-width: 600px;">
+        Reach out to our patient care coordinators, medical helpline, or visit our medical center.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Form & Info Grid -->
+  <section class="section">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: flex-start; margin-bottom: 4rem;">
+        
+        <!-- Contact Information Card -->
+        <div class="card" style="padding: 2.5rem; background: var(--deep-blue); color: #FFF; border-top-color: var(--teal);">
+          <span class="tag-mint" style="margin-bottom: 0.5rem;">GET IN TOUCH</span>
+          <h3 style="color: #FFF; font-size: 1.6rem; margin: 0.5rem 0 1.25rem;">Contact Information</h3>
+          <p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem;">
+            Have questions about doctor availability, diagnostic tests, or our live token system? Our coordinators respond promptly.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--teal); color: #FFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div>
+                <h4 style="color: #FFF; font-size: 1rem;">Hospital Campus</h4>
+                <p style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">104 MediCare Healthcare Blvd, Wellness District, Maharashtra</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--teal); color: #FFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <div>
+                <h4 style="color: #FFF; font-size: 1rem;">Phone & Ambulance</h4>
+                <p style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">+91 98765 43210 (24x7 Emergency Line)</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--teal); color: #FFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <i class="fab fa-whatsapp"></i>
+              </div>
+              <div>
+                <h4 style="color: #FFF; font-size: 1rem;">Official WhatsApp</h4>
+                <p style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">+91 98765 43210 (Instant Bot & Slot Alerts)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="card" style="padding: 2.5rem;">
+          <h3 style="color: var(--deep-blue); margin-bottom: 0.5rem;">Send Us a Message</h3>
+          <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">Fill in your details and our medical reception team will contact you.</p>
+
+          <form onsubmit="handleContactSubmit(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input type="text" class="form-control" required placeholder="John Doe">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone / WhatsApp</label>
+                <input type="tel" class="form-control" required placeholder="+91 9876543210">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Subject</label>
+              <input type="text" class="form-control" required placeholder="General Inquiry / Doctor Consultation">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="form-control" rows="4" style="resize: none;" required placeholder="How can we assist you?"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Embedded Google Map -->
+      <div class="card" style="padding: 1rem; overflow: hidden; border-radius: 16px;">
+        <iframe 
+          title="MediCare Hospital Location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12097.351608933393!2d-74.0060!3d40.7128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzQ2LjEiTiA3NMKwMDAnMjEuNiJX!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
+          width="100%" 
+          height="380" 
+          style="border:0; border-radius: 12px;" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom-bar" style="border: none; padding: 0; justify-content: center;">
+        <div>&copy; 2026 MediCare Hospital. All Rights Reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
+  <script>
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      alert('Thank you for contacting MediCare! Our patient assistance team has received your inquiry.');
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>

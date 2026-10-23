@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Doctors - MediCare Hospital & Medical Center</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> Helpline: <strong>+91 98765 43210</strong></span>
+      </div>
+      <div class="top-bar-right">
+        <div class="online-indicator"><span class="online-dot"></span> <span class="online-status-text">Online</span></div>
+        <select id="lang-select" class="lang-selector">
+          <option value="en">English (EN)</option>
+          <option value="hi">हिन्दी (HI)</option>
+          <option value="mr">मराठी (MR)</option>
+        </select>
+        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()"><i class="fas fa-question-circle"></i> Help</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon-tile">M</div>
+        <div class="logo-text-box">
+          <span class="logo-text"><span class="medi">Medi</span><span class="care">Care</span></span>
+          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+        </div>
+      </a>
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="doctors.html" class="nav-link active">Doctors</a>
+        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> Live Queue</a>
+        <a href="booking.html" class="nav-link">Book Appointment</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+      <div class="header-actions">
+        <div id="header-auth-container"></div>
+        <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Slot</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Banner -->
+  <section class="hero-section organic-bg-shapes" style="padding: 3.5rem 0 4rem; text-align: center;">
+    <div class="container" style="position: relative; z-index: 2;">
+      <span class="tag-mint" style="margin-bottom: 0.5rem;">Leading Medical Minds</span>
+      <h1 style="color: var(--white); font-size: 2.4rem; margin: 0.5rem 0;">Meet Our Specialist Physicians & Surgeons</h1>
+      <p style="color: rgba(255,255,255,0.85); margin: 0 auto; max-width: 620px;">
+        Browse our certified doctors, review their clinical qualifications and room locations, and reserve your consultation slot instantly.
+      </p>
+    </div>
+  </section>
+
+  <!-- Doctors Directory Section -->
+  <section class="section">
+    <div class="container">
+      <!-- Department Filter Pills -->
+      <div style="display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 3rem;" id="dept-pills-filter">
+        <button class="btn btn-sm btn-primary" onclick="filterDoctorsByDept('')">All Departments</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('1')">Cardiology</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('2')">Dental</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('3')">Radiology</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('4')">Neurology</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('5')">Ophthalmology</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('6')">Pediatrics</button>
+      </div>
+
+      <!-- Doctors Grid -->
+      <div class="doctors-grid-4" id="doctors-full-list" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <p style="text-align: center; grid-column: 1 / -1; padding: 3rem;">Loading doctors directory...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom-bar" style="border: none; padding: 0; justify-content: center;">
+        <div>&copy; 2026 MediCare Hospital. All Rights Reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
+  <script>
+    async function filterDoctorsByDept(deptId) {
+      const container = document.getElementById('doctors-full-list');
+      try {
+        const url = deptId ? `/api/doctors?department_id=${deptId}` : '/api/doctors';
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.success && container) {
+          container.innerHTML = '';
+          data.doctors.forEach(doc => {
+            const card = document.createElement('div');
+            card.className = 'doctor-card';
+            card.innerHTML = `
+              <div class="doctor-photo-box">
+                <img src="${doc.avatar}" alt="${doc.name}">
+                <div class="doctor-social-slide">
+                  <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+                  <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+              </div>
+              <div class="doctor-info">
+                <span class="doctor-specialty-tag">${doc.specialty}</span>
+                <h3 class="doctor-name-heading">${doc.name}</h3>
+                <p style="font-size: 0.85rem; color: var(--charcoal-light); margin-bottom: 0.4rem;">${doc.qualification}</p>
+                <div style="font-size: 0.82rem; color: var(--teal); font-weight: 600; margin-bottom: 0.75rem;">
+                  <i class="fas fa-door-open"></i> ${doc.room_no} &bull; Hours: ${doc.start_hour} - ${doc.end_hour}
+                </div>
+                <a href="booking.html?doc=${doc.id}" class="btn btn-sm btn-primary" style="width: 100%;">
+                  <i class="fas fa-calendar-check"></i> Book Slot (${doc.consultation_fee ? '₹' + doc.consultation_fee : 'Free'})
+                </a>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => filterDoctorsByDept(''));
+  </script>
+</body>
+</html>

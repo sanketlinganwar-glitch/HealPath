@@ -1,0 +1,2011 @@
+{
+  "departments": [
+    {
+      "id": 1,
+      "name": "Cardiology",
+      "code": "CARD",
+      "description": "Comprehensive cardiovascular diagnosis, intervention, and preventive care.",
+      "icon": "heart-pulse",
+      "default_consult_min": 15
+    },
+    {
+      "id": 2,
+      "name": "Dental Specialist",
+      "code": "DENT",
+      "description": "Advanced dental surgery, orthodontic care, cosmetic dentistry, and dental diagnostics.",
+      "icon": "smile",
+      "default_consult_min": 15
+    },
+    {
+      "id": 3,
+      "name": "Radiology & Imaging",
+      "code": "RAD",
+      "description": "High-precision MRI, CT-Scan, ultrasound, and digital X-ray diagnostics.",
+      "icon": "activity",
+      "default_consult_min": 15
+    },
+    {
+      "id": 4,
+      "name": "Neurology",
+      "code": "NEUR",
+      "description": "World-class care for neurological conditions, spine disorders, and stroke management.",
+      "icon": "cpu",
+      "default_consult_min": 20
+    },
+    {
+      "id": 5,
+      "name": "Ophthalmology",
+      "code": "OPHT",
+      "description": "Advanced vision testing, laser eye surgery, cataract treatment, and retinal care.",
+      "icon": "eye",
+      "default_consult_min": 15
+    },
+    {
+      "id": 6,
+      "name": "Children Center",
+      "code": "PED",
+      "description": "Compassionate pediatric healthcare, newborn care, immunizations, and child wellness.",
+      "icon": "baby",
+      "default_consult_min": 15
+    }
+  ],
+  "doctors": [
+    {
+      "id": 1,
+      "name": "Dr. Rajesh Sharma",
+      "department_id": 1,
+      "department_name": "Cardiology",
+      "specialization": "Senior Cardiologist & Surgeon",
+      "room": "Room 101 (Floor 1)",
+      "experience_years": 16,
+      "bio": "Leading cardiologist with over 15 years experience in interventional cardiology and angiography.",
+      "image_url": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80",
+      "status": "available",
+      "working_start": "10:00",
+      "working_end": "14:00",
+      "slot_duration": 15
+    },
+    {
+      "id": 2,
+      "name": "Dr. Priya Nair",
+      "department_id": 6,
+      "department_name": "Children Center",
+      "specialization": "Consultant Pediatrician",
+      "room": "Room 102 (Floor 1)",
+      "experience_years": 12,
+      "bio": "Specialist in pediatric developmental health, immunization, and infant intensive care.",
+      "image_url": "https://images.unsplash.com/photo-1594824813580-ff67fbf9303d?auto=format&fit=crop&w=600&q=80",
+      "status": "available",
+      "working_start": "10:00",
+      "working_end": "14:00",
+      "slot_duration": 15
+    },
+    {
+      "id": 3,
+      "name": "Dr. Meera Kulkarni",
+      "department_id": 4,
+      "department_name": "Neurology",
+      "specialization": "Neurosurgeon & Specialist",
+      "room": "Room 201 (Floor 2)",
+      "experience_years": 18,
+      "bio": "Renowned neurosurgeon specializing in micro-neurosurgery and neurological disorders.",
+      "image_url": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80",
+      "status": "available",
+      "working_start": "10:00",
+      "working_end": "14:00",
+      "slot_duration": 20
+    },
+    {
+      "id": 4,
+      "name": "Dr. Suresh Patil",
+      "department_id": 2,
+      "department_name": "Dental Specialist",
+      "specialization": "Dental Surgeon & Orthodontist",
+      "room": "Room 202 (Floor 2)",
+      "experience_years": 14,
+      "bio": "Expert in restorative dentistry, implants, smile corrections, and dental surgery.",
+      "image_url": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80",
+      "status": "available",
+      "working_start": "10:00",
+      "working_end": "14:00",
+      "slot_duration": 15
+    },
+    {
+      "id": 5,
+      "name": "Dr. Vikram Malhotra",
+      "department_id": 3,
+      "department_name": "Radiology & Imaging",
+      "specialization": "Diagnostic Radiologist",
+      "room": "Room 301 (Floor 3)",
+      "experience_years": 11,
+      "bio": "Specialist in advanced diagnostic imaging, cross-sectional imaging, and ultrasound.",
+      "image_url": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80",
+      "status": "available",
+      "working_start": "10:00",
+      "working_end": "14:00",
+      "slot_duration": 15
+    },
+    {
+      "id": 6,
+      "name": "Dr. Sunita Rao",
+      "department_id": 5,
+      "department_name": "Ophthalmology",
+      "specialization": "Cornea & Refractive Surgeon",
+      "room": "Room 302 (Floor 3)",
+      "experience_years": 13,
+      "bio": "Expert in LASIK, cataract procedures, corneal transplants, and retinal care.",
+      "image_url": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80",
+      "status": "available",
+      "working_start": "10:00",
+      "working_end": "14:00",
+      "slot_duration": 15
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Hospital Administrator",
+      "email": "admin@medicare.com",
+      "phone": "+919876543210",
+      "password_hash": "$2a$10$nbJroktN5DbfIqAOBXeCz.uziWdfOB2LGsxD6NVXZ94GNWcfHQVEO",
+      "role": "admin",
+      "doctor_id": null,
+      "created_at": "2026-10-23T10:27:17.665Z"
+    },
+    {
+      "id": 2,
+      "name": "Sneha Patil (Reception Desk)",
+      "email": "reception@medicare.com",
+      "phone": "+919876543211",
+      "password_hash": "$2a$10$nbJroktN5DbfIqAOBXeCz.59WCXuYG8UTYsmspkKylEiiQ7b93s8K",
+      "role": "receptionist",
+      "doctor_id": null,
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 3,
+      "name": "Dr. Rajesh Sharma",
+      "email": "doctor.sharma@medicare.com",
+      "phone": "+919876543212",
+      "password_hash": "$2a$10$nbJroktN5DbfIqAOBXeCz.w3CYwP2sRCAcg6kicML/4Z7SHvRJMVG",
+      "role": "doctor",
+      "doctor_id": 1,
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 4,
+      "name": "Dr. Priya Nair",
+      "email": "doctor.nair@medicare.com",
+      "phone": "+919876543213",
+      "password_hash": "$2a$10$nbJroktN5DbfIqAOBXeCz.w3CYwP2sRCAcg6kicML/4Z7SHvRJMVG",
+      "role": "doctor",
+      "doctor_id": 2,
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 5,
+      "name": "Rohan Gupta",
+      "email": "patient@medicare.com",
+      "phone": "+919823011111",
+      "password_hash": "$2a$10$nbJroktN5DbfIqAOBXeCz.qDzAOuK1Ep3iQ8YInURFvpI7C7VvSSi",
+      "role": "patient",
+      "doctor_id": null,
+      "created_at": "2026-10-23T10:27:17.674Z"
+    }
+  ],
+  "slots": [
+    {
+      "id": 1,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "booked",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 2,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "booked",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 3,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "missed",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 4,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "missed",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 5,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 6,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 7,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 8,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 9,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 10,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 11,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 12,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 13,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 14,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 15,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 16,
+      "doctor_id": 1,
+      "date": "2026-10-23",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 17,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 18,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 19,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 20,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 21,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 22,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 23,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 24,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 25,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 26,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 27,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 28,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 29,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 30,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 31,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 32,
+      "doctor_id": 1,
+      "date": "2026-10-24",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 33,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 34,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 35,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 36,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 37,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 38,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 39,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 40,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 41,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 42,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 43,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 44,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 45,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 46,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 47,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 48,
+      "doctor_id": 2,
+      "date": "2026-10-23",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 49,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 50,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 51,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 52,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 53,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 54,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 55,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 56,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 57,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 58,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 59,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 60,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 61,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 62,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 63,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 64,
+      "doctor_id": 2,
+      "date": "2026-10-24",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 65,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "10:00",
+      "end_time": "10:20",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 66,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "10:20",
+      "end_time": "10:40",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 67,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "10:40",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 68,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "11:00",
+      "end_time": "11:20",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 69,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "11:20",
+      "end_time": "11:40",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 70,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "11:40",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 71,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "12:00",
+      "end_time": "12:20",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 72,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "12:20",
+      "end_time": "12:40",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 73,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "12:40",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 74,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "13:00",
+      "end_time": "13:20",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 75,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "13:20",
+      "end_time": "13:40",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 76,
+      "doctor_id": 3,
+      "date": "2026-10-23",
+      "start_time": "13:40",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 77,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "10:00",
+      "end_time": "10:20",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 78,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "10:20",
+      "end_time": "10:40",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 79,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "10:40",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 80,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "11:00",
+      "end_time": "11:20",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 81,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "11:20",
+      "end_time": "11:40",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 82,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "11:40",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 83,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "12:00",
+      "end_time": "12:20",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 84,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "12:20",
+      "end_time": "12:40",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 85,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "12:40",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 86,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "13:00",
+      "end_time": "13:20",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 87,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "13:20",
+      "end_time": "13:40",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 88,
+      "doctor_id": 3,
+      "date": "2026-10-24",
+      "start_time": "13:40",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 89,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 90,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 91,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 92,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 93,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 94,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 95,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 96,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 97,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 98,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 99,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 100,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 101,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 102,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 103,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 104,
+      "doctor_id": 4,
+      "date": "2026-10-23",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 105,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 106,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 107,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 108,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 109,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 110,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 111,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 112,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 113,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 114,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 115,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 116,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 117,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 118,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 119,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 120,
+      "doctor_id": 4,
+      "date": "2026-10-24",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 121,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 122,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 123,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 124,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 125,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 126,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 127,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 128,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 129,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 130,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 131,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 132,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 133,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 134,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 135,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 136,
+      "doctor_id": 5,
+      "date": "2026-10-23",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 137,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 138,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 139,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 140,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 141,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 142,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 143,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 144,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 145,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 146,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 147,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 148,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 149,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 150,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 151,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 152,
+      "doctor_id": 5,
+      "date": "2026-10-24",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 153,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 154,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 155,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 156,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 157,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 158,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 159,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 160,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 161,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 162,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 163,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 164,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 165,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 166,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 167,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 168,
+      "doctor_id": 6,
+      "date": "2026-10-23",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 169,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 170,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 171,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 172,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 173,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 174,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 175,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 176,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 177,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 178,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 179,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 180,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 181,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 182,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 183,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 184,
+      "doctor_id": 6,
+      "date": "2026-10-24",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T10:27:17.674Z"
+    }
+  ],
+  "appointments": [
+    {
+      "id": 1,
+      "patient_id": 5,
+      "patient_name": "Aarav Deshmukh",
+      "age": 48,
+      "disease": "Routine cardiac follow-up and blood pressure check",
+      "whatsapp_no": "+919823011111",
+      "notes": "Carrying previous ECG reports",
+      "slot_id": 1,
+      "token_no": "CARD-001",
+      "doctor_id": 1,
+      "department_id": 1,
+      "date": "2026-10-23",
+      "time": "10:00",
+      "checked_in": true,
+      "status": "checked_in",
+      "created_at": "2026-10-23T09:27:17.675Z"
+    },
+    {
+      "id": 2,
+      "patient_id": null,
+      "patient_name": "Sunita Shinde",
+      "age": 62,
+      "disease": "Mild chest tightness on exertion",
+      "whatsapp_no": "+919823022222",
+      "notes": "Diabetic history",
+      "slot_id": 2,
+      "token_no": "CARD-002",
+      "doctor_id": 1,
+      "department_id": 1,
+      "date": "2026-10-23",
+      "time": "10:15",
+      "checked_in": true,
+      "status": "checked_in",
+      "created_at": "2026-10-23T09:47:17.675Z"
+    },
+    {
+      "id": 3,
+      "patient_id": null,
+      "patient_name": "Deepak More",
+      "age": 38,
+      "disease": "Palpitations after workout",
+      "whatsapp_no": "+919823033333",
+      "notes": null,
+      "slot_id": 3,
+      "token_no": "CARD-003",
+      "doctor_id": 1,
+      "department_id": 1,
+      "date": "2026-10-23",
+      "time": "10:30",
+      "checked_in": false,
+      "status": "missed",
+      "created_at": "2026-10-23T10:07:17.675Z"
+    },
+    {
+      "id": 4,
+      "patient_id": null,
+      "patient_name": "Pooja Sharma",
+      "age": 29,
+      "disease": "Mild chest congestion",
+      "whatsapp_no": "+919876543210",
+      "notes": "First visit",
+      "slot_id": 4,
+      "token_no": "CARD-004",
+      "doctor_id": 1,
+      "department_id": 1,
+      "date": "2026-10-23",
+      "time": "10:45",
+      "checked_in": false,
+      "status": "missed",
+      "created_at": "2026-10-23T10:45:35.850Z"
+    }
+  ],
+  "queue": [
+    {
+      "id": 1,
+      "appointment_id": 1,
+      "token_no": "CARD-001",
+      "doctor_id": 1,
+      "department_id": 1,
+      "patient_name": "Aarav Deshmukh",
+      "status": "in_progress",
+      "position": 1,
+      "called_at": "2026-10-23T10:17:17.675Z",
+      "completed_at": null,
+      "created_at": "2026-10-23T09:27:17.675Z"
+    },
+    {
+      "id": 2,
+      "appointment_id": 2,
+      "token_no": "CARD-002",
+      "doctor_id": 1,
+      "department_id": 1,
+      "patient_name": "Sunita Shinde",
+      "status": "waiting",
+      "position": 2,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T09:47:17.675Z"
+    },
+    {
+      "id": 3,
+      "appointment_id": 3,
+      "token_no": "CARD-003",
+      "doctor_id": 1,
+      "department_id": 1,
+      "patient_name": "Deepak More",
+      "status": "missed",
+      "position": 3,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T10:07:17.675Z"
+    },
+    {
+      "id": 4,
+      "appointment_id": 4,
+      "token_no": "CARD-004",
+      "doctor_id": 1,
+      "department_id": 1,
+      "patient_name": "Pooja Sharma",
+      "status": "missed",
+      "position": 2,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T10:45:35.850Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "appointment_id": 1,
+      "recipient_phone": "+919823011111",
+      "message_text": "Hello Aarav Deshmukh, your appointment with Dr. Rajesh Sharma is confirmed on 2026-10-23 at 10:00. Token No: CARD-001. Please arrive 10 minutes early.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-23T09:27:17.675Z"
+    },
+    {
+      "id": 2,
+      "appointment_id": 4,
+      "recipient_phone": "+919876543210",
+      "message_text": "Hello Pooja Sharma, your appointment with Dr. Rajesh Sharma is confirmed on 2026-10-23 at 10:45. Token No: CARD-004. Please arrive 10 minutes early.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-23T10:45:35.854Z"
+    }
+  ],
+  "settings": {
+    "slot_duration_min": "15",
+    "grace_period_min": "10",
+    "hospital_name": "MediCare Hospital & Medical Center",
+    "hospital_phone": "+91 98765 43210",
+    "hospital_email": "contact@medicare.com"
+  }
+}

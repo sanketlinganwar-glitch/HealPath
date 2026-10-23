@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About MediCare - Hospital & Queue Care System</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> Helpline: <strong>+91 98765 43210</strong></span>
+      </div>
+      <div class="top-bar-right">
+        <div class="online-indicator"><span class="online-dot"></span> <span class="online-status-text">Online</span></div>
+        <select id="lang-select" class="lang-selector">
+          <option value="en">English (EN)</option>
+          <option value="hi">हिन्दी (HI)</option>
+          <option value="mr">मराठी (MR)</option>
+        </select>
+        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()"><i class="fas fa-question-circle"></i> Help</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon-tile">M</div>
+        <div class="logo-text-box">
+          <span class="logo-text"><span class="medi">Medi</span><span class="care">Care</span></span>
+          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+        </div>
+      </a>
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="doctors.html" class="nav-link">Doctors</a>
+        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> Live Queue</a>
+        <a href="booking.html" class="nav-link">Book Appointment</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+      <div class="header-actions">
+        <div id="header-auth-container"></div>
+        <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Slot</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Banner -->
+  <section class="hero-section organic-bg-shapes" style="padding: 3.5rem 0 4rem; text-align: center;">
+    <div class="container" style="position: relative; z-index: 2;">
+      <span class="tag-mint" style="margin-bottom: 0.5rem;">Caring for Generations</span>
+      <h1 style="color: var(--white); font-size: 2.4rem; margin: 0.5rem 0;">About MediCare Hospital</h1>
+      <p style="color: rgba(255,255,255,0.85); margin: 0 auto; max-width: 620px;">
+        Transforming hospital healthcare with medical excellence, patient empathy, and modern digital token queue management.
+      </p>
+    </div>
+  </section>
+
+  <!-- About Core Pillars -->
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-media">
+          <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&q=80&w=800" alt="Hospital Building" class="about-img">
+        </div>
+        <div>
+          <span class="tag-mint">OUR FOUNDING VISION</span>
+          <h2 style="color: var(--deep-blue); margin: 0.85rem 0 1.25rem;">Revolutionizing Hospital Waiting Times With Smart Queues.</h2>
+          <p style="margin-bottom: 1.25rem;">
+            MediCare was founded on a simple yet profound belief: <em>Patients seeking healing should not suffer hours of exhaustion in crowded hospital lobbies.</em>
+          </p>
+          <p style="margin-bottom: 1.5rem;">
+            By integrating atomic slot bookings, automated WhatsApp dispatch, and live Socket.io queue monitors, we have achieved an unprecedented 94% reduction in patient waiting room congestion.
+          </p>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+            <div style="background: var(--light-gray); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--teal);">
+              <h4 style="color: var(--deep-blue); margin-bottom: 0.25rem;">Zero Waiting Room</h4>
+              <p style="font-size: 0.85rem;">Live estimated arrival alerts so you only come when it is your turn.</p>
+            </div>
+            <div style="background: var(--light-gray); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--teal);">
+              <h4 style="color: var(--deep-blue); margin-bottom: 0.25rem;">10-Min Auto Shift</h4>
+              <p style="font-size: 0.85rem;">Intelligent missed-slot protection rescheduling you if traffic delays occur.</p>
+            </div>
+          </div>
+
+          <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book an Appointment Today</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom-bar" style="border: none; padding: 0; justify-content: center;">
+        <div>&copy; 2026 MediCare Hospital & Medical Center. All Rights Reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

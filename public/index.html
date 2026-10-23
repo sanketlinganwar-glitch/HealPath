@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediCare - Hospital Website, Appointment & Queue System</title>
+  <meta name="description" content="MediCare: Health Today. Brighter Tomorrow. Your Health. Our Priority. Book doctor appointments, check real-time queue tokens, and receive instant WhatsApp confirmations.">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Central MediCare Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Pulsing Page Loader -->
+  <div id="page-loader">
+    <div class="pulse-loader-ring"></div>
+    <div style="font-weight: 700; color: var(--deep-blue); font-size: 1.1rem; letter-spacing: 0.05em;">
+      <span style="color: var(--deep-blue);">Medi</span><span style="color: var(--teal);">Care</span>
+    </div>
+  </div>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> <span data-i18n="emergency_call">24/7 Emergency Line:</span> <strong>+91 98765 43210</strong></span>
+        <span><i class="fas fa-clock" style="color: var(--mint); margin-right: 5px;"></i> <span data-i18n="mon_sat">Mon - Sat: 8:00 AM - 9:00 PM</span></span>
+      </div>
+      <div class="top-bar-right">
+        <!-- Live Connectivity Dot -->
+        <div class="online-indicator">
+          <span class="online-dot"></span>
+          <span class="online-status-text" data-i18n="online">Online</span>
+        </div>
+
+        <!-- Language Selector -->
+        <select id="lang-select" class="lang-selector">
+          <option value="en">English (EN)</option>
+          <option value="hi">हिन्दी (HI)</option>
+          <option value="mr">मराठी (MR)</option>
+        </select>
+
+        <!-- Help Button -->
+        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()">
+          <i class="fas fa-question-circle"></i> <span data-i18n="help">Help</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Sticky Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <!-- MediCare Logo -->
+      <a href="index.html" class="logo">
+        <div class="logo-icon-tile">M</div>
+        <div class="logo-text-box">
+          <span class="logo-text"><span class="medi">Medi</span><span class="care">Care</span></span>
+          <span class="logo-tagline" data-i18n="hero_tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+        </div>
+      </a>
+
+      <!-- Centered Navigation -->
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link active" data-i18n="home">Home</a>
+        
+        <div class="nav-dropdown">
+          <a href="javascript:void(0)" class="nav-link"><span data-i18n="pages">Pages</span> <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i></a>
+          <div class="dropdown-menu">
+            <a href="about.html" class="dropdown-item" data-i18n="about_us">About Us</a>
+            <a href="queue.html" class="dropdown-item" data-i18n="live_queue">Live Queue</a>
+            <a href="booking.html" class="dropdown-item" data-i18n="book_appointment">Book Appointment</a>
+            <a href="dashboard.html" class="dropdown-item" data-i18n="dashboard">Dashboard</a>
+          </div>
+        </div>
+
+        <div class="nav-dropdown">
+          <a href="services.html" class="nav-link"><span data-i18n="services">Services</span> <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i></a>
+          <div class="dropdown-menu">
+            <a href="services.html#cardiology" class="dropdown-item">Cardiology Care</a>
+            <a href="services.html#dental" class="dropdown-item">Dental Specialist</a>
+            <a href="services.html#neurology" class="dropdown-item">Neurology Care</a>
+            <a href="services.html#pediatrics" class="dropdown-item">Children Center</a>
+          </div>
+        </div>
+
+        <a href="doctors.html" class="nav-link" data-i18n="doctors">Doctors</a>
+        <a href="queue.html" class="nav-link" style="color: var(--teal); font-weight: 700;"><i class="fas fa-satellite-dish"></i> <span data-i18n="live_queue">Live Queue</span></a>
+        <a href="blog.html" class="nav-link" data-i18n="blog">Blog</a>
+        <a href="contact.html" class="nav-link" data-i18n="contact">Contact</a>
+      </nav>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <div id="header-auth-container">
+          <button class="btn btn-sm btn-secondary" onclick="openAuthModal('login')">
+            <i class="fas fa-user-circle"></i> <span data-i18n="login_register">Login / Register</span>
+          </button>
+        </div>
+        <a href="booking.html" class="btn btn-primary">
+          <i class="fas fa-calendar-plus"></i> <span data-i18n="book_appointment">Book Appointment</span>
+        </a>
+        <button class="mobile-toggle" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. Hero Section -->
+  <section class="hero-section organic-bg-shapes">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <span class="tag-mint" data-i18n="hero_tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+        <h1 data-i18n="hero_title">Your Health. Our Priority.</h1>
+        <p data-i18n="hero_subtext">
+          MediCare provides trusted healthcare solutions for a healthier, happier life with digital token booking and zero waiting queues.
+        </p>
+        <div class="hero-buttons">
+          <a href="booking.html" class="btn btn-primary btn-lg">
+            <i class="fas fa-calendar-check"></i> <span data-i18n="book_appointment">Book Appointment</span>
+          </a>
+          <a href="about.html" class="btn btn-outline-white btn-lg" data-i18n="about_us">About Us</a>
+        </div>
+      </div>
+
+      <div class="hero-image-wrapper">
+        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800" alt="MediCare Doctors Team" class="hero-img">
+        <div class="hero-badge-floating">
+          <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--teal); color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+            <i class="fas fa-award"></i>
+          </div>
+          <div>
+            <h4>25+ Years</h4>
+            <p data-i18n="experience_badge">Medical Excellence & Trust</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Quick Appointment Bar (Overlapping Hero) -->
+  <div class="container quick-book-bar-container">
+    <div class="quick-book-bar">
+      <form class="quick-book-grid" onsubmit="handleQuickBook(event)">
+        <div class="form-group" style="margin: 0;">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="quick-name" class="form-control" required placeholder="e.g. Ramesh Kulkarni" data-i18n="quick_name">
+          <i class="fas fa-user form-icon" style="top: 2rem;"></i>
+        </div>
+
+        <div class="form-group" style="margin: 0;">
+          <label class="form-label">WhatsApp Number</label>
+          <input type="tel" id="quick-phone" class="form-control" required placeholder="+91 9876543210" data-i18n="quick_phone">
+          <i class="fab fa-whatsapp form-icon" style="top: 2rem;"></i>
+        </div>
+
+        <div class="form-group" style="margin: 0;">
+          <label class="form-label">Department</label>
+          <select id="quick-dept" class="form-control" required style="padding-right: 1.5rem;">
+            <option value="">-- Select Department --</option>
+            <option value="1">Cardiology</option>
+            <option value="2">Dental Specialist</option>
+            <option value="3">Radiology & Imaging</option>
+            <option value="4">Neurology</option>
+            <option value="5">Ophthalmology</option>
+            <option value="6">Children Center</option>
+          </select>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.82rem 1.6rem;">
+            <i class="fas fa-arrow-right"></i> <span data-i18n="get_appointment">Get Appointment</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Trust Icons Row -->
+  <section class="trust-strip">
+    <div class="container">
+      <div class="trust-grid">
+        <div class="trust-item">
+          <div class="trust-icon-box"><i class="fas fa-shield-halved"></i></div>
+          <div>
+            <h4 data-i18n="trusted_care">Trusted Care</h4>
+            <p data-i18n="trusted_care_desc">Certified Specialists & Doctors</p>
+          </div>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-icon-box"><i class="fas fa-heart"></i></div>
+          <div>
+            <h4 data-i18n="better_living">Better Living</h4>
+            <p data-i18n="better_living_desc">Holistic Health Support</p>
+          </div>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-icon-box"><i class="fas fa-users"></i></div>
+          <div>
+            <h4 data-i18n="healthy_comm">Healthy Communities</h4>
+            <p data-i18n="healthy_comm_desc">Preventive Care Outreach</p>
+          </div>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-icon-box"><i class="fas fa-seedling"></i></div>
+          <div>
+            <h4 data-i18n="life_wellness">Life Long Wellness</h4>
+            <p data-i18n="life_wellness_desc">Personalized Treatment Plans</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. About Section -->
+  <section class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-media">
+          <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=700" alt="MediCare Hospital Diagnostic Wing" class="about-img">
+          <div class="video-play-btn" onclick="openHelpModal()">
+            <i class="fas fa-play" style="margin-left: 3px;"></i>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <span class="tag-mint" data-i18n="about_tag">About MediCare</span>
+          <h2 data-i18n="about_heading" style="margin: 0.85rem 0 1.25rem;">Thousands Of Specialities For Any Type Diagnostic.</h2>
+          <p data-i18n="about_p1">
+            At MediCare, we combine cutting-edge medical technologies with heartfelt compassionate care. Our smart slot management and real-time live token tracking ensure that you never have to endure crowded waiting rooms.
+          </p>
+
+          <div class="checklist-2col">
+            <div class="check-item"><i class="fas fa-check-circle"></i> <span data-i18n="check_expert">Board Certified Specialists</span></div>
+            <div class="check-item"><i class="fas fa-check-circle"></i> <span data-i18n="check_lab">State-of-the-Art Laboratory</span></div>
+            <div class="check-item"><i class="fas fa-check-circle"></i> <span data-i18n="check_emergency">24/7 Critical Emergency Care</span></div>
+            <div class="check-item"><i class="fas fa-check-circle"></i> <span data-i18n="check_queue">Zero-Wait Smart Queue System</span></div>
+          </div>
+
+          <a href="about.html" class="btn btn-secondary" data-i18n="more_about_us">More About Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Services Grid (3x2) -->
+  <section class="section section-bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag-mint" data-i18n="services_tag">Clinical Excellence</span>
+        <h2 data-i18n="services_heading">Comprehensive Healthcare Services</h2>
+        <p>Expert medical care, world-class diagnostics, and dedicated patient support.</p>
+      </div>
+
+      <div class="services-grid-3x2">
+        <!-- 1. Ambulance -->
+        <div class="service-card card-interactive" onclick="window.location.href='services.html#ambulance'">
+          <div class="service-icon-box"><i class="fas fa-ambulance"></i></div>
+          <h3 data-i18n="ambulance_title">Fast Ambulance</h3>
+          <p data-i18n="ambulance_desc">Equipped with ICU life support, oxygen, and emergency response teams reaching you in minutes.</p>
+          <span class="service-readmore">Explore Service &rarr;</span>
+        </div>
+
+        <!-- 2. Dental -->
+        <div class="service-card card-interactive" onclick="window.location.href='booking.html?dept=2'">
+          <div class="service-icon-box"><i class="fas fa-tooth"></i></div>
+          <h3 data-i18n="dental_title">Dental Specialist</h3>
+          <p data-i18n="dental_desc">Comprehensive cosmetic dentistry, orthodontics, oral hygiene, and painless surgical procedures.</p>
+          <span class="service-readmore">Book Dental Slot &rarr;</span>
+        </div>
+
+        <!-- 3. Laboratory -->
+        <div class="service-card card-interactive" onclick="window.location.href='services.html#laboratory'">
+          <div class="service-icon-box"><i class="fas fa-flask"></i></div>
+          <h3 data-i18n="lab_title">Modern Laboratory</h3>
+          <p data-i18n="lab_desc">Fully automated robotic pathology, biochemistry, and rapid diagnostic molecular reports.</p>
+          <span class="service-readmore">Explore Service &rarr;</span>
+        </div>
+
+        <!-- 4. Children -->
+        <div class="service-card card-interactive" onclick="window.location.href='booking.html?dept=6'">
+          <div class="service-icon-box"><i class="fas fa-baby"></i></div>
+          <h3 data-i18n="child_title">Children Center</h3>
+          <p data-i18n="child_desc">Dedicated pediatric wing with gentle pediatricians, immunization, and child growth monitoring.</p>
+          <span class="service-readmore">Book Pediatric Slot &rarr;</span>
+        </div>
+
+        <!-- 5. Heart Surgery -->
+        <div class="service-card card-interactive" onclick="window.location.href='booking.html?dept=1'">
+          <div class="service-icon-box"><i class="fas fa-heart-pulse"></i></div>
+          <h3 data-i18n="heart_title">Heart Surgery</h3>
+          <p data-i18n="heart_desc">Interventional cardiology, non-invasive cardiac testing, bypass surgeries, and heart health.</p>
+          <span class="service-readmore">Book Cardiology Slot &rarr;</span>
+        </div>
+
+        <!-- 6. Care Advice -->
+        <div class="service-card card-interactive" onclick="window.location.href='services.html#advice'">
+          <div class="service-icon-box"><i class="fas fa-user-doctor"></i></div>
+          <h3 data-i18n="care_title">Care Advice</h3>
+          <p data-i18n="care_desc">Telehealth consultations, lifestyle counseling, preventive wellness plans, and medication management.</p>
+          <span class="service-readmore">Explore Service &rarr;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Specialities Tabs -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag-mint">Departments & Specialties</span>
+        <h2>Explore Our Clinical Focus Areas</h2>
+        <p>Meet our leading medical chairs and explore specialized treatment units.</p>
+      </div>
+
+      <div class="specialities-tabs-header">
+        <button class="spec-tab-btn active" onclick="switchSpecTab(1)"><i class="fas fa-heartbeat"></i> Cardiology</button>
+        <button class="spec-tab-btn" onclick="switchSpecTab(2)"><i class="fas fa-tooth"></i> Dental</button>
+        <button class="spec-tab-btn" onclick="switchSpecTab(3)"><i class="fas fa-x-ray"></i> Radiology</button>
+        <button class="spec-tab-btn" onclick="switchSpecTab(4)"><i class="fas fa-brain"></i> Neurology</button>
+        <button class="spec-tab-btn" onclick="switchSpecTab(5)"><i class="fas fa-eye"></i> Ophthalmology</button>
+      </div>
+
+      <div id="spec-content-box" class="spec-tab-content">
+        <img id="spec-img" src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600" alt="Doctor" class="spec-doctor-img">
+        <div>
+          <span class="tag-mint" id="spec-code">CARD - ROOM 101</span>
+          <h3 id="spec-name" style="margin: 0.75rem 0; font-size: 1.7rem;">Cardiology & Preventive Heart Care</h3>
+          <p id="spec-desc" style="margin-bottom: 1.5rem; line-height: 1.7;">
+            Our cardiology center is headed by Dr. Rajesh Sharma. We provide 24/7 cardiac monitoring, digital ECG, color Doppler echocardiography, and minimally invasive cardiac catheterization.
+          </p>
+          <div style="margin-bottom: 1.5rem;">
+            <p><strong>Chief Consultant:</strong> <span id="spec-doctor">Dr. Rajesh Sharma (MBBS, MD Cardiology)</span></p>
+            <p><strong>Average Consultation:</strong> 15 mins per slot</p>
+          </div>
+          <a id="spec-book-btn" href="booking.html?dept=1" class="btn btn-primary">
+            <i class="fas fa-calendar-check"></i> Book With This Specialist
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Testimonials (Full-Width Deep Blue Slider) -->
+  <section class="testimonials-section">
+    <div class="container">
+      <div class="testimonial-card-single">
+        <div style="color: var(--mint); font-size: 2.2rem; margin-bottom: 1rem;"><i class="fas fa-quote-left"></i></div>
+        <p class="testimonial-quote" id="test-quote">
+          "The digital slot booking and live WhatsApp queue system at MediCare was an absolute breath of fresh air. I received my token on WhatsApp, arrived 10 minutes before my slot, and was seen by Dr. Sharma immediately. No lines, no stress!"
+        </p>
+        <img id="test-avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200" alt="Patient Avatar" class="testimonial-avatar">
+        <div class="testimonial-author-name" id="test-name">Ananya Joshi</div>
+        <div class="testimonial-author-role" id="test-role">Cardiac Patient, Pune</div>
+
+        <div class="testimonial-dots">
+          <span class="test-dot active" onclick="switchTestimonial(0)"></span>
+          <span class="test-dot" onclick="switchTestimonial(1)"></span>
+          <span class="test-dot" onclick="switchTestimonial(2)"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Doctors Team (4 Cards with hover social slider) -->
+  <section class="section section-bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag-mint">Certified Medical Specialists</span>
+        <h2>Meet Our Renowned Doctors</h2>
+        <p>Our team of experienced and compassionate doctors are here to provide world-class medical care.</p>
+      </div>
+
+      <div class="doctors-grid-4" id="doctors-team-container">
+        <!-- Dynamic Doctors loaded from database -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Footer (Deep Blue) -->
+  <footer class="footer">
+    <div class="container">
+      <!-- Top Strip with Phone & Newsletter -->
+      <div class="footer-top-strip">
+        <div class="footer-phone-box">
+          <div class="footer-phone-icon"><i class="fas fa-headset"></i></div>
+          <div>
+            <span style="font-size: 0.8rem; color: var(--mint); font-weight: 700; text-transform: uppercase;" data-i18n="need_help">Need Help?</span>
+            <h3 style="color: var(--white); font-size: 1.35rem;" data-i18n="call_us_now">+91 98765 43210</h3>
+          </div>
+        </div>
+
+        <div class="footer-newsletter-box">
+          <input type="email" class="footer-newsletter-input" placeholder="Your Email Address...">
+          <button class="btn btn-primary" data-i18n="subscribe_btn">Subscribe</button>
+        </div>
+      </div>
+
+      <!-- 4 Columns -->
+      <div class="footer-grid-4">
+        <!-- Col 1: About -->
+        <div class="footer-col">
+          <a href="index.html" class="logo" style="margin-bottom: 1.25rem;">
+            <div class="logo-icon-tile" style="background: var(--white); color: var(--deep-blue); border-color: var(--mint);">M</div>
+            <div class="logo-text-box">
+              <span class="logo-text"><span style="color: var(--white);">Medi</span><span class="care">Care</span></span>
+              <span class="logo-tagline" style="color: var(--mint);">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+            </div>
+          </a>
+          <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem;" data-i18n="footer_about_text">
+            A multi-speciality hospital and digital queue care facility providing world-class health treatments with trust, compassion, and innovation.
+          </p>
+        </div>
+
+        <!-- Col 2: Useful Links -->
+        <div class="footer-col">
+          <h4 data-i18n="useful_links">Useful Links</h4>
+          <ul class="footer-links">
+            <li><a href="about.html"><i class="fas fa-angle-right"></i> About Us</a></li>
+            <li><a href="services.html"><i class="fas fa-angle-right"></i> Medical Services</a></li>
+            <li><a href="doctors.html"><i class="fas fa-angle-right"></i> Our Doctors</a></li>
+            <li><a href="queue.html"><i class="fas fa-angle-right"></i> Live Queue Board</a></li>
+            <li><a href="booking.html"><i class="fas fa-angle-right"></i> Book Appointment</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Opening Hours -->
+        <div class="footer-col">
+          <h4 data-i18n="opening_hours">Opening Hours</h4>
+          <ul class="footer-links" style="color: rgba(255,255,255,0.75); font-size: 0.9rem;">
+            <li style="margin-bottom: 0.5rem;"><strong>Monday - Friday:</strong> 8:00 AM - 9:00 PM</li>
+            <li style="margin-bottom: 0.5rem;"><strong>Saturday:</strong> 8:00 AM - 6:00 PM</li>
+            <li style="margin-bottom: 0.5rem;"><strong>Sunday:</strong> 9:00 AM - 2:00 PM</li>
+            <li><strong style="color: var(--mint);">Emergency Care:</strong> 24 Hours / 7 Days</li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Contact -->
+        <div class="footer-col">
+          <h4 data-i18n="contact">Contact Information</h4>
+          <ul class="footer-links" style="color: rgba(255,255,255,0.75); font-size: 0.9rem;">
+            <li style="margin-bottom: 0.6rem;"><i class="fas fa-map-marker-alt" style="color: var(--teal); margin-right: 6px;"></i> 104 MediCare Healthcare Blvd, Wellness District</li>
+            <li style="margin-bottom: 0.6rem;"><i class="fas fa-envelope" style="color: var(--teal); margin-right: 6px;"></i> contact@medicare.com</li>
+            <li><i class="fab fa-whatsapp" style="color: #25D366; margin-right: 6px;"></i> +91 98765 43210</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Copyright Bar -->
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 MediCare Hospital. <span data-i18n="all_rights">All Rights Reserved.</span></div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Patient Rights</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll To Top Button -->
+  <button class="scroll-top-btn" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Floating AI Chat Assistant & Voice Button -->
+  <div class="chat-fab" id="chat-fab-btn" title="MediCare AI Voice Assistant">
+    <i class="fas fa-robot" style="font-size: 1.4rem;"></i>
+  </div>
+
+  <!-- AI Chat Widget Popup -->
+  <div class="chat-widget-box" id="chat-widget-box">
+    <div class="chat-widget-header">
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--teal); color: #FFF; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div>
+          <h4 style="color: var(--white); font-size: 0.95rem; margin: 0;">MediCare AI Assistant</h4>
+          <span style="font-size: 0.72rem; color: var(--mint);">Online & Speech Enabled</span>
+        </div>
+      </div>
+      <button id="chat-close-btn" style="background: none; border: none; color: #FFF; font-size: 1.2rem; cursor: pointer;">&times;</button>
+    </div>
+
+    <!-- Quick Question Chips -->
+    <div style="padding: 0.6rem 0.85rem; background: var(--light-gray); display: flex; gap: 0.4rem; overflow-x: auto; white-space: nowrap;">
+      <button class="btn btn-sm btn-outline-white" style="font-size: 0.72rem; color: var(--deep-blue); border-color: var(--mint); background: #FFF;" onclick="askQuickQuestion('How to book slot')">How to book</button>
+      <button class="btn btn-sm btn-outline-white" style="font-size: 0.72rem; color: var(--deep-blue); border-color: var(--mint); background: #FFF;" onclick="askQuickQuestion('Live queue status')">Live queue</button>
+      <button class="btn btn-sm btn-outline-white" style="font-size: 0.72rem; color: var(--deep-blue); border-color: var(--mint); background: #FFF;" onclick="askQuickQuestion('Cardiology doctor')">Cardiology</button>
+      <button class="btn btn-sm btn-outline-white" style="font-size: 0.72rem; color: var(--deep-blue); border-color: var(--mint); background: #FFF;" onclick="askQuickQuestion('Emergency helpline')">Emergency</button>
+    </div>
+
+    <!-- Messages Container -->
+    <div class="chat-messages" id="chat-messages-container">
+      <div class="chat-msg chat-msg-bot">
+        Hello! I am your MediCare AI Health & Queue Assistant. You can type your medical question or tap the microphone to speak!
+      </div>
+    </div>
+
+    <!-- Input Bar -->
+    <div class="chat-input-bar">
+      <button id="chat-mic-btn" type="button" style="background: none; border: none; color: var(--teal); font-size: 1.15rem; cursor: pointer;" title="Speak (Web Speech API)">
+        <i class="fas fa-microphone"></i>
+      </button>
+      <input type="text" id="chat-input-text" class="form-control" style="padding: 0.5rem 0.75rem;" placeholder="Type a message or symptom...">
+      <button id="chat-send-btn" type="button" class="btn btn-sm btn-primary" style="padding: 0.55rem 0.85rem;">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Socket.io & Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
+
+  <script>
+    // Quick booking bar handler
+    function handleQuickBook(e) {
+      e.preventDefault();
+      const dept = document.getElementById('quick-dept').value;
+      const name = encodeURIComponent(document.getElementById('quick-name').value);
+      const phone = encodeURIComponent(document.getElementById('quick-phone').value);
+      window.location.href = `booking.html?dept=${dept}&name=${name}&phone=${phone}`;
+    }
+
+    // Load Doctors into Team Grid
+    async function loadTeamDoctors() {
+      const container = document.getElementById('doctors-team-container');
+      if (!container) return;
+      try {
+        const res = await fetch('/api/doctors');
+        const data = await res.json();
+        if (data.success && data.doctors) {
+          container.innerHTML = '';
+          data.doctors.slice(0, 4).forEach(doc => {
+            const card = document.createElement('div');
+            card.className = 'doctor-card';
+            card.innerHTML = `
+              <div class="doctor-photo-box">
+                <img src="${doc.avatar}" alt="${doc.name}">
+                <div class="doctor-social-slide">
+                  <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+                  <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+              </div>
+              <div class="doctor-info">
+                <span class="doctor-specialty-tag">${doc.specialty}</span>
+                <h3 class="doctor-name-heading">${doc.name}</h3>
+                <p style="font-size: 0.82rem; color: var(--charcoal-light); margin-bottom: 0.85rem;">${doc.qualification} &bull; ${doc.room_no}</p>
+                <a href="booking.html?doc=${doc.id}" class="btn btn-sm btn-primary" style="width: 100%;">
+                  <i class="fas fa-calendar-check"></i> Book Slot
+                </a>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        }
+      } catch (e) {
+        console.error('Failed to load doctors:', e);
+      }
+    }
+    document.addEventListener('DOMContentLoaded', loadTeamDoctors);
+
+    // Specialties Tabs Data
+    const specData = {
+      1: {
+        code: "CARD - ROOM 101",
+        title: "Cardiology & Preventive Heart Care",
+        desc: "Our cardiology center is headed by Dr. Rajesh Sharma. We provide 24/7 cardiac monitoring, digital ECG, color Doppler echocardiography, and minimally invasive cardiac catheterization.",
+        doc: "Dr. Rajesh Sharma (MBBS, MD Cardiology)",
+        img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600",
+        dept: 1
+      },
+      2: {
+        code: "DENT - ROOM 204",
+        title: "Dental Surgery & Orthodontics",
+        desc: "Specialized in laser dental treatment, digital smile design, painless root canals, and tooth alignment with Dr. Priya Patil.",
+        doc: "Dr. Priya Patil (BDS, MDS Orthodontics)",
+        img: "https://images.unsplash.com/photo-1594824813511-209e7c5414f4?auto=format&fit=crop&q=80&w=600",
+        dept: 2
+      },
+      3: {
+        code: "RAD - ROOM 112",
+        title: "High-Precision Radiology & Imaging",
+        desc: "High-definition 3 Tesla MRI, multi-slice CT angiography, ultrasound, and digital mammography led by Dr. Amit Kulkarni.",
+        doc: "Dr. Amit Kulkarni (MBBS, DMRD Radiology)",
+        img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600",
+        dept: 3
+      },
+      4: {
+        code: "NEUR - ROOM 305",
+        title: "Neurology & Spine Disorders",
+        desc: "Comprehensive neurological diagnosis for stroke rehabilitation, migraine management, EEG telemetry, and epilepsy by Dr. Sunita Rao.",
+        doc: "Dr. Sunita Rao (MBBS, DM Neurology)",
+        img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=600",
+        dept: 4
+      },
+      5: {
+        code: "OPHT - ROOM 108",
+        title: "Ophthalmology & Laser Eye Surgery",
+        desc: "State-of-the-art vision screening, cataract phacoemulsification, glaucoma treatment, and retina diagnostics by Dr. Vikram Joshi.",
+        doc: "Dr. Vikram Joshi (MBBS, MS Ophthalmology)",
+        img: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600",
+        dept: 5
+      }
+    };
+
+    function switchSpecTab(id) {
+      document.querySelectorAll('.spec-tab-btn').forEach((b, idx) => {
+        b.classList.toggle('active', (idx + 1) === id);
+      });
+      const d = specData[id];
+      if (d) {
+        document.getElementById('spec-code').textContent = d.code;
+        document.getElementById('spec-name').textContent = d.title;
+        document.getElementById('spec-desc').textContent = d.desc;
+        document.getElementById('spec-doctor').textContent = d.doc;
+        document.getElementById('spec-img').src = d.img;
+        document.getElementById('spec-book-btn').href = `booking.html?dept=${d.dept}`;
+      }
+    }
+
+    // Testimonials Data
+    const testimonials = [
+      {
+        quote: "The digital slot booking and live WhatsApp queue system at MediCare was an absolute breath of fresh air. I received my token on WhatsApp, arrived 10 minutes before my slot, and was seen by Dr. Sharma immediately. No lines, no stress!",
+        name: "Ananya Joshi",
+        role: "Cardiac Patient, Pune",
+        avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200"
+      },
+      {
+        quote: "I was running late due to highway traffic, but MediCare's intelligent 10-minute auto-shift protected my booking! The system automatically scheduled me for the next available slot and messaged me on WhatsApp without any hassle.",
+        name: "Rajendra Deshmukh",
+        role: "Dental Care Patient, Mumbai",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"
+      },
+      {
+        quote: "As a busy mother of two, taking children to the hospital used to take all day. With MediCare's live queue board on my phone, I knew exactly when token PED-004 would be called. Truly world-class hospital technology!",
+        name: "Pooja Mehta",
+        role: "Pediatric Patient Guardian, Nagpur",
+        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200"
+      }
+    ];
+
+    function switchTestimonial(idx) {
+      document.querySelectorAll('.test-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === idx);
+      });
+      const t = testimonials[idx];
+      if (t) {
+        document.getElementById('test-quote').textContent = `"${t.quote}"`;
+        document.getElementById('test-name').textContent = t.name;
+        document.getElementById('test-role').textContent = t.role;
+        document.getElementById('test-avatar').src = t.avatar;
+      }
+    }
+  </script>
+</body>
+</html>

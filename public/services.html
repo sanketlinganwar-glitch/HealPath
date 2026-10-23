@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Services - MediCare Hospital & Medical Center</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> 24/7 Emergency Line: <strong>+91 98765 43210</strong></span>
+      </div>
+      <div class="top-bar-right">
+        <div class="online-indicator"><span class="online-dot"></span> <span class="online-status-text">Online</span></div>
+        <select id="lang-select" class="lang-selector">
+          <option value="en">English (EN)</option>
+          <option value="hi">हिन्दी (HI)</option>
+          <option value="mr">मराठी (MR)</option>
+        </select>
+        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()"><i class="fas fa-question-circle"></i> Help</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon-tile">M</div>
+        <div class="logo-text-box">
+          <span class="logo-text"><span class="medi">Medi</span><span class="care">Care</span></span>
+          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+        </div>
+      </a>
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link active">Services</a>
+        <a href="doctors.html" class="nav-link">Doctors</a>
+        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> Live Queue</a>
+        <a href="booking.html" class="nav-link">Book Appointment</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+      </nav>
+      <div class="header-actions">
+        <div id="header-auth-container"></div>
+        <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Slot</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Banner -->
+  <section class="hero-section organic-bg-shapes" style="padding: 3.5rem 0 4rem; text-align: center;">
+    <div class="container" style="position: relative; z-index: 2;">
+      <span class="tag-mint" style="margin-bottom: 0.5rem;">World-Class Clinical Offerings</span>
+      <h1 style="color: var(--white); font-size: 2.4rem; margin: 0.5rem 0;">Our Medical Services & Specialties</h1>
+      <p style="color: rgba(255,255,255,0.85); margin: 0 auto; max-width: 620px;">
+        Explore our advanced clinical departments equipped with cutting-edge medical technologies and board-certified healthcare specialists.
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Layout: Sidebar + Details (as mandated in Part 2) -->
+  <section class="section">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 320px 1fr; gap: 3rem; align-items: flex-start;">
+        
+        <!-- Left Sidebar: Search & Category List with Arrows -->
+        <aside>
+          <!-- Search Box -->
+          <div class="card" style="margin-bottom: 2rem; padding: 1.5rem;">
+            <h4 style="color: var(--deep-blue); margin-bottom: 0.85rem;">Search Service</h4>
+            <div class="form-group" style="margin: 0;">
+              <input type="text" class="form-control" placeholder="Search keywords..." oninput="filterServices(this.value)">
+              <i class="fas fa-search form-icon" style="top: 0.85rem;"></i>
+            </div>
+          </div>
+
+          <!-- Category List with Arrows -->
+          <div class="card" style="padding: 1.5rem;">
+            <h4 style="color: var(--deep-blue); margin-bottom: 1rem;">Departments</h4>
+            <ul style="display: flex; flex-direction: column; gap: 0.6rem;">
+              <li>
+                <a href="#cardiology" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--light-gray); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
+                  <span><i class="fas fa-heart-pulse" style="color: var(--teal); margin-right: 8px;"></i> Cardiology</span>
+                  <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: var(--teal);"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#dental" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--light-gray); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
+                  <span><i class="fas fa-tooth" style="color: var(--teal); margin-right: 8px;"></i> Dental Specialist</span>
+                  <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: var(--teal);"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#radiology" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--light-gray); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
+                  <span><i class="fas fa-x-ray" style="color: var(--teal); margin-right: 8px;"></i> Radiology & Imaging</span>
+                  <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: var(--teal);"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#neurology" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--light-gray); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
+                  <span><i class="fas fa-brain" style="color: var(--teal); margin-right: 8px;"></i> Neurology</span>
+                  <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: var(--teal);"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#pediatrics" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--light-gray); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
+                  <span><i class="fas fa-baby" style="color: var(--teal); margin-right: 8px;"></i> Children Center</span>
+                  <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: var(--teal);"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Right Side: Service Details (Image, Text, Quote Block, Doctor Highlights) -->
+        <div>
+          <!-- Service 1: Cardiology -->
+          <article id="cardiology" class="card" style="margin-bottom: 2.5rem; padding: 2.2rem;">
+            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=900" alt="Cardiology" style="width: 100%; height: 320px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+            <span class="tag-mint">DEPARTMENT OF CARDIOLOGY</span>
+            <h2 style="color: var(--deep-blue); margin: 0.5rem 0 1rem;">Interventional & Preventive Cardiology</h2>
+            <p style="margin-bottom: 1.25rem;">
+              MediCare's Heart Center is a tertiary care unit dedicated to cardiac health. We feature a digital Cath Lab, computerized Stress Test (TMT), Echocardiography, Holter monitoring, and emergency coronary angioplasty available 24 hours a day.
+            </p>
+
+            <blockquote style="background: var(--light-gray); border-left: 4px solid var(--teal); padding: 1rem 1.5rem; border-radius: 8px; font-style: italic; color: var(--deep-blue); margin: 1.5rem 0;">
+              "Early diagnosis of cardiac anomalies and zero-wait intervention saves lives. Our smart queue ensures that critical consultations begin without bureaucratic delays."
+              <footer style="margin-top: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--teal);">&mdash; Dr. Rajesh Sharma, Head of Cardiology</footer>
+            </blockquote>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <span style="font-size: 0.9rem; color: var(--charcoal-light);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 101, First Floor</strong></span>
+              <a href="booking.html?dept=1" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Cardiology Slot</a>
+            </div>
+          </article>
+
+          <!-- Service 2: Dental -->
+          <article id="dental" class="card" style="margin-bottom: 2.5rem; padding: 2.2rem;">
+            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=900" alt="Dental" style="width: 100%; height: 320px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+            <span class="tag-mint">DENTAL CLINICAL WING</span>
+            <h2 style="color: var(--deep-blue); margin: 0.5rem 0 1rem;">Advanced Dental Surgery & Orthodontics</h2>
+            <p style="margin-bottom: 1.25rem;">
+              Experience painless cosmetic dental solutions, laser gum contouring, clear aligners, dental implants, and pediatric dentistry in our sterile, friendly clinic.
+            </p>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <span style="font-size: 0.9rem; color: var(--charcoal-light);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 204, Second Floor</strong></span>
+              <a href="booking.html?dept=2" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Dental Slot</a>
+            </div>
+          </article>
+
+          <!-- Service 3: Neurology -->
+          <article id="neurology" class="card" style="padding: 2.2rem;">
+            <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=900" alt="Neurology" style="width: 100%; height: 320px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
+            <span class="tag-mint">NEUROLOGY & BRAIN CARE</span>
+            <h2 style="color: var(--deep-blue); margin: 0.5rem 0 1rem;">Neurological Diagnostics & Stroke Center</h2>
+            <p style="margin-bottom: 1.25rem;">
+              Our neurology wing provides precision neuro-electrophysiology, epilepsy management, stroke critical response, dementia therapy, and chronic headache treatments.
+            </p>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <span style="font-size: 0.9rem; color: var(--charcoal-light);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 305, Third Floor</strong></span>
+              <a href="booking.html?dept=4" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Neurology Slot</a>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom-bar" style="border: none; padding: 0; justify-content: center;">
+        <div>&copy; 2026 MediCare Hospital. All Rights Reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

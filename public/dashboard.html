@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediCare - Role-Based Hospital Dashboard</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span><i class="fas fa-shield-alt" style="color: var(--mint); margin-right: 5px;"></i> MediCare Protected Portal (Role-Based Access Control)</span>
+      </div>
+      <div class="top-bar-right">
+        <div class="online-indicator">
+          <span class="online-dot"></span>
+          <span class="online-status-text">Online</span>
+        </div>
+        <select id="lang-select" class="lang-selector">
+          <option value="en">English (EN)</option>
+          <option value="hi">हिन्दी (HI)</option>
+          <option value="mr">मराठी (MR)</option>
+        </select>
+        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()">
+          <i class="fas fa-question-circle"></i> Help
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon-tile">M</div>
+        <div class="logo-text-box">
+          <span class="logo-text"><span class="medi">Medi</span><span class="care">Care</span></span>
+          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="doctors.html" class="nav-link">Doctors</a>
+        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> Live Queue</a>
+        <a href="booking.html" class="nav-link">Book Appointment</a>
+        <a href="dashboard.html" class="nav-link active">Dashboard</a>
+      </nav>
+
+      <div class="header-actions">
+        <div id="header-auth-container"></div>
+        <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Layout (Deep Blue Sidebar + Light Gray Content) -->
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="dash-sidebar">
+      <div>
+        <div style="background: rgba(255,255,255,0.08); border-radius: 12px; padding: 1.25rem; margin-bottom: 2rem; border-left: 3px solid var(--teal);">
+          <div style="font-size: 0.75rem; color: var(--mint); font-weight: 700; text-transform: uppercase;">Active Session</div>
+          <div id="dash-user-name" style="font-size: 1.15rem; font-weight: 700; color: #FFF; margin: 0.2rem 0;">Aarav Deshmukh</div>
+          <span id="dash-user-role" class="tag-mint" style="font-size: 0.68rem; padding: 0.2rem 0.6rem;">PATIENT</span>
+        </div>
+
+        <!-- Role-Switcher Navigation for Seamless Evaluation -->
+        <div style="margin-bottom: 1.5rem;">
+          <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mint); display: block; margin-bottom: 0.6rem; padding-left: 0.5rem;">PORTAL ROLES</span>
+          <a href="javascript:void(0)" id="nav-patient" class="dash-nav-link active" onclick="switchRoleView('patient')">
+            <i class="fas fa-user-injured"></i> Patient Portal
+          </a>
+          <a href="javascript:void(0)" id="nav-doctor" class="dash-nav-link" onclick="switchRoleView('doctor')">
+            <i class="fas fa-user-md"></i> Doctor Consultation
+          </a>
+          <a href="javascript:void(0)" id="nav-admin" class="dash-nav-link" onclick="switchRoleView('admin')">
+            <i class="fas fa-hospital-user"></i> Admin / Receptionist
+          </a>
+        </div>
+
+        <div>
+          <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mint); display: block; margin-bottom: 0.6rem; padding-left: 0.5rem;">SYSTEM ACTIONS</span>
+          <a href="booking.html" class="dash-nav-link">
+            <i class="fas fa-calendar-plus"></i> Book New Slot
+          </a>
+          <a href="queue.html" class="dash-nav-link">
+            <i class="fas fa-tv"></i> Public Queue Monitor
+          </a>
+        </div>
+      </div>
+
+      <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
+        <button class="btn btn-outline-white btn-sm" style="width: 100%; border-color: rgba(229,72,77,0.5); color: #FFA1A3;" onclick="handleLogout()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dash-content" id="dashboard-main-view">
+      <!-- Injected dynamically based on role -->
+    </main>
+  </div>
+
+  <!-- Floating Chat Assistant -->
+  <div class="chat-fab" id="chat-fab-btn" title="MediCare AI Voice Assistant">
+    <i class="fas fa-robot" style="font-size: 1.4rem;"></i>
+  </div>
+
+  <div class="chat-widget-box" id="chat-widget-box">
+    <div class="chat-widget-header">
+      <div style="display: flex; align-items: center; gap: 0.6rem;">
+        <i class="fas fa-robot"></i>
+        <strong>MediCare AI Voice Assistant</strong>
+      </div>
+      <button id="chat-close-btn" style="background: none; border: none; color: #FFF; font-size: 1.2rem; cursor: pointer;">&times;</button>
+    </div>
+    <div class="chat-messages" id="chat-messages-container">
+      <div class="chat-msg chat-msg-bot">
+        Hello! I can guide you through managing appointments, live token statuses, or doctor schedules.
+      </div>
+    </div>
+    <div class="chat-input-bar">
+      <button id="chat-mic-btn" type="button" style="background: none; border: none; color: var(--teal); font-size: 1.15rem; cursor: pointer;">
+        <i class="fas fa-microphone"></i>
+      </button>
+      <input type="text" id="chat-input-text" class="form-control" style="padding: 0.5rem 0.75rem;" placeholder="Type or speak...">
+      <button id="chat-send-btn" type="button" class="btn btn-sm btn-primary">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>
