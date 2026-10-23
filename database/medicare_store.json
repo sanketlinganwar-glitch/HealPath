@@ -47,6 +47,14 @@
       "description": "Compassionate pediatric healthcare, newborn care, immunizations, and child wellness.",
       "icon": "baby",
       "default_consult_min": 15
+    },
+    {
+      "id": 7,
+      "name": "Sanjivani Hospital (Yavatmal 445001)",
+      "code": "SANJ",
+      "description": "Sanjeevan Multispecialty Hospital & Research Institute, Mahadev Mandir Road, Ratanlal Plots, Yavatmal 445001.",
+      "icon": "hospital",
+      "default_consult_min": 15
     }
   ],
   "doctors": [
@@ -138,6 +146,96 @@
       "status": "available",
       "working_start": "10:00",
       "working_end": "14:00",
+      "slot_duration": 15
+    },
+    {
+      "id": 101,
+      "name": "Dr. Sunil M. Agrawal",
+      "department_id": 7,
+      "department_name": "Sanjivani Hospital (Yavatmal 445001)",
+      "specialization": "Chief Surgeon & Laparoscopy Specialist",
+      "room": "Room 1 (Consultant Suite)",
+      "experience_years": 22,
+      "bio": "Managing Director at Sanjeevan Multispecialty Hospital Yavatmal. Pioneer in laparoscopic and general surgery in Vidarbha.",
+      "image_url": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600",
+      "status": "available",
+      "working_start": "10:00",
+      "working_end": "14:00",
+      "slot_duration": 15
+    },
+    {
+      "id": 102,
+      "name": "Dr. Vijay S. Kawalkar",
+      "department_id": 7,
+      "department_name": "Sanjivani Hospital (Yavatmal 445001)",
+      "specialization": "Senior Consultant Laparoscopic Surgeon",
+      "room": "Room 2 (Surgical OPD)",
+      "experience_years": 19,
+      "bio": "Senior surgeon specializing in minimally invasive abdominal surgeries, laser proctology, and trauma emergencies.",
+      "image_url": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600",
+      "status": "available",
+      "working_start": "11:00",
+      "working_end": "14:00",
+      "slot_duration": 15
+    },
+    {
+      "id": 103,
+      "name": "Dr. H. S. Bora",
+      "department_id": 7,
+      "department_name": "Sanjivani Hospital (Yavatmal 445001)",
+      "specialization": "MD General Medicine & Critical Care",
+      "room": "Room 3 (Medicine Wing)",
+      "experience_years": 25,
+      "bio": "Leading general physician with over two decades of critical care, diabetes management, and intensive therapy experience.",
+      "image_url": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=600",
+      "status": "available",
+      "working_start": "10:30",
+      "working_end": "14:30",
+      "slot_duration": 15
+    },
+    {
+      "id": 104,
+      "name": "Dr. Vinay Pande",
+      "department_id": 7,
+      "department_name": "Sanjivani Hospital (Yavatmal 445001)",
+      "specialization": "Chest & Pulmonary Critical Care",
+      "room": "Room 4 (Chest Clinic)",
+      "experience_years": 16,
+      "bio": "Pulmonology and respiratory medicine expert specializing in asthma, COPD, and critical respiratory infections.",
+      "image_url": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600",
+      "status": "available",
+      "working_start": "10:00",
+      "working_end": "14:00",
+      "slot_duration": 15
+    },
+    {
+      "id": 105,
+      "name": "Dr. Sheetal S. Agrawal",
+      "department_id": 7,
+      "department_name": "Sanjivani Hospital (Yavatmal 445001)",
+      "specialization": "MD Obstetrics & Gynecology",
+      "room": "Room 5 (Women Clinic)",
+      "experience_years": 20,
+      "bio": "Renowned obstetrician and gynecologist managing high-risk pregnancies, maternal care, and infertility treatments.",
+      "image_url": "https://images.unsplash.com/photo-1594824813580-ff67fbf9303d?auto=format&fit=crop&q=80&w=600",
+      "status": "available",
+      "working_start": "10:00",
+      "working_end": "14:00",
+      "slot_duration": 15
+    },
+    {
+      "id": 106,
+      "name": "Dr. Lalit Paldiwal",
+      "department_id": 7,
+      "department_name": "Sanjivani Hospital (Yavatmal 445001)",
+      "specialization": "MD Radiology & Sonography",
+      "room": "Room 6 (Imaging Suite)",
+      "experience_years": 14,
+      "bio": "Chief radiologist specializing in color Doppler, 4D ultrasound, CT scans, and high-precision diagnostic imaging.",
+      "image_url": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600&q=80",
+      "status": "available",
+      "working_start": "09:30",
+      "working_end": "13:30",
       "slot_duration": 15
     }
   ],
@@ -832,7 +930,7 @@
       "date": "2026-10-23",
       "start_time": "11:40",
       "end_time": "12:00",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -886,7 +984,7 @@
       "date": "2026-10-23",
       "start_time": "13:40",
       "end_time": "14:00",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1860,6 +1958,186 @@
       "end_time": "14:00",
       "status": "available",
       "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 185,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "09:00",
+      "end_time": "09:15",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 186,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "09:15",
+      "end_time": "09:30",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 187,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "09:30",
+      "end_time": "09:45",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 188,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "09:45",
+      "end_time": "10:00",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 189,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 190,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 191,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 192,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 193,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 194,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 195,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 196,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 197,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 198,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 199,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 200,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 201,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 202,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 203,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 204,
+      "doctor_id": 101,
+      "date": "2026-10-24",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-23T11:48:50.602Z"
     }
   ],
   "appointments": [
@@ -1934,6 +2212,42 @@
       "checked_in": false,
       "status": "missed",
       "created_at": "2026-10-23T10:45:35.850Z"
+    },
+    {
+      "id": 5,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 20,
+      "disease": "my brain not work properly",
+      "whatsapp_no": "+919403734023",
+      "notes": "nothing",
+      "slot_id": 76,
+      "token_no": "NEUR-001",
+      "doctor_id": 3,
+      "department_id": 4,
+      "date": "2026-10-23",
+      "time": "13:40",
+      "checked_in": false,
+      "status": "missed",
+      "created_at": "2026-10-23T11:05:40.587Z"
+    },
+    {
+      "id": 6,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 20,
+      "disease": "my brain not work properly",
+      "whatsapp_no": "+919403734023",
+      "notes": "",
+      "slot_id": 70,
+      "token_no": "NEUR-002",
+      "doctor_id": 3,
+      "department_id": 4,
+      "date": "2026-10-23",
+      "time": "11:40",
+      "checked_in": false,
+      "status": "missed",
+      "created_at": "2026-10-23T11:12:17.825Z"
     }
   ],
   "queue": [
@@ -1988,6 +2302,32 @@
       "called_at": null,
       "completed_at": null,
       "created_at": "2026-10-23T10:45:35.850Z"
+    },
+    {
+      "id": 5,
+      "appointment_id": 5,
+      "token_no": "NEUR-001",
+      "doctor_id": 3,
+      "department_id": 4,
+      "patient_name": "Sanket Linganwar",
+      "status": "missed",
+      "position": 1,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T11:05:40.587Z"
+    },
+    {
+      "id": 6,
+      "appointment_id": 6,
+      "token_no": "NEUR-002",
+      "doctor_id": 3,
+      "department_id": 4,
+      "patient_name": "Sanket Linganwar",
+      "status": "missed",
+      "position": 1,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T11:12:17.825Z"
     }
   ],
   "messages": [
@@ -2010,6 +2350,26 @@
       "status": "delivered",
       "error_message": null,
       "sent_at": "2026-10-23T10:45:35.854Z"
+    },
+    {
+      "id": 3,
+      "appointment_id": 5,
+      "recipient_phone": "+919403734023",
+      "message_text": "Hello Sanket Linganwar, your appointment with Dr. Meera Kulkarni is confirmed on 2026-10-23 at 13:40. Token No: NEUR-001. Please arrive 10 minutes early.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-23T11:05:40.599Z"
+    },
+    {
+      "id": 4,
+      "appointment_id": 6,
+      "recipient_phone": "+919403734023",
+      "message_text": "Hello Sanket Linganwar, your appointment with Dr. Meera Kulkarni is confirmed on 2026-10-23 at 11:40. Token No: NEUR-002. Please arrive 10 minutes early.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-23T11:12:17.842Z"
     }
   ],
   "settings": {

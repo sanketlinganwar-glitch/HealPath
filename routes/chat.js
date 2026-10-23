@@ -22,9 +22,9 @@ const FAQ_KNOWLEDGE = [
   {
     keywords: ['miss', 'missed', 'late', 'shift', 'grace'],
     response: {
-      en: 'MediCare offers an automatic 10-minute grace period! If you are late, our intelligent queue system automatically shifts you to the next available slot for the day and sends an update to your WhatsApp.',
-      hi: 'मेडीकेअर 10 मिनट की छूट अवधि प्रदान करता है! यदि आपको देर हो जाती है, तो सिस्टम आपको स्वचालित रूप से अगले उपलब्ध स्लॉट में स्थानांतरित कर देता है और व्हाट्सएप पर संदेश भेजता है।',
-      mr: 'मेडीकेअर 10 मिनिटांचा अतिरिक्त वेळ देते! उशीर झाल्यास, प्रणाली तुम्हाला स्वयंचलितपणे पुढच्या उपलब्ध स्लॉटमध्ये हलवते आणि व्हॉट्सअ‍ॅपवर संदेश पाठवते.'
+      en: 'HealPath offers an automatic 10-minute grace period! If you are late, our intelligent queue system automatically shifts you to the next available slot for the day and sends an update to your WhatsApp.',
+      hi: 'हीलपाथ (HealPath) 10 मिनट की छूट अवधि प्रदान करता है! यदि आपको देर हो जाती है, तो सिस्टम आपको स्वचालित रूप से अगले उपलब्ध स्लॉट में स्थानांतरित कर देता है और व्हाट्सएप पर संदेश भेजता है।',
+      mr: 'हीलपाथ (HealPath) 10 मिनिटांचा अतिरिक्त वेळ देते! उशीर झाल्यास, प्रणाली तुम्हाला स्वयंचलितपणे पुढच्या उपलब्ध स्लॉटमध्ये हलवते आणि व्हॉट्सअ‍ॅपवर संदेश पाठवते.'
     }
   },
   {
@@ -38,9 +38,17 @@ const FAQ_KNOWLEDGE = [
   {
     keywords: ['emergency', 'ambulance', 'urgent', 'fast'],
     response: {
-      en: '🚨 For emergencies, immediately call our 24/7 MediCare Emergency Hotline: +91 98765 43210 or 108. Fast ambulance dispatch is available 24 hours a day.',
-      hi: '🚨 आपातकालीन स्थिति के लिए, तुरंत हमारी 24/7 हेल्पलाइन पर कॉल करें: +91 98765 43210 या 108। एम्बुलेंस सेवा 24 घंटे उपलब्ध है।',
-      mr: '🚨 आणीबाणीसाठी, आमच्या 24/7 हेल्पलाइनवर त्वरित कॉल करा: +91 98765 43210 किंवा 108. रुग्णवाहिका 24 तास उपलब्ध आहे.'
+      en: '🚨 For emergencies, immediately call our 24/7 HealPath Hotline: +91 95526 25262 (Yavatmal 445001 Facility) or +91 98765 43210 / 108. Fast ambulance dispatch is available 24 hours a day.',
+      hi: '🚨 आपातकालीन स्थिति के लिए, तुरंत हमारी 24/7 यवतमाल हेल्पलाइन: +91 95526 25262 या 108 पर कॉल करें। एम्बुलेंस सेवा 24 घंटे उपलब्ध है।',
+      mr: '🚨 आणीबाणीसाठी, आमच्या 24/7 यवतमाळ हेल्पलाइन: +91 95526 25262 किंवा 108 वर त्वरित कॉल करा. रुग्णवाहिका 24 तास उपलब्ध आहे.'
+    }
+  },
+  {
+    keywords: ['sanjivani', 'sanjeevan', 'yavatmal', '445001'],
+    response: {
+      en: 'Sanjeevan Multispecialty Hospital & Research Institute (Sanjivani Hospital) is located at Mahadev Mandir Road, Ratanlal Plots (near Tiranga Chowk), Yavatmal 445001. Leading doctors include Dr. Sunil M. Agrawal (Surgery), Dr. H.S. Bora (Medicine), Dr. Vinay Pande (Chest), Dr. Sheetal Agrawal (Gynecology), and Dr. Lalit Paldiwal (Radiology). Helpline: +91 95526 25262.',
+      hi: 'संजीवन मल्टीस्पेशलिटी हॉस्पिटल (संजीवनी हॉस्पिटल) महादेव मंदिर रोड, रतनलाल प्लॉट्स, यवतमाल 445001 पर स्थित है। मुख्य डॉक्टर्स: डॉ. सुनील अग्रवाल (सर्जरी), डॉ. एच.एस. बोरा (मेडिसिन), डॉ. विनय पांडे (चेस्ट)। हेल्पलाइन: +91 95526 25262।',
+      mr: 'संजीवन मल्टीस्पेशालिटी हॉस्पिटल (संजीवनी हॉस्पिटल) महादेव मंदिर रोड, रतनलाल प्लॉट्स, यवतमाळ 445001 येथे स्थित आहे. तज्ज्ञ डॉक्टर्स: डॉ. सुनील अग्रवाल (सर्जन), डॉ. एच.एस. बोरा (एमडी), डॉ. विनय पांडे (छातीरोग). हेल्पलाइन: +91 95526 25262.'
     }
   },
   {
@@ -79,9 +87,9 @@ router.post('/', (req, res) => {
   } else {
     // Friendly fallback
     const fallbacks = {
-      en: "I am MediCare Assistant! I can help you book slots, check real-time queue position, find doctor timings, or provide emergency guidance. How can I assist your health journey today?",
-      hi: "मैं मेडीकेअर सहायक हूँ! मैं अपॉइंटमेंट बुकिंग, लाइव टोकन स्थिति और डॉक्टर की जानकारी में आपकी मदद कर सकता हूँ। बताएं मैं क्या मदद करूँ?",
-      mr: "मी मेडीकेअर सहाय्यक आहे! मी अपॉइंटमेंट बुकिंग, थेट टोकन स्थिती आणि डॉक्टरांच्या माहितीसाठी मदत करू शकतो. मी कशी मदत करू?"
+      en: "I am HealPath AI Assistant! I can help you book slots, check real-time queue position, find doctor timings at Sanjivani Hospital Yavatmal, or provide emergency guidance. How can I assist your health journey today?",
+      hi: "मैं हीलपाथ (HealPath) एआई सहायक हूँ! मैं अपॉइंटमेंट बुकिंग, लाइव टोकन स्थिति और यवतमाल संजीवनी हॉस्पिटल डॉक्टर्स की जानकारी में आपकी मदद कर सकता हूँ। बताएं मैं क्या मदद करूँ?",
+      mr: "मी हीलपाथ (HealPath) एआय सहाय्यक आहे! मी अपॉइंटमेंट बुकिंग, थेट टोकन स्थिती आणि यवतमाळ संजीवनी हॉस्पिटल डॉक्टरांच्या माहितीसाठी मदत करू शकतो. मी कशी मदत करू?"
     };
     reply = fallbacks[lang] || fallbacks['en'];
   }

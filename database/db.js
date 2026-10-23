@@ -54,9 +54,9 @@ class FileDatabase {
       settings: {
         slot_duration_min: '15',
         grace_period_min: '10',
-        hospital_name: 'MediCare Hospital & Medical Center',
-        hospital_phone: '+91 98765 43210',
-        hospital_email: 'contact@medicare.com'
+        hospital_name: 'HealPath Hospital System',
+        hospital_phone: '+91 95526 25262 / +91 98765 43210',
+        hospital_email: 'contact@healpath.com'
       }
     };
     this.load();

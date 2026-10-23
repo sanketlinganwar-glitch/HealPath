@@ -102,7 +102,7 @@ class WhatsAppService {
 
   // Booking confirmation template
   async sendBookingConfirmation({ appointment, doctorName, io }) {
-    const text = `Hello ${appointment.patient_name}, your appointment with ${doctorName} is confirmed on ${appointment.date} at ${appointment.time}. Token No: ${appointment.token_no}. Please arrive 10 minutes early.`;
+    const text = `🏥 [HealPath Hospital] Hello ${appointment.patient_name}, your appointment with ${doctorName} is confirmed on ${appointment.date} at ${appointment.time}. Token No: ${appointment.token_no}. Please arrive 10 minutes early. Helpline: +91 95526 25262.`;
     return this.sendMessage({
       appointmentId: appointment.id,
       recipientPhone: appointment.whatsapp_no,
@@ -113,7 +113,7 @@ class WhatsAppService {
 
   // Reschedule notification template
   async sendRescheduleNotice({ appointment, doctorName, io }) {
-    const text = `Hello ${appointment.patient_name}, your appointment with ${doctorName} has been rescheduled to ${appointment.date} at ${appointment.time}. New Token No: ${appointment.token_no}. Please arrive 10 minutes early.`;
+    const text = `🔄 [HealPath Hospital] Hello ${appointment.patient_name}, your appointment with ${doctorName} has been rescheduled to ${appointment.date} at ${appointment.time}. New Token No: ${appointment.token_no}. Please arrive 10 minutes early.`;
     return this.sendMessage({
       appointmentId: appointment.id,
       recipientPhone: appointment.whatsapp_no,
@@ -124,7 +124,7 @@ class WhatsAppService {
 
   // Missed-slot auto-shift notification template
   async sendMissedShiftNotice({ appointment, oldTime, newTime, doctorName, io }) {
-    const text = `Hello ${appointment.patient_name}, you missed your slot at ${oldTime}. You have been automatically shifted to the next available slot on ${appointment.date} at ${newTime}. Updated Token: ${appointment.token_no}.`;
+    const text = `⚠️ [HealPath Hospital] Hello ${appointment.patient_name}, you missed your slot at ${oldTime}. You have been automatically shifted to the next available slot on ${appointment.date} at ${newTime}. Updated Token: ${appointment.token_no}.`;
     return this.sendMessage({
       appointmentId: appointment.id,
       recipientPhone: appointment.whatsapp_no,

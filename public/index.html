@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MediCare - Hospital Website, Appointment & Queue System</title>
-  <meta name="description" content="MediCare: Health Today. Brighter Tomorrow. Your Health. Our Priority. Book doctor appointments, check real-time queue tokens, and receive instant WhatsApp confirmations.">
+  <title>HealPath - Hospital Website, Appointment & Queue System</title>
+  <meta name="description" content="HealPath: Health Today. Brighter Tomorrow. Your Health. Our Priority. Smart hospital slot booking, real-time live queue tracking, WhatsApp notifications, and partner hospital spotlight for Sanjeevan Hospital Yavatmal 445001.">
   
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- Central MediCare Stylesheet -->
+  <!-- Central HealPath Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -17,8 +17,8 @@
   <!-- Pulsing Page Loader -->
   <div id="page-loader">
     <div class="pulse-loader-ring"></div>
-    <div style="font-weight: 700; color: var(--deep-blue); font-size: 1.1rem; letter-spacing: 0.05em;">
-      <span style="color: var(--deep-blue);">Medi</span><span style="color: var(--teal);">Care</span>
+    <div style="font-weight: 700; color: var(--deep-blue); font-size: 1.15rem; letter-spacing: 0.05em;">
+      <span style="color: var(--deep-blue);">Heal</span><span style="color: var(--teal);">Path</span>
     </div>
   </div>
 
@@ -27,7 +27,7 @@
     <div class="container top-bar-inner">
       <div class="top-bar-left">
         <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> <span data-i18n="emergency_call">24/7 Emergency Line:</span> <strong>+91 98765 43210</strong></span>
-        <span><i class="fas fa-clock" style="color: var(--mint); margin-right: 5px;"></i> <span data-i18n="mon_sat">Mon - Sat: 8:00 AM - 9:00 PM</span></span>
+        <span><i class="fas fa-hospital" style="color: var(--mint); margin-right: 5px; margin-left: 10px;"></i> Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)</span>
       </div>
       <div class="top-bar-right">
         <!-- Live Connectivity Dot -->
@@ -54,11 +54,11 @@
   <!-- Global Sticky Header -->
   <header class="header">
     <div class="container header-inner">
-      <!-- MediCare Logo -->
+      <!-- HealPath Logo -->
       <a href="index.html" class="logo">
-        <div class="logo-icon-tile">M</div>
+        <div class="logo-icon-tile">H</div>
         <div class="logo-text-box">
-          <span class="logo-text"><span class="medi">Medi</span><span class="care">Care</span></span>
+          <span class="logo-text"><span class="heal">Heal</span><span class="path">Path</span></span>
           <span class="logo-tagline" data-i18n="hero_tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
         </div>
       </a>
@@ -71,6 +71,7 @@
           <a href="javascript:void(0)" class="nav-link"><span data-i18n="pages">Pages</span> <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i></a>
           <div class="dropdown-menu">
             <a href="about.html" class="dropdown-item" data-i18n="about_us">About Us</a>
+            <a href="#sanjivani-hospital-spotlight" class="dropdown-item">Sanjivani Hospital (Yavatmal)</a>
             <a href="queue.html" class="dropdown-item" data-i18n="live_queue">Live Queue</a>
             <a href="booking.html" class="dropdown-item" data-i18n="book_appointment">Book Appointment</a>
             <a href="dashboard.html" class="dropdown-item" data-i18n="dashboard">Dashboard</a>
@@ -88,6 +89,7 @@
         </div>
 
         <a href="doctors.html" class="nav-link" data-i18n="doctors">Doctors</a>
+        <a href="#sanjivani-hospital-spotlight" class="nav-link" style="color: var(--teal); font-weight: 700;"><i class="fas fa-hospital-user"></i> Yavatmal Facility</a>
         <a href="queue.html" class="nav-link" style="color: var(--teal); font-weight: 700;"><i class="fas fa-satellite-dish"></i> <span data-i18n="live_queue">Live Queue</span></a>
         <a href="blog.html" class="nav-link" data-i18n="blog">Blog</a>
         <a href="contact.html" class="nav-link" data-i18n="contact">Contact</a>
@@ -117,18 +119,20 @@
         <span class="tag-mint" data-i18n="hero_tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
         <h1 data-i18n="hero_title">Your Health. Our Priority.</h1>
         <p data-i18n="hero_subtext">
-          MediCare provides trusted healthcare solutions for a healthier, happier life with digital token booking and zero waiting queues.
+          HealPath provides trusted healthcare solutions for a healthier, happier life with digital token booking, zero waiting queues, and verified hospital networks.
         </p>
         <div class="hero-buttons">
           <a href="booking.html" class="btn btn-primary btn-lg">
             <i class="fas fa-calendar-check"></i> <span data-i18n="book_appointment">Book Appointment</span>
           </a>
-          <a href="about.html" class="btn btn-outline-white btn-lg" data-i18n="about_us">About Us</a>
+          <a href="#sanjivani-hospital-spotlight" class="btn btn-outline-white btn-lg">
+            <i class="fas fa-hospital"></i> Sanjivani Hospital (Yavatmal)
+          </a>
         </div>
       </div>
 
       <div class="hero-image-wrapper">
-        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800" alt="MediCare Doctors Team" class="hero-img">
+        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800" alt="HealPath Doctors Team" class="hero-img">
         <div class="hero-badge-floating">
           <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--teal); color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
             <i class="fas fa-award"></i>
@@ -159,13 +163,14 @@
         </div>
 
         <div class="form-group" style="margin: 0;">
-          <label class="form-label">Department</label>
+          <label class="form-label">Hospital / Department</label>
           <select id="quick-dept" class="form-control" required style="padding-right: 1.5rem;">
             <option value="">-- Select Department --</option>
-            <option value="1">Cardiology</option>
+            <option value="sanjivani">📍 Sanjivani Hospital, Yavatmal (445001)</option>
+            <option value="1">Cardiology Care</option>
             <option value="2">Dental Specialist</option>
             <option value="3">Radiology & Imaging</option>
-            <option value="4">Neurology</option>
+            <option value="4">Neurology Care</option>
             <option value="5">Ophthalmology</option>
             <option value="6">Children Center</option>
           </select>
@@ -224,17 +229,17 @@
     <div class="container">
       <div class="about-grid">
         <div class="about-media">
-          <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=700" alt="MediCare Hospital Diagnostic Wing" class="about-img">
+          <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=700" alt="HealPath Hospital Wing" class="about-img">
           <div class="video-play-btn" onclick="openHelpModal()">
             <i class="fas fa-play" style="margin-left: 3px;"></i>
           </div>
         </div>
 
         <div class="about-content">
-          <span class="tag-mint" data-i18n="about_tag">About MediCare</span>
+          <span class="tag-mint" data-i18n="about_tag">About HealPath</span>
           <h2 data-i18n="about_heading" style="margin: 0.85rem 0 1.25rem;">Thousands Of Specialities For Any Type Diagnostic.</h2>
           <p data-i18n="about_p1">
-            At MediCare, we combine cutting-edge medical technologies with heartfelt compassionate care. Our smart slot management and real-time live token tracking ensure that you never have to endure crowded waiting rooms.
+            At HealPath, we combine cutting-edge medical technologies with heartfelt compassionate care. Our smart slot management and real-time live token tracking ensure that you never have to endure crowded waiting rooms.
           </p>
 
           <div class="checklist-2col">
@@ -250,6 +255,151 @@
     </div>
   </section>
 
+  <!-- =========================================================================
+       PROMINENT SPOTLIGHT: SANJEEVAN / SANJIVANI HOSPITAL, YAVATMAL (PIN 445001)
+       ========================================================================= -->
+  <section id="sanjivani-hospital-spotlight" class="section" style="background: linear-gradient(180deg, #F0F9F8 0%, #FFFFFF 100%); border-top: 3px solid var(--teal); border-bottom: 3px solid var(--mint);">
+    <div class="container">
+      <div class="section-header" style="max-width: 800px;">
+        <span class="tag-mint" style="background: var(--deep-blue); color: var(--mint);"><i class="fas fa-map-marker-alt"></i> YAVATMAL (PIN 445001) MEDICAL NETWORK</span>
+        <h2 style="color: var(--deep-blue); margin-top: 0.6rem;">Sanjeevan Multispecialty Hospital & Research Institute</h2>
+        <p style="font-size: 1.05rem; color: var(--charcoal);">
+          <strong>Mahadev Mandir Road, Ratanlal Plots (Near Tiranga Chowk), Yavatmal, Maharashtra – 445001</strong><br>
+          Emergency & Trauma Line: <a href="tel:+919552625262" style="font-weight: 700; color: var(--teal);">+91-9552625262</a> &bull; OPD: <a href="tel:+919834287792" style="font-weight: 700; color: var(--teal);">+91-9834287792</a>
+        </p>
+      </div>
+
+      <!-- Sanjivani Highlights Grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 3rem; align-items: center; margin-bottom: 3rem;">
+        <!-- Left: Hospital Overview & Facilities -->
+        <div class="card" style="padding: 2.2rem; background: var(--white);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <span class="tag-mint"><i class="fas fa-certificate"></i> Verified HFR Facility (445001)</span>
+            <span style="font-size: 0.82rem; font-weight: 700; color: var(--teal);"><i class="fas fa-clock"></i> 24x7 Emergency ICU</span>
+          </div>
+
+          <h3 style="color: var(--deep-blue); font-size: 1.35rem; margin-bottom: 0.75rem;">
+            Advanced Surgical & Critical Care in Yavatmal
+          </h3>
+          <p style="margin-bottom: 1.5rem; font-size: 0.92rem; line-height: 1.65;">
+            Sanjeevan Hospital (Sanjivani) is Yavatmal's premier multispecialty healthcare destination, featuring fully equipped modular operation theatres, digital ultrasound diagnostics, an intensive respiratory critical care unit, and round-the-clock ambulance dispatch.
+          </p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; margin-bottom: 1.75rem;">
+            <div style="background: var(--light-gray); padding: 0.85rem; border-radius: 8px; border-left: 3px solid var(--teal);">
+              <strong style="color: var(--deep-blue); font-size: 0.88rem; display: block;">Morning OPD</strong>
+              <span style="font-size: 0.82rem; color: var(--charcoal-light);">10:00 AM - 02:00 PM</span>
+            </div>
+            <div style="background: var(--light-gray); padding: 0.85rem; border-radius: 8px; border-left: 3px solid var(--teal);">
+              <strong style="color: var(--deep-blue); font-size: 0.88rem; display: block;">Evening OPD</strong>
+              <span style="font-size: 0.82rem; color: var(--charcoal-light);">05:00 PM - 09:00 PM</span>
+            </div>
+          </div>
+
+          <!-- Live Queue Snapshot -->
+          <div style="background: var(--deep-blue); color: var(--white); border-radius: 12px; padding: 1.2rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+              <span style="font-size: 0.78rem; text-transform: uppercase; color: var(--mint); letter-spacing: 0.08em; font-weight: 700;">Live OPD Queue (Yavatmal)</span>
+              <span class="online-indicator"><span class="online-dot"></span> <span style="color: #FFF; font-size: 0.72rem;">Live</span></span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+              <div>
+                <div style="font-size: 1.85rem; font-weight: 800; color: var(--mint);">SANJ-004</div>
+                <small style="color: rgba(255,255,255,0.8);">Now Consulting: Dr. Sunil M. Agrawal (Suite 1)</small>
+              </div>
+              <div style="text-align: right;">
+                <span class="tag-mint" style="font-size: 0.75rem; background: var(--teal); color: #FFF;">Avg Wait: 12 mins</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="openSanjivaniBookingModal()">
+              <i class="fas fa-calendar-check"></i> Book OPD at Sanjivani Hospital
+            </button>
+            <a href="queue.html" class="btn btn-secondary">
+              <i class="fas fa-satellite-dish"></i> View Live Tokens
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Doctors Team at Sanjivani Hospital Yavatmal -->
+        <div>
+          <h3 style="color: var(--deep-blue); font-size: 1.25rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas fa-user-md" style="color: var(--teal);"></i> Lead Doctors at Sanjivani Hospital (Yavatmal)
+          </h3>
+
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <!-- Doc 1 -->
+            <div class="card" style="padding: 1.25rem; display: flex; align-items: center; gap: 1.25rem;">
+              <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=200" alt="Dr. Sunil Agrawal" style="width: 70px; height: 70px; border-radius: 12px; object-fit: cover;">
+              <div style="flex: 1;">
+                <span class="tag-mint" style="font-size: 0.68rem;">General & Laparoscopic Surgery</span>
+                <h4 style="color: var(--deep-blue); font-size: 1.05rem; margin: 0.2rem 0;">Dr. Sunil M. Agrawal</h4>
+                <p style="font-size: 0.8rem; margin: 0;">MBBS, MS &bull; Managing Director &bull; Room 1 (Floor 1)</p>
+              </div>
+              <button class="btn btn-sm btn-primary" onclick="openSanjivaniBookingModal(101)">Book</button>
+            </div>
+
+            <!-- Doc 2 -->
+            <div class="card" style="padding: 1.25rem; display: flex; align-items: center; gap: 1.25rem;">
+              <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=200" alt="Dr. H.S. Bora" style="width: 70px; height: 70px; border-radius: 12px; object-fit: cover;">
+              <div style="flex: 1;">
+                <span class="tag-mint" style="font-size: 0.68rem;">General Medicine & Critical Care</span>
+                <h4 style="color: var(--deep-blue); font-size: 1.05rem; margin: 0.2rem 0;">Dr. H. S. Bora</h4>
+                <p style="font-size: 0.8rem; margin: 0;">MBBS, MD &bull; Consultant Physician &bull; Room 3</p>
+              </div>
+              <button class="btn btn-sm btn-primary" onclick="openSanjivaniBookingModal(103)">Book</button>
+            </div>
+
+            <!-- Doc 3 -->
+            <div class="card" style="padding: 1.25rem; display: flex; align-items: center; gap: 1.25rem;">
+              <img src="https://images.unsplash.com/photo-1594824813580-ff67fbf9303d?auto=format&fit=crop&q=80&w=200" alt="Dr. Sheetal Agrawal" style="width: 70px; height: 70px; border-radius: 12px; object-fit: cover;">
+              <div style="flex: 1;">
+                <span class="tag-mint" style="font-size: 0.68rem;">Obstetrics & Gynecology</span>
+                <h4 style="color: var(--deep-blue); font-size: 1.05rem; margin: 0.2rem 0;">Dr. Sheetal S. Agrawal</h4>
+                <p style="font-size: 0.8rem; margin: 0;">MBBS, MD &bull; Infertility & Women's Health &bull; Room 5</p>
+              </div>
+              <button class="btn btn-sm btn-primary" onclick="openSanjivaniBookingModal(105)">Book</button>
+            </div>
+
+            <!-- Doc 4 -->
+            <div class="card" style="padding: 1.25rem; display: flex; align-items: center; gap: 1.25rem;">
+              <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200" alt="Dr. Vinay Pande" style="width: 70px; height: 70px; border-radius: 12px; object-fit: cover;">
+              <div style="flex: 1;">
+                <span class="tag-mint" style="font-size: 0.68rem;">Chest & Respiratory Medicine</span>
+                <h4 style="color: var(--deep-blue); font-size: 1.05rem; margin: 0.2rem 0;">Dr. Vinay Pande</h4>
+                <p style="font-size: 0.8rem; margin: 0;">MBBS, TDD, PGDCE &bull; Chest Physician &bull; Room 4</p>
+              </div>
+              <button class="btn btn-sm btn-primary" onclick="openSanjivaniBookingModal(104)">Book</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Embedded Map for Sanjivani Hospital Yavatmal 445001 -->
+      <div class="card" style="padding: 1rem; border-radius: 14px; overflow: hidden;">
+        <div style="padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <strong style="color: var(--deep-blue); font-size: 0.95rem;">
+            <i class="fas fa-map-location-dot" style="color: var(--teal); margin-right: 6px;"></i> Sanjeevan Hospital Location (Mahadev Mandir Road, Ratanlal Plots, Yavatmal 445001)
+          </strong>
+          <a href="https://maps.google.com/?q=Sanjeevan+Multispecialty+Hospital+Yavatmal+445001" target="_blank" class="btn btn-sm btn-secondary">
+            <i class="fas fa-directions"></i> Get GPS Directions
+          </a>
+        </div>
+        <iframe 
+          title="Sanjeevan Hospital Yavatmal Map"
+          src="https://maps.google.com/maps?q=Mahadev+Mandir+Road,+Ratanlal+Plots,+Yavatmal,+Maharashtra+445001&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+          width="100%" 
+          height="320" 
+          style="border:0; border-radius: 10px;" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- 5. Services Grid (3x2) -->
   <section class="section section-bg-light">
     <div class="container">
@@ -260,7 +410,6 @@
       </div>
 
       <div class="services-grid-3x2">
-        <!-- 1. Ambulance -->
         <div class="service-card card-interactive" onclick="window.location.href='services.html#ambulance'">
           <div class="service-icon-box"><i class="fas fa-ambulance"></i></div>
           <h3 data-i18n="ambulance_title">Fast Ambulance</h3>
@@ -268,7 +417,6 @@
           <span class="service-readmore">Explore Service &rarr;</span>
         </div>
 
-        <!-- 2. Dental -->
         <div class="service-card card-interactive" onclick="window.location.href='booking.html?dept=2'">
           <div class="service-icon-box"><i class="fas fa-tooth"></i></div>
           <h3 data-i18n="dental_title">Dental Specialist</h3>
@@ -276,7 +424,6 @@
           <span class="service-readmore">Book Dental Slot &rarr;</span>
         </div>
 
-        <!-- 3. Laboratory -->
         <div class="service-card card-interactive" onclick="window.location.href='services.html#laboratory'">
           <div class="service-icon-box"><i class="fas fa-flask"></i></div>
           <h3 data-i18n="lab_title">Modern Laboratory</h3>
@@ -284,7 +431,6 @@
           <span class="service-readmore">Explore Service &rarr;</span>
         </div>
 
-        <!-- 4. Children -->
         <div class="service-card card-interactive" onclick="window.location.href='booking.html?dept=6'">
           <div class="service-icon-box"><i class="fas fa-baby"></i></div>
           <h3 data-i18n="child_title">Children Center</h3>
@@ -292,7 +438,6 @@
           <span class="service-readmore">Book Pediatric Slot &rarr;</span>
         </div>
 
-        <!-- 5. Heart Surgery -->
         <div class="service-card card-interactive" onclick="window.location.href='booking.html?dept=1'">
           <div class="service-icon-box"><i class="fas fa-heart-pulse"></i></div>
           <h3 data-i18n="heart_title">Heart Surgery</h3>
@@ -300,7 +445,6 @@
           <span class="service-readmore">Book Cardiology Slot &rarr;</span>
         </div>
 
-        <!-- 6. Care Advice -->
         <div class="service-card card-interactive" onclick="window.location.href='services.html#advice'">
           <div class="service-icon-box"><i class="fas fa-user-doctor"></i></div>
           <h3 data-i18n="care_title">Care Advice</h3>
@@ -354,11 +498,11 @@
       <div class="testimonial-card-single">
         <div style="color: var(--mint); font-size: 2.2rem; margin-bottom: 1rem;"><i class="fas fa-quote-left"></i></div>
         <p class="testimonial-quote" id="test-quote">
-          "The digital slot booking and live WhatsApp queue system at MediCare was an absolute breath of fresh air. I received my token on WhatsApp, arrived 10 minutes before my slot, and was seen by Dr. Sharma immediately. No lines, no stress!"
+          "The digital slot booking and live WhatsApp queue system on HealPath was an absolute breath of fresh air. I received my token on WhatsApp, arrived 10 minutes before my slot at Sanjeevan Hospital Yavatmal, and was seen by Dr. Agrawal immediately. No lines, no stress!"
         </p>
         <img id="test-avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200" alt="Patient Avatar" class="testimonial-avatar">
         <div class="testimonial-author-name" id="test-name">Ananya Joshi</div>
-        <div class="testimonial-author-role" id="test-role">Cardiac Patient, Pune</div>
+        <div class="testimonial-author-role" id="test-role">Patient, Yavatmal (445001)</div>
 
         <div class="testimonial-dots">
           <span class="test-dot active" onclick="switchTestimonial(0)"></span>
@@ -387,7 +531,6 @@
   <!-- 9. Footer (Deep Blue) -->
   <footer class="footer">
     <div class="container">
-      <!-- Top Strip with Phone & Newsletter -->
       <div class="footer-top-strip">
         <div class="footer-phone-box">
           <div class="footer-phone-icon"><i class="fas fa-headset"></i></div>
@@ -403,19 +546,18 @@
         </div>
       </div>
 
-      <!-- 4 Columns -->
       <div class="footer-grid-4">
-        <!-- Col 1: About -->
+        <!-- Col 1: About HealPath -->
         <div class="footer-col">
           <a href="index.html" class="logo" style="margin-bottom: 1.25rem;">
-            <div class="logo-icon-tile" style="background: var(--white); color: var(--deep-blue); border-color: var(--mint);">M</div>
+            <div class="logo-icon-tile" style="background: var(--white); color: var(--deep-blue); border-color: var(--mint);">H</div>
             <div class="logo-text-box">
-              <span class="logo-text"><span style="color: var(--white);">Medi</span><span class="care">Care</span></span>
+              <span class="logo-text"><span style="color: var(--white);">Heal</span><span class="path">Path</span></span>
               <span class="logo-tagline" style="color: var(--mint);">HEALTH TODAY. BRIGHTER TOMORROW.</span>
             </div>
           </a>
           <p style="color: rgba(255,255,255,0.75); font-size: 0.9rem;" data-i18n="footer_about_text">
-            A multi-speciality hospital and digital queue care facility providing world-class health treatments with trust, compassion, and innovation.
+            HealPath is a digital hospital appointment, live token queue care, and healthcare network platform providing world-class health treatments with trust, compassion, and innovation.
           </p>
         </div>
 
@@ -424,6 +566,7 @@
           <h4 data-i18n="useful_links">Useful Links</h4>
           <ul class="footer-links">
             <li><a href="about.html"><i class="fas fa-angle-right"></i> About Us</a></li>
+            <li><a href="#sanjivani-hospital-spotlight"><i class="fas fa-angle-right"></i> Sanjivani Hospital Yavatmal</a></li>
             <li><a href="services.html"><i class="fas fa-angle-right"></i> Medical Services</a></li>
             <li><a href="doctors.html"><i class="fas fa-angle-right"></i> Our Doctors</a></li>
             <li><a href="queue.html"><i class="fas fa-angle-right"></i> Live Queue Board</a></li>
@@ -437,7 +580,7 @@
           <ul class="footer-links" style="color: rgba(255,255,255,0.75); font-size: 0.9rem;">
             <li style="margin-bottom: 0.5rem;"><strong>Monday - Friday:</strong> 8:00 AM - 9:00 PM</li>
             <li style="margin-bottom: 0.5rem;"><strong>Saturday:</strong> 8:00 AM - 6:00 PM</li>
-            <li style="margin-bottom: 0.5rem;"><strong>Sunday:</strong> 9:00 AM - 2:00 PM</li>
+            <li style="margin-bottom: 0.5rem;"><strong>Yavatmal Sanjivani OPD:</strong> 10:00 AM - 9:00 PM</li>
             <li><strong style="color: var(--mint);">Emergency Care:</strong> 24 Hours / 7 Days</li>
           </ul>
         </div>
@@ -446,16 +589,15 @@
         <div class="footer-col">
           <h4 data-i18n="contact">Contact Information</h4>
           <ul class="footer-links" style="color: rgba(255,255,255,0.75); font-size: 0.9rem;">
-            <li style="margin-bottom: 0.6rem;"><i class="fas fa-map-marker-alt" style="color: var(--teal); margin-right: 6px;"></i> 104 MediCare Healthcare Blvd, Wellness District</li>
-            <li style="margin-bottom: 0.6rem;"><i class="fas fa-envelope" style="color: var(--teal); margin-right: 6px;"></i> contact@medicare.com</li>
-            <li><i class="fab fa-whatsapp" style="color: #25D366; margin-right: 6px;"></i> +91 98765 43210</li>
+            <li style="margin-bottom: 0.6rem;"><i class="fas fa-map-marker-alt" style="color: var(--teal); margin-right: 6px;"></i> Mahadev Mandir Rd, Ratanlal Plots, Yavatmal 445001</li>
+            <li style="margin-bottom: 0.6rem;"><i class="fas fa-phone-alt" style="color: var(--teal); margin-right: 6px;"></i> +91 95526 25262 / +91 98765 43210</li>
+            <li><i class="fab fa-whatsapp" style="color: #25D366; margin-right: 6px;"></i> +91 95526 25262</li>
           </ul>
         </div>
       </div>
 
-      <!-- Copyright Bar -->
       <div class="footer-bottom-bar">
-        <div>&copy; 2026 MediCare Hospital. <span data-i18n="all_rights">All Rights Reserved.</span></div>
+        <div>&copy; 2026 HealPath Hospital System. <span data-i18n="all_rights">All Rights Reserved.</span></div>
         <div style="display: flex; gap: 1.5rem;">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms of Service</a>
@@ -471,7 +613,7 @@
   </button>
 
   <!-- Floating AI Chat Assistant & Voice Button -->
-  <div class="chat-fab" id="chat-fab-btn" title="MediCare AI Voice Assistant">
+  <div class="chat-fab" id="chat-fab-btn" title="HealPath AI Voice Assistant">
     <i class="fas fa-robot" style="font-size: 1.4rem;"></i>
   </div>
 
@@ -483,7 +625,7 @@
           <i class="fas fa-robot"></i>
         </div>
         <div>
-          <h4 style="color: var(--white); font-size: 0.95rem; margin: 0;">MediCare AI Assistant</h4>
+          <h4 style="color: var(--white); font-size: 0.95rem; margin: 0;">HealPath AI Assistant</h4>
           <span style="font-size: 0.72rem; color: var(--mint);">Online & Speech Enabled</span>
         </div>
       </div>
@@ -492,20 +634,18 @@
 
     <!-- Quick Question Chips -->
     <div style="padding: 0.6rem 0.85rem; background: var(--light-gray); display: flex; gap: 0.4rem; overflow-x: auto; white-space: nowrap;">
+      <button class="btn btn-sm btn-outline-white" style="font-size: 0.72rem; color: var(--deep-blue); border-color: var(--mint); background: #FFF;" onclick="askQuickQuestion('Sanjivani Hospital Yavatmal doctors')">Sanjivani Hospital</button>
       <button class="btn btn-sm btn-outline-white" style="font-size: 0.72rem; color: var(--deep-blue); border-color: var(--mint); background: #FFF;" onclick="askQuickQuestion('How to book slot')">How to book</button>
       <button class="btn btn-sm btn-outline-white" style="font-size: 0.72rem; color: var(--deep-blue); border-color: var(--mint); background: #FFF;" onclick="askQuickQuestion('Live queue status')">Live queue</button>
-      <button class="btn btn-sm btn-outline-white" style="font-size: 0.72rem; color: var(--deep-blue); border-color: var(--mint); background: #FFF;" onclick="askQuickQuestion('Cardiology doctor')">Cardiology</button>
       <button class="btn btn-sm btn-outline-white" style="font-size: 0.72rem; color: var(--deep-blue); border-color: var(--mint); background: #FFF;" onclick="askQuickQuestion('Emergency helpline')">Emergency</button>
     </div>
 
-    <!-- Messages Container -->
     <div class="chat-messages" id="chat-messages-container">
       <div class="chat-msg chat-msg-bot">
-        Hello! I am your MediCare AI Health & Queue Assistant. You can type your medical question or tap the microphone to speak!
+        Hello! I am your HealPath AI Health & Queue Assistant. You can ask about appointments, doctor schedules, or Sanjivani Hospital in Yavatmal (445001)!
       </div>
     </div>
 
-    <!-- Input Bar -->
     <div class="chat-input-bar">
       <button id="chat-mic-btn" type="button" style="background: none; border: none; color: var(--teal); font-size: 1.15rem; cursor: pointer;" title="Speak (Web Speech API)">
         <i class="fas fa-microphone"></i>
@@ -517,6 +657,63 @@
     </div>
   </div>
 
+  <!-- Sanjivani Hospital OPD Booking Modal -->
+  <div id="sanjivani-modal" class="modal-backdrop">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <span class="tag-mint"><i class="fas fa-hospital"></i> YAVATMAL (445001)</span>
+          <h3 style="color: var(--deep-blue); margin-top: 0.4rem;">Book Sanjivani Hospital OPD</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('sanjivani-modal')">&times;</button>
+      </div>
+
+      <div style="background: var(--light-gray); border-radius: 10px; padding: 0.9rem; margin-bottom: 1.25rem; font-size: 0.85rem; border-left: 3px solid var(--teal);">
+        <strong>Facility:</strong> Sanjeevan Multispecialty Hospital & Research Institute<br>
+        <strong>Address:</strong> Mahadev Mandir Rd, Ratanlal Plots, Yavatmal 445001 &bull; <strong>+91 95526 25262</strong>
+      </div>
+
+      <form id="sanjivani-booking-form" onsubmit="submitSanjivaniOPD(event)">
+        <div class="form-group">
+          <label class="form-label">Consulting Specialist Doctor *</label>
+          <select id="sanjivani-doc-select" class="form-control" required>
+            <option value="101">Dr. Sunil M. Agrawal (General & Laparoscopic Surgery) - ₹500</option>
+            <option value="102">Dr. Vijay S. Kawalkar (Senior Consultant Surgeon) - ₹500</option>
+            <option value="103">Dr. H. S. Bora (General Medicine & ICU) - ₹400</option>
+            <option value="104">Dr. Vinay Pande (Chest & Pulmonology) - ₹450</option>
+            <option value="105">Dr. Sheetal S. Agrawal (Obstetrics & Gynecology) - ₹400</option>
+            <option value="106">Dr. Lalit Paldiwal (Radiology & Ultrasound) - ₹500</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Patient Full Name *</label>
+          <input type="text" id="sanj-patient-name" class="form-control" required placeholder="e.g. Anand Jadhav">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label">Age *</label>
+            <input type="number" id="sanj-patient-age" class="form-control" required min="1" max="110" placeholder="e.g. 35">
+          </div>
+          <div class="form-group">
+            <label class="form-label">WhatsApp Number *</label>
+            <input type="tel" id="sanj-patient-phone" class="form-control" required placeholder="+91 9552625262">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Symptoms / Reason for Visit *</label>
+          <input type="text" id="sanj-symptoms" class="form-control" required placeholder="e.g. Stomach pain, fever, surgical consult">
+        </div>
+
+        <button type="submit" id="btn-submit-sanjivani" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
+          <i class="fas fa-check-circle"></i> Confirm & Generate Sanjivani Token
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- Socket.io & Scripts -->
   <script src="/socket.io/socket.io.js"></script>
   <script type="module" src="js/i18n.js"></script>
@@ -524,14 +721,75 @@
   <script src="js/chat.js"></script>
 
   <script>
-    // Quick booking bar handler
     function handleQuickBook(e) {
       e.preventDefault();
       const dept = document.getElementById('quick-dept').value;
       const name = encodeURIComponent(document.getElementById('quick-name').value);
       const phone = encodeURIComponent(document.getElementById('quick-phone').value);
+
+      if (dept === 'sanjivani') {
+        openSanjivaniBookingModal();
+        return;
+      }
       window.location.href = `booking.html?dept=${dept}&name=${name}&phone=${phone}`;
     }
+
+    // Sanjivani Modal Handler
+    function openSanjivaniBookingModal(doctorId = null) {
+      const modal = document.getElementById('sanjivani-modal');
+      if (modal) {
+        if (doctorId) {
+          const select = document.getElementById('sanjivani-doc-select');
+          if (select) select.value = doctorId;
+        }
+        modal.classList.add('active');
+      }
+    }
+
+    async function submitSanjivaniOPD(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-submit-sanjivani');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Confirming Sanjivani OPD Token...';
+      }
+
+      const doctorId = document.getElementById('sanjivani-doc-select').value;
+      const patientName = document.getElementById('sanj-patient-name').value.trim();
+      const age = document.getElementById('sanj-patient-age').value.trim();
+      const phone = document.getElementById('sanj-patient-phone').value.trim();
+      const symptoms = document.getElementById('sanj-symptoms').value.trim();
+
+      try {
+        const res = await fetch('/api/hospital/sanjivani/book-opd', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            doctor_id: Number(doctorId),
+            patient_name: patientName,
+            age: Number(age),
+            phone,
+            symptoms
+          })
+        });
+
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message);
+
+        closeModal('sanjivani-modal');
+        alert(`🎉 Confirmed!\n\nToken Number: ${data.booking.token_number}\nDoctor: ${data.booking.doctor_name}\nRoom: ${data.booking.room}\nHospital: Sanjeevan Hospital, Yavatmal 445001\n\nInstant WhatsApp notification dispatched to ${phone}.`);
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fas fa-check-circle"></i> Confirm & Generate Sanjivani Token';
+        }
+      }
+    }
+
+    window.openSanjivaniBookingModal = openSanjivaniBookingModal;
+    window.submitSanjivaniOPD = submitSanjivaniOPD;
 
     // Load Doctors into Team Grid
     async function loadTeamDoctors() {
@@ -547,7 +805,7 @@
             card.className = 'doctor-card';
             card.innerHTML = `
               <div class="doctor-photo-box">
-                <img src="${doc.avatar}" alt="${doc.name}">
+                <img src="${doc.avatar || doc.image_url}" alt="${doc.name}">
                 <div class="doctor-social-slide">
                   <a href="#"><i class="fab fa-linkedin-in"></i></a>
                   <a href="#"><i class="fab fa-twitter"></i></a>
@@ -555,9 +813,9 @@
                 </div>
               </div>
               <div class="doctor-info">
-                <span class="doctor-specialty-tag">${doc.specialty}</span>
+                <span class="doctor-specialty-tag">${doc.specialty || doc.specialization}</span>
                 <h3 class="doctor-name-heading">${doc.name}</h3>
-                <p style="font-size: 0.82rem; color: var(--charcoal-light); margin-bottom: 0.85rem;">${doc.qualification} &bull; ${doc.room_no}</p>
+                <p style="font-size: 0.82rem; color: var(--charcoal-light); margin-bottom: 0.85rem;">${doc.qualification || 'MBBS, MD'} &bull; ${doc.room_no || doc.room}</p>
                 <a href="booking.html?doc=${doc.id}" class="btn btn-sm btn-primary" style="width: 100%;">
                   <i class="fas fa-calendar-check"></i> Book Slot
                 </a>
@@ -587,7 +845,7 @@
         title: "Dental Surgery & Orthodontics",
         desc: "Specialized in laser dental treatment, digital smile design, painless root canals, and tooth alignment with Dr. Priya Patil.",
         doc: "Dr. Priya Patil (BDS, MDS Orthodontics)",
-        img: "https://images.unsplash.com/photo-1594824813511-209e7c5414f4?auto=format&fit=crop&q=80&w=600",
+        img: "https://images.unsplash.com/photo-1594824813580-ff67fbf9303d?auto=format&fit=crop&q=80&w=600",
         dept: 2
       },
       3: {
@@ -634,19 +892,19 @@
     // Testimonials Data
     const testimonials = [
       {
-        quote: "The digital slot booking and live WhatsApp queue system at MediCare was an absolute breath of fresh air. I received my token on WhatsApp, arrived 10 minutes before my slot, and was seen by Dr. Sharma immediately. No lines, no stress!",
+        quote: "The digital slot booking and live WhatsApp queue system on HealPath was an absolute breath of fresh air. I received my token on WhatsApp, arrived 10 minutes before my slot at Sanjeevan Hospital Yavatmal, and was seen by Dr. Agrawal immediately. No lines, no stress!",
         name: "Ananya Joshi",
-        role: "Cardiac Patient, Pune",
+        role: "Patient, Yavatmal (445001)",
         avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200"
       },
       {
-        quote: "I was running late due to highway traffic, but MediCare's intelligent 10-minute auto-shift protected my booking! The system automatically scheduled me for the next available slot and messaged me on WhatsApp without any hassle.",
+        quote: "I was running late due to highway traffic, but HealPath's intelligent 10-minute auto-shift protected my booking! The system automatically scheduled me for the next available slot and messaged me on WhatsApp without any hassle.",
         name: "Rajendra Deshmukh",
         role: "Dental Care Patient, Mumbai",
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200"
       },
       {
-        quote: "As a busy mother of two, taking children to the hospital used to take all day. With MediCare's live queue board on my phone, I knew exactly when token PED-004 would be called. Truly world-class hospital technology!",
+        quote: "As a busy mother of two, taking children to the hospital used to take all day. With HealPath's live queue board on my phone, I knew exactly when token PED-004 would be called. Truly world-class hospital technology!",
         name: "Pooja Mehta",
         role: "Pediatric Patient Guardian, Nagpur",
         avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200"

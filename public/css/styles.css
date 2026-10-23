@@ -392,11 +392,13 @@ p {
   line-height: 1;
 }
 
-.logo-text .medi {
+.logo-text .medi,
+.logo-text .heal {
   color: var(--deep-blue);
 }
 
-.logo-text .care {
+.logo-text .care,
+.logo-text .path {
   color: var(--teal);
 }
 

@@ -237,7 +237,7 @@ function openBookingModal(slot, doctor) {
   }
 
   // Pre-fill user data if logged in
-  const userJson = localStorage.getItem('medicare_user');
+  const userJson = localStorage.getItem('healpath_user') || localStorage.getItem('medicare_user');
   let prefillName = '';
   let prefillPhone = '';
   let prefillAge = '';

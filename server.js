@@ -79,7 +79,7 @@ app.use('/api/hospital/sanjivani', sanjivaniRoutes);
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
-    system: 'MediCare - Hospital Website, Appointment & Queue System',
+    system: 'HealPath - Hospital Website, Appointment & Queue System',
     timestamp: new Date().toISOString(),
     database: db.isMySQL() ? 'MySQL' : 'Atomic Store',
     socket_clients: io.engine.clientsCount
@@ -110,10 +110,11 @@ function startServer(port) {
   server.listen(port, () => {
     console.log(`
 ========================================================================
-🏥 MediCare - Hospital Website, Appointment & Queue System
+🏥 HealPath - Hospital Website, Appointment & Queue System
 ========================================================================
 ✨ Tagline: "Health Today. Brighter Tomorrow."
 ✨ Secondary: "Your Health. Our Priority."
+📍 Partner Facility: Sanjeevan Hospital, Yavatmal 445001 (+91 95526 25262)
 
 🚀 Server running live at: http://localhost:${port}
 🌐 Public Portal:         http://localhost:${port}/index.html

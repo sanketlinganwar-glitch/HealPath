@@ -10,7 +10,7 @@ if (typeof io !== 'undefined') {
 
   socket.on('connect', () => {
     updateOnlineStatus(true);
-    console.log('✅ [Socket.io] Connected to MediCare Realtime Server');
+    console.log('✅ [Socket.io] Connected to HealPath Realtime Server');
   });
 
   socket.on('disconnect', () => {
@@ -187,8 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Auth state management in header
 function checkAuthState() {
-  const token = localStorage.getItem('medicare_token');
-  const userJson = localStorage.getItem('medicare_user');
+  const token = localStorage.getItem('healpath_token') || localStorage.getItem('medicare_token');
+  const userJson = localStorage.getItem('healpath_user') || localStorage.getItem('medicare_user');
   const authContainer = document.getElementById('header-auth-container');
 
   if (authContainer) {
@@ -206,6 +206,8 @@ function checkAuthState() {
           </div>
         `;
       } catch (e) {
+        localStorage.removeItem('healpath_token');
+        localStorage.removeItem('healpath_user');
         localStorage.removeItem('medicare_token');
         localStorage.removeItem('medicare_user');
       }
@@ -220,6 +222,8 @@ function checkAuthState() {
 }
 
 function handleLogout() {
+  localStorage.removeItem('healpath_token');
+  localStorage.removeItem('healpath_user');
   localStorage.removeItem('medicare_token');
   localStorage.removeItem('medicare_user');
   showToast('Logged out successfully', 'info');
@@ -237,7 +241,7 @@ function openHelpModal() {
       <div class="modal-content">
         <div class="modal-header">
           <h3 style="color: var(--deep-blue); display: flex; align-items: center; gap: 0.5rem;">
-            <i class="fas fa-circle-question" style="color: var(--teal);"></i> MediCare Help & Guidance
+            <i class="fas fa-circle-question" style="color: var(--teal);"></i> HealPath Help & Guidance
           </h3>
           <button class="modal-close-btn" onclick="closeModal('help-modal')">&times;</button>
         </div>
@@ -252,7 +256,7 @@ function openHelpModal() {
           <p style="font-size: 0.9rem; margin-bottom: 0.8rem;">Every booking, reschedule, and queue shift is instantly confirmed via WhatsApp message with your token and doctor details.</p>
           
           <h4 style="margin-bottom: 0.4rem; color: var(--deep-blue);">4. Emergency Assistance</h4>
-          <p style="font-size: 0.9rem; color: var(--status-booked); font-weight: 700;">Hotline: +91 98765 43210 (24x7 Ambulance Dispatch)</p>
+          <p style="font-size: 0.9rem; color: var(--status-booked); font-weight: 700;">Yavatmal 445001 Hotline: +91 95526 25262 &bull; 24x7 Ambulance: +91 98765 43210</p>
         </div>
         <button class="btn btn-primary" style="width: 100%;" onclick="closeModal('help-modal')">Got It</button>
       </div>
@@ -277,7 +281,7 @@ function openAuthModal(mode = 'login') {
     <div class="modal-content">
       <div class="modal-header">
         <h3 style="color: var(--deep-blue); display: flex; align-items: center; gap: 0.5rem;">
-          <i class="fas fa-user-shield" style="color: var(--teal);"></i> ${isLogin ? 'Login to MediCare' : 'Create Patient Account'}
+          <i class="fas fa-user-shield" style="color: var(--teal);"></i> ${isLogin ? 'Login to HealPath' : 'Create Patient Account'}
         </h3>
         <button class="modal-close-btn" onclick="closeModal('auth-modal')">&times;</button>
       </div>
@@ -380,6 +384,8 @@ async function handleAuthSubmit(e, mode) {
       throw new Error(data.message || 'Authentication failed');
     }
 
+    localStorage.setItem('healpath_token', data.token);
+    localStorage.setItem('healpath_user', JSON.stringify(data.user));
     localStorage.setItem('medicare_token', data.token);
     localStorage.setItem('medicare_user', JSON.stringify(data.user));
 

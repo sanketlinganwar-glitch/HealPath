@@ -1,5 +1,5 @@
 /**
- * MediCare Multilingual Localization (English, Hindi, Marathi)
+ * HealPath Multilingual Localization (English, Hindi, Marathi)
  */
 
 const translations = {
@@ -23,8 +23,8 @@ const translations = {
 
     // Hero
     hero_title: "Your Health. Our Priority.",
-    hero_tagline: "Health Today. Brighter Tomorrow.",
-    hero_subtext: "MediCare provides trusted healthcare solutions for a healthier, happier life with digital token booking and zero waiting queues.",
+    hero_tagline: "HEALTH TODAY. BRIGHTER TOMORROW.",
+    hero_subtext: "HealPath provides trusted healthcare solutions for a healthier, happier life with digital token booking, zero waiting queues, and verified hospital networks.",
     about_us: "About Us",
     experience_badge: "Years of Trust & Caring Medical Excellence",
 
@@ -45,14 +45,20 @@ const translations = {
     life_wellness_desc: "Personalized Treatment Plans",
 
     // About Section
-    about_tag: "About MediCare",
+    about_tag: "About HealPath",
     about_heading: "Thousands Of Specialities For Any Type Diagnostic.",
-    about_p1: "At MediCare, we combine cutting-edge medical technologies with heartfelt compassionate care. Our smart slot management and real-time live token tracking ensure that you never have to endure crowded waiting rooms.",
+    about_p1: "At HealPath, we combine cutting-edge medical technologies with heartfelt compassionate care. Our smart slot management and real-time live token tracking ensure that you never have to endure crowded waiting rooms.",
     check_expert: "Board Certified Specialists",
     check_lab: "State-of-the-Art Laboratory",
     check_emergency: "24/7 Critical Emergency Care",
     check_queue: "Zero-Wait Smart Queue System",
     more_about_us: "More About Us",
+
+    // Sanjivani Spotlight
+    sanjivani_tag: "Featured Hospital Spotlight",
+    sanjivani_heading: "Sanjeevan Multispecialty Hospital & Research Institute",
+    sanjivani_sub: "Mahadev Mandir Road, Ratanlal Plots, Yavatmal 445001",
+    sanjivani_call: "Helpline: +91 9552625262",
 
     // Services
     services_tag: "Clinical Excellence",
@@ -90,11 +96,11 @@ const translations = {
     call_us_now: "Call Us Now: +91 98765 43210",
     subscribe_nl: "Subscribe to health updates & announcements",
     subscribe_btn: "Subscribe",
-    footer_about: "About MediCare",
-    footer_about_text: "A multi-speciality hospital and digital queue care facility providing world-class health treatments with trust, compassion, and innovation.",
+    footer_about: "About HealPath",
+    footer_about_text: "HealPath is a digital hospital appointment, live token queue care, and healthcare network platform providing world-class health treatments with trust, compassion, and innovation.",
     useful_links: "Useful Links",
     opening_hours: "Opening Hours",
-    all_rights: "All Rights Reserved. MediCare Hospital."
+    all_rights: "All Rights Reserved. HealPath Hospital System."
   },
 
   hi: {
@@ -118,7 +124,7 @@ const translations = {
     // Hero
     hero_title: "आपका स्वास्थ्य. हमारी प्राथमिकता.",
     hero_tagline: "आज का स्वास्थ्य. सुनहरा कल.",
-    hero_subtext: "मेडीकेअर स्वस्थ और खुशहाल जीवन के लिए विश्वसनीय स्वास्थ्य सेवा समाधान प्रदान करता है, जहां डिजिटल टोकन द्वारा बिना प्रतीक्षा के इलाज मिलता है।",
+    hero_subtext: "हीलपाथ (HealPath) स्वस्थ और खुशहाल जीवन के लिए विश्वसनीय स्वास्थ्य सेवा समाधान प्रदान करता है, जहां डिजिटल टोकन द्वारा बिना प्रतीक्षा के इलाज मिलता है।",
     about_us: "हमारे बारे में",
     experience_badge: "वर्षों का विश्वास और उत्कृष्ट चिकित्सा सेवा",
 
@@ -139,14 +145,20 @@ const translations = {
     life_wellness_desc: "व्यक्तिगत उपचार योजनाएं",
 
     // About Section
-    about_tag: "मेडीकेअर के बारे में",
+    about_tag: "हीलपाथ के बारे में",
     about_heading: "हर प्रकार के निदान के लिए हजारों विशेषताएं।",
-    about_p1: "मेडीकेअर में, हम अत्याधुनिक चिकित्सा तकनीकों को संवेदनशील देखभाल के साथ जोड़ते हैं। हमारी स्मार्ट स्लॉट प्रणाली यह सुनिश्चित करती है कि आपको भीड़ में प्रतीक्षा न करनी पड़े।",
+    about_p1: "हीलपाथ (HealPath) में, हम अत्याधुनिक चिकित्सा तकनीकों को संवेदनशील देखभाल के साथ जोड़ते हैं। हमारी स्मार्ट स्लॉट प्रणाली यह सुनिश्चित करती है कि आपको भीड़ में प्रतीक्षा न करनी पड़े।",
     check_expert: "अनुभवी विशेषज्ञ डॉक्टर",
     check_lab: "अत्याधुनिक प्रयोगशाला",
     check_emergency: "24/7 आपातकालीन आईसीयू",
     check_queue: "शून्य-प्रतीक्षा स्मार्ट कतार",
     more_about_us: "और जानें",
+
+    // Sanjivani Spotlight
+    sanjivani_tag: "प्रमुख अस्पताल",
+    sanjivani_heading: "संजीवन मल्टीस्पेशलिटी हॉस्पिटल एवं रिसर्च इंस्टीट्यूट",
+    sanjivani_sub: "महादेव मंदिर रोड, रतनलाल प्लॉट्स, यवतमाल 445001",
+    sanjivani_call: "हेल्पलाइन: +91 9552625262",
 
     // Services
     services_tag: "नैदानिक उत्कृष्टता",
@@ -184,11 +196,11 @@ const translations = {
     call_us_now: "अभी कॉल करें: +91 98765 43210",
     subscribe_nl: "स्वास्थ्य समाचार और सुझाव प्राप्त करें",
     subscribe_btn: "सब्सक्राइब",
-    footer_about: "मेडीकेअर के बारे में",
-    footer_about_text: "एक बहु-विशेषज्ञता अस्पताल जो विश्वास, करुणा और नवाचार के साथ विश्वस्तरीय स्वास्थ्य उपचार प्रदान करता है।",
+    footer_about: "हीलपाथ के बारे में",
+    footer_about_text: "एक बहु-विशेषज्ञता डिजिटल हेल्थकेयर नेटवर्क जो विश्वास, करुणा और नवाचार के साथ विश्वस्तरीय स्वास्थ्य उपचार प्रदान करता है।",
     useful_links: "महत्वपूर्ण लिंक",
     opening_hours: "समय",
-    all_rights: "सर्वाधिकार सुरक्षित। मेडीकेअर अस्पताल।"
+    all_rights: "सर्वाधिकार सुरक्षित। हीलपाथ (HealPath)।"
   },
 
   mr: {
@@ -212,7 +224,7 @@ const translations = {
     // Hero
     hero_title: "तुमचे आरोग्य. आमचे प्राधान्य.",
     hero_tagline: "आजचे आरोग्य. उद्याचे उज्ज्वल भविष्य.",
-    hero_subtext: "मेडीकेअर निरोगी व आनंदी जीवनासाठी विश्वासार्ह आरोग्य सेवा पुरवते, डिजिटल टोकनद्वारे वेळेची बचत आणि दर्जेदार उपचार.",
+    hero_subtext: "हीलपाथ (HealPath) निरोगी व आनंदी जीवनासाठी विश्वासार्ह आरोग्य सेवा पुरवते, डिजिटल टोकनद्वारे वेळेची बचत आणि दर्जेदार उपचार.",
     about_us: "आमच्याबद्दल",
     experience_badge: "वर्षानुवर्षे विश्वास आणि सर्वोत्तम वैद्यकीय सेवा",
 
@@ -233,14 +245,20 @@ const translations = {
     life_wellness_desc: "वैयक्तिक उपचार पद्धती",
 
     // About Section
-    about_tag: "मेडीकेअर विषयी",
+    about_tag: "हीलपाथ विषयी",
     about_heading: "प्रत्येक प्रकारच्या निदानासाठी हजारो विशेष कौशल्ये.",
-    about_p1: "मेडीकेअरमध्ये आम्ही अत्याधुनिक वैद्यकीय तंत्रज्ञानाची जोड संवेदनशील सेवेला देतो. आमची थेट रांग प्रणाली तुम्हाला गर्दीत ताटकळत उभे राहण्यापासून मुक्त करते.",
+    about_p1: "हीलपाथ (HealPath) मध्ये आम्ही अत्याधुनिक वैद्यकीय तंत्रज्ञानाची जोड संवेदनशील सेवेला देतो. आमची थेट रांग प्रणाली तुम्हाला गर्दीत ताटकळत उभे राहण्यापासून मुक्त करते.",
     check_expert: "अनुभवी तज्ज्ञ डॉक्टर",
     check_lab: "अत्याधुनिक प्रयोगशाळा",
     check_emergency: "24/7 आणीबाणी कक्ष",
     check_queue: "डिजिटल स्मार्ट टोकन रांग",
     more_about_us: "अधिक माहिती",
+
+    // Sanjivani Spotlight
+    sanjivani_tag: "यवतमाळ येथील अग्रगण्य रुग्णालय",
+    sanjivani_heading: "संजीवन मल्टीस्पेशालिटी हॉस्पिटल आणि रिसर्च इन्स्टिट्यूट",
+    sanjivani_sub: "महादेव मंदिर रोड, रतनलाल प्लॉट्स, यवतमाळ ४४५००१",
+    sanjivani_call: "हेल्पलाइन: +९१ ९५५२६२५२६२",
 
     // Services
     services_tag: "वैद्यकीय उत्कृष्टता",
@@ -278,15 +296,15 @@ const translations = {
     call_us_now: "आता संपर्क साधा: +91 98765 43210",
     subscribe_nl: "आरोग्यविषयक ताज्या बातम्या मिळवा",
     subscribe_btn: "सबस्क्राइब",
-    footer_about: "मेडीकेअर बद्दल",
-    footer_about_text: "विश्वास, करुणा आणि तंत्रज्ञानाच्या साहाय्याने जागतिक दर्जाचे उपचार देणारे आधुनिक रुग्णालय.",
+    footer_about: "हीलपाथ बद्दल",
+    footer_about_text: "विश्वास, करुणा आणि तंत्रज्ञानाच्या साहाय्याने जागतिक दर्जाचे उपचार देणारे आधुनिक रुग्णालय व डिजिटल रांग व्यवस्था.",
     useful_links: "महत्त्वाच्या लिंक्स",
     opening_hours: "कामाचे तास",
-    all_rights: "सर्व हक्क राखीव. मेडीकेअर रुग्णालय."
+    all_rights: "सर्व हक्क राखीव. हीलपाथ (HealPath) रुग्णालय प्रणाली."
   }
 };
 
-let currentLanguage = localStorage.getItem('medicare_lang') || 'en';
+let currentLanguage = localStorage.getItem('healpath_lang') || localStorage.getItem('medicare_lang') || 'en';
 
 export function getLang() {
   return currentLanguage;
@@ -295,7 +313,7 @@ export function getLang() {
 export function setLang(lang) {
   if (translations[lang]) {
     currentLanguage = lang;
-    localStorage.setItem('medicare_lang', lang);
+    localStorage.setItem('healpath_lang', lang);
     applyTranslations();
   }
 }
@@ -316,20 +334,19 @@ export function applyTranslations() {
     }
   });
 
-  // Update language selector dropdown if exists
   const selector = document.getElementById('lang-select');
   if (selector) {
     selector.value = currentLanguage;
   }
 }
 
-// Global expose
-window.medicareI18n = {
+window.healpathI18n = {
   getLang,
   setLang,
   t,
   applyTranslations
 };
+window.medicareI18n = window.healpathI18n;
 
 document.addEventListener('DOMContentLoaded', () => {
   applyTranslations();

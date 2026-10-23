@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Doctors - MediCare Hospital & Medical Center</title>
+  <title>Our Doctors - HealPath Hospital & Sanjivani Multispecialty Yavatmal</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
@@ -15,6 +15,7 @@
     <div class="container top-bar-inner">
       <div class="top-bar-left">
         <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> Helpline: <strong>+91 98765 43210</strong></span>
+        <span><i class="fas fa-hospital" style="color: var(--mint); margin-right: 5px; margin-left: 10px;"></i> Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)</span>
       </div>
       <div class="top-bar-right">
         <div class="online-indicator"><span class="online-dot"></span> <span class="online-status-text">Online</span></div>
@@ -32,9 +33,9 @@
   <header class="header">
     <div class="container header-inner">
       <a href="index.html" class="logo">
-        <div class="logo-icon-tile">M</div>
+        <div class="logo-icon-tile">H</div>
         <div class="logo-text-box">
-          <span class="logo-text"><span class="medi">Medi</span><span class="care">Care</span></span>
+          <span class="logo-text"><span class="heal">Heal</span><span class="path">Path</span></span>
           <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
         </div>
       </a>
@@ -69,13 +70,16 @@
     <div class="container">
       <!-- Department Filter Pills -->
       <div style="display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 3rem;" id="dept-pills-filter">
-        <button class="btn btn-sm btn-primary" onclick="filterDoctorsByDept('')">All Departments</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('1')">Cardiology</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('2')">Dental</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('3')">Radiology</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('4')">Neurology</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('5')">Ophthalmology</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('6')">Pediatrics</button>
+        <button class="btn btn-sm btn-primary" onclick="filterDoctorsByDept('', this)">All Departments</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('sanjivani', this)" style="border-color: var(--teal); background: #E6FFFA; color: var(--deep-blue); font-weight: 700;">
+          <i class="fas fa-hospital" style="color: var(--teal);"></i> Sanjivani Hospital (Yavatmal 445001)
+        </button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('1', this)">Cardiology</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('2', this)">Dental</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('3', this)">Radiology</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('4', this)">Neurology</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('5', this)">Ophthalmology</button>
+        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('6', this)">Pediatrics</button>
       </div>
 
       <!-- Doctors Grid -->
@@ -89,7 +93,7 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-bottom-bar" style="border: none; padding: 0; justify-content: center;">
-        <div>&copy; 2026 MediCare Hospital. All Rights Reserved.</div>
+        <div>&copy; 2026 HealPath Hospital System. All Rights Reserved.</div>
       </div>
     </div>
   </footer>
@@ -99,46 +103,80 @@
   <script src="js/main.js"></script>
   <script src="js/chat.js"></script>
   <script>
-    async function filterDoctorsByDept(deptId) {
+    async function filterDoctorsByDept(deptId, btnEl) {
+      if (btnEl) {
+        document.querySelectorAll('#dept-pills-filter button').forEach(b => {
+          b.className = 'btn btn-sm btn-secondary';
+        });
+        btnEl.className = 'btn btn-sm btn-primary';
+      }
+
       const container = document.getElementById('doctors-full-list');
       try {
-        const url = deptId ? `/api/doctors?department_id=${deptId}` : '/api/doctors';
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data.success && container) {
-          container.innerHTML = '';
-          data.doctors.forEach(doc => {
-            const card = document.createElement('div');
-            card.className = 'doctor-card';
-            card.innerHTML = `
-              <div class="doctor-photo-box">
-                <img src="${doc.avatar}" alt="${doc.name}">
-                <div class="doctor-social-slide">
-                  <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                  <a href="#"><i class="fab fa-twitter"></i></a>
-                  <a href="#"><i class="fas fa-envelope"></i></a>
-                </div>
-              </div>
-              <div class="doctor-info">
-                <span class="doctor-specialty-tag">${doc.specialty}</span>
-                <h3 class="doctor-name-heading">${doc.name}</h3>
-                <p style="font-size: 0.85rem; color: var(--charcoal-light); margin-bottom: 0.4rem;">${doc.qualification}</p>
-                <div style="font-size: 0.82rem; color: var(--teal); font-weight: 600; margin-bottom: 0.75rem;">
-                  <i class="fas fa-door-open"></i> ${doc.room_no} &bull; Hours: ${doc.start_hour} - ${doc.end_hour}
-                </div>
-                <a href="booking.html?doc=${doc.id}" class="btn btn-sm btn-primary" style="width: 100%;">
-                  <i class="fas fa-calendar-check"></i> Book Slot (${doc.consultation_fee ? '₹' + doc.consultation_fee : 'Free'})
-                </a>
-              </div>
-            `;
-            container.appendChild(card);
-          });
+        container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; padding: 3rem;"><i class="fas fa-spinner fa-spin" style="color: var(--teal); font-size: 1.5rem;"></i> Loading doctors...</p>';
+
+        let doctors = [];
+        if (deptId === 'sanjivani') {
+          const res = await fetch('/api/hospital/sanjivani/doctors');
+          const data = await res.json();
+          if (data.success) {
+            doctors = data.doctors.map(d => ({
+              ...d,
+              specialty: d.department,
+              room_no: d.room,
+              start_hour: d.opd_timing,
+              end_hour: '',
+              isSanjivani: true
+            }));
+          }
+        } else {
+          const url = deptId ? `/api/doctors?department_id=${deptId}` : '/api/doctors';
+          const res = await fetch(url);
+          const data = await res.json();
+          if (data.success) {
+            doctors = data.doctors;
+          }
         }
+
+        container.innerHTML = '';
+        if (doctors.length === 0) {
+          container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; padding: 3rem;">No doctors found for this selection.</p>';
+          return;
+        }
+
+        doctors.forEach(doc => {
+          const card = document.createElement('div');
+          card.className = 'doctor-card';
+          card.innerHTML = `
+            <div class="doctor-photo-box">
+              <img src="${doc.avatar}" alt="${doc.name}">
+              ${doc.isSanjivani ? '<div style="position: absolute; top: 10px; right: 10px; background: var(--teal); color: #FFF; font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 12px;"><i class="fas fa-hospital"></i> Yavatmal 445001</div>' : ''}
+              <div class="doctor-social-slide">
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+              </div>
+            </div>
+            <div class="doctor-info">
+              <span class="doctor-specialty-tag">${doc.specialty || doc.department_name}</span>
+              <h3 class="doctor-name-heading">${doc.name}</h3>
+              <p style="font-size: 0.85rem; color: var(--charcoal-light); margin-bottom: 0.4rem;">${doc.qualification || doc.role || ''}</p>
+              <div style="font-size: 0.82rem; color: var(--teal); font-weight: 600; margin-bottom: 0.75rem;">
+                <i class="fas fa-door-open"></i> ${doc.room_no || 'Consultation Room'} &bull; ${doc.start_hour || ''} ${doc.end_hour ? '- ' + doc.end_hour : ''}
+              </div>
+              <a href="${doc.isSanjivani ? 'index.html#sanjivani-section' : 'booking.html?doc=' + doc.id}" class="btn btn-sm btn-primary" style="width: 100%;">
+                <i class="fas fa-calendar-check"></i> Book Slot (${doc.consultation_fee ? '₹' + doc.consultation_fee : 'Free'})
+              </a>
+            </div>
+          `;
+          container.appendChild(card);
+        });
       } catch (e) {
         console.error(e);
+        container.innerHTML = '<p style="text-align: center; color: red;">Error loading doctors list.</p>';
       }
     }
-    document.addEventListener('DOMContentLoaded', () => filterDoctorsByDept(''));
+    document.addEventListener('DOMContentLoaded', () => filterDoctorsByDept('', null));
   </script>
 </body>
 </html>

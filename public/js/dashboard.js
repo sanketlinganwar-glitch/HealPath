@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function initDashboard() {
-  const token = localStorage.getItem('medicare_token');
-  const userJson = localStorage.getItem('medicare_user');
+  const token = localStorage.getItem('healpath_token') || localStorage.getItem('medicare_token');
+  const userJson = localStorage.getItem('healpath_user') || localStorage.getItem('medicare_user');
 
   if (!token || !userJson) {
     // If not logged in, show default patient demo or prompt login
@@ -498,7 +498,7 @@ async function updateDoctorStatus(doctorId, status) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('medicare_token')}`
+        'Authorization': `Bearer ${localStorage.getItem('healpath_token') || localStorage.getItem('medicare_token')}`
       },
       body: JSON.stringify({ status })
     });
@@ -719,7 +719,7 @@ async function exportDailyReport(type = 'print') {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.setAttribute('href', url);
-      link.setAttribute('download', `medicare_report_${report.report_date}.csv`);
+      link.setAttribute('download', `healpath_report_${report.report_date}.csv`);
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -731,7 +731,7 @@ async function exportDailyReport(type = 'print') {
     printWin.document.write(`
       <html>
         <head>
-          <title>MediCare Hospital Daily Report - ${report.report_date}</title>
+          <title>HealPath Hospital Daily Report - ${report.report_date}</title>
           <style>
             body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2D3748; padding: 2rem; }
             h1, h2, h3 { color: #0F3B64; margin-bottom: 0.5rem; }
@@ -742,7 +742,7 @@ async function exportDailyReport(type = 'print') {
           </style>
         </head>
         <body>
-          <h2>MediCare Hospital & Medical Center</h2>
+          <h2>HealPath Hospital System</h2>
           <p><strong>Daily Operations & Queue Report</strong> &bull; Date: ${report.report_date} &bull; Generated: ${new Date().toLocaleTimeString()}</p>
           <hr>
           <h3>Summary Statistics</h3>

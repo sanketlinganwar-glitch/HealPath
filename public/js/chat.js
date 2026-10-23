@@ -116,7 +116,7 @@ async function sendUserMessage(speakAnswer = false) {
   // Typing indicator
   const typingEl = document.createElement('div');
   typingEl.className = 'chat-msg chat-msg-bot';
-  typingEl.innerHTML = '<i class="fas fa-ellipsis-h fa-beat" style="color: var(--teal);"></i> MediCare is answering...';
+  typingEl.innerHTML = '<i class="fas fa-ellipsis-h fa-beat" style="color: var(--teal);"></i> HealPath is answering...';
   messagesBox.appendChild(typingEl);
   messagesBox.scrollTop = messagesBox.scrollHeight;
 

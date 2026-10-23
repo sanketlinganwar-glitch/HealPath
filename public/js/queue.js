@@ -1,5 +1,5 @@
 /**
- * MediCare Live Hospital Queue & Token System
+ * HealPath Live Hospital Queue & Token System
  * Real-time updates via Socket.io, estimated wait calculations, audio token announcements
  */
 

@@ -5,10 +5,11 @@ export async function seedDatabase(force = false) {
   const store = db.store;
 
   if (store.data.departments.length > 0 && !force) {
+    ensureSanjivaniData(store);
     return;
   }
 
-  console.log(' [Seed] Seeding MediCare initial departments, doctors, slots, and users...');
+  console.log('🌱 [Seed] Seeding HealPath initial departments, doctors, slots, and users...');
 
   // 1. Departments
   store.data.departments = [
@@ -58,6 +59,14 @@ export async function seedDatabase(force = false) {
       code: 'PED',
       description: 'Compassionate pediatric healthcare, newborn care, immunizations, and child wellness.',
       icon: 'baby',
+      default_consult_min: 15
+    },
+    {
+      id: 7,
+      name: 'Sanjivani Hospital (Yavatmal 445001)',
+      code: 'SANJ',
+      description: 'Sanjeevan Multispecialty Hospital & Research Institute, Mahadev Mandir Road, Ratanlal Plots, Yavatmal 445001.',
+      icon: 'hospital',
       default_consult_min: 15
     }
   ];
@@ -152,6 +161,96 @@ export async function seedDatabase(force = false) {
       status: 'available',
       working_start: '10:00',
       working_end: '14:00',
+      slot_duration: 15
+    },
+    {
+      id: 101,
+      name: 'Dr. Sunil M. Agrawal',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'Chief Surgeon & Laparoscopy Specialist',
+      room: 'Room 1 (Consultant Suite)',
+      experience_years: 22,
+      bio: 'Managing Director at Sanjeevan Multispecialty Hospital Yavatmal. Pioneer in laparoscopic and general surgery in Vidarbha.',
+      image_url: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600',
+      status: 'available',
+      working_start: '10:00',
+      working_end: '14:00',
+      slot_duration: 15
+    },
+    {
+      id: 102,
+      name: 'Dr. Vijay S. Kawalkar',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'Senior Consultant Laparoscopic Surgeon',
+      room: 'Room 2 (Surgical OPD)',
+      experience_years: 19,
+      bio: 'Senior surgeon specializing in minimally invasive abdominal surgeries, laser proctology, and trauma emergencies.',
+      image_url: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600',
+      status: 'available',
+      working_start: '11:00',
+      working_end: '14:00',
+      slot_duration: 15
+    },
+    {
+      id: 103,
+      name: 'Dr. H. S. Bora',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'MD General Medicine & Critical Care',
+      room: 'Room 3 (Medicine Wing)',
+      experience_years: 25,
+      bio: 'Leading general physician with over two decades of critical care, diabetes management, and intensive therapy experience.',
+      image_url: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=600',
+      status: 'available',
+      working_start: '10:30',
+      working_end: '14:30',
+      slot_duration: 15
+    },
+    {
+      id: 104,
+      name: 'Dr. Vinay Pande',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'Chest & Pulmonary Critical Care',
+      room: 'Room 4 (Chest Clinic)',
+      experience_years: 16,
+      bio: 'Pulmonology and respiratory medicine expert specializing in asthma, COPD, and critical respiratory infections.',
+      image_url: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600',
+      status: 'available',
+      working_start: '10:00',
+      working_end: '14:00',
+      slot_duration: 15
+    },
+    {
+      id: 105,
+      name: 'Dr. Sheetal S. Agrawal',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'MD Obstetrics & Gynecology',
+      room: 'Room 5 (Women Clinic)',
+      experience_years: 20,
+      bio: 'Renowned obstetrician and gynecologist managing high-risk pregnancies, maternal care, and infertility treatments.',
+      image_url: 'https://images.unsplash.com/photo-1594824813580-ff67fbf9303d?auto=format&fit=crop&q=80&w=600',
+      status: 'available',
+      working_start: '10:00',
+      working_end: '14:00',
+      slot_duration: 15
+    },
+    {
+      id: 106,
+      name: 'Dr. Lalit Paldiwal',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'MD Radiology & Sonography',
+      room: 'Room 6 (Imaging Suite)',
+      experience_years: 14,
+      bio: 'Chief radiologist specializing in color Doppler, 4D ultrasound, CT scans, and high-precision diagnostic imaging.',
+      image_url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80',
+      status: 'available',
+      working_start: '09:30',
+      working_end: '13:30',
       slot_duration: 15
     }
   ];
@@ -382,7 +481,126 @@ export async function seedDatabase(force = false) {
   }
 
   db.save();
-  console.log(' [Seed] Successfully seeded MediCare database with doctors, slots, and demo appointments.');
+  console.log('✅ [Seed] Successfully seeded HealPath database with doctors, slots, and demo appointments.');
+}
+
+export function ensureSanjivaniData(store) {
+  if (!store.data.departments.some(d => d.id === 7)) {
+    store.data.departments.push({
+      id: 7,
+      name: 'Sanjivani Hospital (Yavatmal 445001)',
+      code: 'SANJ',
+      description: 'Sanjeevan Multispecialty Hospital & Research Institute, Mahadev Mandir Road, Ratanlal Plots, Yavatmal 445001.',
+      icon: 'hospital',
+      default_consult_min: 15
+    });
+  }
+
+  const sanjivaniDoctors = [
+    {
+      id: 101,
+      name: 'Dr. Sunil M. Agrawal',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'Chief Surgeon & Laparoscopy Specialist',
+      room: 'Room 1 (Consultant Suite)',
+      experience_years: 22,
+      bio: 'Managing Director at Sanjeevan Multispecialty Hospital Yavatmal. Pioneer in laparoscopic and general surgery in Vidarbha.',
+      image_url: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600',
+      status: 'available',
+      working_start: '10:00',
+      working_end: '14:00',
+      slot_duration: 15
+    },
+    {
+      id: 102,
+      name: 'Dr. Vijay S. Kawalkar',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'Senior Consultant Laparoscopic Surgeon',
+      room: 'Room 2 (Surgical OPD)',
+      experience_years: 19,
+      bio: 'Senior surgeon specializing in minimally invasive abdominal surgeries, laser proctology, and trauma emergencies.',
+      image_url: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600',
+      status: 'available',
+      working_start: '11:00',
+      working_end: '14:00',
+      slot_duration: 15
+    },
+    {
+      id: 103,
+      name: 'Dr. H. S. Bora',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'MD General Medicine & Critical Care',
+      room: 'Room 3 (Medicine Wing)',
+      experience_years: 25,
+      bio: 'Leading general physician with over two decades of critical care, diabetes management, and intensive therapy experience.',
+      image_url: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=600',
+      status: 'available',
+      working_start: '10:30',
+      working_end: '14:30',
+      slot_duration: 15
+    },
+    {
+      id: 104,
+      name: 'Dr. Vinay Pande',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'Chest & Pulmonary Critical Care',
+      room: 'Room 4 (Chest Clinic)',
+      experience_years: 16,
+      bio: 'Pulmonology and respiratory medicine expert specializing in asthma, COPD, and critical respiratory infections.',
+      image_url: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600',
+      status: 'available',
+      working_start: '10:00',
+      working_end: '14:00',
+      slot_duration: 15
+    },
+    {
+      id: 105,
+      name: 'Dr. Sheetal S. Agrawal',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'MD Obstetrics & Gynecology',
+      room: 'Room 5 (Women Clinic)',
+      experience_years: 20,
+      bio: 'Renowned obstetrician and gynecologist managing high-risk pregnancies, maternal care, and infertility treatments.',
+      image_url: 'https://images.unsplash.com/photo-1594824813580-ff67fbf9303d?auto=format&fit=crop&q=80&w=600',
+      status: 'available',
+      working_start: '10:00',
+      working_end: '14:00',
+      slot_duration: 15
+    },
+    {
+      id: 106,
+      name: 'Dr. Lalit Paldiwal',
+      department_id: 7,
+      department_name: 'Sanjivani Hospital (Yavatmal 445001)',
+      specialization: 'MD Radiology & Sonography',
+      room: 'Room 6 (Imaging Suite)',
+      experience_years: 14,
+      bio: 'Chief radiologist specializing in color Doppler, 4D ultrasound, CT scans, and high-precision diagnostic imaging.',
+      image_url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600&q=80',
+      status: 'available',
+      working_start: '09:30',
+      working_end: '13:30',
+      slot_duration: 15
+    }
+  ];
+
+  let added = false;
+  for (const doc of sanjivaniDoctors) {
+    if (!store.data.doctors.some(d => d.id === doc.id)) {
+      store.data.doctors.push(doc);
+      added = true;
+    }
+  }
+
+  if (added) {
+    store.save();
+    console.log('✅ [Seed] Sanjivani Hospital Yavatmal (445001) data verified and synced.');
+  }
 }
 
 if (process.argv[1]?.endsWith('seed.js')) {
