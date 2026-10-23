@@ -300,6 +300,50 @@
       "age": null,
       "gender": "unspecified",
       "created_at": "2026-10-23T10:52:46.174Z"
+    },
+    {
+      "id": 7,
+      "name": "Sanket Linganwar",
+      "email": "anandmohod@gmail.com",
+      "phone": "7028393036",
+      "password": "$2a$10$9trm2xioQx0kO84RtRFAdelucM.c5dOx9xeqjH/UHdfexPRl/5Oua",
+      "role": "patient",
+      "age": null,
+      "gender": "unspecified",
+      "created_at": "2026-10-23T12:13:14.959Z"
+    },
+    {
+      "id": 8,
+      "name": "sanjana gudwar",
+      "email": "sevalade@gmail.com",
+      "phone": "7586156555",
+      "password": "$2a$10$c2bzsYrAUSQsLBd69uU8A.z6Fcj/1Xvu77d0po6xsuJU67dSSmN8K",
+      "role": "patient",
+      "age": null,
+      "gender": "unspecified",
+      "created_at": "2026-10-23T12:18:13.493Z"
+    },
+    {
+      "id": 9,
+      "name": "sanjana gudwar",
+      "email": "sanjanagudwar@gmail.com",
+      "phone": "86260577535",
+      "password": "$2a$10$32IHIQhIPJxqYUiFTYIKEezjTZq2xtdJw2KlxNFIBNNYvwPmdTMeq",
+      "role": "patient",
+      "age": null,
+      "gender": "unspecified",
+      "created_at": "2026-10-23T12:20:32.102Z"
+    },
+    {
+      "id": 10,
+      "name": "jay kumar",
+      "email": "jay.sharma@medicare.com",
+      "phone": "7499809437",
+      "password": "$2a$10$eB.g5oxjNcRmasgTcRerZ.g77gC7d7doYnq972morlgMGmeQuuZcC",
+      "role": "patient",
+      "age": null,
+      "gender": "unspecified",
+      "created_at": "2026-10-23T12:23:51.456Z"
     }
   ],
   "slots": [
@@ -345,7 +389,7 @@
       "date": "2026-10-23",
       "start_time": "11:00",
       "end_time": "11:15",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1272,7 +1316,7 @@
       "date": "2026-10-24",
       "start_time": "10:45",
       "end_time": "11:00",
-      "status": "available",
+      "status": "booked",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1281,7 +1325,7 @@
       "date": "2026-10-24",
       "start_time": "11:00",
       "end_time": "11:15",
-      "status": "available",
+      "status": "booked",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1290,7 +1334,7 @@
       "date": "2026-10-24",
       "start_time": "11:15",
       "end_time": "11:30",
-      "status": "available",
+      "status": "booked",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -2156,7 +2200,7 @@
       "date": "2026-10-23",
       "time": "10:00",
       "checked_in": true,
-      "status": "checked_in",
+      "status": "completed",
       "created_at": "2026-10-23T09:27:17.675Z"
     },
     {
@@ -2174,7 +2218,7 @@
       "date": "2026-10-23",
       "time": "10:15",
       "checked_in": true,
-      "status": "checked_in",
+      "status": "in_progress",
       "created_at": "2026-10-23T09:47:17.675Z"
     },
     {
@@ -2248,6 +2292,78 @@
       "checked_in": false,
       "status": "missed",
       "created_at": "2026-10-23T11:12:17.825Z"
+    },
+    {
+      "id": 7,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 20,
+      "disease": "PAIN IN ROOTS",
+      "whatsapp_no": "+919403734023",
+      "notes": "NO",
+      "slot_id": 108,
+      "token_no": "DENT-001",
+      "doctor_id": 4,
+      "department_id": 2,
+      "date": "2026-10-24",
+      "time": "10:45",
+      "checked_in": false,
+      "status": "booked",
+      "created_at": "2026-10-23T12:10:47.671Z"
+    },
+    {
+      "id": 8,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 67,
+      "disease": "ygjhlkjk",
+      "whatsapp_no": "7028393036",
+      "notes": "tfuou",
+      "slot_id": 109,
+      "token_no": "DENT-002",
+      "doctor_id": 4,
+      "department_id": 2,
+      "date": "2026-10-24",
+      "time": "11:00",
+      "checked_in": false,
+      "status": "booked",
+      "created_at": "2026-10-23T12:14:10.677Z"
+    },
+    {
+      "id": 9,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 56,
+      "disease": "gfvhjhljji;o",
+      "whatsapp_no": "7028393036",
+      "notes": "sdygi",
+      "slot_id": 5,
+      "token_no": "CARD-005",
+      "doctor_id": 1,
+      "department_id": 1,
+      "date": "2026-10-23",
+      "time": "11:00",
+      "checked_in": false,
+      "status": "missed",
+      "created_at": "2026-10-23T12:16:05.288Z"
+    },
+    {
+      "id": 10,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 20,
+      "disease": "dghvkj;oop'",
+      "whatsapp_no": "7028393036",
+      "notes": "rfyup9o]=-=-",
+      "slot_id": 110,
+      "token_no": "DENT-003",
+      "doctor_id": 4,
+      "department_id": 2,
+      "date": "2026-10-24",
+      "time": "11:15",
+      "checked_in": false,
+      "status": "booked",
+      "created_at": "2026-10-23T12:33:26.852Z"
     }
   ],
   "queue": [
@@ -2258,10 +2374,10 @@
       "doctor_id": 1,
       "department_id": 1,
       "patient_name": "Aarav Deshmukh",
-      "status": "in_progress",
+      "status": "completed",
       "position": 1,
       "called_at": "2026-10-23T10:17:17.675Z",
-      "completed_at": null,
+      "completed_at": "2026-10-23T12:21:09.656Z",
       "created_at": "2026-10-23T09:27:17.675Z"
     },
     {
@@ -2271,9 +2387,9 @@
       "doctor_id": 1,
       "department_id": 1,
       "patient_name": "Sunita Shinde",
-      "status": "waiting",
+      "status": "in_progress",
       "position": 2,
-      "called_at": null,
+      "called_at": "2026-10-23T12:21:02.690Z",
       "completed_at": null,
       "created_at": "2026-10-23T09:47:17.675Z"
     },
@@ -2328,6 +2444,58 @@
       "called_at": null,
       "completed_at": null,
       "created_at": "2026-10-23T11:12:17.825Z"
+    },
+    {
+      "id": 7,
+      "appointment_id": 7,
+      "token_no": "DENT-001",
+      "doctor_id": 4,
+      "department_id": 2,
+      "patient_name": "Sanket Linganwar",
+      "status": "waiting",
+      "position": 1,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T12:10:47.671Z"
+    },
+    {
+      "id": 8,
+      "appointment_id": 8,
+      "token_no": "DENT-002",
+      "doctor_id": 4,
+      "department_id": 2,
+      "patient_name": "Sanket Linganwar",
+      "status": "waiting",
+      "position": 2,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T12:14:10.677Z"
+    },
+    {
+      "id": 9,
+      "appointment_id": 9,
+      "token_no": "CARD-005",
+      "doctor_id": 1,
+      "department_id": 1,
+      "patient_name": "Sanket Linganwar",
+      "status": "missed",
+      "position": 2,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T12:16:05.288Z"
+    },
+    {
+      "id": 10,
+      "appointment_id": 10,
+      "token_no": "DENT-003",
+      "doctor_id": 4,
+      "department_id": 2,
+      "patient_name": "Sanket Linganwar",
+      "status": "waiting",
+      "position": 3,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T12:33:26.852Z"
     }
   ],
   "messages": [
@@ -2370,6 +2538,46 @@
       "status": "delivered",
       "error_message": null,
       "sent_at": "2026-10-23T11:12:17.842Z"
+    },
+    {
+      "id": 5,
+      "appointment_id": 7,
+      "recipient_phone": "+919403734023",
+      "message_text": "🏥 [HealPath Hospital] Hello Sanket Linganwar, your appointment with Dr. Suresh Patil is confirmed on 2026-10-24 at 10:45. Token No: DENT-001. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-23T12:10:47.685Z"
+    },
+    {
+      "id": 6,
+      "appointment_id": 8,
+      "recipient_phone": "+7028393036",
+      "message_text": "🏥 [HealPath Hospital] Hello Sanket Linganwar, your appointment with Dr. Suresh Patil is confirmed on 2026-10-24 at 11:00. Token No: DENT-002. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-23T12:14:10.712Z"
+    },
+    {
+      "id": 7,
+      "appointment_id": 9,
+      "recipient_phone": "+7028393036",
+      "message_text": "🏥 [HealPath Hospital] Hello Sanket Linganwar, your appointment with Dr. Rajesh Sharma is confirmed on 2026-10-23 at 11:00. Token No: CARD-005. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-23T12:16:05.320Z"
+    },
+    {
+      "id": 8,
+      "appointment_id": 10,
+      "recipient_phone": "+7028393036",
+      "message_text": "🏥 [HealPath Hospital] Hello Sanket Linganwar, your appointment with Dr. Suresh Patil is confirmed on 2026-10-24 at 11:15. Token No: DENT-003. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-23T12:33:26.864Z"
     }
   ],
   "settings": {
