@@ -191,6 +191,17 @@
       "role": "patient",
       "doctor_id": null,
       "created_at": "2026-10-23T10:27:17.674Z"
+    },
+    {
+      "id": 6,
+      "name": "Sanket Linganwar",
+      "email": "sanketlinganwar@gmail.com",
+      "phone": "+919403734023",
+      "password": "$2a$10$fiU046N36Sb0lIYRBdTPzuFV.5M0pZfIQ/.vycTsBvC50MPXQCS4u",
+      "role": "patient",
+      "age": null,
+      "gender": "unspecified",
+      "created_at": "2026-10-23T10:52:46.174Z"
     }
   ],
   "slots": [

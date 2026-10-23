@@ -22,6 +22,7 @@ import appointmentRoutes from './routes/appointments.js';
 import queueRoutes from './routes/queue.js';
 import adminRoutes from './routes/admin.js';
 import chatRoutes from './routes/chat.js';
+import sanjivaniRoutes from './routes/sanjivaniHospital.js';
 
 dotenv.config();
 
@@ -72,6 +73,7 @@ app.use('/api/appointments', appointmentRoutes);
 app.use('/api/queue', queueRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/hospital/sanjivani', sanjivaniRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
