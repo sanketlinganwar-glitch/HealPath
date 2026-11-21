@@ -149,7 +149,10 @@ export const updateDoctorStatus = (doctorId, status) => api.patch(`/api/doctors/
 
 // --- AI & Chat APIs ---
 export const suggestDepartment = (symptoms) => api.post('/api/ai/suggest-department', { symptoms }).then(r => r.data);
-export const chat = (message, language = 'en', tokenId = null) => api.post('/api/chat', { message, language, token_id: tokenId }).then(r => r.data);
+export const triageSymptoms = (data) => api.post('/api/ai/triage', data).then(r => r.data);
+export const resetConversation = (conversationId) => api.post('/api/ai/conversation/reset', { conversation_id: conversationId }).then(r => r.data);
+export const chat = (message, language = 'en', tokenId = null, conversationId = null) =>
+  api.post('/api/chat', { message, language, token_id: tokenId, conversation_id: conversationId }).then(r => r.data);
 
 // --- Demo APIs ---
 export const demoReset = () => api.post('/api/demo/reset').then(r => r.data);

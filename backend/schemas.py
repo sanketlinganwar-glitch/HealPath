@@ -226,15 +226,48 @@ class SuggestedAction(BaseModel):
     label: str
     action: str
 
+class AITriageRequest(BaseModel):
+    main_symptom: str = Field(..., min_length=2, description="Primary patient symptom or chief complaint")
+    duration: Optional[str] = Field(None, description="Symptom duration e.g. '2 days', '1 week'")
+    severity: Optional[Literal["mild", "moderate", "severe"]] = "moderate"
+    age_group: Optional[Literal["infant", "child", "adult", "senior"]] = "adult"
+    associated_symptoms: Optional[List[str]] = Field(default_factory=list)
+    preexisting_conditions: Optional[List[str]] = Field(default_factory=list)
+    language: Optional[Literal["en", "hi", "mr"]] = "en"
+
+class AITriageResponse(BaseModel):
+    symptom_summary: str
+    recommended_department_id: int
+    recommended_department_name: str
+    urgency_category: Literal["ROUTINE", "MODERATE", "URGENT", "EMERGENCY"]
+    reason: str
+    suggested_next_step: str
+    follow_up_questions: List[str] = Field(default_factory=list)
+    emergency_warning_indicators: List[str] = Field(default_factory=list)
+    disclaimer: str
+    is_offline_fallback: bool = False
+
+class ConversationResetRequest(BaseModel):
+    conversation_id: str
+
+class ConversationResetResponse(BaseModel):
+    success: bool
+    message: str
+    conversation_id: str
+
 class ChatRequest(BaseModel):
     message: str
     language: Optional[Literal["en", "hi", "mr"]] = "en"
     token_id: Optional[int] = None
+    conversation_id: Optional[str] = None
 
 class ChatResponse(BaseModel):
     reply: str
     intent: Literal["queue_status", "department_help", "general", "emergency"]
     suggested_actions: List[SuggestedAction]
+    conversation_id: Optional[str] = None
+    urgency: Optional[Literal["ROUTINE", "MODERATE", "URGENT", "EMERGENCY"]] = "ROUTINE"
+    is_offline_fallback: Optional[bool] = False
 
 # --- Demo Schemas ---
 class DemoSimulateRequest(BaseModel):

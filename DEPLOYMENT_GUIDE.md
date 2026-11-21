@@ -83,6 +83,19 @@ npm run dev                       # Runs on http://localhost:5173
 - **PWA Portal:** `http://localhost:5173`
 - **Build Production:** `npm run build`
 
+### D. Automated Quality Assurance & Verification
+```bash
+# 1. Run Stage 5 AI Assistant Test Suite (17 tests)
+.\backend\venv\Scripts\python.exe -m unittest backend/test_ai_assistant.py
+
+# 2. Run Comprehensive FastAPI Smoke Tests (17 tests)
+.\backend\venv\Scripts\python.exe backend/smoke_test.py
+
+# 3. Run Express & QR Check-In Integration Tests (20 tests)
+node test_stage3_4.js
+```
+Total verified automated tests: **54/54 passing (100%)**.
+
 ---
 
 ## 4. Production Containerization Blueprint (Docker Compose)

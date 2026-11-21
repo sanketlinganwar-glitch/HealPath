@@ -83,6 +83,8 @@ graph TB
   - `backend/routers/prescriptions.py`: Digital prescription authoring with medication dosage, frequency, and follow-ups.
   - `backend/routers/feedback.py`: Patient satisfaction scoring and department review aggregations.
   - `backend/routers/staff.py`: Doctor console, call-next logic, emergency audit log inspection, and OT schedule.
+  - `backend/services/ai_service.py`: Stage 5 AI Symptom Triage Engine and conversational assistant powered by Google Gemini 2.5 Flash with UUID session isolation, sliding context window, 20 req/min rate limiting, and Sanjeevan Hospital deterministic offline fallback.
+  - `frontend/src/components/AIHealthAssistant.jsx`: Trilingual (EN/HI/MR) floating AI assistant with quick symptom prompts, color-coded urgency badges, emergency hotline escalation (+91 95526 25262), and Web Speech voice recognition/synthesis.
   - `frontend/src/pages/DisplayBoard.jsx`: Full-screen lobby smart TV dashboard with browser-native Web Speech TTS in Hindi/Marathi.
   - `frontend/src/pages/PatientTrackPage.jsx`: Live token tracking card with WhatsApp sharing, QR pass, and staff updates.
 

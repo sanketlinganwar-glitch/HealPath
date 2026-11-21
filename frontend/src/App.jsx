@@ -5,6 +5,7 @@ import { LanguageProvider } from './context/LanguageContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ToastContainer } from './components/Toast';
+import { AIHealthAssistant } from './components/AIHealthAssistant';
 
 import { LandingPage } from './pages/LandingPage';
 import { LoginPage } from './pages/LoginPage';
@@ -42,6 +43,7 @@ function ProtectedRoute({ children, allowedRoles }) {
 function AppLayout() {
   const location = useLocation();
   const isDisplayBoard = location.pathname.startsWith('/display');
+  const isPatientTrack = location.pathname.startsWith('/patient/track');
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
@@ -92,6 +94,7 @@ function AppLayout() {
       </main>
 
       {!isDisplayBoard && <Footer />}
+      {!isDisplayBoard && !isPatientTrack && <AIHealthAssistant />}
       <ToastContainer />
     </div>
   );

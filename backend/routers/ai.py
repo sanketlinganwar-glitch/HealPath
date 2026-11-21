@@ -1,8 +1,8 @@
 import os
 import json
 import logging
-from typing import Optional
-from fastapi import APIRouter, Depends
+from typing import Optional, List
+from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 
@@ -11,11 +11,22 @@ from backend.models import Department, Token
 from backend.schemas import (
     AISuggestRequest,
     AISuggestResponse,
+    AITriageRequest,
+    AITriageResponse,
     ChatRequest,
     ChatResponse,
+    ConversationResetRequest,
+    ConversationResetResponse,
     SuggestedAction
 )
 from backend.services.queue import get_token_position_and_wait
+from backend.services.ai_service import (
+    triage_symptoms_with_gemini,
+    chat_turn_with_gemini,
+    conversation_store,
+    get_gemini_client,
+    HEALTHCARE_DISCLAIMER
+)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 load_dotenv(os.path.join(BASE_DIR, ".env"))
@@ -26,18 +37,8 @@ router = APIRouter(prefix="/api", tags=["ai"])
 
 DEFAULT_DISCLAIMER = "This is a guidance suggestion, not a medical diagnosis. In case of emergency, proceed immediately to the Emergency Desk."
 
-def get_gemini_client():
-    api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key:
-        return None
-    try:
-        from google import genai
-        return genai.Client(api_key=api_key)
-    except Exception as e:
-        logger.warning(f"Could not initialize Gemini Client: {e}")
-        return None
 
-# --- Department Suggestion ---
+# --- Backward Compatible Department Suggestion ---
 @router.post("/ai/suggest-department", response_model=AISuggestResponse)
 def suggest_department(payload: AISuggestRequest, db: Session = Depends(get_db)):
     """Suggest appropriate medical department using AI based on reported symptoms."""
@@ -144,20 +145,54 @@ def suggest_department(payload: AISuggestRequest, db: Session = Depends(get_db))
     return fallback_res
 
 
-# --- Multilingual Hospital Chatbot 2.0 ---
+# --- Stage 5: Advanced Structured AI Symptom Triage ---
+@router.post("/ai/triage", response_model=AITriageResponse)
+def triage_symptoms(payload: AITriageRequest, db: Session = Depends(get_db)):
+    """
+    Stage 5 AI Symptom Triage Engine powered by Google Gemini 2.5 Flash.
+    Provides structured hospital department recommendations, urgency classification,
+    and medical safety disclaimers with automatic deterministic offline fallback.
+    """
+    departments = db.query(Department).all()
+    result = triage_symptoms_with_gemini(
+        main_symptom=payload.main_symptom,
+        duration=payload.duration,
+        severity=payload.severity,
+        age_group=payload.age_group,
+        associated_symptoms=payload.associated_symptoms,
+        preexisting_conditions=payload.preexisting_conditions,
+        language=payload.language or "en",
+        departments=departments
+    )
+    return result
+
+
+# --- Stage 5: Conversation Session Reset ---
+@router.post("/ai/conversation/reset", response_model=ConversationResetResponse)
+def reset_conversation(payload: ConversationResetRequest):
+    """
+    Resets a multi-turn conversation session, clearing context history for user privacy.
+    """
+    cleared = conversation_store.reset(payload.conversation_id)
+    return {
+        "success": True,
+        "message": "Conversation session reset successfully." if cleared else "Session already inactive or not found.",
+        "conversation_id": payload.conversation_id
+    }
+
+
+# --- Stage 5: Multilingual Hospital Chatbot 2.5 ---
 @router.post("/chat", response_model=ChatResponse)
-def hospital_chat(payload: ChatRequest, db: Session = Depends(get_db)):
+def hospital_chat(payload: ChatRequest, request: Request, db: Session = Depends(get_db)):
     """
-    AI Health Assistant 2.0: Multilingual hospital assistant supporting English, Hindi (hi), and Marathi (mr).
+    AI Health Assistant 2.5: Multilingual hospital assistant supporting English, Hindi (hi), and Marathi (mr).
     Handles symptom triage, follow-up questions, queue tracking, appointment booking guidance,
-    and emergency safety warnings with medical disclaimers.
+    and emergency safety warnings with medical disclaimers and multi-turn context retention.
     """
-    lang = payload.language or "en"
-    msg_lower = payload.message.lower().strip()
+    client_ip = request.client.host if request.client else None
 
     # Retrieve real token context if provided
-    token_context = ""
-    token_obj = None
+    token_context = None
     if payload.token_id:
         token_obj = db.query(Token).filter(Token.id == payload.token_id).first()
         if token_obj:
@@ -173,153 +208,13 @@ def hospital_chat(payload: ChatRequest, db: Session = Depends(get_db)):
                 f"Doctor Room: {room_str}."
             )
 
-    # 1. Emergency detection
-    emergency_keywords = [
-        "emergency", "heart attack", "chest pain", "severe bleeding", "unconscious",
-        "choking", "accident", "stroke", "paralysis", "breathing difficulty",
-        "आपातकाल", "छाती में दर्द", "सांस लेने में तकलीफ", "बेहोश", "तातडी", "हृदयविकार", "श्वास घेण्यास त्रास"
-    ]
-    if any(k in msg_lower for k in emergency_keywords):
-        if lang == "hi":
-            reply = "⚠️ यह एक आपातकालीन स्थिति लग रही है! कृपया तुरंत आपातकालीन डेस्क (Emergency Desk) पर जाएं या 112 पर कॉल करें। सॉफ्टवेयर टोकन या कतार में प्रतीक्षा न करें।"
-        elif lang == "mr":
-            reply = "⚠️ ही गंभीर आपत्कालीन परिस्थिती वाटत आहे! कृपया ताबडतोब आपत्कालीन कक्षात (Emergency Desk) जा किंवा 112 वर कॉल करा. रांगेत प्रतीक्षा करू नका."
-        else:
-            reply = "⚠️ This sounds like a potential medical emergency! Please proceed immediately to the hospital Emergency Desk or dial 112 for urgent evaluation. Do not delay care waiting for an online queue token."
-
-        return {
-            "reply": reply,
-            "intent": "emergency",
-            "suggested_actions": [
-                {"label": "🚨 Emergency Desk", "action": "goto_emergency"},
-                {"label": "📞 Call 112 / Ambulance", "action": "call_112"}
-            ]
-        }
-
-    # 2. Appointment Booking queries
-    appointment_keywords = ["appointment", "book appointment", "schedule", "अपॉइंटमेंट", "तारीख", "वेळ", "भेट"]
-    if any(k in msg_lower for k in appointment_keywords) and not payload.token_id:
-        if lang == "hi":
-            reply = "आप हमारे ऑनलाइन बुकिंग सिस्टम के माध्यम से विभाग, डॉक्टर और समय स्लॉट चुनकर आसानी से अपॉइंटमेंट बुक कर सकते हैं।"
-        elif lang == "mr":
-            reply = "आपण आमच्या ऑनलाइन बुकिंग पोर्टलद्वारे विभाग, डॉक्टर आणि वेळेचा स्लॉट निवडून अपॉइंटमेंट बुक करू शकता."
-        else:
-            reply = "You can easily schedule a consultation with our specialist doctors by selecting your preferred department, doctor, date, and time slot."
-
-        return {
-            "reply": reply,
-            "intent": "department_help",
-            "suggested_actions": [
-                {"label": "📅 Book Appointment", "action": "book_appointment"},
-                {"label": "👨‍⚕️ View Doctors", "action": "view_doctors"}
-            ]
-        }
-
-    # 3. Try Gemini API for conversational AI
-    client = get_gemini_client()
-    if client:
-        model_name = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
-        system_instruction = (
-            f"You are the friendly, professional hospital AI assistant for HealPath.\n"
-            f"STRICT RULES:\n"
-            f"1. You must respond strictly in language: '{lang}' (en = English, hi = Hindi / Hinglish friendly, mr = Marathi).\n"
-            f"2. Keep responses brief (1-3 sentences), warm, and reassuring.\n"
-            f"3. NEVER diagnose illnesses or prescribe medication or dosages. Direct patient to relevant hospital departments.\n"
-            f"4. If symptoms are vague (e.g. fever, headache, pain), ask 1 relevant clarifying follow-up question (e.g., duration, severity).\n"
-            f"5. If token context is available, use it directly to answer queue questions.\n"
-            f"6. Always adhere to medical safety: remind that this is guidance, not medical diagnosis.\n"
-            f"Context: {token_context if token_context else 'No specific token selected'}\n"
-        )
-
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=f"{system_instruction}\n\nUser: {payload.message}",
-            )
-            ai_reply = response.text.strip()
-            
-            intent = "general"
-            if "token" in msg_lower or "wait" in msg_lower or "queue" in msg_lower or "नंबर" in msg_lower:
-                intent = "queue_status"
-            elif "doctor" in msg_lower or "department" in msg_lower or "विभाग" in msg_lower or "डॉक्टर" in msg_lower:
-                intent = "department_help"
-
-            actions = [
-                {"label": "📅 Book Appointment", "action": "book_appointment"},
-                {"label": "🎫 Track Token", "action": "track_token"},
-                {"label": "👨‍⚕️ Doctors Roster", "action": "view_doctors"},
-            ]
-            return {
-                "reply": ai_reply,
-                "intent": intent,
-                "suggested_actions": actions
-            }
-        except Exception as e:
-            logger.warning(f"Gemini chat failed, using fallback: {e}")
-
-    # 4. Robust Rule-Based Fallback Engine
-    if "status" in msg_lower or "wait" in msg_lower or "turn" in msg_lower or "queue" in msg_lower or "नंबर" in msg_lower or "वेळ" in msg_lower:
-        intent = "queue_status"
-        if token_obj:
-            pos, ahead, est_wait = get_token_position_and_wait(db, token_obj)
-            if token_obj.status == "in_progress":
-                if lang == "hi":
-                    reply = f"आपका टोकन {token_obj.token_number} वर्तमान में डॉ. {token_obj.doctor.name if token_obj.doctor else 'डॉक्टर'} के पास चल रहा है ({token_obj.doctor.room if token_obj.doctor else 'कक्षा'})।"
-                elif lang == "mr":
-                    reply = f"आपला टोकन {token_obj.token_number} सध्या डॉ. {token_obj.doctor.name if token_obj.doctor else 'डॉक्टर'} यांच्याकडे सुरू आहे ({token_obj.doctor.room if token_obj.doctor else 'कक्ष'})."
-                else:
-                    reply = f"Your token {token_obj.token_number} is currently in progress with {token_obj.doctor.name if token_obj.doctor else 'Doctor'} at {token_obj.doctor.room if token_obj.doctor else 'Room'}."
-            elif token_obj.status == "waiting":
-                if lang == "hi":
-                    reply = f"टोकन {token_obj.token_number}: आपके आगे {ahead} लोग हैं। अनुमानित प्रतीक्षा समय लगभग {est_wait} मिनट है।"
-                elif lang == "mr":
-                    reply = f"टोकन {token_obj.token_number}: तुमच्या पुढे {ahead} रुग्ण आहेत. अंदाजे प्रतीक्षा वेळ सुमारे {est_wait} मिनिटे आहे."
-                else:
-                    reply = f"Token {token_obj.token_number}: You have {ahead} patient(s) ahead. Estimated wait is ~{est_wait} minutes."
-            else:
-                reply = f"Your token {token_obj.token_number} status is '{token_obj.status}'."
-        else:
-            if lang == "hi":
-                reply = "आप अपने टोकन को ट्रैक करने के लिए अपना 10 अंकों का मोबाइल नंबर या टोकन आईडी दर्ज कर सकते हैं।"
-            elif lang == "mr":
-                reply = "आपला टोकन ट्रॅक करण्यासाठी कृपया आपला १० अंकी मोबाईल नंबर किंवा टोकन आयडी प्रविष्ट करा."
-            else:
-                reply = "You can track your live turn and estimated wait time by entering your 10-digit mobile number or Token ID on the patient tracking page."
-
-        actions = [
-            {"label": "🎫 Track My Token", "action": "track_token"},
-            {"label": "📺 Display Board", "action": "view_display"},
-        ]
-    elif "doctor" in msg_lower or "department" in msg_lower or "विभाग" in msg_lower or "डॉक्टर" in msg_lower:
-        intent = "department_help"
-        if lang == "hi":
-            reply = "हमारे अस्पताल में जनरल मेडिसिन, कार्डियोलॉजी, ऑर्थोपेडिक्स, पीडियाट्रिक्स और ईएनटी विभाग उपलब्ध हैं। आप कौन से लक्षण महसूस कर रहे हैं?"
-        elif lang == "mr":
-            reply = "आमच्या रुग्णालयात जनरल मेडिसिन, कार्डिओलॉजी, ऑर्थोपेडिक्स, पेडियाट्रिक्स आणि ईएनटी विभाग उपलब्ध आहेत. आपल्याला कोणते लक्षण जाणवत आहेत?"
-        else:
-            reply = "We offer General Medicine, Cardiology, Orthopedics, Pediatrics, and ENT departments. What symptoms are you experiencing?"
-
-        actions = [
-            {"label": "👨‍⚕️ View Doctors", "action": "view_doctors"},
-            {"label": "💡 Get Department Advice", "action": "ai_triage"},
-        ]
-    else:
-        intent = "general"
-        if lang == "hi":
-            reply = "नमस्ते! मैं हीलपाथ (HealPath) डिजिटल सहायक हूँ। मैं टोकन स्थिति, अपॉइंटमेंट बुकिंग और विभाग चयन में आपकी सहायता कर सकता हूँ।"
-        elif lang == "mr":
-            reply = "नमस्कार! मी हीलपाथ (HealPath) डिजिटल सहाय्यक आहे. मी टोकन स्थिती, अपॉइंटमेंट बुकिंग आणि विभाग निवड याबाबत मदत करू शकतो."
-        else:
-            reply = "Hello! I am the HealPath hospital assistant. I can help you book appointments, track queue tokens, or find the right medical department."
-
-        actions = [
-            {"label": "📅 Book Appointment", "action": "book_appointment"},
-            {"label": "🎫 Track Token", "action": "track_token"},
-            {"label": "💡 AI Symptom Triage", "action": "ai_triage"},
-        ]
-
-    return {
-        "reply": reply,
-        "intent": intent,
-        "suggested_actions": actions
-    }
+    departments = db.query(Department).all()
+    result = chat_turn_with_gemini(
+        message=payload.message,
+        conversation_id=payload.conversation_id,
+        language=payload.language or "en",
+        token_context=token_context,
+        client_ip=client_ip,
+        departments=departments
+    )
+    return result

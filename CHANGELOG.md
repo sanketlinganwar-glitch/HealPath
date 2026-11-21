@@ -3,6 +3,51 @@
 
 ---
 
+## [v2.3.0] - 2026-11-21 (Stage 5 Milestone: AI Health Assistant with Gemini 2.5 Flash)
+
+### ✨ Features Added & Upgraded
+- **Google Gemini 2.5 Flash Integration:**
+  - Integrated official Google Gen AI SDK (`google-genai` v2.33.0) configured with 15-second request timeouts and robust exception handling.
+  - Read `GEMINI_API_KEY` and `GEMINI_MODEL` (`gemini-2.5-flash`) securely from `backend/.env`.
+  - Zero API key exposure to frontend bundles or client responses.
+- **AI Symptom Triage Engine (`POST /api/ai/triage`):**
+  - Implemented structured clinical symptom triage collecting primary complaint, duration, severity (`mild`, `moderate`, `severe`), age group (`infant`, `child`, `adult`, `senior`), and associated symptoms.
+  - Generates structured recommendations including recommended department, urgency classification (`ROUTINE`, `MODERATE`, `URGENT`, `EMERGENCY`), medical reasoning, hospital next steps, and follow-up questions.
+  - Enforced strict healthcare guardrails: assistant functions as routing/navigation tool only and never claims clinical diagnosis or prescribes pharmaceutical dosages.
+- **Emergency Red-Flag Intercept & Escalation:**
+  - Hardened pattern-matching rules for acute cardiac, respiratory, neurological, trauma, and poisoning conditions.
+  - Multi-lingual detection in English, Hindi, and Marathi (e.g., "crushing chest pain", "छाती में दर्द", "श्वास घेण्यास त्रास").
+  - Emergency conditions automatically override AI urgency to `EMERGENCY` with Sanjeevan Hospital 24/7 Hotline (+91 95526 25262) callout.
+- **Multi-Turn Conversational Session Engine:**
+  - Built `ConversationStore` with UUID session isolation to guarantee complete privacy between patients.
+  - Context window retaining the last 10 messages for conversational flow.
+  - Rate limiting enforced at 20 requests/minute per conversation session.
+  - Added `POST /api/ai/conversation/reset` to wipe chat history on demand.
+  - Injected live token context (queue position, patients ahead, estimated wait time, doctor room) when `token_id` is supplied.
+- **Deterministic Offline Fallback Protocol:**
+  - Automated fallback when Gemini API key is absent, network fails, or request times out.
+  - Evaluates patient symptoms against standard Sanjeevan Hospital OPD protocols with clear offline labeling (`is_offline_fallback: true`).
+- **React AI Health Assistant Interface (`AIHealthAssistant.jsx`):**
+  - Modern floating chat launcher with animated pulsing badge.
+  - Chat bubbles distinguishing patient and AI messages with timestamps and avatars.
+  - Quick symptom prompts (Chest Tightness, Knee Pain, Child Fever, Ear & Throat).
+  - Prominent urgency badges with color-coded alerts (`ROUTINE` [green], `MODERATE` [cyan], `URGENT` [amber], `EMERGENCY` [pulsing red]).
+  - Recommended department card with direct navigation actions.
+  - Persistent healthcare disclaimer visible at all times.
+  - Trilingual support (English, Hindi, Marathi) with instant switching.
+  - Integrated Web Speech API for voice queries and audio playback.
+  - Globally mounted in `AppLayout` and aliased through `ChatWidget.jsx`.
+
+### 🧪 QA & Test Metrics
+- Created `backend/test_ai_assistant.py` with 17 automated test cases (mocked Gemini success, offline fallback, timeouts, exceptions, emergency red flags across EN/HI/MR, department mappings, input validation, multi-turn retention, rate limiting, and session isolation).
+- 17/17 Stage 5 AI Assistant tests passed (`backend/test_ai_assistant.py`).
+- 17/17 FastAPI smoke tests passed (`backend/smoke_test.py`).
+- 20/20 Express integration tests passed (`test_stage3_4.js`).
+- Total verified tests: **54/54 passing (100%)**.
+- Production Vite PWA build in `frontend/` succeeds with exit code 0 (`dist/` generated with 0 errors).
+
+---
+
 ## [v2.2.0] - 2026-11-21 (Stage 3 & Stage 4 Milestone)
 
 ### ✨ Features Added & Upgraded
@@ -41,12 +86,6 @@
   - Added live WebSocket connection and auto-reconnection status badge on the TV display.
   - Synchronized Now Serving cards, Next In Line tickers, and multilingual speech announcements (EN, HI, MR).
 
-### 🧪 QA & Test Metrics
-- Vite production build in `frontend/` succeeds with exit code 0 (`dist/` generated in 6.27s).
-- 17/17 FastAPI smoke tests passed (`backend/smoke_test.py`).
-- 20/20 Express integration tests passed (`test_stage3_4.js`).
-- Total verified tests: **38/38 passing (100%)**.
-
 ---
 
 ## [v2.1.0] - 2026-11-21 (Stage 1 & Stage 2 Milestone)
@@ -58,28 +97,6 @@
 - **Missing QR Check-in Page:** Built responsive, mobile-first `public/checkin.html` with Sanjeevan Hospital Yavatmal branding, real-time cryptographic validation, and lobby instructions.
 
 ### 🔒 Security Hardening
-- **Secret Management:** Removed hardcoded development JWT fallbacks across `backend/auth.py` and `routes/auth.js`. Added environment validation on application startup.
-- **Public Self Check-In Endpoint:** Implemented `POST /api/checkin/self-verify` in `routes/checkin.js` with HMAC-SHA256 signature verification, allowing patients to confirm arrival without exposing staff administrative JWT tokens.
-- **Manual Verification Fallback:** Added `POST /api/checkin/manual-verify` for patients whose camera cannot scan QR passes directly.
-
-### 📚 Documentation & Governance
-- Established comprehensive platform architecture, schema, API, and QA repository:
-  1. `PROJECT_OVERVIEW.md`
-  2. `SYSTEM_ARCHITECTURE.md`
-  3. `DATABASE_SCHEMA.md`
-  4. `API_DOCUMENTATION.md`
-  5. `DEVELOPMENT_ROADMAP.md`
-  6. `SECURITY_REPORT.md`
-  7. `TESTING_REPORT.md`
-  8. `DEPLOYMENT_GUIDE.md`
-  9. `CHANGELOG.md`
-  10. `HACKBYTE_PROJECT_PROGRESS.md`
-
----
-
-## [v2.0.0] - Baseline HackByte / HealPath Implementation
-- Implemented Python 3.13 FastAPI backend with 21 modules covering appointments, prescriptions, feedback, and emergency workflow.
-- Created React 18 SPA with 12 pages, Tailwind CSS design system, and PWA manifest.
-- Established Sanjeevan Hospital Yavatmal (445001) real-world partner profile and doctor rosters.
-- Built atomic slot reservation engine and 60-second missed slot auto-shifter cron daemon.
-- Created trilingual translation dictionary in English, Hindi, and Marathi.
+- **Eliminated Hardcoded Fallback Secrets:** Removed hardcoded JWT and QR secret keys from `server.js` and `backend/auth.py`.
+- **Environment Enforcements:** Validates existence of `JWT_SECRET` and `QR_SECRET` on startup.
+- **Cryptographic QR Pass Generation:** Generated HMAC-SHA256 signature validating token ID, phone, timestamp, and purpose.

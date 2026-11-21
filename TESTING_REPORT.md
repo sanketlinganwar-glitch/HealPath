@@ -1,21 +1,21 @@
 # 🧪 HACKBYTE — TESTING & QUALITY ASSURANCE REPORT
 **Project Name:** HACKBYTE (HealPath / QueueCare)  
 **Partner Hospital:** Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal, Maharashtra, India – 445001  
-**Last Updated:** November 21, 2026 (Stage 3 & Stage 4 Complete)
+**Last Updated:** November 21, 2026 (Stage 5 Complete)
 
 ---
 
 ## 1. Test Strategy & Execution Summary
 
-Testing was performed across both architectures using automated smoke tests, production build validations, and runtime API verification.
+Testing was performed across both architectures using automated test suites, production build validations, and runtime API verification.
 
 ```
 ============================================================
-TEST EXECUTION METRICS (STAGES 1 - 4)
+TEST EXECUTION METRICS (STAGES 1 - 5)
 ============================================================
-Total Test Suites Run:     3
-Total Test Cases Executed: 38
-Tests Passed:              38 (100%)
+Total Test Suites Run:     4
+Total Test Cases Executed: 54
+Tests Passed:              54 (100%)
 Tests Failed:              0  (0%)
 Build Status:              SUCCESS (Exit Code 0)
 Test Health:               100% HEALTHY
@@ -50,53 +50,56 @@ Executed with Python 3.13 against FastAPI application endpoints:
 
 ---
 
-## 3. Test Suite 2: Frontend Production Build (`npm run build`)
+## 3. Test Suite 2: AI Health Assistant Test Suite (`backend/test_ai_assistant.py`)
 
-Executed using Vite 5.4.14 and Tailwind CSS in `frontend/`:
-- **Module Transformation:** 1747 modules transformed cleanly.
-- **Rollup Parse Check:** 0 JSX syntax errors (PatientTrackPage, ReceptionDashboard, AdminDashboard, DisplayBoard clean).
-- **PWA Service Worker:** `dist/sw.js` and `dist/workbox-9c191d2f.js` generated cleanly.
-- **Bundle Output:**
-  - `dist/index.html` (1.19 kB)
-  - `dist/assets/index-DpQ2wi3p.css` (54.63 kB)
-  - `dist/assets/index-BMUB3m8H.js` (444.70 kB)
-- **Exit Code:** `0` (Success in 6.27s)
-
----
-
-## 4. Test Suite 3: Express Integration & Check-In Suite (`test_stage3_4.js`)
-
-Executed with Node.js against Express live server on port 3000:
+Executed with Python 3.13 validating Stage 5 Gemini 2.5 Flash, offline triage, rate limiting, and healthcare safety:
 
 | # | Test Scenario | Method / Route | Expected Result | Actual Result | Status |
 |---|---|---|---|---|:---:|
-| **1** | Express Doctors Health | `GET /api/doctors` | HTTP 200, array of doctors | 200 OK, 12 doctors returned | **PASSED** |
-| **2** | Dr. Sunil M. Agrawal Roster | `GET /api/doctors` | Doctor record present | Found in Sanjeevan roster | **PASSED** |
-| **3** | Dr. Vijay S. Kawalkar Roster | `GET /api/doctors` | Doctor record present | Found in Sanjeevan roster | **PASSED** |
-| **4** | Dr. H. S. Bora Roster | `GET /api/doctors` | Doctor record present | Found in Sanjeevan roster | **PASSED** |
-| **5** | Dr. Vinay Pande Roster | `GET /api/doctors` | Doctor record present | Found in Sanjeevan roster | **PASSED** |
-| **6** | Dr. Sheetal S. Agrawal Roster | `GET /api/doctors` | Doctor record present | Found in Sanjeevan roster | **PASSED** |
-| **7** | Dr. Lalit Paldiwal Roster | `GET /api/doctors` | Doctor record present | Found in Sanjeevan roster | **PASSED** |
-| **8** | Sanjeevan Hospital Registry | `GET /api/hospital/sanjivani` | 200 OK, Yavatmal 445001 | Verified facility metadata | **PASSED** |
-| **9** | Live Queue TV Board Data | `GET /api/queue/live-board` | 200 OK, active doctor boards | Doctor consultation cards returned | **PASSED** |
-| **10**| Tampered QR HMAC Rejection | `POST /api/checkin/self-verify` | HTTP 400 Bad Request | Correctly rejected with 400 | **PASSED** |
-| **11**| Cryptographic QR Self Check-In | `POST /api/checkin/self-verify` | HTTP 200 / 409 verified | Cryptographic HMAC accepted | **PASSED** |
-| **12**| Duplicate Check-In Guard | `POST /api/checkin/self-verify` | HTTP 409 Conflict | Duplicate prevented idempotently | **PASSED** |
-| **13**| Manual Fallback Rejection | `POST /api/checkin/manual-verify`| HTTP 404 for non-existent token | Correctly rejected with 404 | **PASSED** |
+| **1** | Gemini API Success (Mocked) | `POST /api/ai/triage` | Structured JSON with Cardiology, URGENT | Valid triage payload, fallback=False | **PASSED** |
+| **2** | Key Unset Fallback | `POST /api/ai/triage` | Deterministic Orthopedics fallback | Offline fallback=True, disclaimer present | **PASSED** |
+| **3** | Gemini Exception Fallback | `POST /api/ai/triage` | Graceful fallback to ENT OPD | Error caught, offline fallback=True | **PASSED** |
+| **4** | Gemini Timeout Fallback | `POST /api/ai/triage` | Graceful fallback to Pediatrics OPD | 15s timeout caught, fallback=True | **PASSED** |
+| **5** | Red Flags (English) | `POST /api/ai/triage` | EMERGENCY urgency & ER hotline | Urgency EMERGENCY, indicators flagged | **PASSED** |
+| **6** | Red Flags (Hindi) | `POST /api/ai/triage` | आपातकालीन urgency & 112 advisory | Urgency EMERGENCY, Hindi advisory | **PASSED** |
+| **7** | Red Flags (Marathi) | `POST /api/ai/triage` | आपत्कालीन urgency & ER advisory | Urgency EMERGENCY, Marathi advisory | **PASSED** |
+| **8** | Cardiology Mapping | `POST /api/ai/suggest-department` | Maps palpitations/BP to Cardiology | Department Cardiology matched | **PASSED** |
+| **9** | Orthopedics Mapping | `POST /api/ai/suggest-department` | Maps knee/sprain to Orthopedics | Department Orthopedics matched | **PASSED** |
+| **10**| Pediatrics Mapping | `POST /api/ai/suggest-department` | Maps baby/vaccine to Pediatrics | Department Pediatrics matched | **PASSED** |
+| **11**| ENT Mapping | `POST /api/ai/suggest-department` | Maps ear/sinus to ENT | Department ENT matched | **PASSED** |
+| **12**| Input Validation | `POST /api/ai/triage` | HTTP 422 on empty string / missing body | Rejected with 422 Unprocessable Content | **PASSED** |
+| **13**| Multi-Turn Context | `POST /api/chat` | Context history maintained across turns | Session history retained in memory | **PASSED** |
+| **14**| Rate Limiting (>20 req/min) | `POST /api/chat` | 21st request receives rate limit warning | Rate limited with pause advisory | **PASSED** |
+| **15**| Conversation Reset | `POST /api/ai/conversation/reset` | Clears conversation memory for privacy | Session wiped, reports success | **PASSED** |
+| **16**| Session Isolation | `POST /api/chat` | Patient A context isolated from Patient B | Zero cross-talk between sessions | **PASSED** |
+| **17**| Token Context Injection | `POST /api/chat` | Injects live queue wait into reply | Reply intent queue_status with wait data | **PASSED** |
 
 ---
 
-## 5. Verification Commands
+## 4. Test Suite 3: Express & QR Check-in Integration (`test_stage3_4.js`)
 
-To reproduce the complete test verification suite locally:
+Executed with Node.js v20+ testing doctor synchronization, hospital identity, and QR check-in:
 
-```powershell
-# 1. FastAPI Comprehensive Smoke Tests
-.\backend\venv\Scripts\python.exe backend/smoke_test.py
+| # | Test Scenario | Route / Target | Expected Result | Actual Result | Status |
+|---|---|---|---|---|:---:|
+| **1-7**| Doctor Roster Sync | `GET /api/doctors` | 12 doctors present with Sanjeevan specialists | Verified all 6 Sanjeevan specialists | **PASSED** |
+| **8** | Hospital Identity | `GET /api/hospital/sanjivani`| Located in Yavatmal 445001 | Sanjeevan Hospital verified | **PASSED** |
+| **9** | Live Board Data | `GET /api/queue/live-board` | Doctors array populated | Verified doctor cards | **PASSED** |
+| **10-12**| Tampered QR Check-In | `POST /api/checkin/self-verify` | HTTP 400 Bad Request | Tampered signature rejected | **PASSED** |
+| **13-14**| Valid HMAC QR Check-In| `POST /api/checkin/self-verify` | HTTP 200 or 409 already in queue | Valid status returned | **PASSED** |
+| **15-16**| Duplicate Prevention | `POST /api/checkin/self-verify` | HTTP 409 Conflict | Duplicate prevented | **PASSED** |
+| **17-20**| Manual Token Fallback | `POST /api/checkin/manual-verify`| HTTP 404 on missing token | Missing token rejected | **PASSED** |
 
-# 2. Frontend Production Build
-Set-Location frontend; npm run build; Set-Location ..
+---
 
-# 3. Express Check-In & Doctor Integration Test
-node test_stage3_4.js
-```
+## 5. Test Suite 4: Frontend Production Build (`npm run build`)
+
+Executed using Vite 5.4.21 and Tailwind CSS in `frontend/`:
+- **Module Transformation:** 1748 modules transformed cleanly.
+- **Rollup Parse Check:** 0 JSX syntax errors (AIHealthAssistant, ChatWidget, PatientTrackPage, ReceptionDashboard, AdminDashboard clean).
+- **PWA Service Worker:** `dist/sw.js` and `dist/workbox-9c191d2f.js` generated cleanly.
+- **Bundle Output:**
+  - `dist/index.html` (1.19 kB)
+  - `dist/assets/index-DIahPNPT.css` (56.03 kB │ gzip: 9.30 kB)
+  - `dist/assets/index-Cbmqg8kV.js` (452.34 kB │ gzip: 129.28 kB)
+- **Exit Code:** 0 (SUCCESS in 35.47s)

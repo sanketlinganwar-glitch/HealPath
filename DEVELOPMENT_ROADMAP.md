@@ -10,8 +10,8 @@ flowchart TD
     S1[Stage 1: Repository Audit & Backup ✅] --> S2[Stage 2: Critical Bug Fixing & Build Stabilization ✅]
     S2 --> S3[Stage 3: Workflow Stabilization ✅]
     S3 --> S4[Stage 4: QR Check-In & Live Queue TV Integration ✅]
-    S4 --> S5[Stage 5: AI Health Assistant with Gemini ⏳]
-    S5 --> S6[Stage 6: Predictive Queue Waiting Time AI 📋]
+    S4 --> S5[Stage 5: AI Health Assistant with Gemini 2.5 Flash ✅]
+    S5 --> S6[Stage 6: Predictive Queue Waiting Time AI ⏳]
     S6 --> S7[Stage 7: Multilingual Voice Assistant 📋]
     S7 --> S8[Stage 8: Digital Health Wallet 📋]
     S8 --> S9[Stage 9: Analytics & Omnichannel Notifications 📋]
@@ -58,41 +58,66 @@ flowchart TD
   - Live viewfinder scanning via `html5-qrcode`.
   - Camera switch support (environment/rear vs. selfie).
   - Cryptographic token signature extraction and server-side HMAC validation (`/api/checkin/self-verify`).
-  - Audio chime confirmation and duplicate check-in prevention (409 Conflict).
-  - Manual token entry fallback.
-- **Live Queue & TV Display (`public/js/queue.js` & `DisplayBoard.jsx`):**
-  - Real-time Socket.io event synchronization (`patient:checkedin`, `queue:patient_called`, `queue:updated`, `appointment:checked_in`) without requiring full page reload.
-  - Patient confidentiality protection via name masking (`maskPatientName`) on public lobby monitors.
-  - Live WebSocket connection status indicator.
-  - Multilingual audio announcements in English, Hindi, and Marathi.
+  - Prevented duplicate check-ins (409 Conflict) and handled expired slots (410 Gone).
+  - Maintained manual token entry fallback.
+- **Live Queue & TV Display Integration:**
+  - Implemented patient privacy masking (`maskPatientName`) protecting confidential healthcare information.
+  - Verified Socket.io real-time events (`patient:checkedin`, `queue:patient_called`, `queue:updated`, `appointment:checked_in`).
+  - Multilingual voice announcements (EN, HI, MR) without page refresh.
 
-### Stage 5: AI Health Assistant with Gemini (NEXT RECOMMENDED STAGE ⏳)
-- Connect Google Gemini API (`gemini-2.5-flash` or `gemini-1.5-flash`) via `backend/routers/ai.py`.
-- Triage medical symptoms with structured confidence scores, department routing, and clinical urgency tiering.
-- Implement rate limiting, safety filters, and strict disclaimer guarding against autonomous pharmaceutical prescriptions.
-- Add conversational chat interface in React frontend with suggested follow-up prompts.
+### Stage 5: AI Health Assistant with Gemini 2.5 Flash (COMPLETED ✅)
+- **Google Gemini 2.5 Flash API Integration:**
+  - Integrated official Google Gen AI SDK (`google-genai` v2.33.0) with 15-second request timeouts.
+  - Configured `GEMINI_API_KEY` and `GEMINI_MODEL` (`gemini-2.5-flash`) exclusively in backend environment.
+  - Zero API key exposure to browser or frontend bundles.
+- **AI Symptom Triage Engine (`POST /api/ai/triage`):**
+  - Structured symptom intake (complaint, duration, severity, age group, associated symptoms).
+  - Department recommendation and urgency classification (`ROUTINE`, `MODERATE`, `URGENT`, `EMERGENCY`).
+  - Strict Healthcare Safety Guardrails: Assistant operates as navigation/triage guide only, barred from medical diagnoses or prescribing drugs.
+- **Emergency Red-Flag Intercept & Escalation:**
+  - Hardened pattern-matching rules for cardiac, respiratory, stroke, trauma, and poisoning conditions.
+  - Multi-lingual keywords across English, Hindi, and Marathi.
+  - Emergency conditions override model outputs to enforce `EMERGENCY` with Sanjeevan Hospital 24/7 Hotline (+91 95526 25262) callout.
+- **Multi-Turn Conversational Session Engine:**
+  - `ConversationStore` with UUID session isolation to guarantee complete privacy between patients.
+  - Context window retaining the last 10 messages for conversational flow.
+  - Session rate-limiting enforced at 20 requests/minute.
+  - `POST /api/ai/conversation/reset` endpoint to wipe chat history on demand.
+  - Real-time token queue wait context injection.
+- **Deterministic Offline Fallback Protocol:**
+  - Automated fallback when Gemini API key is absent, network fails, or request times out.
+  - Evaluates patient symptoms against standard Sanjeevan Hospital OPD protocols with clear offline labeling (`is_offline_fallback: true`).
+- **React AI Health Assistant Interface (`AIHealthAssistant.jsx`):**
+  - Floating launcher button with glowing pulse animation.
+  - Modern chat bubbles with timestamps, quick prompts, and urgency badges.
+  - Trilingual support (English, Hindi, Marathi) with instant switching.
+  - Integrated Web Speech API for voice queries and audio playback.
+  - Globally mounted in `AppLayout` and aliased through `ChatWidget.jsx`.
 
-### Stage 6: Predictive Queue Waiting Time AI
-- Transition wait-time calculation from naive linear estimation to rolling historical regression.
-- Factor in doctor arrival delays, break schedules, and peak-hour hospital congestion.
-- Display transparent "Why this changed" explanations to waiting patients.
+### Stage 6: Predictive Queue Waiting Time AI (NEXT TARGET ⏳)
+- Historical consultation duration regression model based on department and time of day.
+- Dynamic turn recalculation when emergency patients are prioritized into the queue.
+- Real-time doctor consultation pace tracking and delay notifications.
 
-### Stage 7: Multilingual Voice Assistant
-- Enhance browser-native Web Speech API with regional Marathi and Hindi phonetics.
-- Provide voice-driven navigation: "हार्ट डॉक्टर वेळ", "Book Appointment".
+### Stage 7: Multilingual Voice Assistant (FUTURE 📋)
+- Low-latency voice interaction in English, Hindi, and Marathi using Gemini Live API / Web Speech API.
+- Dialect handling for Vidarbha regional Marathi.
 
-### Stage 8: Digital Health Wallet
-- Digital health record storage with ABDM / ABHA ID integration.
-- Instant PDF prescription downloads and lab test reports.
+### Stage 8: Digital Health Wallet (FUTURE 📋)
+- Offline-first token pass with PWA caching.
+- Digital prescription download with QR-verified digital signature.
+- Lab test report integration with secure viewing.
 
-### Stage 9: Analytics & Omnichannel Notifications
-- Real-time hospital metrics dashboard with exportable CSV and PDF reports.
-- Omnichannel patient alerts via WhatsApp (Meta Cloud API), SMS, and Web Push.
+### Stage 9: Analytics & Omnichannel Notifications (FUTURE 📋)
+- WhatsApp Cloud API webhook for automated turn alerts (3 patients ahead, 1 patient ahead).
+- SMS fallback via Fast2SMS / Twilio.
+- Department bottleneck heatmaps and wait time analytics for hospital management.
 
-### Stage 10: Database Unification to PostgreSQL
-- Author Alembic database migration scripts from SQLite and JSON datastore to PostgreSQL.
-- Stress test concurrent queue transactions and lock contention.
+### Stage 10: Database Unification to PostgreSQL (FUTURE 📋)
+- Migrate atomic JSON datastore and SQLite to a single PostgreSQL production instance.
+- Dual-write transition followed by decommissioning of the legacy Express datastore.
 
-### Stage 11: Production DevOps & Cloud Deployment
-- Multi-stage `Dockerfile` and `docker-compose.yml` orchestrating FastAPI, Express, React, and PostgreSQL.
-- CI/CD workflow testing, health probes, and reverse proxy configuration (Nginx / Caddy).
+### Stage 11: Security Hardening & DevOps Production (FUTURE 📋)
+- Complete OWASP Top 10 compliance audit.
+- Docker multi-container composition (`docker-compose.prod.yml`).
+- Caddy / Nginx reverse proxy with automated Let's Encrypt SSL/TLS.

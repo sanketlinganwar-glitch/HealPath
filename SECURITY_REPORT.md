@@ -48,5 +48,16 @@ Healthcare data platforms require rigorous confidentiality, integrity, and avail
 ## 4. Privacy & Healthcare Compliance
 
 1. **Public Display Board Anonymization:** Lobby screens never show full patient names, mobile numbers, or diagnostic notes. Only token numbers (`C-012`) and doctor room designations are broadcast.
+2. **AI Assistant Healthcare Safety Boundaries (Stage 5):**
+   - The AI Assistant strictly operates as a navigation, routing, and preliminary symptom triage assistant.
+   - Strictly forbidden from generating definitive clinical diagnoses or prescribing medications/dosages.
+   - Persistent healthcare disclaimers rendered in all client views and API payloads.
+   - Emergency Red-Flag Intercept: Hardened multi-lingual keyword patterns (cardiac, respiratory, neurological, trauma) automatically force `EMERGENCY` status regardless of model response, providing immediate direct dialing to the Sanjeevan Hospital 24/7 Hotline (+91 95526 25262) or 112.
+3. **AI Session Isolation & Data Privacy:**
+   - Multi-turn sessions isolated by cryptographically random UUIDs; zero cross-session leakage.
+   - In-memory sliding context window (last 10 turns) with automatic 60-minute TTL cleanup.
+   - Explicit `POST /api/ai/conversation/reset` endpoint allowing patients to wipe their conversational context anytime.
+   - Backend-only `GEMINI_API_KEY` handling with zero client exposure or debug logging.
+   - Rate limiting enforced at 20 requests/minute per session to guard against model exhaustion and DDoS abuse.
 2. **Medical Report Obfuscation:** Uploaded patient reports are stripped of original filenames, renamed to cryptographically random UUIDs (`fileStore.saveFile`), and stored outside the public document root.
 3. **Emergency Audit Trail:** Any priority escalation from normal to emergency is recorded in `emergency_audit_logs` with staff username, timestamp, and clinical justification.

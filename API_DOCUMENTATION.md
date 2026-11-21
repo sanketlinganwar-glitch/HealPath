@@ -88,8 +88,10 @@
 | `POST` | `/api/feedback` | Public | Submit post-consultation 1–5 star ratings and comments. |
 | `GET` | `/api/feedback/summary` | Public | Aggregated ratings breakdown and department averages. |
 
-### I. AI Health Assistant & Triage
+### I. AI Health Assistant & Triage (Stage 5 Upgraded)
 | Method | Path | Auth | Description |
 |---|---|---|---|
-| `POST` | `/api/ai/suggest-department` | Public | Submits symptoms; returns recommended clinical department. |
-| `POST` | `/api/chat` | Public | Multilingual triage conversational assistant (EN/HI/MR). |
+| `POST` | `/api/ai/suggest-department` | Public | Submits symptoms; returns recommended clinical department (backward-compatible). |
+| `POST` | `/api/ai/triage` | Public | Stage 5 structured clinical symptom triage powered by Gemini 2.5 Flash with urgency scoring (`ROUTINE`, `MODERATE`, `URGENT`, `EMERGENCY`), hospital next steps, and automatic deterministic offline fallback. |
+| `POST` | `/api/ai/conversation/reset` | Public | Resets multi-turn conversation session, clearing context history for user privacy. |
+| `POST` | `/api/chat` | Public | Multilingual multi-turn conversational AI assistant (EN/HI/MR) with 20 req/min rate limiting, live token context injection, and emergency red-flag override. |
