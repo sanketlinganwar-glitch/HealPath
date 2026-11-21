@@ -59,9 +59,9 @@ function showToast(message, type = 'info') {
 
   const toast = document.createElement('div');
   toast.style.cssText = `
-    background: #0F3B64;
+    background: #1B3B6F;
     color: #FFFFFF;
-    border-left: 4px solid #14BBA6;
+    border-left: 4px solid #2563EB;
     padding: 1rem 1.25rem;
     border-radius: 8px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
@@ -75,9 +75,9 @@ function showToast(message, type = 'info') {
   `;
 
   toast.innerHTML = `
-    <i class="fas fa-bell" style="color: #14BBA6; font-size: 1.1rem;"></i>
+    <i class="fas fa-bell" style="color: #2563EB; font-size: 1.1rem;"></i>
     <div style="flex: 1;">${message}</div>
-    <button style="background: none; border: none; color: #A7D8D1; cursor: pointer; font-size: 1rem;" onclick="this.parentElement.remove()">&times;</button>
+    <button style="background: none; border: none; color: #BAE6FD; cursor: pointer; font-size: 1rem;" onclick="this.parentElement.remove()">&times;</button>
   `;
 
   toastContainer.appendChild(toast);
@@ -114,7 +114,7 @@ function showWhatsAppNotification(data) {
       <span style="font-weight: 700; color: #25D366; display: flex; align-items: center; gap: 0.4rem;">
         <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> WhatsApp Confirmation Sent
       </span>
-      <span style="font-size: 0.75rem; color: #A7D8D1;">Just Now</span>
+      <span style="font-size: 0.75rem; color: #BAE6FD;">Just Now</span>
     </div>
     <div style="font-size: 0.84rem; line-height: 1.4; color: #ECE5DD;">
       <strong>To:</strong> ${data.recipientPhone || 'Patient'}<br>

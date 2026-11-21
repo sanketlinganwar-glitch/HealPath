@@ -51,9 +51,13 @@ class FileDatabase {
       appointments: [],
       queue: [],
       messages: [],
+      payments: [],
+      reports: [],
+      report_logs: [],
       settings: {
         slot_duration_min: '15',
         grace_period_min: '10',
+        reminder_minutes_before: '60',
         hospital_name: 'HealPath Hospital System',
         hospital_phone: '+91 95526 25262 / +91 98765 43210',
         hospital_email: 'contact@healpath.com'
@@ -67,6 +71,15 @@ class FileDatabase {
       try {
         const raw = fs.readFileSync(DATA_FILE, 'utf8');
         this.data = JSON.parse(raw);
+        if (!Array.isArray(this.data.payments)) {
+          this.data.payments = [];
+        }
+        if (!Array.isArray(this.data.reports)) {
+          this.data.reports = [];
+        }
+        if (!Array.isArray(this.data.report_logs)) {
+          this.data.report_logs = [];
+        }
       } catch (e) {
         console.error('Error loading DB file:', e);
       }

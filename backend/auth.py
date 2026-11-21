@@ -98,3 +98,20 @@ def require_admin(current_user: User = Depends(get_current_user)) -> User:
             detail="Access forbidden: admin role required"
         )
     return current_user
+
+def get_current_user_optional(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
+    db: Session = Depends(get_db)
+) -> Optional[User]:
+    """Optionally verify Bearer JWT token; returns User if valid, None if absent or invalid."""
+    if not credentials or not credentials.credentials:
+        return None
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if not username:
+            return None
+        return db.query(User).filter(User.username == username).first()
+    except Exception:
+        return None
+

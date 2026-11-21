@@ -195,6 +195,54 @@ TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
 
 ---
 
+---
+
+## 💳 Razorpay Test Mode (Optional Online OPD Payment)
+
+HealPath supports optional online payment for doctor consultation fees using Razorpay in **TEST MODE ONLY**.
+
+### 1. Obtaining Test Keys
+1. Log in to your [Razorpay Dashboard](https://dashboard.razorpay.com/).
+2. Toggle the switch at the top to **"Test Mode"**.
+3. Navigate to **Settings &rarr; API Keys &rarr; Generate Key**.
+4. Copy your **Key ID** and **Key Secret**.
+5. Key ID **must** start with `rzp_test_...` (e.g., `rzp_test_1DP5mmOlF5G5ag`).
+6. Copy the keys into your `.env` file:
+   ```env
+   RAZORPAY_KEY_ID=rzp_test_your_test_key_id
+   RAZORPAY_KEY_SECRET=your_test_key_secret
+   RAZORPAY_WEBHOOK_SECRET=your_test_webhook_secret
+   ```
+> [!IMPORTANT]
+> The server strictly enforces test mode safety: it rejects requests if `RAZORPAY_KEY_ID` does not start with `rzp_test_`. Live API keys are prohibited in this environment.
+
+### 2. Test Cards & UPI Details
+For demo and checkout testing, please consult the official Razorpay documentation for current test credentials:
+- [Razorpay Test Mode Cards & NetBanking](https://razorpay.com/docs/payments/payments/test-card-details/)
+- Use any future validity date (e.g., `12/30`) and any 3-digit CVV (e.g., `123`).
+- For UPI testing, you can enter `success@razorpay` or use Razorpay's simulated success buttons in checkout.
+
+### 3. Payment Flow & Rules
+- **Optional**: "Pay at hospital" is always the default method.
+- **Dynamic Fee Detection**: The "Pay online" option only displays if the selected doctor has a `consultation_fee > 0`. If the doctor has no fee or fee is 0, the online payment option is hidden completely.
+- **10-Minute Exclusive Hold**: Creating a payment order reserves the time slot as `pending_payment` with a 10-minute hold countdown. If payment is dismissed or fails, the patient can retry or immediately release the slot.
+- **Automated Hold Expiry**: A background minute cron cleans up expired holds and returns slots to `available`.
+- **Refund Due**: When a paid appointment is cancelled, its status updates to `refund_due`. Administrators can issue real test refunds via the Operations Dashboard (`POST /api/admin/payments/:id/refund`).
+
+### 4. Manual Testing Checklist
+- [x] **No fee doctor**: When doctor has no consultation fee, online payment is completely hidden.
+- [x] **Pay at hospital**: Default option books immediately without payment gateways.
+- [x] **Successful payment**: Razorpay Checkout confirms slot, marks payment `paid`, issues QR pass and token.
+- [x] **Closed popup**: Displays 10-minute hold countdown with Retry and Cancel & Release buttons.
+- [x] **Tampered signature**: Backend rejects invalid HMAC SHA256 signatures with HTTP 400.
+- [x] **Duplicate verify**: Calling verify multiple times is idempotent and returns the confirmed booking.
+- [x] **Race condition (slot contention)**: Second simultaneous booking or order creation on the same slot receives HTTP 409 Conflict.
+- [x] **Webhook idempotency**: Duplicate raw webhook events with the same `event.id` are safely ignored.
+- [x] **Cancellation of paid slot**: Sets `payment_status: 'refund_due'` instead of silent cancellation.
+- [x] **Non-admin refund protection**: Non-admin users attempting refunds receive HTTP 403 Forbidden.
+
+---
+
 ## 🔒 Security & Performance
 - **Atomic Transactions:** Prevents duplicate slot bookings through synchronized in-memory and database mutex locking.
 - **Helmet & CORS:** Strict HTTP headers with configured policies.
@@ -202,6 +250,7 @@ TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
 - **Password Hashing:** Industry-standard `bcryptjs` with salt rounds = 10.
 - **JWT Protection:** Signed tokens with 7-day expiration.
 - **Responsive Layout:** Optimized for mobile smartphones, tablets, and high-resolution desktops.
+
 
 ---
 

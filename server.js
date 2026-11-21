@@ -23,6 +23,10 @@ import queueRoutes from './routes/queue.js';
 import adminRoutes from './routes/admin.js';
 import chatRoutes from './routes/chat.js';
 import sanjivaniRoutes from './routes/sanjivaniHospital.js';
+import checkinRoutes from './routes/checkin.js';
+import paymentRoutes from './routes/payments.js';
+import reportRoutes from './routes/reports.js';
+
 
 dotenv.config();
 
@@ -48,6 +52,10 @@ app.use(helmet({
 }));
 
 app.use(cors());
+
+// Razorpay Webhook requires unmodified raw body for HMAC-SHA256 signature verification
+app.use('/api/payments/webhook', express.raw({ type: 'application/json' }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -74,6 +82,10 @@ app.use('/api/queue', queueRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/hospital/sanjivani', sanjivaniRoutes);
+app.use('/api/checkin', checkinRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api', reportRoutes);
+
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -95,12 +107,12 @@ initCronJobs(io);
 // Auto-seed demo database if fresh
 seedDatabase(false).catch(console.error);
 
-// Fallback route for SPA / direct link navigation
+// Fallback route: serve 404.html for unknown non-API routes
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api')) {
     return next();
   }
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
 // Start Server with Port Fallback

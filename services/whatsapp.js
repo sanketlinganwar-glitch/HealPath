@@ -12,7 +12,7 @@ class WhatsAppService {
   /**
    * Send WhatsApp notification with async retry & automatic fallback to live simulation
    */
-  async sendMessage({ appointmentId = null, recipientPhone, text, io = null }) {
+  async sendMessage({ appointmentId = null, recipientPhone, text, type = 'notification', channel = null, io = null }) {
     // Clean and validate E.164 phone
     const formattedPhone = recipientPhone.startsWith('+') ? recipientPhone : `+${recipientPhone.replace(/\D/g, '')}`;
 
@@ -22,6 +22,8 @@ class WhatsAppService {
       recipient_phone: formattedPhone,
       message_text: text,
       provider: 'simulation',
+      channel: channel || 'whatsapp-sim',
+      type: type,
       status: 'sent',
       error_message: null,
       sent_at: new Date().toISOString()
@@ -31,6 +33,7 @@ class WhatsAppService {
       // 1. Try WhatsApp Cloud API if configured
       if (this.cloudToken && this.phoneId) {
         logEntry.provider = 'whatsapp_cloud';
+        logEntry.channel = 'whatsapp';
         const url = `https://graph.facebook.com/v18.0/${this.phoneId}/messages`;
         const res = await fetch(url, {
           method: 'POST',
@@ -55,6 +58,7 @@ class WhatsAppService {
       // 2. Try Twilio if configured
       else if (this.twilioSid && this.twilioAuth) {
         logEntry.provider = 'twilio';
+        logEntry.channel = 'whatsapp';
         const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${this.twilioSid}/Messages.json`;
         const params = new URLSearchParams();
         params.append('To', `whatsapp:${formattedPhone}`);
@@ -80,6 +84,7 @@ class WhatsAppService {
       // 3. Fallback: Reliable Live Simulation
       else {
         logEntry.provider = 'simulation';
+        logEntry.channel = 'whatsapp-sim';
         logEntry.status = 'delivered';
       }
     } catch (err) {
@@ -95,6 +100,7 @@ class WhatsAppService {
     // Broadcast live event to staff and patient dashboards via Socket.io
     if (io) {
       io.emit('whatsapp:message_sent', logEntry);
+      io.emit('message:sent', logEntry);
     }
 
     return logEntry;
@@ -107,6 +113,7 @@ class WhatsAppService {
       appointmentId: appointment.id,
       recipientPhone: appointment.whatsapp_no,
       text,
+      type: 'booking',
       io
     });
   }
@@ -118,6 +125,7 @@ class WhatsAppService {
       appointmentId: appointment.id,
       recipientPhone: appointment.whatsapp_no,
       text,
+      type: 'reschedule',
       io
     });
   }
@@ -129,6 +137,7 @@ class WhatsAppService {
       appointmentId: appointment.id,
       recipientPhone: appointment.whatsapp_no,
       text,
+      type: 'auto_shift',
       io
     });
   }

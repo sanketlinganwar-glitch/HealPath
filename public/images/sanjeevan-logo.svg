@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 250" width="100%" height="100%">
+  <defs>
+    <!-- Circular Path for Hospital Title -->
+    <path id="textCircle" d="M 31,118 A 89,89 0 1,1 209,118" fill="none" />
+    
+    <!-- Ribbon Path for Motto -->
+    <path id="ribbonPath" d="M 45,212 Q 120,188 195,212" fill="none" />
+    
+    <!-- Shadow filter -->
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.18"/>
+    </filter>
+
+    <linearGradient id="purpleRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#93278F"/>
+      <stop offset="100%" stop-color="#7B1D77"/>
+    </linearGradient>
+
+    <linearGradient id="redCross" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EF4444"/>
+      <stop offset="100%" stop-color="#DC2626"/>
+    </linearGradient>
+
+    <linearGradient id="greenHands" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <linearGradient id="greenRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#16A34A"/>
+    </linearGradient>
+  </defs>
+
+  <g filter="url(#subtleShadow)">
+    <!-- Outer Purple Ring -->
+    <circle cx="120" cy="115" r="102" fill="url(#purpleRing)" stroke="#EAB308" stroke-width="2"/>
+    <circle cx="120" cy="115" r="76" fill="#FFFFFF" stroke="#EAB308" stroke-width="1.5"/>
+
+    <!-- Circular Hospital Name along the purple ring -->
+    <text font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="10" font-weight="800" fill="#FFFFFF" letter-spacing="1.2">
+      <textPath href="#textCircle" startOffset="50%" text-anchor="middle">
+        SANJEEVAN MULTI-SPECIALITY HOSPITAL
+      </textPath>
+    </text>
+
+    <!-- Medical / Crown Symbol at Top -->
+    <path d="M 106,60 L 120,51 L 134,60 L 128,65 L 120,61 L 112,65 Z" fill="#1E3A8A"/>
+    <circle cx="106" cy="58" r="1.8" fill="#1E3A8A"/>
+    <circle cx="120" cy="49" r="2.2" fill="#1E3A8A"/>
+    <circle cx="134" cy="58" r="1.8" fill="#1E3A8A"/>
+
+    <!-- Central Red Cross -->
+    <g transform="translate(120, 114)">
+      <!-- Cross Arms -->
+      <path d="M -15,-40 L 15,-40 L 15,-15 L 40,-15 L 40,15 L 15,15 L 15,35 L -15,35 L -15,15 L -40,15 L -40,-15 L -15,-15 Z" 
+            fill="url(#redCross)" stroke="#B91C1C" stroke-width="1.5" stroke-linejoin="round"/>
+
+      <!-- White Flame of Life in Cross Center -->
+      <path d="M 0,-18 C 7,-9 9,-1 6,7 C 4,12 0,15 0,15 C 0,15 -4,12 -6,7 C -9,-1 -7,-9 0,-18 Z" fill="#FFFFFF"/>
+      <!-- Inner Flame Core -->
+      <path d="M 0,-8 C 3,-2 4,3 2,7 C 1,9 0,11 0,11 C 0,11 -1,9 -2,7 C -4,3 -3,-2 0,-8 Z" fill="#FEF08A"/>
+    </g>
+
+    <!-- Cupped Healing Green Hands -->
+    <path d="M 80,126 C 80,148 98,162 120,162 C 142,162 160,148 160,126 C 154,136 142,148 120,148 C 98,148 86,136 80,126 Z" 
+          fill="url(#greenHands)"/>
+    <path d="M 76,124 C 82,142 98,154 116,155 C 114,151 106,144 94,138 C 84,133 78,127 76,124 Z" fill="#047857"/>
+    <path d="M 164,124 C 158,142 142,154 124,155 C 126,151 134,144 146,138 C 156,133 162,127 164,124 Z" fill="#047857"/>
+
+    <!-- Ribbon / Banner across the bottom -->
+    <polygon points="36,215 54,200 54,226" fill="#15803D"/>
+    <polygon points="204,215 186,200 186,226" fill="#15803D"/>
+
+    <!-- Ribbon Main Body (Curved Banner) -->
+    <path d="M 46,210 Q 120,184 194,210 L 194,230 Q 120,204 46,230 Z" 
+          fill="url(#greenRibbon)" stroke="#166534" stroke-width="1.5"/>
+
+    <!-- Ribbon Motto Text -->
+    <text font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="8.8" font-weight="800" fill="#FFFFFF" letter-spacing="0.8">
+      <textPath href="#ribbonPath" startOffset="50%" text-anchor="middle">
+        SAVE LIFE WITH LOVE &amp; CARE
+      </textPath>
+    </text>
+  </g>
+</svg>

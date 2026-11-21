@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact HealPath - Yavatmal (445001) & Regional Healthcare Centers</title>
-  
+  <title>Contact & Hospital Location - Sanjivani Hospital Yavatmal</title>
+  <meta name="description" content="Get in touch with Sanjeevan Multispecialty Hospital Yavatmal 445001. 24/7 Emergency Casualty hotline, reception desk, WhatsApp support, and Google Map directions.">
+  <meta property="og:title" content="Contact Sanjivani Hospital Yavatmal">
+  <meta property="og:description" content="Reach our patient coordinator desk or visit our facility on Mahadev Mandir Road, Yavatmal.">
+  <link rel="icon" type="image/svg+xml" href="images/sanjeevan-logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -14,98 +21,140 @@
   <div class="top-bar">
     <div class="container top-bar-inner">
       <div class="top-bar-left">
-        <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> Helpline: <strong>+91 98765 43210</strong></span>
-        <span><i class="fas fa-hospital" style="color: var(--mint); margin-right: 5px; margin-left: 10px;"></i> Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)</span>
+        <span class="top-bar-emergency-pill">
+          <i class="fas fa-phone-alt" style="color: var(--mint);"></i>
+          <span data-i18n="emergency_call">24/7 Emergency Line:</span>
+          <strong><a href="tel:+919552625262">+91 95526 25262</a></strong> / 
+          <strong><a href="tel:+919876543210">+91 98765 43210</a></strong>
+        </span>
+        <span>
+          <i class="fas fa-hospital" style="color: var(--mint);"></i>
+          Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)
+        </span>
       </div>
       <div class="top-bar-right">
-        <div class="online-indicator"><span class="online-dot"></span> <span class="online-status-text">Online</span></div>
-        <select id="lang-select" class="lang-selector">
-          <option value="en">English (EN)</option>
-          <option value="hi">हिन्दी (HI)</option>
-          <option value="mr">मराठी (MR)</option>
-        </select>
-        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()"><i class="fas fa-question-circle"></i> Help</button>
+        <span>
+          <i class="fas fa-clock" style="color: var(--mint);"></i>
+          OPD Hours: <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong>
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- Header -->
+  <!-- Sticky Header -->
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <div class="logo-icon-tile">H</div>
+      <a href="index.html" class="logo" aria-label="HealPath Sanjivani Hospital Homepage">
+        <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
         <div class="logo-text-box">
-          <span class="logo-text"><span class="heal">Heal</span><span class="path">Path</span></span>
-          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+          <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+          <span class="logo-tagline" data-i18n="hero_tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
         </div>
       </a>
-      <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="services.html" class="nav-link">Services</a>
-        <a href="doctors.html" class="nav-link">Doctors</a>
-        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> Live Queue</a>
-        <a href="booking.html" class="nav-link">Book Appointment</a>
-        <a href="contact.html" class="nav-link active">Contact</a>
+
+      <nav class="nav-menu" id="primary-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link" data-i18n="home">Home</a>
+        <a href="services.html" class="nav-link" data-i18n="services">Services</a>
+        <a href="doctors.html" class="nav-link" data-i18n="doctors">Doctors</a>
+        <a href="about.html" class="nav-link" data-i18n="about_us">About Us</a>
+        <a href="queue.html" class="nav-link queue-nav-pill"><i class="fas fa-satellite-dish"></i> <span data-i18n="live_queue">Live Queue</span></a>
+        <a href="blog.html" class="nav-link" data-i18n="blog">Blog</a>
+        <a href="contact.html" class="nav-link active" data-i18n="contact">Contact</a>
       </nav>
+
       <div class="header-actions">
+        <div class="lang-selector-wrapper">
+          <i class="fas fa-globe" style="color: var(--teal); font-size: 0.85rem;"></i>
+          <select id="lang-select" class="lang-selector" aria-label="Select Language">
+            <option value="en">English (EN)</option>
+            <option value="hi">हिन्दी (HI)</option>
+            <option value="mr">मराठी (MR)</option>
+          </select>
+        </div>
         <div id="header-auth-container"></div>
-        <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Slot</a>
+        <a href="booking.html" class="btn btn-primary header-book-btn">
+          <i class="fas fa-calendar-check"></i> <span data-i18n="book_appointment">Book Slot</span>
+        </a>
+        <button class="mobile-toggle" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
       </div>
     </div>
   </header>
 
-  <!-- Page Banner -->
-  <section class="hero-section organic-bg-shapes" style="padding: 3.5rem 0 4rem; text-align: center;">
-    <div class="container" style="position: relative; z-index: 2;">
-      <span class="tag-mint" style="margin-bottom: 0.5rem;">24/7 Patient Help Desk</span>
-      <h1 style="color: var(--white); font-size: 2.4rem; margin: 0.5rem 0;">We're Connected All Time To Help Our Patients</h1>
-      <p style="color: rgba(255,255,255,0.85); margin: 0 auto; max-width: 600px;">
-        Reach out to HealPath patient coordinators, 24/7 emergency desks, or visit our affiliated facility in Yavatmal 445001.
+  <!-- Page Banner & Breadcrumbs -->
+  <section class="page-banner">
+    <div class="container page-banner-inner">
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep"><i class="fas fa-chevron-right"></i></span>
+        <span class="active">Contact Us</span>
+      </nav>
+      <span class="section-tag"><i class="fas fa-phone-alt"></i> Help & Inquiries</span>
+      <h1 style="font-size: 2.3rem; color: var(--deep-blue); margin-top: 0.25rem;">Contact Sanjivani Hospital</h1>
+      <p style="color: var(--text-muted); font-size: 1rem; max-width: 680px;">
+        Reach our reception desk, emergency casualty coordinator, or submit an inquiry about OPD doctor availability.
       </p>
     </div>
   </section>
 
-  <!-- Contact Form & Info Grid -->
-  <section class="section">
+  <!-- Contact Form & Info Section -->
+  <main class="section">
     <div class="container">
-      <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: flex-start; margin-bottom: 4rem;">
+      <div style="display: grid; grid-template-columns: 1fr 1.25fr; gap: 3rem; align-items: flex-start; margin-bottom: 4rem;">
         
         <!-- Contact Information Card -->
-        <div class="card" style="padding: 2.5rem; background: var(--deep-blue); color: #FFF; border-top-color: var(--teal);">
-          <span class="tag-mint" style="margin-bottom: 0.5rem;">GET IN TOUCH</span>
-          <h3 style="color: #FFF; font-size: 1.6rem; margin: 0.5rem 0 1.25rem;">Contact Information</h3>
-          <p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem;">
-            Have questions about doctor availability, diagnostic tests, or our live token system? Our coordinators respond promptly.
+        <div class="card" style="padding: 2.5rem; background: var(--deep-blue); color: #FFF; border-top: 4px solid var(--teal);">
+          <span class="tag-mint" style="margin-bottom: 0.6rem; color: var(--teal); background: rgba(20, 187, 166, 0.15);">HOSPITAL HELPDESK</span>
+          <h2 style="color: #FFF; font-size: 1.6rem; margin: 0.5rem 0 1rem;">Direct Contact Details</h2>
+          <p style="color: #CBD5E1; margin-bottom: 2rem; font-size: 0.95rem;">
+            For immediate assistance regarding OPD schedule confirmations, diagnostic reports, or hospital admissions:
           </p>
 
           <div style="display: flex; flex-direction: column; gap: 1.5rem;">
             <div style="display: flex; gap: 1rem; align-items: flex-start;">
-              <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--teal); color: #FFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); color: var(--teal); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem;">
                 <i class="fas fa-hospital"></i>
               </div>
               <div>
-                <h4 style="color: #FFF; font-size: 1rem;">Sanjivani Hospital (Facility Partner)</h4>
-                <p style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">Sanjeevan Multispecialty Hospital & Research Institute, Mahadev Mandir Road, Ratanlal Plots, Near Tiranga Chowk, Yavatmal, Maharashtra 445001</p>
+                <h4 style="color: #FFF; font-size: 1rem; margin-bottom: 0.2rem;">Sanjivani Multispecialty Hospital</h4>
+                <p style="color: #94A3B8; font-size: 0.88rem; line-height: 1.5;">
+                  Sanjeevan Multispecialty Hospital & Research Institute, Mahadev Mandir Road, Ratanlal Plots, Near Tiranga Chowk, Yavatmal, Maharashtra 445001
+                </p>
               </div>
             </div>
 
             <div style="display: flex; gap: 1rem; align-items: flex-start;">
-              <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--teal); color: #FFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); color: var(--teal); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem;">
                 <i class="fas fa-phone-alt"></i>
               </div>
               <div>
-                <h4 style="color: #FFF; font-size: 1rem;">Phone & Ambulance Hotline</h4>
-                <p style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">+91 95526 25262 / +91 98342 87792 (Yavatmal 24x7 Emergency)</p>
+                <h4 style="color: #FFF; font-size: 1rem; margin-bottom: 0.2rem;">24/7 Emergency Line</h4>
+                <p style="color: #94A3B8; font-size: 0.88rem;">
+                  <a href="tel:+919552625262" style="color: #FFF; font-weight: 700;">+91 95526 25262</a> &bull; Ambulance: <a href="tel:+919876543210" style="color: #FFF;">+91 98765 43210</a>
+                </p>
               </div>
             </div>
 
             <div style="display: flex; gap: 1rem; align-items: flex-start;">
-              <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--teal); color: #FFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); color: #25D366; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.3rem;">
                 <i class="fab fa-whatsapp"></i>
               </div>
               <div>
-                <h4 style="color: #FFF; font-size: 1rem;">Official WhatsApp</h4>
-                <p style="color: rgba(255,255,255,0.75); font-size: 0.85rem;">+91 95526 25262 (Instant Bot & Live Slot Alerts)</p>
+                <h4 style="color: #FFF; font-size: 1rem; margin-bottom: 0.2rem;">WhatsApp Notification Bot</h4>
+                <p style="color: #94A3B8; font-size: 0.88rem;">
+                  <a href="https://wa.me/919552625262" target="_blank" rel="noopener" style="color: #25D366; font-weight: 700;">+91 95526 25262</a> (Instant Slot & Queue Alerts)
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; align-items: flex-start;">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); color: var(--teal); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.2rem;">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div>
+                <h4 style="color: #FFF; font-size: 1rem; margin-bottom: 0.2rem;">OPD Timings</h4>
+                <p style="color: #94A3B8; font-size: 0.88rem;">
+                  Mon - Sat: 9:00 AM - 8:00 PM &bull; Sunday: 10:00 AM - 1:00 PM (Emergency 24x7)
+                </p>
               </div>
             </div>
           </div>
@@ -113,33 +162,36 @@
 
         <!-- Contact Form -->
         <div class="card" style="padding: 2.5rem;">
-          <h3 style="color: var(--deep-blue); margin-bottom: 0.5rem;">Send Us a Message</h3>
-          <p style="margin-bottom: 1.5rem; font-size: 0.9rem;">Fill in your details and our medical reception team will contact you.</p>
+          <h3 style="color: var(--deep-blue); margin-bottom: 0.5rem; font-size: 1.5rem;">Send a Patient Inquiry</h3>
+          <p style="margin-bottom: 1.75rem; font-size: 0.95rem; color: var(--text-muted);">
+            Fill in your details below and our hospital patient relations desk will reply promptly.
+          </p>
 
           <form onsubmit="handleContactSubmit(event)">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
               <div class="form-group">
-                <label class="form-label">Your Name</label>
-                <input type="text" class="form-control" required placeholder="Sanket Linganwar">
+                <label class="form-label" for="contact-name">Your Full Name *</label>
+                <input type="text" id="contact-name" class="form-control" required placeholder="e.g. Ramesh Kulkarni">
               </div>
+
               <div class="form-group">
-                <label class="form-label">Phone / WhatsApp</label>
-                <input type="tel" class="form-control" required placeholder="+91 9552625262">
+                <label class="form-label" for="contact-phone">Phone / WhatsApp Number *</label>
+                <input type="tel" id="contact-phone" class="form-control" required placeholder="+91 95526 25262">
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label">Subject</label>
-              <input type="text" class="form-control" required placeholder="General Inquiry / Doctor Consultation / Yavatmal OPD">
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <label class="form-label" for="contact-subject">Subject / Department *</label>
+              <input type="text" id="contact-subject" class="form-control" required placeholder="e.g. General Surgery Consult / OPD Timing Inquiry">
             </div>
 
-            <div class="form-group">
-              <label class="form-label">Message</label>
-              <textarea class="form-control" rows="4" style="resize: none;" required placeholder="How can we assist you?"></textarea>
+            <div class="form-group" style="margin-bottom: 1.75rem;">
+              <label class="form-label" for="contact-message">Your Message *</label>
+              <textarea id="contact-message" class="form-control" rows="4" style="resize: none;" required placeholder="Describe your question or consultation requirement..."></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%;">
-              <i class="fas fa-paper-plane"></i> Send Message
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+              <i class="fas fa-paper-plane"></i> Send Message to Reception
             </button>
           </form>
         </div>
@@ -147,25 +199,96 @@
       </div>
 
       <!-- Embedded Google Map -->
-      <div class="card" style="padding: 1rem; overflow: hidden; border-radius: 16px;">
+      <div class="card" style="padding: 1.25rem; overflow: hidden; border-radius: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+          <div>
+            <h3 style="font-size: 1.15rem; color: var(--deep-blue); margin: 0;">Sanjivani Hospital Location Map</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Mahadev Mandir Road, Ratanlal Plots, Yavatmal, Maharashtra 445001</p>
+          </div>
+          <a href="https://maps.google.com/?q=Sanjeevan+Multispecialty+Hospital+Yavatmal+445001" target="_blank" rel="noopener" class="btn btn-sm btn-outline">
+            <i class="fas fa-external-link-alt"></i> Open in Google Maps
+          </a>
+        </div>
         <iframe 
-          title="Sanjivani Hospital Yavatmal Location"
+          title="Sanjivani Hospital Yavatmal Location Map"
           src="https://maps.google.com/maps?q=Sanjeevan+Hospital+Mahadev+Mandir+Road+Yavatmal+445001&t=&z=16&ie=UTF8&iwloc=&output=embed" 
           width="100%" 
-          height="380" 
-          style="border:0; border-radius: 12px;" 
+          height="400" 
+          style="border: 0; border-radius: 10px;" 
           allowfullscreen="" 
           loading="lazy">
         </iframe>
       </div>
     </div>
-  </section>
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-bottom-bar" style="border: none; padding: 0; justify-content: center;">
-        <div>&copy; 2026 HealPath Hospital System. All Rights Reserved.</div>
+      <div class="footer-grid">
+        <div class="footer-col footer-col-brand">
+          <a href="index.html" class="logo footer-logo">
+            <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
+            <div class="logo-text-box">
+              <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+              <span class="logo-tagline">SANJIVANI MULTISPECIALTY HOSPITAL</span>
+            </div>
+          </a>
+          <p class="footer-desc">
+            Official hospital appointment and live queue tracking portal for Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal (445001).
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Hospital Portals</h4>
+          <ul class="footer-links">
+            <li><a href="booking.html"><i class="fas fa-chevron-right"></i> Book Doctor Slot</a></li>
+            <li><a href="queue.html"><i class="fas fa-chevron-right"></i> Live OPD Queue Screen</a></li>
+            <li><a href="doctors.html"><i class="fas fa-chevron-right"></i> Specialist Doctors</a></li>
+            <li><a href="services.html"><i class="fas fa-chevron-right"></i> Medical Departments</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chevron-right"></i> Patient / Doctor Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">OPD & Consultation Hours</h4>
+          <ul class="footer-links footer-timings">
+            <li><span>General OPD:</span> <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong></li>
+            <li><span>Specialist Consults:</span> <strong>Morning & Evening Slots</strong></li>
+            <li class="emergency-timing"><span>Emergency & Casualty:</span> <strong class="badge-emergency-text">24 Hours / 7 Days Open</strong></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Hospital Location & Help</h4>
+          <ul class="footer-links footer-contact-info">
+            <li>
+              <i class="fas fa-map-marker-alt footer-icon"></i>
+              <div>
+                <strong>Sanjeevan Multispecialty Hospital</strong><br>
+                Mahadev Mandir Road, Ratanlal Plots, Yavatmal 445001<br>
+                <a href="https://maps.google.com/?q=Sanjeevan+Multispecialty+Hospital+Yavatmal+445001" target="_blank" rel="noopener" class="map-link">
+                  <i class="fas fa-directions"></i> Get Directions on Google Maps
+                </a>
+              </div>
+            </li>
+            <li>
+              <i class="fas fa-phone-alt footer-icon"></i>
+              <div>Emergency Hotline: <a href="tel:+919552625262"><strong>+91 95526 25262</strong></a></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 Sanjivani Hospital & HealPath System. All Rights Reserved.</div>
+        <div class="footer-legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="sep">&bull;</span>
+          <a href="terms.html">Terms of Service</a>
+          <span class="sep">&bull;</span>
+          <a href="about.html">About Hospital</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -174,10 +297,12 @@
   <script type="module" src="js/i18n.js"></script>
   <script src="js/main.js"></script>
   <script src="js/chat.js"></script>
+  <script src="js/layout.js"></script>
+
   <script>
     function handleContactSubmit(e) {
       e.preventDefault();
-      alert('Thank you for contacting HealPath! Our patient assistance team has received your inquiry.');
+      alert('Thank you for contacting Sanjivani Hospital! Our patient coordinator desk has received your inquiry.');
       e.target.reset();
     }
   </script>

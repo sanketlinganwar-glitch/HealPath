@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Activity, LogIn, LogOut, Monitor, UserCheck, Stethoscope, Globe, Sparkles } from 'lucide-react';
+import { Activity, LogIn, LogOut, Monitor, UserCheck, Stethoscope, Globe, Sparkles, Calendar, WifiOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -8,6 +8,20 @@ export function Navbar() {
   const { user, logout, isAuthenticated } = useAuth();
   const { lang, setLang, t } = useLanguage();
   const navigate = useNavigate();
+  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -16,6 +30,12 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-xs">
+      {!isOnline && (
+        <div className="bg-amber-500 text-slate-900 px-4 py-1.5 text-xs font-semibold flex items-center justify-center space-x-2 animate-pulse">
+          <WifiOff className="w-4 h-4" />
+          <span>Offline Mode Active — actions are buffered and will automatically sync when connectivity is restored.</span>
+        </div>
+      )}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo & Brand */}
@@ -45,6 +65,13 @@ export function Navbar() {
               className="px-3 py-1.5 rounded-lg text-sm font-semibold text-slate-700 hover:text-blue-700 hover:bg-blue-50/80 transition-colors"
             >
               {t('patientModule')}
+            </Link>
+            <Link
+              to="/book-appointment"
+              className="px-3 py-1.5 rounded-lg text-sm font-semibold text-slate-700 hover:text-blue-700 hover:bg-blue-50/80 transition-colors flex items-center space-x-1.5"
+            >
+              <Calendar className="w-4 h-4 text-emerald-600" />
+              <span>{t('bookAppointment') || 'Book Appointment'}</span>
             </Link>
             <Link
               to="/display"

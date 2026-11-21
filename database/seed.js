@@ -6,6 +6,11 @@ export async function seedDatabase(force = false) {
 
   if (store.data.departments.length > 0 && !force) {
     ensureSanjivaniData(store);
+    migrateDoctorProfiles(store);
+    migrateAppointmentReminders(store);
+    migrateAnalyticsTimestamps(store);
+    migratePaymentsSchema(store);
+    migrateReportsSchema(store);
     return;
   }
 
@@ -601,8 +606,229 @@ export function ensureSanjivaniData(store) {
     store.save();
     console.log('✅ [Seed] Sanjivani Hospital Yavatmal (445001) data verified and synced.');
   }
+
+  migrateDoctorProfiles(store);
+}
+
+export function migrateDoctorProfiles(store) {
+  if (!store || !store.data || !Array.isArray(store.data.doctors)) return false;
+  let changed = false;
+
+  for (const doc of store.data.doctors) {
+    if (!('qualification' in doc)) {
+      doc.qualification = null;
+      changed = true;
+    }
+    if (!('experience_years' in doc)) {
+      doc.experience_years = null;
+      changed = true;
+    }
+    if (!('languages' in doc) || !Array.isArray(doc.languages)) {
+      doc.languages = Array.isArray(doc.languages) ? doc.languages : [];
+      changed = true;
+    }
+    if (!('bio' in doc)) {
+      doc.bio = null;
+      changed = true;
+    }
+    if (!('consultation_fee' in doc)) {
+      doc.consultation_fee = null;
+      changed = true;
+    }
+    if (!('photo_url' in doc)) {
+      doc.photo_url = doc.avatar || doc.image_url || null;
+      changed = true;
+    }
+    if (!('opd_days' in doc)) {
+      doc.opd_days = null;
+      changed = true;
+    }
+    if (!('opd_hours' in doc)) {
+      const start = doc.working_start || doc.start_hour;
+      const end = doc.working_end || doc.end_hour;
+      doc.opd_hours = (start && end) ? `${start}-${end}` : null;
+      changed = true;
+    }
+  }
+
+  if (changed) {
+    store.save();
+    console.log('✅ [Migration] Doctor profiles backfilled with optional fields.');
+  }
+  return changed;
+}
+
+export function migrateAppointmentReminders(store) {
+  if (!store || !store.data) return false;
+  let changed = false;
+
+  // 1. Settings migration for reminder_minutes_before
+  if (!store.data.settings) {
+    store.data.settings = {};
+    changed = true;
+  }
+  if (!('reminder_minutes_before' in store.data.settings) || store.data.settings.reminder_minutes_before == null) {
+    store.data.settings.reminder_minutes_before = '60';
+    changed = true;
+  }
+
+  // 2. Appointments backfill
+  if (Array.isArray(store.data.appointments)) {
+    for (const appt of store.data.appointments) {
+      if (!('reminder_sent_at' in appt)) {
+        appt.reminder_sent_at = null;
+        changed = true;
+      }
+      if (!('reminder_attempts' in appt)) {
+        appt.reminder_attempts = 0;
+        changed = true;
+      }
+    }
+  }
+
+  if (changed) {
+    store.save();
+    console.log('✅ [Migration] Appointment reminders schema (reminder_sent_at, reminder_attempts, reminder_minutes_before) backfilled.');
+  }
+  return changed;
+}
+
+export function migrateAnalyticsTimestamps(store) {
+  if (!store || !store.data) return false;
+  let changed = false;
+
+  // 1. Appointments timestamps and attributes
+  if (Array.isArray(store.data.appointments)) {
+    for (const appt of store.data.appointments) {
+      if (!('checked_in_at' in appt)) {
+        appt.checked_in_at = null;
+        changed = true;
+      }
+      if (!('called_at' in appt)) {
+        appt.called_at = null;
+        changed = true;
+      }
+      if (!('started_at' in appt)) {
+        appt.started_at = null;
+        changed = true;
+      }
+      if (!('completed_at' in appt)) {
+        appt.completed_at = null;
+        changed = true;
+      }
+      if (!('source' in appt) || !appt.source) {
+        appt.source = 'online';
+        changed = true;
+      }
+      if (!('auto_shifted' in appt)) {
+        appt.auto_shifted = false;
+        changed = true;
+      }
+    }
+  }
+
+  // 2. Queue items timestamps
+  if (Array.isArray(store.data.queue)) {
+    for (const q of store.data.queue) {
+      if (!('checked_in_at' in q)) {
+        q.checked_in_at = null;
+        changed = true;
+      }
+      if (!('called_at' in q)) {
+        q.called_at = null;
+        changed = true;
+      }
+      if (!('started_at' in q)) {
+        q.started_at = null;
+        changed = true;
+      }
+      if (!('completed_at' in q)) {
+        q.completed_at = null;
+        changed = true;
+      }
+    }
+  }
+
+  if (changed) {
+    store.save();
+    console.log('✅ [Migration] Analytics timestamps (checked_in_at, called_at, started_at, completed_at, source, auto_shifted) safely initialized as nullable.');
+  }
+  return changed;
+}
+
+export function migratePaymentsSchema(store) {
+  if (!store || !store.data) return false;
+  let changed = false;
+
+  // 1. Ensure payments collection exists
+  if (!Array.isArray(store.data.payments)) {
+    store.data.payments = [];
+    changed = true;
+  }
+
+  // 2. Appointments payment fields backfill
+  if (Array.isArray(store.data.appointments)) {
+    for (const appt of store.data.appointments) {
+      if (!('payment_mode' in appt)) {
+        appt.payment_mode = 'hospital';
+        changed = true;
+      }
+      if (!('payment_status' in appt)) {
+        appt.payment_status = 'not_required';
+        changed = true;
+      }
+      if (!('amount' in appt)) {
+        appt.amount = 0;
+        changed = true;
+      }
+      if (!('razorpay_order_id' in appt)) {
+        appt.razorpay_order_id = null;
+        changed = true;
+      }
+      if (!('razorpay_payment_id' in appt)) {
+        appt.razorpay_payment_id = null;
+        changed = true;
+      }
+      if (!('paid_at' in appt)) {
+        appt.paid_at = null;
+        changed = true;
+      }
+      if (!('hold_expires_at' in appt)) {
+        appt.hold_expires_at = null;
+        changed = true;
+      }
+    }
+  }
+
+  if (changed) {
+    store.save();
+    console.log('✅ [Migration] Payments schema (payments collection, appointment payment fields) initialized.');
+  }
+  return changed;
+}
+
+export function migrateReportsSchema(store) {
+  if (!store || !store.data) return false;
+  let changed = false;
+
+  if (!Array.isArray(store.data.reports)) {
+    store.data.reports = [];
+    changed = true;
+  }
+
+  if (!Array.isArray(store.data.report_logs)) {
+    store.data.report_logs = [];
+    changed = true;
+  }
+
+  if (changed) {
+    store.save();
+    console.log('✅ [Migration] Reports schema (reports, report_logs collections) initialized.');
+  }
+  return changed;
 }
 
 if (process.argv[1]?.endsWith('seed.js')) {
   seedDatabase(true).then(() => process.exit(0));
 }
+

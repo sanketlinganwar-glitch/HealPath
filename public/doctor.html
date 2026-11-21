@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Profile | Sanjeevan Multispecialty Hospital Yavatmal</title>
+  <meta name="description" content="Verified specialist doctor profiles, OPD consultation timings, and qualifications at Sanjeevan Hospital Yavatmal.">
+  <link rel="canonical" href="https://healpath.sanjeevanhospital.org/doctor.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Doctor Profile | Sanjeevan Hospital Yavatmal">
+  <meta property="og:description" content="View verified qualifications, OPD timings, and schedule a consultation slot.">
+  <meta property="og:type" content="profile">
+  <meta property="og:image" content="/images/hospital.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="images/sanjeevan-logo.svg"><rect width='100' height='100' rx='20' fill='%230F3B64'/><path d='M35 20h30v60H35z' fill='%2314BBA6'/><path d='M20 35h60v30H20z' fill='%2314BBA6'/></svg>">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .doctor-profile-header {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, #164e7d 100%);
+      color: #fff;
+      padding: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .doctor-profile-header::after {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(20, 187, 166, 0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .profile-hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      position: relative;
+      z-index: 2;
+      flex-wrap: wrap;
+    }
+    .profile-avatar-container {
+      width: 170px;
+      height: 170px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 4px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      flex-shrink: 0;
+      background: #0d3153;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .profile-avatar-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .profile-initials-fallback {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--mint) 100%);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .profile-hero-details h1 {
+      font-size: 2.2rem;
+      color: #fff;
+      margin: 0.35rem 0 0.5rem;
+      font-weight: 800;
+    }
+    .profile-meta-pills {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 0.85rem;
+    }
+    .profile-pill {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      backdrop-filter: blur(8px);
+    }
+    .profile-pill.teal-pill {
+      background: var(--teal);
+      color: #fff;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+    .status-available { background: #dcfce7; color: #15803d; }
+    .status-in_consultation { background: #dbeafe; color: #1d4ed8; }
+    .status-on_break { background: #fef3c7; color: #b45309; }
+    .status-off_duty { background: #f3f4f6; color: #4b5563; }
+
+    .profile-main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-top: 2.5rem;
+      margin-bottom: 4rem;
+    }
+    @media (max-width: 900px) {
+      .profile-main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .profile-card {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .profile-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+    }
+    .profile-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding-bottom: 0.75rem;
+    }
+    .profile-card-header i {
+      font-size: 1.25rem;
+      color: var(--teal);
+    }
+    .profile-card-header h3 {
+      font-size: 1.15rem;
+      color: var(--deep-blue);
+      margin: 0;
+      font-weight: 700;
+    }
+    .lang-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(20, 187, 166, 0.12);
+      color: var(--deep-blue);
+      padding: 0.35rem 0.85rem;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin: 0.25rem 0.4rem 0.25rem 0;
+    }
+    .schedule-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.08);
+    }
+    .schedule-row:last-child {
+      border-bottom: none;
+    }
+    .schedule-label {
+      color: var(--charcoal-light);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .schedule-val {
+      font-weight: 700;
+      color: var(--deep-blue);
+      font-size: 0.95rem;
+    }
+    .live-status-card {
+      background: #fff;
+      border-radius: 20px;
+      border: 2px solid var(--teal);
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(20, 187, 166, 0.12);
+      position: sticky;
+      top: 100px;
+    }
+    .waiting-counter-box {
+      background: linear-gradient(135deg, rgba(20, 187, 166, 0.08) 0%, rgba(20, 187, 166, 0.15) 100%);
+      border-radius: 14px;
+      padding: 1.25rem;
+      text-align: center;
+      margin: 1.25rem 0;
+      border: 1px solid rgba(20, 187, 166, 0.25);
+    }
+    .waiting-number {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .waiting-label {
+      font-size: 0.85rem;
+      color: var(--deep-blue);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .next-slot-box {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .next-slot-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--deep-blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* Skeleton Loading State */
+    .skeleton {
+      background: linear-gradient(90deg, #edf2f7 25%, #f7fafc 50%, #edf2f7 75%);
+      background-size: 200% 100%;
+      animation: skeleton-pulse 1.5s infinite;
+      border-radius: 8px;
+    }
+    @keyframes skeleton-pulse {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .skeleton-avatar {
+      width: 170px;
+      height: 170px;
+      border-radius: 24px;
+    }
+    .skeleton-line {
+      height: 20px;
+      margin-bottom: 12px;
+    }
+    .skeleton-title {
+      height: 34px;
+      width: 60%;
+      margin-bottom: 15px;
+    }
+    .error-card {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: #fff;
+      border-radius: 20px;
+      max-width: 600px;
+      margin: 4rem auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    .error-card i {
+      font-size: 4rem;
+      color: #ef4444;
+      margin-bottom: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span class="top-bar-emergency-pill">
+          <i class="fas fa-phone-alt" style="color: var(--mint);"></i>
+          <span data-i18n="emergency_call">24/7 Emergency Line:</span>
+          <strong><a href="tel:+919552625262">+91 95526 25262</a></strong> / 
+          <strong><a href="tel:+919876543210">+91 98765 43210</a></strong>
+        </span>
+        <span>
+          <i class="fas fa-hospital" style="color: var(--mint);"></i>
+          Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)
+        </span>
+      </div>
+      <div class="top-bar-right">
+        <span>
+          <i class="fas fa-clock" style="color: var(--mint);"></i>
+          OPD Hours: <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="HealPath Sanjivani Hospital Homepage">
+        <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
+        <div class="logo-text-box">
+          <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+          <span class="logo-tagline" data-i18n="hero_tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+        </div>
+      </a>
+      <nav class="nav-menu" id="primary-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link" data-i18n="home">Home</a>
+        <a href="services.html" class="nav-link" data-i18n="services">Services</a>
+        <a href="doctors.html" class="nav-link active" data-i18n="doctors">Doctors</a>
+        <a href="about.html" class="nav-link" data-i18n="about_us">About Us</a>
+        <a href="queue.html" class="nav-link queue-nav-pill"><i class="fas fa-satellite-dish"></i> <span data-i18n="live_queue">Live Queue</span></a>
+        <a href="blog.html" class="nav-link" data-i18n="blog">Blog</a>
+        <a href="contact.html" class="nav-link" data-i18n="contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-selector-wrapper">
+          <i class="fas fa-globe" style="color: var(--teal); font-size: 0.85rem;"></i>
+          <select id="lang-select" class="lang-selector" aria-label="Select Language">
+            <option value="en">English (EN)</option>
+            <option value="hi">हिन्दी (HI)</option>
+            <option value="mr">मराठी (MR)</option>
+          </select>
+        </div>
+        <div id="header-auth-container"></div>
+        <a href="booking.html" class="btn btn-primary header-book-btn">
+          <i class="fas fa-calendar-check"></i> <span data-i18n="book_appointment">Book Slot</span>
+        </a>
+        <button class="mobile-toggle" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main id="doctor-profile-root">
+    
+    <!-- Skeleton Loader Displayed Initially -->
+    <div id="profile-skeleton" class="container" style="padding: 3rem 0;">
+      <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 2rem;">
+        <div class="skeleton skeleton-avatar"></div>
+        <div style="flex: 1;">
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-line" style="width: 45%;"></div>
+          <div class="skeleton skeleton-line" style="width: 30%;"></div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+        <div>
+          <div class="skeleton" style="height: 160px; margin-bottom: 1.5rem;"></div>
+          <div class="skeleton" style="height: 120px; margin-bottom: 1.5rem;"></div>
+        </div>
+        <div>
+          <div class="skeleton" style="height: 280px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Profile Content Container (Injected on load) -->
+    <div id="profile-content" style="display: none;"></div>
+
+    <!-- 404 Doctor Not Found State -->
+    <div id="profile-404" class="container" style="display: none;">
+      <div class="error-card">
+        <i class="fas fa-user-slash"></i>
+        <h2 style="color: var(--deep-blue); margin-bottom: 0.5rem;" data-i18n="doctor_not_found">Doctor Profile Not Found</h2>
+        <p style="color: var(--charcoal-light); margin-bottom: 1.75rem;" data-i18n="doctor_not_found_desc">
+          We could not locate the physician or surgeon profile you requested. The doctor might have been relocated or the ID is invalid.
+        </p>
+        <a href="doctors.html" class="btn btn-primary">
+          <i class="fas fa-arrow-left"></i> <span data-i18n="back_to_doctors">Browse All Doctors</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-col-brand">
+          <a href="index.html" class="logo footer-logo">
+            <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
+            <div class="logo-text-box">
+              <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+              <span class="logo-tagline">SANJIVANI MULTISPECIALTY HOSPITAL</span>
+            </div>
+          </a>
+          <p class="footer-desc">
+            Official hospital appointment and live queue tracking portal for Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal (445001).
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Hospital Portals</h4>
+          <ul class="footer-links">
+            <li><a href="booking.html"><i class="fas fa-chevron-right"></i> Book Doctor Slot</a></li>
+            <li><a href="queue.html"><i class="fas fa-chevron-right"></i> Live OPD Queue Screen</a></li>
+            <li><a href="doctors.html"><i class="fas fa-chevron-right"></i> Specialist Doctors</a></li>
+            <li><a href="services.html"><i class="fas fa-chevron-right"></i> Medical Departments</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chevron-right"></i> Patient / Doctor Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">OPD & Consultation Hours</h4>
+          <ul class="footer-links footer-timings">
+            <li><span>General OPD:</span> <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong></li>
+            <li><span>Specialist Consults:</span> <strong>Morning & Evening Slots</strong></li>
+            <li class="emergency-timing"><span>Emergency & Casualty:</span> <strong class="badge-emergency-text">24 Hours / 7 Days Open</strong></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Hospital Location & Help</h4>
+          <ul class="footer-links footer-contact-info">
+            <li>
+              <i class="fas fa-map-marker-alt footer-icon"></i>
+              <div>
+                <strong>Sanjeevan Multispecialty Hospital</strong><br>
+                Mahadev Mandir Road, Ratanlal Plots, Yavatmal 445001<br>
+                <a href="https://maps.google.com/?q=Sanjeevan+Multispecialty+Hospital+Yavatmal+445001" target="_blank" rel="noopener" class="map-link">
+                  <i class="fas fa-directions"></i> Get Directions on Google Maps
+                </a>
+              </div>
+            </li>
+            <li>
+              <i class="fas fa-phone-alt footer-icon"></i>
+              <div>Emergency Hotline: <a href="tel:+919552625262"><strong>+91 95526 25262</strong></a></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 Sanjivani Hospital & HealPath System. All Rights Reserved.</div>
+        <div class="footer-legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="sep">&bull;</span>
+          <a href="terms.html">Terms of Service</a>
+          <span class="sep">&bull;</span>
+          <a href="about.html">About Hospital</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    let currentDoctor = null;
+    let socket = null;
+
+    function getDoctorIdFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id') || params.get('doctor') || params.get('doc');
+    }
+
+    function getInitials(name) {
+      if (!name) return 'DR';
+      const clean = name.replace(/^Dr\.?\s+/i, '').trim();
+      const parts = clean.split(/\s+/);
+      if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+      return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    }
+
+    function formatSlotTime(slot) {
+      if (!slot) return null;
+      try {
+        let dateVal = slot;
+        if (typeof slot === 'object' && slot.date && slot.start_time) {
+          dateVal = `${slot.date}T${slot.start_time}:00`;
+        }
+
+        const d = new Date(dateVal);
+        if (isNaN(d.getTime())) return null;
+        
+        const today = new Date();
+        const tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+
+        const isToday = d.toDateString() === today.toDateString();
+        const isTomorrow = d.toDateString() === tomorrow.toDateString();
+
+        const formattedTime = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+
+        if (isToday) return `Today at ${formattedTime}`;
+        if (isTomorrow) return `Tomorrow at ${formattedTime}`;
+
+        const dateStr = d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+        return `${dateStr} at ${formattedTime}`;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function renderDoctorProfile(doc) {
+      currentDoctor = doc;
+      document.title = `${doc.name} - Specialist Profile | HealPath`;
+
+      const skeleton = document.getElementById('profile-skeleton');
+      const content = document.getElementById('profile-content');
+      const notFound = document.getElementById('profile-404');
+
+      if (skeleton) skeleton.style.display = 'none';
+      if (notFound) notFound.style.display = 'none';
+      if (content) content.style.display = 'block';
+
+      const photoUrl = doc.photo_url || doc.avatar || doc.image_url;
+      const initials = getInitials(doc.name);
+
+      // Status labels & classes
+      const statusMap = {
+        'available': { text: 'Available & Consulting', class: 'status-available', dot: '🟢' },
+        'in_consultation': { text: 'In Consultation', class: 'status-in_consultation', dot: '🔵' },
+        'on_break': { text: 'On Short Break', class: 'status-on_break', dot: '🟡' },
+        'off_duty': { text: 'Off Duty', class: 'status-off_duty', dot: '⚪' }
+      };
+      const curStatus = statusMap[doc.status] || statusMap['available'];
+
+      // Next slot display text
+      const nextSlotText = formatSlotTime(doc.next_available_slot);
+
+      // Build Profile Cards dynamically - HIDE ANY FIELD THAT HAS NO DATA!
+      let profileCardsHtml = '';
+
+      // 1. About / Bio Card (render only if bio is non-empty)
+      if (doc.bio && doc.bio.trim()) {
+        profileCardsHtml += `
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <i class="fas fa-stethoscope"></i>
+              <h3 data-i18n="about_doctor">Clinical Background & Experience</h3>
+            </div>
+            <p style="color: var(--charcoal); line-height: 1.7; font-size: 0.98rem; margin: 0;">
+              ${doc.bio.trim()}
+            </p>
+          </div>
+        `;
+      }
+
+      // 2. Qualifications & Experience Card (render only if at least one is present)
+      const hasQual = doc.qualification && doc.qualification.trim();
+      const hasExp = doc.experience_years !== null && doc.experience_years !== undefined && doc.experience_years !== '';
+
+      if (hasQual || hasExp) {
+        let qualRows = '';
+        if (hasQual) {
+          qualRows += `
+            <div class="schedule-row">
+              <span class="schedule-label"><i class="fas fa-graduation-cap" style="color: var(--teal);"></i> <span data-i18n="qualifications">Qualifications & Degrees</span></span>
+              <span class="schedule-val">${doc.qualification.trim()}</span>
+            </div>
+          `;
+        }
+        if (hasExp) {
+          qualRows += `
+            <div class="schedule-row">
+              <span class="schedule-label"><i class="fas fa-award" style="color: var(--teal);"></i> <span data-i18n="experience_years">Years in Clinical Practice</span></span>
+              <span class="schedule-val">${doc.experience_years} Years Experience</span>
+            </div>
+          `;
+        }
+
+        profileCardsHtml += `
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <i class="fas fa-user-graduate"></i>
+              <h3 data-i18n="credentials">Qualifications & Experience</h3>
+            </div>
+            <div>
+              ${qualRows}
+            </div>
+          </div>
+        `;
+      }
+
+      // 3. Languages Spoken Card (render only if non-empty array)
+      if (Array.isArray(doc.languages) && doc.languages.length > 0) {
+        const langBadges = doc.languages.map(l => `<span class="lang-badge"><i class="fas fa-comment-dots"></i> ${l}</span>`).join('');
+        profileCardsHtml += `
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <i class="fas fa-language"></i>
+              <h3 data-i18n="languages_spoken">Languages Spoken</h3>
+            </div>
+            <div style="display: flex; flex-wrap: wrap;">
+              ${langBadges}
+            </div>
+          </div>
+        `;
+      }
+
+      // 4. OPD Schedule Card (render only if opd_days, opd_hours, or working_start are set)
+      const opdDays = doc.opd_days || 'Monday - Saturday';
+      const opdHours = doc.opd_hours || (doc.working_start && doc.working_end ? `${doc.working_start} - ${doc.working_end}` : (doc.start_hour && doc.end_hour ? `${doc.start_hour} - ${doc.end_hour}` : null));
+
+      if (doc.opd_days || doc.opd_hours || opdHours) {
+        profileCardsHtml += `
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <i class="fas fa-calendar-alt"></i>
+              <h3 data-i18n="opd_schedule">OPD Consultation Schedule</h3>
+            </div>
+            <div>
+              <div class="schedule-row">
+                <span class="schedule-label"><i class="far fa-calendar-check" style="color: var(--teal);"></i> <span data-i18n="opd_days">OPD Days</span></span>
+                <span class="schedule-val">${opdDays}</span>
+              </div>
+              ${opdHours ? `
+              <div class="schedule-row">
+                <span class="schedule-label"><i class="far fa-clock" style="color: var(--teal);"></i> <span data-i18n="opd_hours">Consultation Hours</span></span>
+                <span class="schedule-val">${opdHours}</span>
+              </div>` : ''}
+              <div class="schedule-row">
+                <span class="schedule-label"><i class="fas fa-door-open" style="color: var(--teal);"></i> <span data-i18n="room_location">Consultation Room</span></span>
+                <span class="schedule-val">${doc.room_no || doc.room || 'General OPD'}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 5. Consultation Fee Card (render only if fee is set)
+      if (doc.consultation_fee !== null && doc.consultation_fee !== undefined) {
+        profileCardsHtml += `
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <i class="fas fa-receipt"></i>
+              <h3 data-i18n="consultation_fee">Consultation Fee</h3>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+              <span style="font-size: 2rem; font-weight: 800; color: var(--deep-blue);">
+                ${doc.consultation_fee > 0 ? '₹' + doc.consultation_fee : 'Free'}
+              </span>
+              <span style="color: var(--charcoal-light); font-size: 0.9rem;">/ in-clinic consultation</span>
+            </div>
+          </div>
+        `;
+      }
+
+      // If doctor has no extra cards, show minimal card
+      if (!profileCardsHtml) {
+        profileCardsHtml = `
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <i class="fas fa-hospital-user"></i>
+              <h3>Doctor Information</h3>
+            </div>
+            <p style="color: var(--charcoal-light); margin: 0;">
+              Certified medical practitioner at ${doc.department_name}. Consultation slots are available for booking online.
+            </p>
+          </div>
+        `;
+      }
+
+      // Render full HTML
+      content.innerHTML = `
+        <!-- Doctor Profile Hero Banner -->
+        <section class="doctor-profile-header">
+          <div class="container">
+            <div class="profile-hero-inner">
+              <div class="profile-avatar-container">
+                ${photoUrl ? `
+                  <img src="${photoUrl}" alt="${doc.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                  <div class="profile-initials-fallback" style="display: none;">${initials}</div>
+                ` : `
+                  <div class="profile-initials-fallback">${initials}</div>
+                `}
+              </div>
+              <div class="profile-hero-details">
+                <span class="tag-mint"><i class="fas fa-hospital"></i> ${doc.department_name}</span>
+                <h1>${doc.name}</h1>
+                <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; margin: 0.2rem 0 0.8rem; font-weight: 500;">
+                  ${doc.specialization || doc.specialty}
+                </p>
+                <div class="profile-meta-pills">
+                  <span class="profile-pill">
+                    <i class="fas fa-door-open" style="color: var(--mint);"></i> ${doc.room_no || doc.room || 'Room 101'}
+                  </span>
+                  <span class="status-badge ${curStatus.class}" id="live-doctor-status-badge">
+                    <span>${curStatus.dot}</span> ${curStatus.text}
+                  </span>
+                  ${doc.department_id === 7 ? `
+                    <span class="profile-pill teal-pill">
+                      <i class="fas fa-shield-alt"></i> Sanjivani Multispecialty Yavatmal
+                    </span>
+                  ` : ''}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Main Content & Sidebar -->
+        <div class="container">
+          <div class="profile-main-grid">
+            
+            <!-- Left: Dynamic Info Cards -->
+            <div class="profile-info-column">
+              ${profileCardsHtml}
+            </div>
+
+            <!-- Right: Real-time Live Status & Booking Card -->
+            <div class="profile-action-column">
+              <div class="live-status-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                  <span class="tag-mint" style="font-size: 0.75rem;"><i class="fas fa-satellite-dish"></i> LIVE CLINIC DESK</span>
+                  <span class="online-indicator"><span class="online-dot"></span> Active</span>
+                </div>
+
+                <h3 style="color: var(--deep-blue); font-size: 1.25rem; margin-bottom: 0.5rem;" data-i18n="current_queue_status">
+                  Consultation Status
+                </h3>
+
+                <!-- Doctor Status Pill in sidebar -->
+                <div style="margin-bottom: 1.25rem;">
+                  <span class="status-badge ${curStatus.class}" id="sidebar-doc-status" style="width: 100%; justify-content: center; padding: 0.6rem 1rem; font-size: 0.9rem;">
+                    <span>${curStatus.dot}</span> ${curStatus.text}
+                  </span>
+                </div>
+
+                <!-- Live Waiting Patients Count -->
+                <div class="waiting-counter-box">
+                  <div class="waiting-number" id="live-waiting-count">${doc.today_waiting_count || 0}</div>
+                  <div class="waiting-label" data-i18n="patients_waiting">Patients Waiting in Queue</div>
+                </div>
+
+                <!-- Next Available Slot Box -->
+                <div class="next-slot-box">
+                  <div class="next-slot-icon">
+                    <i class="far fa-calendar-check"></i>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.78rem; color: var(--charcoal-light); font-weight: 600; text-transform: uppercase;" data-i18n="next_slot">
+                      Next Available Slot
+                    </div>
+                    <div style="font-weight: 700; color: var(--deep-blue); font-size: 0.95rem;" id="live-next-slot-text">
+                      ${nextSlotText || '<span style="color: #64748b;">No slots available today</span>'}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Book Appointment Button -->
+                <a href="booking.html?doctor=${doc.id}" class="btn btn-primary" style="width: 100%; padding: 0.85rem 1rem; font-size: 1.05rem; justify-content: center; box-shadow: 0 4px 14px rgba(20, 187, 166, 0.4);">
+                  <i class="fas fa-calendar-plus"></i> <span data-i18n="book_appointment">Book Appointment</span>
+                </a>
+
+                <!-- Help Desk Details -->
+                <div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid rgba(0,0,0,0.08); font-size: 0.85rem; color: var(--charcoal-light); text-align: center;">
+                  <div><i class="fas fa-headset" style="color: var(--teal); margin-right: 4px;"></i> Questions about slots?</div>
+                  <strong style="color: var(--deep-blue); font-size: 0.92rem;">+91 95526 25262 / +91 98765 43210</strong>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      `;
+
+      // Re-apply translations for injected content
+      if (window.healpathI18n && window.healpathI18n.applyTranslations) {
+        window.healpathI18n.applyTranslations();
+      }
+    }
+
+    async function loadDoctorProfile() {
+      const docId = getDoctorIdFromUrl();
+      if (!docId) {
+        show404();
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/doctors/${docId}`);
+        const data = await res.json();
+
+        if (data.success && data.doctor) {
+          renderDoctorProfile(data.doctor);
+        } else {
+          show404();
+        }
+      } catch (err) {
+        console.error('Error fetching doctor profile:', err);
+        show404();
+      }
+    }
+
+    function show404() {
+      const skeleton = document.getElementById('profile-skeleton');
+      const content = document.getElementById('profile-content');
+      const notFound = document.getElementById('profile-404');
+
+      if (skeleton) skeleton.style.display = 'none';
+      if (content) content.style.display = 'none';
+      if (notFound) notFound.style.display = 'block';
+    }
+
+    // Connect to Socket.io for live updates
+    function setupSocketUpdates() {
+      if (typeof io === 'undefined') return;
+      socket = io();
+
+      socket.on('doctor:status_changed', (data) => {
+        if (currentDoctor && data.doctorId === currentDoctor.id) {
+          currentDoctor.status = data.status;
+          const statusMap = {
+            'available': { text: 'Available & Consulting', class: 'status-available', dot: '🟢' },
+            'in_consultation': { text: 'In Consultation', class: 'status-in_consultation', dot: '🔵' },
+            'on_break': { text: 'On Short Break', class: 'status-on_break', dot: '🟡' },
+            'off_duty': { text: 'Off Duty', class: 'status-off_duty', dot: '⚪' }
+          };
+          const cur = statusMap[data.status] || statusMap['available'];
+
+          const badge1 = document.getElementById('live-doctor-status-badge');
+          if (badge1) {
+            badge1.className = `status-badge ${cur.class}`;
+            badge1.innerHTML = `<span>${cur.dot}</span> ${cur.text}`;
+          }
+
+          const badge2 = document.getElementById('sidebar-doc-status');
+          if (badge2) {
+            badge2.className = `status-badge ${cur.class}`;
+            badge2.style.width = '100%';
+            badge2.style.justifyContent = 'center';
+            badge2.innerHTML = `<span>${cur.dot}</span> ${cur.text}`;
+          }
+        }
+      });
+
+      // When queue or slot events occur, re-fetch doctor stats
+      const refreshEvents = ['patient:checkedin', 'queue:updated', 'slot:booked', 'doctor:profile_updated'];
+      refreshEvents.forEach(evt => {
+        socket.on(evt, () => {
+          if (currentDoctor) {
+            fetch(`/api/doctors/${currentDoctor.id}`)
+              .then(res => res.json())
+              .then(d => {
+                if (d.success && d.doctor) {
+                  const waitingEl = document.getElementById('live-waiting-count');
+                  if (waitingEl) waitingEl.textContent = d.doctor.today_waiting_count || 0;
+
+                  const slotTextEl = document.getElementById('live-next-slot-text');
+                  if (slotTextEl) {
+                    const formatted = formatSlotTime(d.doctor.next_available_slot);
+                    slotTextEl.innerHTML = formatted || '<span style="color: #64748b;">No slots available today</span>';
+                  }
+                }
+              })
+              .catch(console.error);
+          }
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDoctorProfile();
+      setupSocketUpdates();
+    });
+  </script>
+</body>
+</html>

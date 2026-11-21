@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found | HealPath Sanjivani Hospital</title>
+  <meta name="description" content="The page you are looking for cannot be found. Return to the HealPath Sanjivani Hospital home page or book an appointment.">
+  <meta property="og:title" content="Page Not Found - HealPath Sanjivani Hospital">
+  <meta property="og:description" content="Return to Sanjivani Hospital home or book an OPD slot.">
+  <link rel="icon" type="image/svg+xml" href="images/sanjeevan-logo.svg">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span class="top-bar-emergency-pill">
+          <i class="fas fa-phone-alt" style="color: var(--mint);"></i>
+          24/7 Emergency Line: <strong><a href="tel:+919552625262">+91 95526 25262</a></strong>
+        </span>
+        <span>
+          <i class="fas fa-hospital" style="color: var(--mint);"></i>
+          Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)
+        </span>
+      </div>
+      <div class="top-bar-right">
+        <span>
+          <i class="fas fa-clock" style="color: var(--mint);"></i>
+          OPD Hours: <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="HealPath Sanjivani Hospital">
+        <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
+        <div class="logo-text-box">
+          <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+          <span class="logo-tagline" data-i18n="hero_tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu" aria-label="Primary Navigation">
+        <a href="index.html" class="nav-link" data-i18n="home">Home</a>
+        <a href="services.html" class="nav-link" data-i18n="services">Services</a>
+        <a href="doctors.html" class="nav-link" data-i18n="doctors">Doctors</a>
+        <a href="about.html" class="nav-link" data-i18n="about_us">About Us</a>
+        <a href="queue.html" class="nav-link queue-nav-pill"><i class="fas fa-satellite-dish"></i> <span data-i18n="live_queue">Live Queue</span></a>
+        <a href="blog.html" class="nav-link" data-i18n="blog">Blog</a>
+        <a href="contact.html" class="nav-link" data-i18n="contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang-selector-wrapper">
+          <i class="fas fa-globe" style="color: var(--teal); font-size: 0.85rem;"></i>
+          <select id="lang-select" class="lang-selector" aria-label="Select Language">
+            <option value="en">English (EN)</option>
+            <option value="hi">हिन्दी (HI)</option>
+            <option value="mr">मराठी (MR)</option>
+          </select>
+        </div>
+        <div id="header-auth-container"></div>
+        <a href="booking.html" class="btn btn-primary header-book-btn">
+          <i class="fas fa-calendar-check"></i> <span>Book Slot</span>
+        </a>
+        <button class="mobile-toggle" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 404 Main Content -->
+  <main class="section" style="min-height: 60vh; display: flex; align-items: center;">
+    <div class="container" style="text-align: center; max-width: 680px;">
+      <div style="font-size: 5.5rem; font-weight: 800; color: var(--teal); line-height: 1; margin-bottom: 1rem; letter-spacing: -0.04em;">
+        404
+      </div>
+      <span class="tag-mint" style="margin-bottom: 1.25rem;">Page Not Found</span>
+      <h1 style="color: var(--deep-blue); margin-bottom: 1rem; font-size: 2.2rem;">Looking for Healthcare Support?</h1>
+      <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem;">
+        The page you requested may have moved or does not exist. You can quickly return to the hospital homepage, search doctor specialties, or book a consultation slot below.
+      </p>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="index.html" class="btn btn-secondary btn-lg">
+          <i class="fas fa-home"></i> Back to Home
+        </a>
+        <a href="booking.html" class="btn btn-primary btn-lg">
+          <i class="fas fa-calendar-check"></i> Book Appointment
+        </a>
+        <a href="contact.html" class="btn btn-outline btn-lg">
+          <i class="fas fa-phone-alt"></i> Contact Reception
+        </a>
+      </div>
+
+      <div style="margin-top: 3rem; padding: 1.5rem; background: var(--white); border: 1px solid var(--border-color); border-radius: 12px; font-size: 0.9rem; color: var(--text-muted);">
+        <i class="fas fa-ambulance" style="color: var(--emergency-red); margin-right: 6px;"></i>
+        Medical emergency? Call our 24/7 Sanjivani Hospital hotline immediately at 
+        <a href="tel:+919552625262" style="font-weight: 700; color: var(--deep-blue);">+91 95526 25262</a>.
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-col-brand">
+          <a href="index.html" class="logo footer-logo">
+            <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
+            <div class="logo-text-box">
+              <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+              <span class="logo-tagline">SANJIVANI MULTISPECIALTY HOSPITAL</span>
+            </div>
+          </a>
+          <p class="footer-desc">
+            Official hospital portal for Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal (445001). Smart slot booking, live queue updates, and verified care.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Hospital Portals</h4>
+          <ul class="footer-links">
+            <li><a href="booking.html"><i class="fas fa-chevron-right"></i> Book Doctor Slot</a></li>
+            <li><a href="queue.html"><i class="fas fa-chevron-right"></i> Live OPD Queue Screen</a></li>
+            <li><a href="doctors.html"><i class="fas fa-chevron-right"></i> Specialist Doctors</a></li>
+            <li><a href="services.html"><i class="fas fa-chevron-right"></i> Medical Departments</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chevron-right"></i> Patient Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">OPD & Consultation Hours</h4>
+          <ul class="footer-links footer-timings">
+            <li><span>General OPD:</span> <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong></li>
+            <li><span>Specialist Consults:</span> <strong>Morning & Evening Slots</strong></li>
+            <li class="emergency-timing"><span>Emergency & Trauma:</span> <strong class="badge-emergency-text">24 Hours / 7 Days Open</strong></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Hospital Location & Help</h4>
+          <ul class="footer-links footer-contact-info">
+            <li>
+              <i class="fas fa-map-marker-alt footer-icon"></i>
+              <div>
+                <strong>Sanjeevan Multispecialty Hospital</strong><br>
+                Mahadev Mandir Road, Ratanlal Plots, Yavatmal, Maharashtra 445001<br>
+                <a href="https://maps.google.com/?q=Sanjeevan+Multispecialty+Hospital+Yavatmal+445001" target="_blank" rel="noopener" class="map-link">
+                  <i class="fas fa-directions"></i> Open in Google Maps
+                </a>
+              </div>
+            </li>
+            <li>
+              <i class="fas fa-phone-alt footer-icon"></i>
+              <div>Emergency: <a href="tel:+919552625262"><strong>+91 95526 25262</strong></a></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 Sanjivani Hospital & HealPath System. All Rights Reserved.</div>
+        <div class="footer-legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="sep">&bull;</span>
+          <a href="terms.html">Terms of Service</a>
+          <span class="sep">&bull;</span>
+          <a href="about.html">About Hospital</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/layout.js"></script>
+</body>
+</html>

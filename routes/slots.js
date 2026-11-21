@@ -91,7 +91,8 @@ router.get('/', (req, res) => {
       id: doctor.id,
       name: doctor.name,
       specialty: doctor.specialty,
-      room_no: doctor.room_no
+      room_no: doctor.room_no,
+      consultation_fee: doctor.consultation_fee || null
     },
     date,
     stats,

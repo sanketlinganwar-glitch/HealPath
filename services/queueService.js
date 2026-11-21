@@ -1,5 +1,6 @@
 import db from '../database/db.js';
 import whatsappService from './whatsapp.js';
+import { getKolkataTime } from '../utils/time.js';
 
 class QueueService {
   /**
@@ -22,15 +23,43 @@ class QueueService {
    */
   async bookSlot({
     slotId,
+    slot_id,
     patientId = null,
+    patient_id = null,
     patientName,
+    patient_name,
     age,
     disease,
     whatsappNo,
+    whatsapp_no,
     notes = '',
+    source = 'online',
+    paymentMode = 'hospital',
+    payment_mode = 'hospital',
+    paymentStatus = 'not_required',
+    payment_status = 'not_required',
+    amount = 0,
+    razorpayOrderId = null,
+    razorpay_order_id = null,
+    razorpayPaymentId = null,
+    razorpay_payment_id = null,
+    paidAt = null,
+    paid_at = null,
+    holdExpiresAt = null,
+    hold_expires_at = null,
     io = null
   }) {
-    const slot = db.store.data.slots.find(s => s.id === Number(slotId));
+    const sId = slotId || slot_id;
+    const pName = patientName || patient_name;
+    const wNo = whatsappNo || whatsapp_no;
+    const pMode = payment_mode || paymentMode;
+    const pStatus = payment_status || paymentStatus;
+    const rOrderId = razorpay_order_id || razorpayOrderId;
+    const rPaymentId = razorpay_payment_id || razorpayPaymentId;
+    const pPaidAt = paid_at || paidAt;
+    const pHoldExpiresAt = hold_expires_at || holdExpiresAt;
+
+    const slot = db.store.data.slots.find(s => s.id === Number(sId));
     if (!slot) {
       throw new Error('Slot does not exist');
     }
@@ -52,11 +81,11 @@ class QueueService {
 
     const appointment = {
       id: appointmentId,
-      patient_id: patientId,
-      patient_name: patientName,
+      patient_id: patientId || patient_id,
+      patient_name: pName,
       age: Number(age),
       disease,
-      whatsapp_no: whatsappNo,
+      whatsapp_no: wNo,
       notes,
       slot_id: slot.id,
       token_no: tokenNo,
@@ -64,8 +93,23 @@ class QueueService {
       department_id: doctor.department_id,
       date: slot.date,
       time: slot.start_time,
+      source: source || 'online',
+      payment_mode: pMode,
+      payment_status: pStatus,
+      amount: Number(amount) || 0,
+      razorpay_order_id: rOrderId,
+      razorpay_payment_id: rPaymentId,
+      paid_at: pPaidAt,
+      hold_expires_at: pHoldExpiresAt,
       checked_in: false,
+      checked_in_at: null,
+      called_at: null,
+      started_at: null,
+      completed_at: null,
+      auto_shifted: false,
       status: 'booked',
+      reminder_sent_at: null,
+      reminder_attempts: 0,
       created_at: new Date().toISOString()
     };
 
@@ -78,10 +122,12 @@ class QueueService {
       token_no: tokenNo,
       doctor_id: slot.doctor_id,
       department_id: doctor.department_id,
-      patient_name: patientName,
+      patient_name: pName,
       status: 'waiting',
       position: this.calculateQueuePosition(slot.doctor_id, slot.date),
+      checked_in_at: null,
       called_at: null,
+      started_at: null,
       completed_at: null,
       created_at: appointment.created_at
     };
@@ -138,6 +184,8 @@ class QueueService {
     appt.date = newSlot.date;
     appt.time = newSlot.start_time;
     appt.status = 'rescheduled';
+    appt.reminder_sent_at = null;
+    appt.reminder_attempts = 0;
     appt.token_no = this.generateTokenNumber(newSlot.doctor_id, newSlot.date);
 
     // Update queue entry
@@ -174,12 +222,25 @@ class QueueService {
       throw new Error('Appointment not found');
     }
 
+    if (appt.status === 'pending_payment') {
+      throw new Error('Cannot check in appointment with pending online payment. Please complete payment first or pay at reception.');
+    }
+
+    const nowIso = new Date().toISOString();
     appt.checked_in = true;
     appt.status = 'checked_in';
+    if (!appt.checked_in_at) {
+      appt.checked_in_at = nowIso;
+    }
 
     const qItem = db.store.data.queue.find(q => q.appointment_id === appt.id);
-    if (qItem && qItem.status === 'missed') {
-      qItem.status = 'waiting';
+    if (qItem) {
+      if (qItem.status === 'missed') {
+        qItem.status = 'waiting';
+      }
+      if (!qItem.checked_in_at) {
+        qItem.checked_in_at = nowIso;
+      }
     }
 
     db.save();
@@ -196,15 +257,16 @@ class QueueService {
    * Check and auto-shift missed slots (called by node-cron every minute)
    */
   async processMissedSlots(io = null) {
-    const now = new Date();
-    const todayStr = now.toISOString().split('T')[0];
-    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const { dateStr: todayStr, currentMinutes } = getKolkataTime();
 
     const gracePeriod = Number(db.store.data.settings.grace_period_min) || 10;
 
     // Find booked appointments for today where patient has not checked in and time has passed slot + grace
     const overdueAppts = db.store.data.appointments.filter(appt => {
-      if (appt.date !== todayStr || appt.checked_in || appt.status === 'completed' || appt.status === 'cancelled') {
+      if (appt.status !== 'booked') {
+        return false;
+      }
+      if (appt.date !== todayStr || appt.checked_in) {
         return false;
       }
 
@@ -236,6 +298,9 @@ class QueueService {
         appt.slot_id = nextSlot.id;
         appt.time = nextSlot.start_time;
         appt.status = 'rescheduled';
+        appt.auto_shifted = true;
+        appt.reminder_sent_at = null;
+        appt.reminder_attempts = 0;
         appt.token_no = this.generateTokenNumber(appt.doctor_id, todayStr);
 
         const qItem = db.store.data.queue.find(q => q.appointment_id === appt.id);
@@ -271,7 +336,50 @@ class QueueService {
       }
     }
   }
+
+  /**
+   * Release expired online payment holds past hold_expires_at
+   * Cancels held appointments and returns slots to 'available'
+   */
+  async releaseExpiredHolds(io = null) {
+    const nowIso = new Date().toISOString();
+    const appts = db.store.data.appointments || [];
+    let releasedCount = 0;
+
+    for (const appt of appts) {
+      if (appt.status === 'pending_payment' && appt.hold_expires_at && appt.hold_expires_at <= nowIso) {
+        appt.status = 'cancelled';
+        appt.payment_status = 'failed';
+
+        const slot = db.store.data.slots.find(s => s.id === appt.slot_id);
+        if (slot) {
+          slot.status = 'available';
+          if (io) {
+            io.emit('slot:updated', { slotId: slot.id, status: 'available' });
+          }
+        }
+
+        const payLog = db.store.data.payments?.find(p => p.order_id === appt.razorpay_order_id);
+        if (payLog && (payLog.status === 'created' || payLog.status === 'pending')) {
+          payLog.status = 'expired';
+        }
+
+        releasedCount++;
+        if (io) {
+          io.emit('payment:hold_expired', { appointmentId: appt.id, slotId: appt.slot_id });
+        }
+      }
+    }
+
+    if (releasedCount > 0) {
+      db.save();
+      console.log(`⏱️ [Holds] Released ${releasedCount} expired payment holds and returned slots to available.`);
+    }
+
+    return releasedCount;
+  }
 }
 
 export const queueService = new QueueService();
 export default queueService;
+

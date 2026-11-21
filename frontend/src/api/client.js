@@ -7,6 +7,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 15000,
 });
 
 // Toast dispatch helper
@@ -35,15 +36,14 @@ api.interceptors.response.use(
     const status = error.response ? error.response.status : null;
     const detail = error.response?.data?.detail || error.message || 'An unexpected error occurred';
 
-    // Show toast for 4xx and 5xx errors
-    if (status !== 404 || !error.config.url.includes('/lookup')) {
+    // Show toast for 4xx and 5xx errors (excluding silent lookup 404s)
+    if (status !== 404 || !error.config?.url?.includes('/lookup')) {
       showToast(detail, status >= 500 ? 'error' : 'warning');
     }
 
     if (status === 401) {
       localStorage.removeItem('healpath_token');
       localStorage.removeItem('healpath_user');
-      // Redirect to login if on protected route
       if (!window.location.hash.includes('/login') && !window.location.hash.includes('/patient')) {
         window.location.hash = '#/login';
       }
@@ -53,7 +53,23 @@ api.interceptors.response.use(
   }
 );
 
-// --- Public APIs ---
+// Resilient API Fetcher with exponential backoff for flaky or offline connections
+export async function resilientFetch(fn, maxRetries = 2, delayMs = 1000) {
+  let attempt = 0;
+  while (attempt <= maxRetries) {
+    try {
+      return await fn();
+    } catch (err) {
+      attempt++;
+      if (attempt > maxRetries || !navigator.onLine) {
+        throw err;
+      }
+      await new Promise((res) => setTimeout(res, delayMs * Math.pow(2, attempt - 1)));
+    }
+  }
+}
+
+// --- Public Reference APIs ---
 export const getHealth = () => api.get('/api/health').then(r => r.data);
 export const getDepartments = () => api.get('/api/departments').then(r => r.data);
 export const getDoctors = (deptId) => api.get('/api/doctors', { params: { department_id: deptId } }).then(r => r.data);
@@ -65,11 +81,43 @@ export const login = (username, password) => api.post('/api/auth/login', { usern
 // --- Token & Patient APIs ---
 export const createToken = (data) => api.post('/api/tokens', data).then(r => r.data);
 export const getToken = (id) => api.get(`/api/tokens/${id}`).then(r => r.data);
+export const getTokenBySecureHash = (hash) => api.get(`/api/tokens/secure/${hash}`).then(r => r.data);
 export const lookupTokens = (phone) => api.get('/api/tokens/lookup', { params: { phone } }).then(r => r.data);
 export const rescheduleToken = (id, delayMinutes) => api.post(`/api/tokens/${id}/reschedule`, { delay_minutes: delayMinutes }).then(r => r.data);
 export const getTokenMessages = (id) => api.get(`/api/tokens/${id}/messages`).then(r => r.data);
 
-// --- Staff APIs ---
+// --- Feature 1: Online Appointment Booking APIs ---
+export const getAppointmentSlots = (doctorId, dateStr) => api.get('/api/appointments/slots', { params: { doctor_id: doctorId, date_str: dateStr } }).then(r => r.data);
+export const bookAppointment = (data) => api.post('/api/appointments/book', data).then(r => r.data);
+export const getMyAppointments = (phone) => api.get('/api/appointments/my', { params: { phone } }).then(r => r.data);
+export const getAppointmentDetails = (id) => api.get(`/api/appointments/${id}`).then(r => r.data);
+export const rescheduleAppointment = (id, newSlotTime, reason) => api.post(`/api/appointments/${id}/reschedule`, { new_slot_time: newSlotTime, reason }).then(r => r.data);
+export const cancelAppointment = (id, reason) => api.post(`/api/appointments/${id}/cancel`, { reason }).then(r => r.data);
+export const checkInAppointment = (id) => api.post(`/api/appointments/${id}/check-in`).then(r => r.data);
+
+// --- Feature 4: Emergency Patient Priority APIs ---
+export const flagEmergency = (tokenId, reason) => api.post(`/api/tokens/${tokenId}/emergency-flag`, { reason }).then(r => r.data);
+export const verifyEmergency = (tokenId, action, clinicalNotes) => api.post(`/api/tokens/${tokenId}/emergency-verify`, { action, clinical_notes: clinicalNotes }).then(r => r.data);
+export const getEmergencyAudit = (tokenId) => api.get(`/api/tokens/${tokenId}/emergency-audit`).then(r => r.data);
+
+// --- Feature 10: Digital Prescription Management APIs ---
+export const createPrescription = (data) => api.post('/api/prescriptions', data).then(r => r.data);
+export const getPrescriptionForToken = (tokenId) => api.get(`/api/prescriptions/token/${tokenId}`).then(r => r.data);
+export const getPrescriptionById = (id) => api.get(`/api/prescriptions/${id}`).then(r => r.data);
+
+// --- Feature 9: Patient Feedback and Ratings APIs ---
+export const submitFeedback = (data) => api.post('/api/feedback', data).then(r => r.data);
+export const getFeedbackSummary = (deptId) => api.get('/api/feedback/summary', { params: { department_id: deptId } }).then(r => r.data);
+
+// --- Feature 7: Doctor Availability and Duty Roster APIs ---
+export const updateDoctorRoster = (doctorId, data) => api.patch(`/api/doctors/${doctorId}/roster`, data).then(r => r.data);
+export const reassignDoctorQueue = (doctorId, targetDoctorId) => api.post(`/api/doctors/${doctorId}/reassign-queue`, null, { params: { target_doctor_id: targetDoctorId } }).then(r => r.data);
+
+// --- Feature 5 & 2: Advanced Hospital Analytics & Notification Logs ---
+export const getAdminAnalytics = (range = 'today') => api.get('/api/admin/analytics', { params: { range } }).then(r => r.data);
+export const getNotificationLogs = () => api.get('/api/admin/notifications').then(r => r.data);
+
+// --- Staff Core APIs ---
 export const getQueue = (deptId) => api.get('/api/queue', { params: { department_id: deptId } }).then(r => r.data);
 export const getStats = (deptId) => api.get('/api/stats', { params: { department_id: deptId } }).then(r => r.data);
 export const getDoctorCurrent = (doctorId) => api.get(`/api/doctors/${doctorId}/current`).then(r => r.data);

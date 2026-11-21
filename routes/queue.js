@@ -98,10 +98,14 @@ router.post('/call-next', (req, res) => {
     q => q.doctor_id === docId && q.status === 'in_progress'
   );
   if (currentInProgress) {
+    const compNow = new Date().toISOString();
     currentInProgress.status = 'completed';
-    currentInProgress.completed_at = new Date().toISOString();
+    currentInProgress.completed_at = compNow;
     const curAppt = db.store.data.appointments.find(a => a.id === currentInProgress.appointment_id);
-    if (curAppt) curAppt.status = 'completed';
+    if (curAppt) {
+      curAppt.status = 'completed';
+      curAppt.completed_at = compNow;
+    }
   }
 
   // Find next waiting patient
@@ -118,12 +122,16 @@ router.post('/call-next', (req, res) => {
     });
   }
 
+  const callNow = new Date().toISOString();
   nextWaiting.status = 'in_progress';
-  nextWaiting.called_at = new Date().toISOString();
+  nextWaiting.called_at = callNow;
+  nextWaiting.started_at = callNow;
 
   const appt = db.store.data.appointments.find(a => a.id === nextWaiting.appointment_id);
   if (appt) {
     appt.status = 'in_progress';
+    appt.called_at = callNow;
+    if (!appt.started_at) appt.started_at = callNow;
   }
 
   db.save();
@@ -162,13 +170,26 @@ router.post('/status', (req, res) => {
     return res.status(404).json({ success: false, message: 'Queue item not found' });
   }
 
+  const statusNow = new Date().toISOString();
   item.status = status;
-  if (status === 'in_progress') item.called_at = new Date().toISOString();
-  if (status === 'completed') item.completed_at = new Date().toISOString();
+  if (status === 'in_progress') {
+    item.called_at = statusNow;
+    item.started_at = statusNow;
+  }
+  if (status === 'completed') {
+    item.completed_at = statusNow;
+  }
 
   const appt = db.store.data.appointments.find(a => a.id === item.appointment_id);
   if (appt) {
     appt.status = status;
+    if (status === 'in_progress') {
+      appt.called_at = statusNow;
+      if (!appt.started_at) appt.started_at = statusNow;
+    }
+    if (status === 'completed') {
+      appt.completed_at = statusNow;
+    }
   }
 
   db.save();

@@ -1,10 +1,11 @@
+import secrets
 from datetime import datetime, date, timedelta
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from backend.db import get_db
-from backend.models import Department, Doctor, Patient, Token, Message
+from backend.models import Department, Doctor, Patient, Token, Message, EmergencyAuditLog
 from backend.schemas import (
     TokenCreate,
     TokenResponse,
@@ -18,12 +19,19 @@ from backend.services.queue import (
     serialize_token,
     trigger_near_turn_notifications,
 )
+from backend.services.notification import notification_service
 
 router = APIRouter(prefix="/api/tokens", tags=["tokens"])
 
 @router.post("", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
 def create_token(payload: TokenCreate, db: Session = Depends(get_db)):
-    """Generate a new patient token and place into waiting queue."""
+    """Generate a new patient token and place into waiting queue with secure QR hash."""
+    # 0. Check idempotency if key provided
+    if payload.idempotency_key:
+        existing_idem = db.query(Token).filter(Token.idempotency_key == payload.idempotency_key).first()
+        if existing_idem:
+            return serialize_token(existing_idem, db)
+
     # 1. Department must exist
     department = db.query(Department).filter(Department.id == payload.department_id).first()
     if not department:
@@ -69,6 +77,8 @@ def create_token(payload: TokenCreate, db: Session = Depends(get_db)):
     token_number = format_token_number(department.code, seq)
 
     now = datetime.now()
+    secure_hash = secrets.token_hex(16)
+
     token = Token(
         department_id=department.id,
         doctor_id=None,
@@ -84,10 +94,27 @@ def create_token(payload: TokenCreate, db: Session = Depends(get_db)):
         created_at=now,
         called_at=None,
         completed_at=None,
-        near_notified=False
+        near_notified=False,
+        secure_hash=secure_hash,
+        emergency_reason=payload.emergency_reason if payload.priority == "emergency" else None,
+        emergency_flagged_by="patient_intake" if payload.priority == "emergency" else None,
+        emergency_flagged_at=now if payload.priority == "emergency" else None,
+        idempotency_key=payload.idempotency_key
     )
     db.add(token)
     db.flush()
+
+    if payload.priority == "emergency":
+        db.add(EmergencyAuditLog(
+            token_id=token.id,
+            action="flagged",
+            old_priority="normal",
+            new_priority="emergency",
+            staff_username="reception",
+            staff_role="receptionist",
+            reason=payload.emergency_reason or "Emergency flagged at patient registration",
+            created_at=now
+        ))
 
     # Create initial system message
     initial_msg = Message(
@@ -103,20 +130,42 @@ def create_token(payload: TokenCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(token)
 
+    # Dispatch notification to patient
+    try:
+        notification_service.notify_token_generated(db, token, patient)
+    except Exception:
+        pass
+
     return serialize_token(token, db)
 
 @router.get("/lookup", response_model=List[TokenResponse])
 def lookup_tokens_by_phone(
-    phone: str = Query(..., min_length=10, max_length=10, description="10-digit patient phone number"),
+    phone: str = Query(..., min_length=10, max_length=15, description="10-digit patient phone number"),
     db: Session = Depends(get_db)
 ):
     """Find a patient's active tokens without login."""
+    clean_phone = "".join(filter(str.isdigit, phone))[-10:]
     tokens = db.query(Token).join(Patient).filter(
-        Patient.phone == phone,
+        Patient.phone == clean_phone,
         Token.status.in_(["waiting", "in_progress"])
     ).order_by(Token.created_at.desc()).all()
 
     return [serialize_token(t, db) for t in tokens]
+
+@router.get("/secure/{secure_hash}", response_model=TokenDetailResponse)
+def get_token_by_secure_hash(secure_hash: str, db: Session = Depends(get_db)):
+    """
+    Secure QR Token verification endpoint.
+    Retrieves token tracking details via unpredictable cryptographic hash,
+    preventing sequential ID guessing or enumeration attacks.
+    """
+    token = db.query(Token).filter(Token.secure_hash == secure_hash).first()
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Invalid or expired QR token"
+        )
+    return format_token_detail(token, db)
 
 @router.get("/{id}", response_model=TokenDetailResponse)
 def get_token_details(id: int, db: Session = Depends(get_db)):
@@ -134,23 +183,7 @@ def get_token_details(id: int, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(token)
 
-    token_data = serialize_token(token, db)
-
-    # Current now_serving token in department
-    now_serving_token = db.query(Token).filter(
-        Token.department_id == token.department_id,
-        Token.status == "in_progress"
-    ).first()
-
-    waiting_count = db.query(Token).filter(
-        Token.department_id == token.department_id,
-        Token.status == "waiting"
-    ).count()
-
-    token_data["now_serving"] = now_serving_token.token_number if now_serving_token else None
-    token_data["department_waiting_count"] = waiting_count
-
-    return token_data
+    return format_token_detail(token, db)
 
 @router.post("/{id}/reschedule", response_model=TokenResponse)
 def reschedule_token(id: int, payload: TokenRescheduleRequest, db: Session = Depends(get_db)):
@@ -207,3 +240,23 @@ def get_token_messages(id: int, db: Session = Depends(get_db)):
         }
         for m in messages
     ]
+
+
+def format_token_detail(token: Token, db: Session) -> dict:
+    token_data = serialize_token(token, db)
+
+    now_serving_token = db.query(Token).filter(
+        Token.department_id == token.department_id,
+        Token.status == "in_progress"
+    ).first()
+
+    waiting_count = db.query(Token).filter(
+        Token.department_id == token.department_id,
+        Token.status == "waiting"
+    ).count()
+
+    token_data["now_serving"] = now_serving_token.token_number if now_serving_token else None
+    token_data["department_waiting_count"] = waiting_count
+    token_data["qr_tracking_url"] = f"#/patient/track/{token.id}?secure={token.secure_hash or ''}"
+
+    return token_data

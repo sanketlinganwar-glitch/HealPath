@@ -17,6 +17,7 @@ import { AdminDashboard } from './pages/AdminDashboard';
 import { DisplayBoard } from './pages/DisplayBoard';
 import { DoctorsInfoPage } from './pages/DoctorsInfoPage';
 import { DemoControlsPage } from './pages/DemoControlsPage';
+import { AppointmentBookingPage } from './pages/AppointmentBookingPage';
 
 // Protected Route by Role
 function ProtectedRoute({ children, allowedRoles }) {
@@ -52,6 +53,7 @@ function AppLayout() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/patient" element={<PatientRegisterPage />} />
+          <Route path="/book-appointment" element={<AppointmentBookingPage />} />
           <Route path="/patient/track/:id" element={<PatientTrackPage />} />
           <Route path="/patient/lookup" element={<PatientLookupPage />} />
           <Route path="/display" element={<DisplayBoard />} />

@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Doctors - HealPath Hospital & Sanjivani Multispecialty Yavatmal</title>
-  
+  <title>Specialist Doctors Directory - Sanjivani Hospital & HealPath</title>
+  <meta name="description" content="Meet consulting surgeons and physicians at Sanjeevan Multispecialty Hospital Yavatmal. Check clinical specialties, OPD room numbers, and reserve slots.">
+  <meta property="og:title" content="Our Doctors - Sanjivani Hospital Yavatmal">
+  <meta property="og:description" content="View verified doctor qualifications, OPD timings, and consultation fees for Sanjivani Hospital.">
+  <link rel="icon" type="image/svg+xml" href="images/sanjeevan-logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -14,86 +21,177 @@
   <div class="top-bar">
     <div class="container top-bar-inner">
       <div class="top-bar-left">
-        <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> Helpline: <strong>+91 98765 43210</strong></span>
-        <span><i class="fas fa-hospital" style="color: var(--mint); margin-right: 5px; margin-left: 10px;"></i> Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)</span>
+        <span class="top-bar-emergency-pill">
+          <i class="fas fa-phone-alt" style="color: var(--mint);"></i>
+          <span data-i18n="emergency_call">24/7 Emergency Line:</span>
+          <strong><a href="tel:+919552625262">+91 95526 25262</a></strong> / 
+          <strong><a href="tel:+919876543210">+91 98765 43210</a></strong>
+        </span>
+        <span>
+          <i class="fas fa-hospital" style="color: var(--mint);"></i>
+          Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)
+        </span>
       </div>
       <div class="top-bar-right">
-        <div class="online-indicator"><span class="online-dot"></span> <span class="online-status-text">Online</span></div>
-        <select id="lang-select" class="lang-selector">
-          <option value="en">English (EN)</option>
-          <option value="hi">हिन्दी (HI)</option>
-          <option value="mr">मराठी (MR)</option>
-        </select>
-        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()"><i class="fas fa-question-circle"></i> Help</button>
+        <span>
+          <i class="fas fa-clock" style="color: var(--mint);"></i>
+          OPD Hours: <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong>
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- Header -->
+  <!-- Sticky Header -->
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <div class="logo-icon-tile">H</div>
+      <a href="index.html" class="logo" aria-label="HealPath Sanjivani Hospital Homepage">
+        <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
         <div class="logo-text-box">
-          <span class="logo-text"><span class="heal">Heal</span><span class="path">Path</span></span>
-          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+          <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+          <span class="logo-tagline" data-i18n="hero_tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
         </div>
       </a>
-      <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="services.html" class="nav-link">Services</a>
-        <a href="doctors.html" class="nav-link active">Doctors</a>
-        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> Live Queue</a>
-        <a href="booking.html" class="nav-link">Book Appointment</a>
-        <a href="dashboard.html" class="nav-link">Dashboard</a>
+
+      <nav class="nav-menu" id="primary-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link" data-i18n="home">Home</a>
+        <a href="services.html" class="nav-link" data-i18n="services">Services</a>
+        <a href="doctors.html" class="nav-link active" data-i18n="doctors">Doctors</a>
+        <a href="about.html" class="nav-link" data-i18n="about_us">About Us</a>
+        <a href="queue.html" class="nav-link queue-nav-pill"><i class="fas fa-satellite-dish"></i> <span data-i18n="live_queue">Live Queue</span></a>
+        <a href="blog.html" class="nav-link" data-i18n="blog">Blog</a>
+        <a href="contact.html" class="nav-link" data-i18n="contact">Contact</a>
       </nav>
+
       <div class="header-actions">
+        <div class="lang-selector-wrapper">
+          <i class="fas fa-globe" style="color: var(--teal); font-size: 0.85rem;"></i>
+          <select id="lang-select" class="lang-selector" aria-label="Select Language">
+            <option value="en">English (EN)</option>
+            <option value="hi">हिन्दी (HI)</option>
+            <option value="mr">मराठी (MR)</option>
+          </select>
+        </div>
         <div id="header-auth-container"></div>
-        <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Slot</a>
+        <a href="booking.html" class="btn btn-primary header-book-btn">
+          <i class="fas fa-calendar-check"></i> <span data-i18n="book_appointment">Book Slot</span>
+        </a>
+        <button class="mobile-toggle" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
       </div>
     </div>
   </header>
 
-  <!-- Page Banner -->
-  <section class="hero-section organic-bg-shapes" style="padding: 3.5rem 0 4rem; text-align: center;">
-    <div class="container" style="position: relative; z-index: 2;">
-      <span class="tag-mint" style="margin-bottom: 0.5rem;">Leading Medical Minds</span>
-      <h1 style="color: var(--white); font-size: 2.4rem; margin: 0.5rem 0;">Meet Our Specialist Physicians & Surgeons</h1>
-      <p style="color: rgba(255,255,255,0.85); margin: 0 auto; max-width: 620px;">
-        Browse our certified doctors, review their clinical qualifications and room locations, and reserve your consultation slot instantly.
+  <!-- Page Banner & Breadcrumbs -->
+  <section class="page-banner">
+    <div class="container page-banner-inner">
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep"><i class="fas fa-chevron-right"></i></span>
+        <span class="active">Doctors</span>
+      </nav>
+      <span class="section-tag"><i class="fas fa-user-md"></i> Clinical Faculty</span>
+      <h1 style="font-size: 2.3rem; color: var(--deep-blue); margin-top: 0.25rem;">Consulting Physicians & Surgeons</h1>
+      <p style="color: var(--text-muted); font-size: 1rem; max-width: 680px;">
+        Browse our certified doctors, inspect clinical credentials and room locations, or book your OPD consultation slot directly.
       </p>
     </div>
   </section>
 
   <!-- Doctors Directory Section -->
-  <section class="section">
+  <main class="section">
     <div class="container">
-      <!-- Department Filter Pills -->
-      <div style="display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 3rem;" id="dept-pills-filter">
-        <button class="btn btn-sm btn-primary" onclick="filterDoctorsByDept('', this)">All Departments</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('sanjivani', this)" style="border-color: var(--teal); background: #E6FFFA; color: var(--deep-blue); font-weight: 700;">
+      
+      <!-- Department Filter Pills (Preserves existing IDs & onclick hooks) -->
+      <div style="display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2.75rem;" id="dept-pills-filter">
+        <button class="btn btn-sm btn-primary" onclick="filterDoctorsByDept('', this)">All Doctors</button>
+        <button class="btn btn-sm btn-outline" onclick="filterDoctorsByDept('sanjivani', this)" style="border-color: var(--teal); background: var(--teal-surface); color: var(--deep-blue); font-weight: 700;">
           <i class="fas fa-hospital" style="color: var(--teal);"></i> Sanjivani Hospital (Yavatmal 445001)
         </button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('1', this)">Cardiology</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('2', this)">Dental</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('3', this)">Radiology</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('4', this)">Neurology</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('5', this)">Ophthalmology</button>
-        <button class="btn btn-sm btn-secondary" onclick="filterDoctorsByDept('6', this)">Pediatrics</button>
+        <button class="btn btn-sm btn-outline" onclick="filterDoctorsByDept('1', this)">Cardiology</button>
+        <button class="btn btn-sm btn-outline" onclick="filterDoctorsByDept('2', this)">Dental</button>
+        <button class="btn btn-sm btn-outline" onclick="filterDoctorsByDept('3', this)">Radiology</button>
+        <button class="btn btn-sm btn-outline" onclick="filterDoctorsByDept('4', this)">Neurology</button>
+        <button class="btn btn-sm btn-outline" onclick="filterDoctorsByDept('5', this)">Ophthalmology</button>
+        <button class="btn btn-sm btn-outline" onclick="filterDoctorsByDept('6', this)">Pediatrics</button>
       </div>
 
-      <!-- Doctors Grid -->
-      <div class="doctors-grid-4" id="doctors-full-list" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
-        <p style="text-align: center; grid-column: 1 / -1; padding: 3rem;">Loading doctors directory...</p>
+      <!-- Doctors Grid Container (Preserves #doctors-full-list) -->
+      <div class="doctors-grid-4" id="doctors-full-list">
+        <p style="text-align: center; grid-column: 1 / -1; padding: 3rem; color: var(--text-muted);">
+          <i class="fas fa-spinner fa-spin" style="color: var(--teal); font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i>
+          Loading medical faculty...
+        </p>
       </div>
+
     </div>
-  </section>
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-bottom-bar" style="border: none; padding: 0; justify-content: center;">
-        <div>&copy; 2026 HealPath Hospital System. All Rights Reserved.</div>
+      <div class="footer-grid">
+        <div class="footer-col footer-col-brand">
+          <a href="index.html" class="logo footer-logo">
+            <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
+            <div class="logo-text-box">
+              <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+              <span class="logo-tagline">SANJIVANI MULTISPECIALTY HOSPITAL</span>
+            </div>
+          </a>
+          <p class="footer-desc">
+            Official hospital appointment and live queue tracking portal for Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal (445001).
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Hospital Portals</h4>
+          <ul class="footer-links">
+            <li><a href="booking.html"><i class="fas fa-chevron-right"></i> Book Doctor Slot</a></li>
+            <li><a href="queue.html"><i class="fas fa-chevron-right"></i> Live OPD Queue Screen</a></li>
+            <li><a href="doctors.html"><i class="fas fa-chevron-right"></i> Specialist Doctors</a></li>
+            <li><a href="services.html"><i class="fas fa-chevron-right"></i> Medical Departments</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chevron-right"></i> Patient / Doctor Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">OPD & Consultation Hours</h4>
+          <ul class="footer-links footer-timings">
+            <li><span>General OPD:</span> <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong></li>
+            <li><span>Specialist Consults:</span> <strong>Morning & Evening Slots</strong></li>
+            <li class="emergency-timing"><span>Emergency & Casualty:</span> <strong class="badge-emergency-text">24 Hours / 7 Days Open</strong></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Hospital Location & Help</h4>
+          <ul class="footer-links footer-contact-info">
+            <li>
+              <i class="fas fa-map-marker-alt footer-icon"></i>
+              <div>
+                <strong>Sanjeevan Multispecialty Hospital</strong><br>
+                Mahadev Mandir Road, Ratanlal Plots, Yavatmal 445001<br>
+                <a href="https://maps.google.com/?q=Sanjeevan+Multispecialty+Hospital+Yavatmal+445001" target="_blank" rel="noopener" class="map-link">
+                  <i class="fas fa-directions"></i> Get Directions on Google Maps
+                </a>
+              </div>
+            </li>
+            <li>
+              <i class="fas fa-phone-alt footer-icon"></i>
+              <div>Emergency Hotline: <a href="tel:+919552625262"><strong>+91 95526 25262</strong></a></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 Sanjivani Hospital & HealPath System. All Rights Reserved.</div>
+        <div class="footer-legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="sep">&bull;</span>
+          <a href="terms.html">Terms of Service</a>
+          <span class="sep">&bull;</span>
+          <a href="about.html">About Hospital</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -102,18 +200,20 @@
   <script type="module" src="js/i18n.js"></script>
   <script src="js/main.js"></script>
   <script src="js/chat.js"></script>
+  <script src="js/layout.js"></script>
+
   <script>
     async function filterDoctorsByDept(deptId, btnEl) {
       if (btnEl) {
         document.querySelectorAll('#dept-pills-filter button').forEach(b => {
-          b.className = 'btn btn-sm btn-secondary';
+          b.className = 'btn btn-sm btn-outline';
         });
         btnEl.className = 'btn btn-sm btn-primary';
       }
 
       const container = document.getElementById('doctors-full-list');
       try {
-        container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; padding: 3rem;"><i class="fas fa-spinner fa-spin" style="color: var(--teal); font-size: 1.5rem;"></i> Loading doctors...</p>';
+        container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; padding: 3rem; color: var(--text-muted);"><i class="fas fa-spinner fa-spin" style="color: var(--teal); font-size: 1.5rem; margin-bottom: 0.5rem; display: block;"></i> Loading doctors...</p>';
 
         let doctors = [];
         if (deptId === 'sanjivani') {
@@ -140,40 +240,46 @@
 
         container.innerHTML = '';
         if (doctors.length === 0) {
-          container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; padding: 3rem;">No doctors found for this selection.</p>';
+          container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; padding: 3rem; color: var(--text-muted);">No doctors found for this selection.</p>';
           return;
         }
 
         doctors.forEach(doc => {
           const card = document.createElement('div');
           card.className = 'doctor-card';
+          const photoSrc = doc.photo_url || doc.avatar || doc.image_url || 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400';
+          const profileUrl = `doctor.html?id=${doc.id}`;
+          const bookUrl = `booking.html?doctor=${doc.id}`;
+
           card.innerHTML = `
             <div class="doctor-photo-box">
-              <img src="${doc.avatar}" alt="${doc.name}">
-              ${doc.isSanjivani ? '<div style="position: absolute; top: 10px; right: 10px; background: var(--teal); color: #FFF; font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 12px;"><i class="fas fa-hospital"></i> Yavatmal 445001</div>' : ''}
-              <div class="doctor-social-slide">
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fas fa-envelope"></i></a>
-              </div>
+              <img src="${photoSrc}" alt="${doc.name}" onerror="this.src='https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400';">
+              ${doc.isSanjivani || doc.department_id === 7 ? '<div style="position: absolute; top: 10px; right: 10px; background: var(--teal); color: #FFF; font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 12px;"><i class="fas fa-hospital"></i> Yavatmal 445001</div>' : ''}
             </div>
             <div class="doctor-info">
-              <span class="doctor-specialty-tag">${doc.specialty || doc.department_name}</span>
-              <h3 class="doctor-name-heading">${doc.name}</h3>
-              <p style="font-size: 0.85rem; color: var(--charcoal-light); margin-bottom: 0.4rem;">${doc.qualification || doc.role || ''}</p>
-              <div style="font-size: 0.82rem; color: var(--teal); font-weight: 600; margin-bottom: 0.75rem;">
-                <i class="fas fa-door-open"></i> ${doc.room_no || 'Consultation Room'} &bull; ${doc.start_hour || ''} ${doc.end_hour ? '- ' + doc.end_hour : ''}
+              <span class="doctor-specialty-tag">${doc.specialty || doc.specialization || doc.department_name}</span>
+              <h3 class="doctor-name-heading">
+                <a href="${profileUrl}" style="color: inherit; text-decoration: none;">${doc.name}</a>
+              </h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem;">${doc.qualification || doc.specialization || ''}</p>
+              <div style="font-size: 0.82rem; color: var(--teal); font-weight: 600; margin-bottom: 0.85rem;">
+                <i class="fas fa-door-open"></i> ${doc.room_no || doc.room || 'Consultation Room'} &bull; ${doc.start_hour || doc.working_start || ''} ${doc.end_hour || doc.working_end ? '- ' + (doc.end_hour || doc.working_end) : ''}
               </div>
-              <a href="${doc.isSanjivani ? 'index.html#sanjivani-section' : 'booking.html?doc=' + doc.id}" class="btn btn-sm btn-primary" style="width: 100%;">
-                <i class="fas fa-calendar-check"></i> Book Slot (${doc.consultation_fee ? '₹' + doc.consultation_fee : 'Free'})
-              </a>
+              <div style="display: flex; gap: 0.5rem; width: 100%; margin-top: auto;">
+                <a href="${profileUrl}" class="btn btn-sm btn-outline" style="flex: 1; text-align: center; justify-content: center;">
+                  <i class="fas fa-user-md"></i> Profile
+                </a>
+                <a href="${bookUrl}" class="btn btn-sm btn-primary" style="flex: 1.2; text-align: center; justify-content: center;">
+                  <i class="fas fa-calendar-check"></i> Book ${doc.consultation_fee ? '₹' + doc.consultation_fee : 'Slot'}
+                </a>
+              </div>
             </div>
           `;
           container.appendChild(card);
         });
       } catch (e) {
         console.error(e);
-        container.innerHTML = '<p style="text-align: center; color: red;">Error loading doctors list.</p>';
+        container.innerHTML = '<p style="text-align: center; color: var(--emergency-red); grid-column: 1 / -1; padding: 2rem;">Error loading doctors list.</p>';
       }
     }
     document.addEventListener('DOMContentLoaded', () => filterDoctorsByDept('', null));

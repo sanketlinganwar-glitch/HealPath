@@ -3,33 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HealPath - Role-Based Hospital Dashboard</title>
-  
+  <title>Portal Dashboard | Sanjeevan Multispecialty Hospital Yavatmal</title>
+  <meta name="description" content="Access role-based hospital management portal for patients, doctors, and administrative staff at Sanjeevan Hospital Yavatmal.">
+  <link rel="canonical" href="https://healpath.sanjeevanhospital.org/dashboard.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Portal Dashboard | Sanjeevan Hospital Yavatmal">
+  <meta property="og:description" content="Manage appointments, live OPD queue status, digital QR passes, and clinical consultations.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://healpath.sanjeevanhospital.org/dashboard.html">
+  <meta property="og:image" content="/images/hospital.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="images/sanjeevan-logo.svg"><rect width='100' height='100' rx='20' fill='%230F3B64'/><path d='M35 20h30v60H35z' fill='%2314BBA6'/><path d='M20 35h60v30H20z' fill='%2314BBA6'/></svg>">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Hospital Shared Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- HTML5 QR Code Scanner Library for Reception Desk -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head>
+
 <body>
 
-  <!-- Top Bar -->
+  <!-- Top Info Bar -->
   <div class="top-bar">
     <div class="container top-bar-inner">
       <div class="top-bar-left">
-        <span><i class="fas fa-shield-alt" style="color: var(--mint); margin-right: 5px;"></i> HealPath Protected Portal (Role-Based Access Control)</span>
-        <span><i class="fas fa-hospital" style="color: var(--mint); margin-right: 5px; margin-left: 10px;"></i> Yavatmal Facility (445001)</span>
+        <span><i class="fas fa-phone-alt"></i> 24/7 Casualty &amp; Emergency: <strong>+91 95526 25262</strong></span>
+        <span><i class="far fa-clock"></i> OPD Hours: <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong></span>
       </div>
       <div class="top-bar-right">
-        <div class="online-indicator">
-          <span class="online-dot"></span>
-          <span class="online-status-text">Online</span>
-        </div>
-        <select id="lang-select" class="lang-selector">
-          <option value="en">English (EN)</option>
-          <option value="hi">हिन्दी (HI)</option>
-          <option value="mr">मराठी (MR)</option>
-        </select>
-        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()">
-          <i class="fas fa-question-circle"></i> Help
-        </button>
+        <span><i class="fas fa-map-marker-alt"></i> Sanjeevan Hospital, Yavatmal (445001)</span>
       </div>
     </div>
   </div>
@@ -37,57 +48,71 @@
   <!-- Header -->
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <div class="logo-icon-tile">H</div>
+      <a href="index.html" class="logo" aria-label="HealPath Home">
+        <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
         <div class="logo-text-box">
-          <span class="logo-text"><span class="heal">Heal</span><span class="path">Path</span></span>
-          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+          <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+          <span class="logo-tagline">SANJEEVAN HOSPITAL &bull; YAVATMAL</span>
         </div>
       </a>
 
-      <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="services.html" class="nav-link">Services</a>
-        <a href="doctors.html" class="nav-link">Doctors</a>
-        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> Live Queue</a>
-        <a href="booking.html" class="nav-link">Book Appointment</a>
-        <a href="dashboard.html" class="nav-link active">Dashboard</a>
+      <nav class="nav-menu" id="primary-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+        <a href="services.html" class="nav-link" data-i18n="nav.services">Services</a>
+        <a href="doctors.html" class="nav-link" data-i18n="nav.doctors">Doctors</a>
+        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> <span data-i18n="nav.queue">Live Queue</span></a>
+        <a href="booking.html" class="nav-link" data-i18n="nav.book">Book Appointment</a>
+        <a href="dashboard.html" class="nav-link active" data-i18n="nav.dashboard">Dashboard</a>
       </nav>
 
       <div class="header-actions">
+        <select id="lang-select" class="lang-selector" aria-label="Select Language">
+          <option value="en">English (EN)</option>
+          <option value="hi">हिन्दी (HI)</option>
+          <option value="mr">मराठी (MR)</option>
+        </select>
         <div id="header-auth-container"></div>
-        <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+        <button class="mobile-toggle" id="mobile-toggle-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- Dashboard Layout (Deep Blue Sidebar + Light Gray Content) -->
+  <!-- Dashboard Layout (Deep Blue Sidebar + Responsive Content Area) -->
   <div class="dashboard-layout">
     <!-- Sidebar -->
-    <aside class="dash-sidebar">
+    <aside class="dash-sidebar" aria-label="Dashboard Sidebar">
       <div>
+        <!-- Active Session Card -->
         <div style="background: rgba(255,255,255,0.08); border-radius: 12px; padding: 1.25rem; margin-bottom: 2rem; border-left: 3px solid var(--teal);">
-          <div style="font-size: 0.75rem; color: var(--mint); font-weight: 700; text-transform: uppercase;">Active Session</div>
-          <div id="dash-user-name" style="font-size: 1.15rem; font-weight: 700; color: #FFF; margin: 0.2rem 0;">Aarav Deshmukh</div>
+          <div style="font-size: 0.75rem; color: var(--mint); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Active Clinical Session</div>
+          <div id="dash-user-name" style="font-size: 1.15rem; font-weight: 700; color: #FFF; margin: 0.25rem 0;">Aarav Deshmukh</div>
           <span id="dash-user-role" class="tag-mint" style="font-size: 0.68rem; padding: 0.2rem 0.6rem;">PATIENT</span>
         </div>
 
-        <!-- Role-Switcher Navigation for Seamless Evaluation -->
-        <div style="margin-bottom: 1.5rem;">
-          <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mint); display: block; margin-bottom: 0.6rem; padding-left: 0.5rem;">PORTAL ROLES</span>
-          <a href="javascript:void(0)" id="nav-patient" class="dash-nav-link active" onclick="switchRoleView('patient')">
-            <i class="fas fa-user-injured"></i> Patient Portal
-          </a>
-          <a href="javascript:void(0)" id="nav-doctor" class="dash-nav-link" onclick="switchRoleView('doctor')">
-            <i class="fas fa-user-md"></i> Doctor Consultation
-          </a>
-          <a href="javascript:void(0)" id="nav-admin" class="dash-nav-link" onclick="switchRoleView('admin')">
-            <i class="fas fa-hospital-user"></i> Admin / Receptionist
-          </a>
+        <!-- Role-Switcher Navigation -->
+        <div style="margin-bottom: 2rem;">
+          <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mint); display: block; margin-bottom: 0.75rem; padding-left: 0.5rem; font-weight: 700;">PORTAL ROLES</span>
+          <div class="dash-role-nav">
+            <a href="javascript:void(0)" id="nav-patient" class="dash-nav-link active" onclick="switchRoleView('patient')">
+              <i class="fas fa-user-injured"></i> Patient Portal
+            </a>
+            <a href="javascript:void(0)" id="nav-doctor" class="dash-nav-link" onclick="switchRoleView('doctor')">
+              <i class="fas fa-user-md"></i> Doctor Consultation
+            </a>
+            <a href="javascript:void(0)" id="nav-admin" class="dash-nav-link" onclick="switchRoleView('admin')">
+              <i class="fas fa-hospital-user"></i> Admin / Receptionist
+            </a>
+            <a href="javascript:void(0)" id="nav-analytics" class="dash-nav-link" onclick="openAdminAnalyticsTab()">
+              <i class="fas fa-chart-line"></i> Analytics & Insights
+            </a>
+          </div>
         </div>
 
+        <!-- Quick System Shortcuts -->
         <div>
-          <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mint); display: block; margin-bottom: 0.6rem; padding-left: 0.5rem;">SYSTEM ACTIONS</span>
+          <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mint); display: block; margin-bottom: 0.75rem; padding-left: 0.5rem; font-weight: 700;">HOSPITAL SHORTCUTS</span>
           <a href="booking.html" class="dash-nav-link">
             <i class="fas fa-calendar-plus"></i> Book New Slot
           </a>
@@ -97,18 +122,103 @@
         </div>
       </div>
 
-      <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
-        <button class="btn btn-outline-white btn-sm" style="width: 100%; border-color: rgba(229,72,77,0.5); color: #FFA1A3;" onclick="handleLogout()">
-          <i class="fas fa-sign-out-alt"></i> Logout
+      <!-- Logout / Exit -->
+      <div style="border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.5rem; margin-top: 1.5rem;">
+        <button class="btn btn-outline-white btn-sm" style="width: 100%; border-color: rgba(217, 48, 37, 0.4); color: #FFA1A3;" onclick="handleLogout()">
+          <i class="fas fa-sign-out-alt"></i> Logout Session
         </button>
       </div>
     </aside>
 
-    <!-- Main Content Area -->
-    <main class="dash-content" id="dashboard-main-view">
-      <!-- Injected dynamically based on role -->
+    <!-- Main Dynamic Content Area -->
+    <main class="dash-content" id="dashboard-main-view" aria-label="Dashboard Content Area">
+      <!-- Injected dynamically based on selected role by dashboard.js -->
     </main>
   </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="footer-logo">
+            <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
+            <div class="logo-text-box">
+              <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+              <span class="logo-tagline">SANJEEVAN HOSPITAL &bull; YAVATMAL</span>
+            </div>
+          </div>
+          <p class="footer-desc">
+            Sanjeevan Multispecialty Hospital &amp; Research Institute brings verified OPD scheduling, transparent wait times, and QR check-in to Yavatmal.
+          </p>
+          <div class="footer-badge-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>HIPAA-aligned Patient Data Protocol</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Portal Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Hospital Home</a></li>
+            <li><a href="services.html">Clinical Departments</a></li>
+            <li><a href="doctors.html">Doctor Directory</a></li>
+            <li><a href="booking.html">Schedule Appointment</a></li>
+            <li><a href="queue.html">Public OPD Queue Monitor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Patient Resources</h4>
+          <ul class="footer-links">
+            <li><a href="about.html">About Sanjeevan Hospital</a></li>
+            <li><a href="contact.html">Hospital Location &amp; Contact</a></li>
+            <li><a href="blog.html">Health Information &amp; Advice</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">OPD Terms &amp; 10-Min Rule</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-col-title">Facility Information</h4>
+          <div class="footer-contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div>
+              <strong>Sanjeevan Multispecialty Hospital</strong><br>
+              Near Bus Stand, Civil Lines, Yavatmal, Maharashtra 445001<br>
+              <a href="https://maps.google.com/?q=Sanjeevan+Hospital+Yavatmal" target="_blank" rel="noopener" class="footer-map-link">
+                <i class="fas fa-directions"></i> View Google Map
+              </a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <i class="fas fa-phone-alt" style="color: var(--emergency-red);"></i>
+            <div>
+              <strong>24/7 Emergency Casualty:</strong><br>
+              <a href="tel:+919552625262" style="color: var(--emergency-red); font-weight: 700;">+91 95526 25262</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <i class="far fa-clock"></i>
+            <div>
+              <strong>OPD Timings:</strong><br>
+              Mon - Sat: 9:00 AM - 8:00 PM<br>
+              Sunday: 9:00 AM - 1:00 PM (Emergency 24/7)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Sanjeevan Multispecialty Hospital &amp; Research Institute, Yavatmal. HealPath Queue System. All rights reserved.</p>
+        <div class="footer-legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">OPD Terms of Service</a>
+          <a href="contact.html">Emergency Contacts</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <!-- Floating Chat Assistant -->
   <div class="chat-fab" id="chat-fab-btn" title="HealPath AI Voice Assistant">
@@ -119,13 +229,13 @@
     <div class="chat-widget-header">
       <div style="display: flex; align-items: center; gap: 0.6rem;">
         <i class="fas fa-robot"></i>
-        <strong>HealPath AI Voice Assistant</strong>
+        <strong>HealPath AI Assistant</strong>
       </div>
       <button id="chat-close-btn" style="background: none; border: none; color: #FFF; font-size: 1.2rem; cursor: pointer;">&times;</button>
     </div>
     <div class="chat-messages" id="chat-messages-container">
       <div class="chat-msg chat-msg-bot">
-        Hello! I can guide you through managing appointments, live token statuses, or doctor schedules.
+        Hello! I can guide you through managing appointments, live token statuses, or doctor schedules at Sanjeevan Hospital.
       </div>
     </div>
     <div class="chat-input-bar">
@@ -139,10 +249,11 @@
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Application Scripts -->
   <script src="/socket.io/socket.io.js"></script>
   <script type="module" src="js/i18n.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/layout.js"></script>
   <script src="js/dashboard.js"></script>
   <script src="js/chat.js"></script>
 </body>

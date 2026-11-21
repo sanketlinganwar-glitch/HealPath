@@ -12,12 +12,16 @@ import {
   AlertTriangle,
   CheckCircle2,
   RefreshCw,
-  Phone
+  Phone,
+  Star,
+  QrCode,
+  ShieldAlert
 } from 'lucide-react';
-import { getToken, rescheduleToken, getTokenMessages } from '../api/client';
+import { getToken, rescheduleToken, getTokenMessages, submitFeedback, showToast } from '../api/client';
 import { usePolling } from '../hooks/usePolling';
 import { useLanguage } from '../context/LanguageContext';
 import { ChatWidget } from '../components/ChatWidget';
+import { QRCodeCard } from '../components/QRCodeCard';
 
 export function PatientTrackPage() {
   const { id } = useParams();
@@ -25,7 +29,31 @@ export function PatientTrackPage() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [rescheduling, setRescheduling] = useState(false);
+  const [showQR, setShowQR] = useState(false);
+  const [feedbackRating, setFeedbackRating] = useState(5);
+  const [feedbackComment, setFeedbackComment] = useState('');
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const [submittingFeedback, setSubmittingFeedback] = useState(false);
   const { t } = useLanguage();
+
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    if (!tokenData) return;
+    setSubmittingFeedback(true);
+    try {
+      await submitFeedback({
+        token_id: tokenData.id,
+        rating: feedbackRating,
+        comment: feedbackComment.trim() || undefined
+      });
+      setFeedbackSubmitted(true);
+      showToast('Thank you! Your feedback has been recorded.', 'success');
+    } catch (err) {
+      showToast(err.message || 'Failed to submit feedback', 'error');
+    } finally {
+      setSubmittingFeedback(false);
+    }
+  };
 
   const fetchTokenData = async () => {
     if (!id) return;
@@ -104,11 +132,31 @@ export function PatientTrackPage() {
       {/* Real-time sync badge */}
       <div className="flex items-center justify-between text-xs text-slate-500 px-1">
         <div className="flex items-center space-x-2">
-          <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping" />
-          <span className="font-semibold text-slate-700">Live Connected • Polling every 5s</span>
+      {/* Emergency Priority Alert Banner */}
+      {tokenData.priority === 'emergency' && (
+        <div className="p-4 rounded-2xl bg-rose-50 border-2 border-rose-300 text-rose-900 flex items-start space-x-3 shadow-md">
+          <ShieldAlert className="w-5 h-5 text-rose-600 mt-0.5 shrink-0 animate-bounce" />
+          <div className="flex-1">
+            <div className="flex items-center justify-between">
+              <h4 className="font-extrabold text-sm text-rose-800">
+                🚨 {t('emergencyPriority') || 'Emergency Priority Active'}
+              </h4>
+              {tokenData.emergency_verified_by ? (
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200 text-rose-900">
+                  {t('verified') || 'Clinically Verified'}
+                </span>
+              ) : (
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900">
+                  {t('pendingVerification') || 'Pending Clinical Verification'}
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-rose-700 mt-0.5 font-medium">
+              Reason: {tokenData.emergency_reason || 'Urgent medical triage priority assigned.'}
+            </p>
+          </div>
         </div>
-        <span>Patient: <strong className="text-slate-800">{tokenData.patient?.name}</strong></span>
-      </div>
+      )}
 
       {/* Hero Token Card */}
       <div className={`p-6 sm:p-10 rounded-3xl shadow-xl border transition-all ${
@@ -271,6 +319,121 @@ export function PatientTrackPage() {
           )}
         </div>
       </div>
+
+      {/* QR Code Pass & Tracking Token Card */}
+      <div className="bg-white rounded-3xl p-6 shadow-xs border border-slate-200/80">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
+              <QrCode className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-slate-900">{t('secureQRPass') || 'Digital QR Token Pass'}</h4>
+              <p className="text-xs text-slate-500">Scan at kiosk, clinic door, or pharmacy</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowQR((prev) => !prev)}
+            className="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition"
+          >
+            {showQR ? (t('hide') || 'Hide Pass') : (t('showQRPass') || 'View QR Pass')}
+          </button>
+        </div>
+
+        {showQR && (
+          <div className="mt-5 flex justify-center pt-4 border-t border-slate-100">
+            <QRCodeCard
+              title={`OPD Token Pass - ${tokenData.token_number}`}
+              subtitle={`${tokenData.department_name} • ${tokenData.patient?.name}`}
+              tokenNumber={tokenData.token_number}
+              secureHash={tokenData.secure_hash}
+              value={`${window.location.origin}/#/patient/track/${tokenData.id}`}
+              details={[
+                { label: 'Patient Name', value: tokenData.patient?.name },
+                { label: 'Department', value: tokenData.department_name },
+                { label: 'Room', value: tokenData.room || 'Assigned on call' },
+                { label: 'Priority', value: tokenData.priority?.toUpperCase() }
+              ]}
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Post-Consultation Feedback Form (when completed) */}
+      {isCompleted && (
+        <div className="bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 rounded-3xl p-6 sm:p-8 shadow-sm border border-teal-200/80 space-y-4">
+          <div className="flex items-center space-x-3">
+            <div className="p-2.5 rounded-xl bg-teal-600 text-white shadow-sm">
+              <Star className="w-6 h-6 fill-amber-300 stroke-amber-400" />
+            </div>
+            <div>
+              <h3 className="text-base font-extrabold text-teal-950">
+                {t('rateExperience') || 'Rate Your Consultation Experience'}
+              </h3>
+              <p className="text-xs text-teal-800">
+                Your feedback helps us improve care delivery and minimize hospital wait times
+              </p>
+            </div>
+          </div>
+
+          {feedbackSubmitted ? (
+            <div className="p-4 rounded-2xl bg-white/80 border border-teal-200 text-teal-900 text-center font-bold text-sm">
+              ✅ {t('feedbackThanks') || 'Thank you! Your feedback has been recorded successfully.'}
+            </div>
+          ) : (
+            <form onSubmit={handleFeedbackSubmit} className="space-y-4 pt-2">
+              <div>
+                <label className="block text-xs font-bold text-teal-900 mb-1.5">
+                  {t('overallRating') || 'Overall Rating (1 to 5 Stars)'}
+                </label>
+                <div className="flex items-center space-x-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setFeedbackRating(star)}
+                      className="p-1.5 focus:outline-hidden transition hover:scale-110"
+                    >
+                      <Star
+                        className={`w-7 h-7 ${
+                          star <= feedbackRating
+                            ? 'text-amber-400 fill-amber-400 drop-shadow-xs'
+                            : 'text-slate-300'
+                        }`}
+                      />
+                    </button>
+                  ))}
+                  <span className="text-xs font-bold text-teal-950 ml-2">
+                    {feedbackRating} / 5 Stars
+                  </span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-teal-900 mb-1">
+                  {t('feedbackComments') || 'Comments or Suggestions (Optional)'}
+                </label>
+                <textarea
+                  rows="2"
+                  value={feedbackComment}
+                  onChange={(e) => setFeedbackComment(e.target.value)}
+                  placeholder="Doctor attentiveness, staff behavior, cleanliness, or queue speed..."
+                  className="w-full px-3 py-2 text-xs rounded-xl bg-white border border-teal-200 focus:ring-2 focus:ring-teal-500 focus:outline-hidden"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={submittingFeedback}
+                className="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs shadow-md shadow-teal-700/20 transition disabled:opacity-50"
+              >
+                {submittingFeedback ? 'Submitting...' : (t('submitFeedback') || 'Submit Feedback')}
+              </button>
+            </form>
+          )}
+        </div>
+      )}
 
       {/* Messages Section (System and Staff updates) */}
       <div className="bg-white rounded-3xl p-6 shadow-xs border border-slate-200/80 space-y-4">

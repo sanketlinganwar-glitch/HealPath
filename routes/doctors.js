@@ -17,7 +17,15 @@ router.get('/', (req, res) => {
     const dept = db.store.data.departments.find(d => d.id === doc.department_id);
     return {
       ...doc,
-      department_name: dept ? dept.name : 'General',
+      avatar: doc.photo_url || doc.avatar || doc.image_url,
+      photo_url: doc.photo_url || doc.avatar || doc.image_url,
+      specialty: doc.specialty || doc.specialization,
+      specialization: doc.specialization || doc.specialty,
+      room_no: doc.room_no || doc.room,
+      room: doc.room || doc.room_no,
+      start_hour: doc.start_hour || doc.working_start || (doc.opd_hours ? doc.opd_hours.split('-')[0] : '09:00'),
+      end_hour: doc.end_hour || doc.working_end || (doc.opd_hours ? doc.opd_hours.split('-')[1] : '14:00'),
+      department_name: dept ? dept.name : (doc.department_name || 'General'),
       department_code: dept ? dept.code : 'GEN'
     };
   });
@@ -27,18 +35,59 @@ router.get('/', (req, res) => {
 
 // GET /api/doctors/:id
 router.get('/:id', (req, res) => {
-  const doc = db.store.data.doctors.find(d => d.id === Number(req.params.id));
+  const docId = Number(req.params.id);
+  const doc = db.store.data.doctors.find(d => d.id === docId);
   if (!doc) {
     return res.status(404).json({ success: false, message: 'Doctor not found' });
   }
 
   const dept = db.store.data.departments.find(d => d.id === doc.department_id);
+
+  // Compute next available slot
+  const now = new Date();
+  const todayDateStr = now.toISOString().split('T')[0];
+  const currentTimeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+  const availableSlots = (db.store.data.slots || [])
+    .filter(s => s.doctor_id === docId && s.status === 'available')
+    .filter(s => {
+      if (s.date > todayDateStr) return true;
+      if (s.date === todayDateStr && s.start_time >= currentTimeStr) return true;
+      return false;
+    })
+    .sort((a, b) => {
+      if (a.date !== b.date) return a.date.localeCompare(b.date);
+      return a.start_time.localeCompare(b.start_time);
+    });
+
+  const nextSlot = availableSlots[0] || null;
+  const next_available_slot = nextSlot ? {
+    slot_id: nextSlot.id,
+    date: nextSlot.date,
+    start_time: nextSlot.start_time
+  } : null;
+
+  // Compute today waiting count (queue items for this doctor with status 'waiting')
+  const today_waiting_count = (db.store.data.queue || []).filter(q => {
+    return q.doctor_id === docId && q.status === 'waiting';
+  }).length;
+
   res.json({
     success: true,
     doctor: {
       ...doc,
-      department_name: dept ? dept.name : 'General',
-      department_code: dept ? dept.code : 'GEN'
+      avatar: doc.photo_url || doc.avatar || doc.image_url,
+      photo_url: doc.photo_url || doc.avatar || doc.image_url,
+      specialty: doc.specialty || doc.specialization,
+      specialization: doc.specialization || doc.specialty,
+      room_no: doc.room_no || doc.room,
+      room: doc.room || doc.room_no,
+      start_hour: doc.start_hour || doc.working_start || (doc.opd_hours ? doc.opd_hours.split('-')[0] : '09:00'),
+      end_hour: doc.end_hour || doc.working_end || (doc.opd_hours ? doc.opd_hours.split('-')[1] : '14:00'),
+      department_name: dept ? dept.name : (doc.department_name || 'General'),
+      department_code: dept ? dept.code : 'GEN',
+      next_available_slot,
+      today_waiting_count
     }
   });
 });
@@ -90,6 +139,65 @@ router.patch('/:id/schedule', authenticateToken, (req, res) => {
 
   db.save();
   res.json({ success: true, message: 'Schedule updated successfully', doctor: doc });
+});
+
+// PATCH /api/doctors/:id/profile (Doctor self-edit bio, languages, opd_days, opd_hours)
+router.patch('/:id/profile', authenticateToken, (req, res) => {
+  const docId = Number(req.params.id);
+  const doc = db.store.data.doctors.find(d => d.id === docId);
+  if (!doc) {
+    return res.status(404).json({ success: false, message: 'Doctor not found' });
+  }
+
+  // Authorization check: doctor can only edit their own profile (doctor_id in JWT must match)
+  if (req.user.role === 'doctor') {
+    if (Number(req.user.doctor_id) !== docId) {
+      return res.status(403).json({ success: false, message: 'Unauthorized: doctor_id in token does not match doctor profile' });
+    }
+    // Doctors cannot change consultation_fee or name
+    if (req.body.consultation_fee !== undefined || req.body.fee !== undefined || req.body.name !== undefined) {
+      return res.status(403).json({
+        success: false,
+        message: 'Doctors cannot modify consultation fee or official name. Please contact hospital administration.'
+      });
+    }
+  } else if (req.user.role !== 'admin') {
+    return res.status(403).json({ success: false, message: 'Access denied: insufficient permissions' });
+  }
+
+  const { bio, languages, opd_days, opd_hours } = req.body;
+
+  if (languages !== undefined) {
+    if (!Array.isArray(languages) || languages.some(l => typeof l !== 'string')) {
+      return res.status(400).json({ success: false, message: 'Languages must be an array of strings' });
+    }
+    doc.languages = languages;
+  }
+
+  if (bio !== undefined) {
+    doc.bio = typeof bio === 'string' ? bio.trim() : null;
+  }
+
+  if (opd_days !== undefined) {
+    doc.opd_days = typeof opd_days === 'string' ? opd_days.trim() : null;
+  }
+
+  if (opd_hours !== undefined) {
+    doc.opd_hours = typeof opd_hours === 'string' ? opd_hours.trim() : null;
+  }
+
+  db.save();
+
+  // Socket notification
+  if (req.app.get('io')) {
+    req.app.get('io').emit('doctor:profile_updated', { doctorId: docId });
+  }
+
+  res.json({
+    success: true,
+    message: 'Doctor profile updated successfully',
+    doctor: doc
+  });
 });
 
 export default router;

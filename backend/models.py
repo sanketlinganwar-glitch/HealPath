@@ -16,6 +16,7 @@ class Department(Base):
     doctors = relationship("Doctor", back_populates="department")
     tokens = relationship("Token", back_populates="department")
     appointments = relationship("Appointment", back_populates="department")
+    feedbacks = relationship("Feedback", back_populates="department")
 
 
 class Doctor(Base):
@@ -27,11 +28,20 @@ class Doctor(Base):
     specialization = Column(String(100), nullable=False)
     room = Column(String(50), nullable=False)
     status = Column(String(20), default="available", nullable=False)  # "available" | "off"
+    
+    # Doctor Availability & Duty Roster
+    shift_start = Column(String(10), default="09:00", nullable=False)
+    shift_end = Column(String(10), default="17:00", nullable=False)
+    break_start = Column(String(10), default="13:00", nullable=False)
+    break_end = Column(String(10), default="14:00", nullable=False)
+    duty_status = Column(String(20), default="available", nullable=False)  # "available" | "busy" | "on_break" | "off_duty"
 
     department = relationship("Department", back_populates="doctors")
     tokens = relationship("Token", back_populates="doctor")
     user = relationship("User", back_populates="doctor", uselist=False)
     appointments = relationship("Appointment", back_populates="doctor")
+    prescriptions = relationship("Prescription", back_populates="doctor")
+    feedbacks = relationship("Feedback", back_populates="doctor")
 
 
 class User(Base):
@@ -59,6 +69,8 @@ class Patient(Base):
 
     tokens = relationship("Token", back_populates="patient")
     appointments = relationship("Appointment", back_populates="patient")
+    prescriptions = relationship("Prescription", back_populates="patient")
+    feedbacks = relationship("Feedback", back_populates="patient")
 
 
 class Token(Base):
@@ -82,6 +94,18 @@ class Token(Base):
     appointment_id = Column(Integer, ForeignKey("appointments.id"), nullable=True)
     near_notified = Column(Boolean, default=False, nullable=False)
 
+    # Secure QR Token identifier
+    secure_hash = Column(String(64), unique=True, index=True, nullable=True)
+
+    # Controlled Emergency Priority Workflow
+    emergency_reason = Column(String(300), nullable=True)
+    emergency_flagged_by = Column(String(100), nullable=True)
+    emergency_verified_by = Column(String(100), nullable=True)
+    emergency_flagged_at = Column(DateTime, nullable=True)
+
+    # Offline / network resilience idempotency key
+    idempotency_key = Column(String(64), nullable=True, index=True)
+
     __table_args__ = (
         UniqueConstraint("department_id", "token_date", "seq", name="uq_dept_date_seq"),
         Index("ix_tokens_dept_status", "department_id", "status"),
@@ -92,6 +116,9 @@ class Token(Base):
     patient = relationship("Patient", back_populates="tokens")
     appointment = relationship("Appointment", back_populates="tokens")
     messages = relationship("Message", back_populates="token", cascade="all, delete-orphan")
+    prescriptions = relationship("Prescription", back_populates="token")
+    feedback = relationship("Feedback", back_populates="token", uselist=False)
+    emergency_audit_logs = relationship("EmergencyAuditLog", back_populates="token", cascade="all, delete-orphan")
 
 
 class Appointment(Base):
@@ -102,13 +129,22 @@ class Appointment(Base):
     department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
     doctor_id = Column(Integer, ForeignKey("doctors.id"), nullable=True)
     slot_time = Column(DateTime, nullable=False)
-    status = Column(String(20), default="booked", nullable=False)  # "booked" | "checked_in" | "cancelled"
+    status = Column(String(20), default="booked", nullable=False)  # "booked" | "checked_in" | "cancelled" | "missed"
     created_at = Column(DateTime, default=datetime.now, nullable=False)
+
+    # Unique appointment code & tracking
+    appointment_code = Column(String(30), unique=True, index=True, nullable=True)
+    notes = Column(String(300), nullable=True)
+    source = Column(String(20), default="online", nullable=False)
+    payment_status = Column(String(20), default="free", nullable=False)
+    cancellation_reason = Column(String(200), nullable=True)
+    idempotency_key = Column(String(64), nullable=True, index=True)
 
     patient = relationship("Patient", back_populates="appointments")
     department = relationship("Department", back_populates="appointments")
     doctor = relationship("Doctor", back_populates="appointments")
     tokens = relationship("Token", back_populates="appointment")
+    prescriptions = relationship("Prescription", back_populates="appointment")
 
 
 class OTSchedule(Base):
@@ -133,3 +169,79 @@ class Message(Base):
     created_at = Column(DateTime, default=datetime.now, nullable=False)
 
     token = relationship("Token", back_populates="messages")
+
+
+class EmergencyAuditLog(Base):
+    __tablename__ = "emergency_audit_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    token_id = Column(Integer, ForeignKey("tokens.id"), nullable=False, index=True)
+    action = Column(String(50), nullable=False)  # "flagged" | "verified" | "cancelled" | "priority_changed"
+    old_priority = Column(String(20), nullable=False)
+    new_priority = Column(String(20), nullable=False)
+    staff_username = Column(String(50), nullable=False)
+    staff_role = Column(String(20), nullable=False)
+    reason = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.now, nullable=False)
+
+    token = relationship("Token", back_populates="emergency_audit_logs")
+
+
+class NotificationLog(Base):
+    __tablename__ = "notification_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    recipient_phone = Column(String(20), nullable=False, index=True)
+    recipient_name = Column(String(100), nullable=False)
+    channel = Column(String(20), nullable=False)  # "whatsapp" | "sms"
+    event_type = Column(String(50), nullable=False)  # "token_created", "turn_approaching", "appointment_booked", etc.
+    message_body = Column(Text, nullable=False)
+    status = Column(String(20), default="simulated", nullable=False)  # "simulated" | "sent" | "failed" | "pending"
+    reference_type = Column(String(20), nullable=True)  # "token" | "appointment"
+    reference_id = Column(Integer, nullable=True)
+    error_detail = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.now, nullable=False)
+
+
+class Prescription(Base):
+    __tablename__ = "prescriptions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    token_id = Column(Integer, ForeignKey("tokens.id"), nullable=True, index=True)
+    appointment_id = Column(Integer, ForeignKey("appointments.id"), nullable=True, index=True)
+    doctor_id = Column(Integer, ForeignKey("doctors.id"), nullable=False)
+    patient_id = Column(Integer, ForeignKey("patients.id"), nullable=False)
+    diagnosis = Column(Text, nullable=False)
+    medicines = Column(Text, nullable=False)  # JSON-encoded array of {name, dosage, frequency, duration, instructions}
+    clinical_notes = Column(Text, nullable=True)
+    tests_recommended = Column(Text, nullable=True)
+    follow_up_date = Column(Date, nullable=True)
+    status = Column(String(20), default="active", nullable=False)  # "active" | "dispensed" | "archived"
+    created_at = Column(DateTime, default=datetime.now, nullable=False)
+
+    doctor = relationship("Doctor", back_populates="prescriptions")
+    patient = relationship("Patient", back_populates="prescriptions")
+    token = relationship("Token", back_populates="prescriptions")
+    appointment = relationship("Appointment", back_populates="prescriptions")
+
+
+class Feedback(Base):
+    __tablename__ = "patient_feedbacks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    token_id = Column(Integer, ForeignKey("tokens.id"), unique=True, nullable=False, index=True)
+    patient_id = Column(Integer, ForeignKey("patients.id"), nullable=False)
+    department_id = Column(Integer, ForeignKey("departments.id"), nullable=False)
+    doctor_id = Column(Integer, ForeignKey("doctors.id"), nullable=True)
+    rating = Column(Integer, nullable=False)  # 1 to 5
+    wait_time_rating = Column(Integer, nullable=True)  # 1 to 5
+    staff_rating = Column(Integer, nullable=True)  # 1 to 5
+    comments = Column(Text, nullable=True)
+    is_anonymous = Column(Boolean, default=False, nullable=False)
+    is_moderated = Column(Boolean, default=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.now, nullable=False)
+
+    patient = relationship("Patient", back_populates="feedbacks")
+    department = relationship("Department", back_populates="feedbacks")
+    doctor = relationship("Doctor", back_populates="feedbacks")
+    token = relationship("Token", back_populates="feedback")

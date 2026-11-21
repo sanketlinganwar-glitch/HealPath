@@ -33,10 +33,18 @@ function initQueue() {
 
     socket.on('appointment:checked_in', (data) => {
       if (window.showToast) {
-        window.showToast(`Token ${data.tokenNo} checked in successfully! Missed-slot timer paused.`, 'success');
+        window.showToast(`Token ${data.tokenNo || ''} checked in successfully! Missed-slot timer paused.`, 'success');
       }
       fetchQueueData();
     });
+
+    socket.on('patient:checkedin', (data) => {
+      if (window.showToast) {
+        window.showToast(`✅ Token ${data.tokenNo || data.token} (${data.patientName || ''}) checked in! Missed-slot timer stopped.`, 'success');
+      }
+      fetchQueueData();
+    });
+
   }
 
   // Doctor filter change
@@ -231,9 +239,9 @@ function announceTokenCall(data) {
       top: 90px;
       left: 50%;
       transform: translateX(-50%);
-      background: #0F3B64;
+      background: #1B3B6F;
       color: #FFFFFF;
-      border: 3px solid #14BBA6;
+      border: 3px solid #2563EB;
       border-radius: 14px;
       padding: 1.25rem 2.5rem;
       box-shadow: 0 15px 40px rgba(0,0,0,0.4);
@@ -245,10 +253,10 @@ function announceTokenCall(data) {
   }
 
   banner.innerHTML = `
-    <div style="font-size: 0.85rem; color: #A7D8D1; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
-      <i class="fas fa-bullhorn" style="color: #14BBA6;"></i> Now Calling Next Patient
+    <div style="font-size: 0.85rem; color: #BAE6FD; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">
+      <i class="fas fa-bullhorn" style="color: #2563EB;"></i> Now Calling Next Patient
     </div>
-    <div style="font-size: 2.4rem; font-weight: 800; color: #14BBA6; margin: 0.2rem 0;">
+    <div style="font-size: 2.4rem; font-weight: 800; color: #2563EB; margin: 0.2rem 0;">
       ${data.tokenNo}
     </div>
     <div style="font-size: 1.15rem; font-weight: 600;">

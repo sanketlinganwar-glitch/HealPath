@@ -98,7 +98,8 @@ def get_display_board(
             now_serving.append({
                 "token_number": t.token_number,
                 "doctor_name": t.doctor.name if t.doctor else "Doctor",
-                "room": t.doctor.room if t.doctor else "Consultation Room"
+                "room": t.doctor.room if t.doctor else "Consultation Room",
+                "patient_name": t.patient.name if t.patient else None,
             })
 
         # Next waiting tokens

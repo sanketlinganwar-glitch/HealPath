@@ -3,8 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Medical Services - HealPath Hospital & Medical Center</title>
-  
+  <title>Medical Services & Departments - Sanjivani Hospital & HealPath</title>
+  <meta name="description" content="Explore clinical specialties at Sanjeevan Multispecialty Hospital Yavatmal: Cardiology, Laparoscopic Surgery, Dental Care, Radiology, Neurology, and Pediatrics.">
+  <meta property="og:title" content="Medical Services & Departments - Sanjivani Hospital">
+  <meta property="og:description" content="Comprehensive clinical specialties, diagnostic labs, and doctor OPD slots in Yavatmal.">
+  <link rel="icon" type="image/svg+xml" href="images/sanjeevan-logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -14,171 +21,319 @@
   <div class="top-bar">
     <div class="container top-bar-inner">
       <div class="top-bar-left">
-        <span><i class="fas fa-phone-alt" style="color: var(--mint); margin-right: 5px;"></i> 24/7 Helpline: <strong>+91 98765 43210</strong></span>
-        <span><i class="fas fa-hospital" style="color: var(--mint); margin-right: 5px; margin-left: 10px;"></i> Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)</span>
+        <span class="top-bar-emergency-pill">
+          <i class="fas fa-phone-alt" style="color: var(--mint);"></i>
+          <span data-i18n="emergency_call">24/7 Emergency Line:</span>
+          <strong><a href="tel:+919552625262">+91 95526 25262</a></strong> / 
+          <strong><a href="tel:+919876543210">+91 98765 43210</a></strong>
+        </span>
+        <span>
+          <i class="fas fa-hospital" style="color: var(--mint);"></i>
+          Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)
+        </span>
       </div>
       <div class="top-bar-right">
-        <div class="online-indicator"><span class="online-dot"></span> <span class="online-status-text">Online</span></div>
-        <select id="lang-select" class="lang-selector">
-          <option value="en">English (EN)</option>
-          <option value="hi">हिन्दी (HI)</option>
-          <option value="mr">मराठी (MR)</option>
-        </select>
-        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()"><i class="fas fa-question-circle"></i> Help</button>
+        <span>
+          <i class="fas fa-clock" style="color: var(--mint);"></i>
+          OPD Hours: <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong>
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- Header -->
+  <!-- Sticky Header -->
   <header class="header">
     <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <div class="logo-icon-tile">H</div>
+      <a href="index.html" class="logo" aria-label="HealPath Sanjivani Hospital Homepage">
+        <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
         <div class="logo-text-box">
-          <span class="logo-text"><span class="heal">Heal</span><span class="path">Path</span></span>
-          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
+          <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+          <span class="logo-tagline" data-i18n="hero_tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
         </div>
       </a>
-      <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="services.html" class="nav-link active">Services</a>
-        <a href="doctors.html" class="nav-link">Doctors</a>
-        <a href="queue.html" class="nav-link"><i class="fas fa-satellite-dish"></i> Live Queue</a>
-        <a href="booking.html" class="nav-link">Book Appointment</a>
-        <a href="dashboard.html" class="nav-link">Dashboard</a>
+
+      <nav class="nav-menu" id="primary-nav" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link" data-i18n="home">Home</a>
+        <a href="services.html" class="nav-link active" data-i18n="services">Services</a>
+        <a href="doctors.html" class="nav-link" data-i18n="doctors">Doctors</a>
+        <a href="about.html" class="nav-link" data-i18n="about_us">About Us</a>
+        <a href="queue.html" class="nav-link queue-nav-pill"><i class="fas fa-satellite-dish"></i> <span data-i18n="live_queue">Live Queue</span></a>
+        <a href="blog.html" class="nav-link" data-i18n="blog">Blog</a>
+        <a href="contact.html" class="nav-link" data-i18n="contact">Contact</a>
       </nav>
+
       <div class="header-actions">
+        <div class="lang-selector-wrapper">
+          <i class="fas fa-globe" style="color: var(--teal); font-size: 0.85rem;"></i>
+          <select id="lang-select" class="lang-selector" aria-label="Select Language">
+            <option value="en">English (EN)</option>
+            <option value="hi">हिन्दी (HI)</option>
+            <option value="mr">मराठी (MR)</option>
+          </select>
+        </div>
         <div id="header-auth-container"></div>
-        <a href="booking.html" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Slot</a>
+        <a href="booking.html" class="btn btn-primary header-book-btn">
+          <i class="fas fa-calendar-check"></i> <span data-i18n="book_appointment">Book Slot</span>
+        </a>
+        <button class="mobile-toggle" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
       </div>
     </div>
   </header>
 
-  <!-- Page Banner -->
-  <section class="hero-section organic-bg-shapes" style="padding: 3.5rem 0 4rem; text-align: center;">
-    <div class="container" style="position: relative; z-index: 2;">
-      <span class="tag-mint" style="margin-bottom: 0.5rem;">World-Class Clinical Offerings</span>
-      <h1 style="color: var(--white); font-size: 2.4rem; margin: 0.5rem 0;">Our Medical Services & Specialties</h1>
-      <p style="color: rgba(255,255,255,0.85); margin: 0 auto; max-width: 620px;">
-        Explore our advanced clinical departments equipped with cutting-edge medical technologies and board-certified healthcare specialists.
+  <!-- Page Banner & Breadcrumb -->
+  <section class="page-banner">
+    <div class="container page-banner-inner">
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="sep"><i class="fas fa-chevron-right"></i></span>
+        <span class="active">Medical Services</span>
+      </nav>
+      <span class="section-tag"><i class="fas fa-stethoscope"></i> Clinical Specialties</span>
+      <h1 style="font-size: 2.3rem; color: var(--deep-blue); margin-top: 0.25rem;">Medical Departments & Care Units</h1>
+      <p style="color: var(--text-muted); font-size: 1rem; max-width: 680px;">
+        Explore our specialized clinical departments with modern diagnostic equipment, certified surgeons, and transparent real-time OPD booking.
       </p>
     </div>
   </section>
 
-  <!-- Services Layout: Sidebar + Details (as mandated in Part 2) -->
-  <section class="section">
+  <!-- Main Content: Sidebar + Services List -->
+  <main class="section">
     <div class="container">
-      <div style="display: grid; grid-template-columns: 320px 1fr; gap: 3rem; align-items: flex-start;">
+      <div style="display: grid; grid-template-columns: 300px 1fr; gap: 2.5rem; align-items: flex-start;">
         
-        <!-- Left Sidebar: Search & Category List with Arrows -->
+        <!-- Sidebar: Search & Department Jump Links -->
         <aside>
           <!-- Search Box -->
-          <div class="card" style="margin-bottom: 2rem; padding: 1.5rem;">
-            <h4 style="color: var(--deep-blue); margin-bottom: 0.85rem;">Search Service</h4>
-            <div class="form-group" style="margin: 0;">
-              <input type="text" class="form-control" placeholder="Search keywords..." oninput="filterServices(this.value)">
-              <i class="fas fa-search form-icon" style="top: 0.85rem;"></i>
+          <div class="card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h4 style="color: var(--deep-blue); margin-bottom: 0.75rem; font-size: 1.05rem;">Search Services</h4>
+            <div class="form-group">
+              <input type="text" id="service-search-input" class="form-control" placeholder="Search departments, symptoms..." oninput="filterServices(this.value)">
             </div>
           </div>
 
-          <!-- Category List with Arrows -->
+          <!-- Department Navigation Links -->
           <div class="card" style="padding: 1.5rem;">
-            <h4 style="color: var(--deep-blue); margin-bottom: 1rem;">Departments</h4>
-            <ul style="display: flex; flex-direction: column; gap: 0.6rem;">
+            <h4 style="color: var(--deep-blue); margin-bottom: 1rem; font-size: 1.05rem;">Clinical Departments</h4>
+            <ul style="display: flex; flex-direction: column; gap: 0.5rem;">
               <li>
-                <a href="#cardiology" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--light-gray); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
-                  <span><i class="fas fa-heart-pulse" style="color: var(--teal); margin-right: 8px;"></i> Cardiology</span>
-                  <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: var(--teal);"></i>
+                <a href="#sanjivani" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--bg-subtle); border-radius: 8px; color: var(--deep-blue); font-weight: 700; border-left: 3px solid var(--teal);">
+                  <span><i class="fas fa-hospital" style="color: var(--teal); margin-right: 8px;"></i> Sanjivani Multispecialty</span>
+                  <i class="fas fa-chevron-right" style="font-size: 0.75rem; color: var(--teal);"></i>
                 </a>
               </li>
               <li>
-                <a href="#dental" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--light-gray); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
+                <a href="#cardiology" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--bg-subtle); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
+                  <span><i class="fas fa-heartbeat" style="color: var(--teal); margin-right: 8px;"></i> Cardiology Care</span>
+                  <i class="fas fa-chevron-right" style="font-size: 0.75rem; color: var(--teal);"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#dental" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--bg-subtle); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
                   <span><i class="fas fa-tooth" style="color: var(--teal); margin-right: 8px;"></i> Dental Specialist</span>
-                  <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: var(--teal);"></i>
+                  <i class="fas fa-chevron-right" style="font-size: 0.75rem; color: var(--teal);"></i>
                 </a>
               </li>
               <li>
-                <a href="#radiology" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--light-gray); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
+                <a href="#radiology" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--bg-subtle); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
                   <span><i class="fas fa-x-ray" style="color: var(--teal); margin-right: 8px;"></i> Radiology & Imaging</span>
-                  <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: var(--teal);"></i>
+                  <i class="fas fa-chevron-right" style="font-size: 0.75rem; color: var(--teal);"></i>
                 </a>
               </li>
               <li>
-                <a href="#neurology" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--light-gray); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
-                  <span><i class="fas fa-brain" style="color: var(--teal); margin-right: 8px;"></i> Neurology</span>
-                  <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: var(--teal);"></i>
+                <a href="#neurology" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--bg-subtle); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
+                  <span><i class="fas fa-brain" style="color: var(--teal); margin-right: 8px;"></i> Neurology & Spine</span>
+                  <i class="fas fa-chevron-right" style="font-size: 0.75rem; color: var(--teal);"></i>
                 </a>
               </li>
               <li>
-                <a href="#pediatrics" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--light-gray); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
-                  <span><i class="fas fa-baby" style="color: var(--teal); margin-right: 8px;"></i> Children Center</span>
-                  <i class="fas fa-chevron-right" style="font-size: 0.8rem; color: var(--teal);"></i>
+                <a href="#pediatrics" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: var(--bg-subtle); border-radius: 8px; color: var(--deep-blue); font-weight: 600;">
+                  <span><i class="fas fa-baby" style="color: var(--teal); margin-right: 8px;"></i> Pediatrics & Child Care</span>
+                  <i class="fas fa-chevron-right" style="font-size: 0.75rem; color: var(--teal);"></i>
                 </a>
               </li>
             </ul>
           </div>
         </aside>
 
-        <!-- Right Side: Service Details (Image, Text, Quote Block, Doctor Highlights) -->
-        <div>
-          <!-- Service 1: Cardiology -->
-          <article id="cardiology" class="card" style="margin-bottom: 2.5rem; padding: 2.2rem;">
-            <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=900" alt="Cardiology" style="width: 100%; height: 320px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
-            <span class="tag-mint">DEPARTMENT OF CARDIOLOGY</span>
-            <h2 style="color: var(--deep-blue); margin: 0.5rem 0 1rem;">Interventional & Preventive Cardiology</h2>
+        <!-- Right: Department Articles -->
+        <div id="services-articles-list">
+          
+          <!-- Sanjivani Multispecialty -->
+          <article id="sanjivani" class="card service-article" style="margin-bottom: 2rem; padding: 2.25rem;">
+            <div style="position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: 12px; margin-bottom: 1.5rem; background: #E2E8F0; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+              <img src="images/hospital.jpg" alt="Sanjeevan Multispecialty Hospital Yavatmal Building Facade" style="width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 0.4s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+              <div style="position: absolute; bottom: 0.85rem; left: 0.85rem; right: 0.85rem; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 59, 100, 0.88); backdrop-filter: blur(8px); padding: 0.65rem 1rem; border-radius: 8px; color: #fff; font-size: 0.84rem;">
+                <span style="font-weight: 600;"><i class="fas fa-hospital" style="color: var(--mint); margin-right: 6px;"></i> Sanjeevan Multispecialty Hospital Campus</span>
+                <span style="color: var(--mint); font-size: 0.78rem; background: rgba(20, 187, 166, 0.22); padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(20, 187, 166, 0.4);"><i class="fas fa-check-circle"></i> Certified Tertiary Facility</span>
+              </div>
+            </div>
+            <span class="tag-mint"><i class="fas fa-hospital"></i> YAVATMAL CENTER (445001)</span>
+            <h2 style="color: var(--deep-blue); margin: 0.6rem 0 0.85rem; font-size: 1.6rem;">Sanjeevan Multispecialty Hospital & Research Institute</h2>
             <p style="margin-bottom: 1.25rem;">
-              HealPath's Heart Center is a tertiary care unit dedicated to cardiac health. Partnered with our network including Sanjeevan Multispecialty Hospital Yavatmal, we feature a digital Cath Lab, computerized Stress Test (TMT), Echocardiography, Holter monitoring, and emergency coronary angioplasty available 24 hours a day.
+              Our cornerstone hospital in Yavatmal brings comprehensive tertiary facilities under one roof: General & Laparoscopic Surgery, Obstetrics & Gynecology, ICU & Critical Care Medicine, Chest Pulmonology, and Ultrasound Radiology.
             </p>
-
-            <blockquote style="background: var(--light-gray); border-left: 4px solid var(--teal); padding: 1rem 1.5rem; border-radius: 8px; font-style: italic; color: var(--deep-blue); margin: 1.5rem 0;">
-              "Early diagnosis of cardiac anomalies and zero-wait intervention saves lives. Our smart queue ensures that critical consultations begin without bureaucratic delays."
-              <footer style="margin-top: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--teal);">&mdash; Dr. Rajesh Sharma, Head of Cardiology</footer>
-            </blockquote>
-
+            <div style="background: var(--bg-subtle); border-left: 4px solid var(--teal); padding: 1rem 1.25rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem;">
+              <strong>Specialists on Board:</strong> Dr. Sunil M. Agrawal (Surgery), Dr. Vijay S. Kawalkar (Consultant Surgeon), Dr. H. S. Bora (Medicine & ICU), Dr. Vinay Pande (Chest), Dr. Sheetal S. Agrawal (Gynecology), Dr. Lalit Paldiwal (Radiology).
+            </div>
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-              <span style="font-size: 0.9rem; color: var(--charcoal-light);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 101, First Floor</strong></span>
+              <span style="font-size: 0.88rem; color: var(--text-muted);"><i class="fas fa-map-marker-alt" style="color: var(--teal);"></i> Mahadev Mandir Rd, Ratanlal Plots, Yavatmal 445001</span>
+              <a href="booking.html?dept=sanjivani" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Sanjivani OPD</a>
+            </div>
+          </article>
+
+          <!-- Cardiology -->
+          <article id="cardiology" class="card service-article" style="margin-bottom: 2rem; padding: 2.25rem;">
+            <div style="aspect-ratio: 16/8; overflow: hidden; border-radius: 10px; margin-bottom: 1.5rem; background: #E2E8F0;">
+              <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=900" alt="Cardiology Care" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="tag-mint">DEPARTMENT OF CARDIOLOGY</span>
+            <h2 style="color: var(--deep-blue); margin: 0.6rem 0 0.85rem; font-size: 1.6rem;">Interventional & Preventive Cardiology</h2>
+            <p style="margin-bottom: 1.25rem;">
+              Our cardiology unit provides computerized Stress ECG (TMT), Echocardiography, Holter ambulatory rhythm recording, and immediate emergency coronary stabilization.
+            </p>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <span style="font-size: 0.88rem; color: var(--text-muted);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 101, First Floor</strong></span>
               <a href="booking.html?dept=1" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Cardiology Slot</a>
             </div>
           </article>
 
-          <!-- Service 2: Dental -->
-          <article id="dental" class="card" style="margin-bottom: 2.5rem; padding: 2.2rem;">
-            <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=900" alt="Dental" style="width: 100%; height: 320px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
-            <span class="tag-mint">DENTAL CLINICAL WING</span>
-            <h2 style="color: var(--deep-blue); margin: 0.5rem 0 1rem;">Advanced Dental Surgery & Orthodontics</h2>
+          <!-- Dental -->
+          <article id="dental" class="card service-article" style="margin-bottom: 2rem; padding: 2.25rem;">
+            <div style="aspect-ratio: 16/8; overflow: hidden; border-radius: 10px; margin-bottom: 1.5rem; background: #E2E8F0;">
+              <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=900" alt="Dental Care" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="tag-mint">DENTAL SPECIALIST WING</span>
+            <h2 style="color: var(--deep-blue); margin: 0.6rem 0 0.85rem; font-size: 1.6rem;">Advanced Dental Surgery & Orthodontics</h2>
             <p style="margin-bottom: 1.25rem;">
-              Experience painless cosmetic dental solutions, laser gum contouring, clear aligners, dental implants, and pediatric dentistry in our sterile, friendly clinic.
+              Painless root canal therapy, digital smile alignment, tooth extractions, and pediatric dental care in a sterile clinical setup.
             </p>
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-              <span style="font-size: 0.9rem; color: var(--charcoal-light);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 204, Second Floor</strong></span>
+              <span style="font-size: 0.88rem; color: var(--text-muted);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 204, Second Floor</strong></span>
               <a href="booking.html?dept=2" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Dental Slot</a>
             </div>
           </article>
 
-          <!-- Service 3: Neurology -->
-          <article id="neurology" class="card" style="padding: 2.2rem;">
-            <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=900" alt="Neurology" style="width: 100%; height: 320px; object-fit: cover; border-radius: 12px; margin-bottom: 1.5rem;">
-            <span class="tag-mint">NEUROLOGY & BRAIN CARE</span>
-            <h2 style="color: var(--deep-blue); margin: 0.5rem 0 1rem;">Neurological Diagnostics & Stroke Center</h2>
+          <!-- Radiology -->
+          <article id="radiology" class="card service-article" style="margin-bottom: 2rem; padding: 2.25rem;">
+            <div style="aspect-ratio: 16/8; overflow: hidden; border-radius: 10px; margin-bottom: 1.5rem; background: #E2E8F0;">
+              <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=900" alt="Radiology Imaging" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="tag-mint">RADIOLOGY & IMAGING</span>
+            <h2 style="color: var(--deep-blue); margin: 0.6rem 0 0.85rem; font-size: 1.6rem;">Precision Medical Imaging & Ultrasound</h2>
             <p style="margin-bottom: 1.25rem;">
-              Our neurology wing provides precision neuro-electrophysiology, epilepsy management, stroke critical response, dementia therapy, and chronic headache treatments.
+              Diagnostic high-resolution color Doppler ultrasound, digital X-rays, mammography, and image-guided diagnostic reporting.
             </p>
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-              <span style="font-size: 0.9rem; color: var(--charcoal-light);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 305, Third Floor</strong></span>
+              <span style="font-size: 0.88rem; color: var(--text-muted);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 112, Ground Floor</strong></span>
+              <a href="booking.html?dept=3" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Imaging Slot</a>
+            </div>
+          </article>
+
+          <!-- Neurology -->
+          <article id="neurology" class="card service-article" style="margin-bottom: 2rem; padding: 2.25rem;">
+            <div style="aspect-ratio: 16/8; overflow: hidden; border-radius: 10px; margin-bottom: 1.5rem; background: #E2E8F0;">
+              <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&q=80&w=900" alt="Neurology Care" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="tag-mint">NEUROLOGY & SPINE CARE</span>
+            <h2 style="color: var(--deep-blue); margin: 0.6rem 0 0.85rem; font-size: 1.6rem;">Neurological Diagnostics & Stroke Recovery</h2>
+            <p style="margin-bottom: 1.25rem;">
+              Evaluation and therapeutic protocols for severe headache, migraine, acute stroke rehabilitation, peripheral neuropathy, and epilepsy.
+            </p>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <span style="font-size: 0.88rem; color: var(--text-muted);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 305, Third Floor</strong></span>
               <a href="booking.html?dept=4" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Neurology Slot</a>
             </div>
           </article>
+
+          <!-- Pediatrics -->
+          <article id="pediatrics" class="card service-article" style="padding: 2.25rem;">
+            <div style="aspect-ratio: 16/8; overflow: hidden; border-radius: 10px; margin-bottom: 1.5rem; background: #E2E8F0;">
+              <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=900" alt="Pediatrics" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <span class="tag-mint">PEDIATRIC HEALTH CENTER</span>
+            <h2 style="color: var(--deep-blue); margin: 0.6rem 0 0.85rem; font-size: 1.6rem;">Child Health & Immunization Clinic</h2>
+            <p style="margin-bottom: 1.25rem;">
+              Infant developmental tracking, nutritional counseling, routine childhood immunizations, and pediatric seasonal illness management.
+            </p>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <span style="font-size: 0.88rem; color: var(--text-muted);"><i class="fas fa-door-open" style="color: var(--teal);"></i> Location: <strong>Room 201, Second Floor</strong></span>
+              <a href="booking.html?dept=6" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Book Pediatrics Slot</a>
+            </div>
+          </article>
+
         </div>
 
       </div>
     </div>
-  </section>
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-bottom-bar" style="border: none; padding: 0; justify-content: center;">
-        <div>&copy; 2026 HealPath Hospital System. All Rights Reserved.</div>
+      <div class="footer-grid">
+        <div class="footer-col footer-col-brand">
+          <a href="index.html" class="logo footer-logo">
+            <div class="logo-icon-tile"><img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="48" height="48"></div>
+            <div class="logo-text-box">
+              <span class="logo-text"><span class="sanjeevan-title">Sanjeevan</span> <span class="hospital-title">Hospital</span></span>
+              <span class="logo-tagline">SANJIVANI MULTISPECIALTY HOSPITAL</span>
+            </div>
+          </a>
+          <p class="footer-desc">
+            Official hospital appointment and live queue tracking portal for Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal (445001).
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Hospital Portals</h4>
+          <ul class="footer-links">
+            <li><a href="booking.html"><i class="fas fa-chevron-right"></i> Book Doctor Slot</a></li>
+            <li><a href="queue.html"><i class="fas fa-chevron-right"></i> Live OPD Queue Screen</a></li>
+            <li><a href="doctors.html"><i class="fas fa-chevron-right"></i> Specialist Doctors</a></li>
+            <li><a href="services.html"><i class="fas fa-chevron-right"></i> Medical Departments</a></li>
+            <li><a href="dashboard.html"><i class="fas fa-chevron-right"></i> Patient / Doctor Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">OPD & Consultation Hours</h4>
+          <ul class="footer-links footer-timings">
+            <li><span>General OPD:</span> <strong>Mon - Sat: 9:00 AM - 8:00 PM</strong></li>
+            <li><span>Specialist Consults:</span> <strong>Morning & Evening Slots</strong></li>
+            <li class="emergency-timing"><span>Emergency & Casualty:</span> <strong class="badge-emergency-text">24 Hours / 7 Days Open</strong></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Hospital Location & Help</h4>
+          <ul class="footer-links footer-contact-info">
+            <li>
+              <i class="fas fa-map-marker-alt footer-icon"></i>
+              <div>
+                <strong>Sanjeevan Multispecialty Hospital</strong><br>
+                Mahadev Mandir Road, Ratanlal Plots, Yavatmal 445001<br>
+                <a href="https://maps.google.com/?q=Sanjeevan+Multispecialty+Hospital+Yavatmal+445001" target="_blank" rel="noopener" class="map-link">
+                  <i class="fas fa-directions"></i> Get Directions on Google Maps
+                </a>
+              </div>
+            </li>
+            <li>
+              <i class="fas fa-phone-alt footer-icon"></i>
+              <div>Emergency Hotline: <a href="tel:+919552625262"><strong>+91 95526 25262</strong></a></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 Sanjivani Hospital & HealPath System. All Rights Reserved.</div>
+        <div class="footer-legal-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="sep">&bull;</span>
+          <a href="terms.html">Terms of Service</a>
+          <span class="sep">&bull;</span>
+          <a href="about.html">About Hospital</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -187,5 +342,17 @@
   <script type="module" src="js/i18n.js"></script>
   <script src="js/main.js"></script>
   <script src="js/chat.js"></script>
+  <script src="js/layout.js"></script>
+
+  <script>
+    function filterServices(term) {
+      const q = term.toLowerCase().trim();
+      const articles = document.querySelectorAll('.service-article');
+      articles.forEach(art => {
+        const text = art.innerText.toLowerCase();
+        art.style.display = text.includes(q) ? 'block' : 'none';
+      });
+    }
+  </script>
 </body>
 </html>

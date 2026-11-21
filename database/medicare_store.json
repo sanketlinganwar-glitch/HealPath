@@ -71,7 +71,13 @@
       "status": "available",
       "working_start": "10:00",
       "working_end": "14:00",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80",
+      "opd_days": null,
+      "opd_hours": "10:00-14:00"
     },
     {
       "id": 2,
@@ -86,7 +92,13 @@
       "status": "available",
       "working_start": "10:00",
       "working_end": "14:00",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1594824813580-ff67fbf9303d?auto=format&fit=crop&w=600&q=80",
+      "opd_days": null,
+      "opd_hours": "10:00-14:00"
     },
     {
       "id": 3,
@@ -101,7 +113,13 @@
       "status": "available",
       "working_start": "10:00",
       "working_end": "14:00",
-      "slot_duration": 20
+      "slot_duration": 20,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80",
+      "opd_days": null,
+      "opd_hours": "10:00-14:00"
     },
     {
       "id": 4,
@@ -116,7 +134,13 @@
       "status": "available",
       "working_start": "10:00",
       "working_end": "14:00",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80",
+      "opd_days": null,
+      "opd_hours": "10:00-14:00"
     },
     {
       "id": 5,
@@ -131,7 +155,13 @@
       "status": "available",
       "working_start": "10:00",
       "working_end": "14:00",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=600&q=80",
+      "opd_days": null,
+      "opd_hours": "10:00-14:00"
     },
     {
       "id": 6,
@@ -146,7 +176,13 @@
       "status": "available",
       "working_start": "10:00",
       "working_end": "14:00",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80",
+      "opd_days": null,
+      "opd_hours": "10:00-14:00"
     },
     {
       "id": 101,
@@ -161,7 +197,13 @@
       "status": "available",
       "working_start": "10:00",
       "working_end": "14:00",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600",
+      "opd_days": null,
+      "opd_hours": "10:00-14:00"
     },
     {
       "id": 102,
@@ -176,7 +218,13 @@
       "status": "available",
       "working_start": "11:00",
       "working_end": "14:00",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600",
+      "opd_days": null,
+      "opd_hours": "11:00-14:00"
     },
     {
       "id": 103,
@@ -191,7 +239,13 @@
       "status": "available",
       "working_start": "10:30",
       "working_end": "14:30",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=600",
+      "opd_days": null,
+      "opd_hours": "10:30-14:30"
     },
     {
       "id": 104,
@@ -206,7 +260,13 @@
       "status": "available",
       "working_start": "10:00",
       "working_end": "14:00",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600",
+      "opd_days": null,
+      "opd_hours": "10:00-14:00"
     },
     {
       "id": 105,
@@ -221,7 +281,13 @@
       "status": "available",
       "working_start": "10:00",
       "working_end": "14:00",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1594824813580-ff67fbf9303d?auto=format&fit=crop&q=80&w=600",
+      "opd_days": null,
+      "opd_hours": "10:00-14:00"
     },
     {
       "id": 106,
@@ -236,7 +302,13 @@
       "status": "available",
       "working_start": "09:30",
       "working_end": "13:30",
-      "slot_duration": 15
+      "slot_duration": 15,
+      "qualification": null,
+      "languages": [],
+      "consultation_fee": null,
+      "photo_url": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600&q=80",
+      "opd_days": null,
+      "opd_hours": "09:30-13:30"
     }
   ],
   "users": [
@@ -1316,7 +1388,7 @@
       "date": "2026-10-24",
       "start_time": "10:45",
       "end_time": "11:00",
-      "status": "booked",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1325,7 +1397,7 @@
       "date": "2026-10-24",
       "start_time": "11:00",
       "end_time": "11:15",
-      "status": "booked",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1334,7 +1406,7 @@
       "date": "2026-10-24",
       "start_time": "11:15",
       "end_time": "11:30",
-      "status": "booked",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1343,7 +1415,7 @@
       "date": "2026-10-24",
       "start_time": "11:30",
       "end_time": "11:45",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1352,7 +1424,7 @@
       "date": "2026-10-24",
       "start_time": "11:45",
       "end_time": "12:00",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1361,7 +1433,7 @@
       "date": "2026-10-24",
       "start_time": "12:00",
       "end_time": "12:15",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1370,7 +1442,7 @@
       "date": "2026-10-24",
       "start_time": "12:15",
       "end_time": "12:30",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1379,7 +1451,7 @@
       "date": "2026-10-24",
       "start_time": "12:30",
       "end_time": "12:45",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1388,7 +1460,7 @@
       "date": "2026-10-24",
       "start_time": "12:45",
       "end_time": "13:00",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1397,7 +1469,7 @@
       "date": "2026-10-24",
       "start_time": "13:00",
       "end_time": "13:15",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1406,7 +1478,7 @@
       "date": "2026-10-24",
       "start_time": "13:15",
       "end_time": "13:30",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1901,7 +1973,7 @@
       "date": "2026-10-24",
       "start_time": "11:00",
       "end_time": "11:15",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1919,7 +1991,7 @@
       "date": "2026-10-24",
       "start_time": "11:30",
       "end_time": "11:45",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1928,7 +2000,7 @@
       "date": "2026-10-24",
       "start_time": "11:45",
       "end_time": "12:00",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1937,7 +2009,7 @@
       "date": "2026-10-24",
       "start_time": "12:00",
       "end_time": "12:15",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1946,7 +2018,7 @@
       "date": "2026-10-24",
       "start_time": "12:15",
       "end_time": "12:30",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1955,7 +2027,7 @@
       "date": "2026-10-24",
       "start_time": "12:30",
       "end_time": "12:45",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -1964,7 +2036,7 @@
       "date": "2026-10-24",
       "start_time": "12:45",
       "end_time": "13:00",
-      "status": "available",
+      "status": "missed",
       "created_at": "2026-10-23T10:27:17.674Z"
     },
     {
@@ -2182,6 +2254,1266 @@
       "end_time": "14:00",
       "status": "available",
       "created_at": "2026-10-23T11:48:50.602Z"
+    },
+    {
+      "id": 205,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "09:00",
+      "end_time": "09:15",
+      "status": "available",
+      "created_at": "2026-10-23T13:23:07.203Z"
+    },
+    {
+      "id": 206,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "09:15",
+      "end_time": "09:30",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.207Z"
+    },
+    {
+      "id": 207,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "09:30",
+      "end_time": "09:45",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.207Z"
+    },
+    {
+      "id": 208,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "09:45",
+      "end_time": "10:00",
+      "status": "available",
+      "created_at": "2026-10-23T13:23:07.207Z"
+    },
+    {
+      "id": 209,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-23T13:23:07.207Z"
+    },
+    {
+      "id": 210,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.207Z"
+    },
+    {
+      "id": 211,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 212,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 213,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 214,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 215,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 216,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 217,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 218,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 219,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "missed",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 220,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 221,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 222,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "booked",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 223,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 224,
+      "doctor_id": 4,
+      "date": "2026-10-25",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "booked",
+      "created_at": "2026-10-23T13:23:07.208Z"
+    },
+    {
+      "id": 225,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "09:00",
+      "end_time": "09:15",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.602Z"
+    },
+    {
+      "id": 226,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "09:15",
+      "end_time": "09:30",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 227,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "09:30",
+      "end_time": "09:45",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 228,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "09:45",
+      "end_time": "10:00",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 229,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 230,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 231,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 232,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 233,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 234,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 235,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 236,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 237,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 238,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 239,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 240,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 241,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 242,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 243,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 244,
+      "doctor_id": 1,
+      "date": "2026-10-25",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-25T04:37:36.603Z"
+    },
+    {
+      "id": 245,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "09:00",
+      "end_time": "09:15",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 246,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "09:15",
+      "end_time": "09:30",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 247,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "09:30",
+      "end_time": "09:45",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 248,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "09:45",
+      "end_time": "10:00",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 249,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 250,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 251,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 252,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 253,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 254,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 255,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 256,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 257,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 258,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 259,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 260,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 261,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 262,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 263,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "missed",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 264,
+      "doctor_id": 3,
+      "date": "2026-10-25",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "booked",
+      "created_at": "2026-10-25T04:51:53.908Z"
+    },
+    {
+      "id": 265,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "09:00",
+      "end_time": "09:15",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 266,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "09:15",
+      "end_time": "09:30",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 267,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "09:30",
+      "end_time": "09:45",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 268,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "09:45",
+      "end_time": "10:00",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 269,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 270,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 271,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 272,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 273,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 274,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 275,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 276,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 277,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 278,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 279,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 280,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 281,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 282,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 283,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 284,
+      "doctor_id": 101,
+      "date": "2026-10-25",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-25T06:37:54.817Z"
+    },
+    {
+      "id": 285,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "09:00",
+      "end_time": "09:15",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 286,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "09:15",
+      "end_time": "09:30",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 287,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "09:30",
+      "end_time": "09:45",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 288,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "09:45",
+      "end_time": "10:00",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 289,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 290,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 291,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 292,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 293,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 294,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 295,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 296,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 297,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 298,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 299,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 300,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 301,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 302,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.272Z"
+    },
+    {
+      "id": 303,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.273Z"
+    },
+    {
+      "id": 304,
+      "doctor_id": 1,
+      "date": "2026-10-27",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:03.273Z"
+    },
+    {
+      "id": 305,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "09:00",
+      "end_time": "09:15",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 306,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "09:15",
+      "end_time": "09:30",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 307,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "09:30",
+      "end_time": "09:45",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 308,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "09:45",
+      "end_time": "10:00",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 309,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 310,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 311,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 312,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 313,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 314,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 315,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 316,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 317,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 318,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 319,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 320,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 321,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 322,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 323,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 324,
+      "doctor_id": 3,
+      "date": "2026-10-27",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-27T16:16:15.632Z"
+    },
+    {
+      "id": 325,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "09:00",
+      "end_time": "09:15",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 326,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "09:15",
+      "end_time": "09:30",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 327,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "09:30",
+      "end_time": "09:45",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 328,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "09:45",
+      "end_time": "10:00",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 329,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "10:00",
+      "end_time": "10:15",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 330,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "10:15",
+      "end_time": "10:30",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 331,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "10:30",
+      "end_time": "10:45",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 332,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "10:45",
+      "end_time": "11:00",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 333,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "11:00",
+      "end_time": "11:15",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 334,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "11:15",
+      "end_time": "11:30",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 335,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "11:30",
+      "end_time": "11:45",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 336,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "11:45",
+      "end_time": "12:00",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 337,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "12:00",
+      "end_time": "12:15",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 338,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "12:15",
+      "end_time": "12:30",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 339,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "12:30",
+      "end_time": "12:45",
+      "status": "missed",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 340,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "12:45",
+      "end_time": "13:00",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 341,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "13:00",
+      "end_time": "13:15",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 342,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "13:15",
+      "end_time": "13:30",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 343,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "13:30",
+      "end_time": "13:45",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
+    },
+    {
+      "id": 344,
+      "doctor_id": 3,
+      "date": "2026-10-29",
+      "start_time": "13:45",
+      "end_time": "14:00",
+      "status": "available",
+      "created_at": "2026-10-29T15:52:19.102Z"
     }
   ],
   "appointments": [
@@ -2201,7 +3533,22 @@
       "time": "10:00",
       "checked_in": true,
       "status": "completed",
-      "created_at": "2026-10-23T09:27:17.675Z"
+      "created_at": "2026-10-23T09:27:17.675Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
     },
     {
       "id": 2,
@@ -2219,7 +3566,22 @@
       "time": "10:15",
       "checked_in": true,
       "status": "in_progress",
-      "created_at": "2026-10-23T09:47:17.675Z"
+      "created_at": "2026-10-23T09:47:17.675Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
     },
     {
       "id": 3,
@@ -2237,7 +3599,22 @@
       "time": "10:30",
       "checked_in": false,
       "status": "missed",
-      "created_at": "2026-10-23T10:07:17.675Z"
+      "created_at": "2026-10-23T10:07:17.675Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
     },
     {
       "id": 4,
@@ -2255,7 +3632,22 @@
       "time": "10:45",
       "checked_in": false,
       "status": "missed",
-      "created_at": "2026-10-23T10:45:35.850Z"
+      "created_at": "2026-10-23T10:45:35.850Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
     },
     {
       "id": 5,
@@ -2273,7 +3665,22 @@
       "time": "13:40",
       "checked_in": false,
       "status": "missed",
-      "created_at": "2026-10-23T11:05:40.587Z"
+      "created_at": "2026-10-23T11:05:40.587Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
     },
     {
       "id": 6,
@@ -2291,7 +3698,22 @@
       "time": "11:40",
       "checked_in": false,
       "status": "missed",
-      "created_at": "2026-10-23T11:12:17.825Z"
+      "created_at": "2026-10-23T11:12:17.825Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
     },
     {
       "id": 7,
@@ -2301,15 +3723,30 @@
       "disease": "PAIN IN ROOTS",
       "whatsapp_no": "+919403734023",
       "notes": "NO",
-      "slot_id": 108,
-      "token_no": "DENT-001",
+      "slot_id": 117,
+      "token_no": "DENT-004",
       "doctor_id": 4,
       "department_id": 2,
       "date": "2026-10-24",
-      "time": "10:45",
+      "time": "13:00",
       "checked_in": false,
-      "status": "booked",
-      "created_at": "2026-10-23T12:10:47.671Z"
+      "status": "missed",
+      "created_at": "2026-10-23T12:10:47.671Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
     },
     {
       "id": 8,
@@ -2319,15 +3756,30 @@
       "disease": "ygjhlkjk",
       "whatsapp_no": "7028393036",
       "notes": "tfuou",
-      "slot_id": 109,
-      "token_no": "DENT-002",
+      "slot_id": 118,
+      "token_no": "DENT-004",
       "doctor_id": 4,
       "department_id": 2,
       "date": "2026-10-24",
-      "time": "11:00",
+      "time": "13:15",
       "checked_in": false,
-      "status": "booked",
-      "created_at": "2026-10-23T12:14:10.677Z"
+      "status": "missed",
+      "created_at": "2026-10-23T12:14:10.677Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
     },
     {
       "id": 9,
@@ -2345,7 +3797,22 @@
       "time": "11:00",
       "checked_in": false,
       "status": "missed",
-      "created_at": "2026-10-23T12:16:05.288Z"
+      "created_at": "2026-10-23T12:16:05.288Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
     },
     {
       "id": 10,
@@ -2355,15 +3822,261 @@
       "disease": "dghvkj;oop'",
       "whatsapp_no": "7028393036",
       "notes": "rfyup9o]=-=-",
-      "slot_id": 110,
-      "token_no": "DENT-003",
+      "slot_id": 116,
+      "token_no": "DENT-004",
       "doctor_id": 4,
       "department_id": 2,
       "date": "2026-10-24",
-      "time": "11:15",
+      "time": "12:45",
       "checked_in": false,
+      "status": "missed",
+      "created_at": "2026-10-23T12:33:26.852Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
+    },
+    {
+      "id": 11,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 34,
+      "disease": "my brain not work properly",
+      "whatsapp_no": "+919403734023",
+      "notes": "no",
+      "slot_id": 180,
+      "token_no": "OPHT-002",
+      "doctor_id": 6,
+      "department_id": 5,
+      "date": "2026-10-24",
+      "time": "12:45",
+      "checked_in": false,
+      "status": "missed",
+      "created_at": "2026-10-23T12:57:03.599Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": false,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
+    },
+    {
+      "id": 12,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 20,
+      "disease": "root canal",
+      "whatsapp_no": "7028393036",
+      "notes": "no",
+      "slot_id": 222,
+      "token_no": "DENT-002",
+      "doctor_id": 4,
+      "department_id": 2,
+      "date": "2026-10-25",
+      "time": "13:15",
+      "checked_in": false,
+      "status": "rescheduled",
+      "created_at": "2026-10-23T13:23:28.619Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": true,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
+    },
+    {
+      "id": 13,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 20,
+      "disease": "hedache",
+      "whatsapp_no": "+919403734023",
+      "notes": "",
+      "slot_id": 264,
+      "token_no": "NEUR-002",
+      "doctor_id": 3,
+      "department_id": 4,
+      "date": "2026-10-25",
+      "time": "13:45",
+      "checked_in": false,
+      "status": "rescheduled",
+      "created_at": "2026-10-25T04:52:46.421Z",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "source": "online",
+      "auto_shifted": true,
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null
+    },
+    {
+      "id": 14,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 31,
+      "disease": "hedache",
+      "whatsapp_no": "+919403734023",
+      "notes": "",
+      "slot_id": 224,
+      "token_no": "DENT-003",
+      "doctor_id": 4,
+      "department_id": 2,
+      "date": "2026-10-25",
+      "time": "13:45",
+      "source": "online",
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null,
+      "checked_in": false,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "auto_shifted": true,
+      "status": "rescheduled",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "created_at": "2026-10-25T08:03:20.566Z"
+    },
+    {
+      "id": 15,
+      "patient_id": null,
+      "patient_name": "Test Hospital Patient",
+      "age": 30,
+      "disease": "Fever",
+      "whatsapp_no": "+919876543210",
+      "notes": "Pay at hospital test",
+      "slot_id": 99991,
+      "token_no": "CARD-001",
+      "doctor_id": 999,
+      "department_id": 1,
+      "date": "2026-10-26",
+      "time": "11:00",
+      "source": "online",
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null,
+      "checked_in": false,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "auto_shifted": false,
       "status": "booked",
-      "created_at": "2026-10-23T12:33:26.852Z"
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "created_at": "2026-10-25T08:14:26.119Z"
+    },
+    {
+      "id": 16,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 55,
+      "disease": "PAIN IN ROOTS",
+      "whatsapp_no": "9403734023",
+      "notes": "",
+      "slot_id": 219,
+      "token_no": "DENT-003",
+      "doctor_id": 4,
+      "department_id": 2,
+      "date": "2026-10-25",
+      "time": "12:30",
+      "source": "online",
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null,
+      "checked_in": false,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "auto_shifted": false,
+      "status": "missed",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "created_at": "2026-10-25T10:06:11.700Z"
+    },
+    {
+      "id": 17,
+      "patient_id": null,
+      "patient_name": "Sanket Linganwar",
+      "age": 55,
+      "disease": "PAIN IN ROOTS",
+      "whatsapp_no": "9403734023",
+      "notes": "",
+      "slot_id": 339,
+      "token_no": "NEUR-001",
+      "doctor_id": 3,
+      "department_id": 4,
+      "date": "2026-10-29",
+      "time": "12:30",
+      "source": "online",
+      "payment_mode": "hospital",
+      "payment_status": "not_required",
+      "amount": 0,
+      "razorpay_order_id": null,
+      "razorpay_payment_id": null,
+      "paid_at": null,
+      "hold_expires_at": null,
+      "checked_in": false,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "auto_shifted": false,
+      "status": "missed",
+      "reminder_sent_at": null,
+      "reminder_attempts": 0,
+      "created_at": "2026-10-29T15:52:34.939Z"
     }
   ],
   "queue": [
@@ -2378,7 +4091,9 @@
       "position": 1,
       "called_at": "2026-10-23T10:17:17.675Z",
       "completed_at": "2026-10-23T12:21:09.656Z",
-      "created_at": "2026-10-23T09:27:17.675Z"
+      "created_at": "2026-10-23T09:27:17.675Z",
+      "checked_in_at": null,
+      "started_at": null
     },
     {
       "id": 2,
@@ -2391,7 +4106,9 @@
       "position": 2,
       "called_at": "2026-10-23T12:21:02.690Z",
       "completed_at": null,
-      "created_at": "2026-10-23T09:47:17.675Z"
+      "created_at": "2026-10-23T09:47:17.675Z",
+      "checked_in_at": null,
+      "started_at": null
     },
     {
       "id": 3,
@@ -2404,7 +4121,9 @@
       "position": 3,
       "called_at": null,
       "completed_at": null,
-      "created_at": "2026-10-23T10:07:17.675Z"
+      "created_at": "2026-10-23T10:07:17.675Z",
+      "checked_in_at": null,
+      "started_at": null
     },
     {
       "id": 4,
@@ -2417,7 +4136,9 @@
       "position": 2,
       "called_at": null,
       "completed_at": null,
-      "created_at": "2026-10-23T10:45:35.850Z"
+      "created_at": "2026-10-23T10:45:35.850Z",
+      "checked_in_at": null,
+      "started_at": null
     },
     {
       "id": 5,
@@ -2430,7 +4151,9 @@
       "position": 1,
       "called_at": null,
       "completed_at": null,
-      "created_at": "2026-10-23T11:05:40.587Z"
+      "created_at": "2026-10-23T11:05:40.587Z",
+      "checked_in_at": null,
+      "started_at": null
     },
     {
       "id": 6,
@@ -2443,33 +4166,39 @@
       "position": 1,
       "called_at": null,
       "completed_at": null,
-      "created_at": "2026-10-23T11:12:17.825Z"
+      "created_at": "2026-10-23T11:12:17.825Z",
+      "checked_in_at": null,
+      "started_at": null
     },
     {
       "id": 7,
       "appointment_id": 7,
-      "token_no": "DENT-001",
+      "token_no": "DENT-004",
       "doctor_id": 4,
       "department_id": 2,
       "patient_name": "Sanket Linganwar",
-      "status": "waiting",
+      "status": "missed",
       "position": 1,
       "called_at": null,
       "completed_at": null,
-      "created_at": "2026-10-23T12:10:47.671Z"
+      "created_at": "2026-10-23T12:10:47.671Z",
+      "checked_in_at": null,
+      "started_at": null
     },
     {
       "id": 8,
       "appointment_id": 8,
-      "token_no": "DENT-002",
+      "token_no": "DENT-004",
       "doctor_id": 4,
       "department_id": 2,
       "patient_name": "Sanket Linganwar",
-      "status": "waiting",
+      "status": "missed",
       "position": 2,
       "called_at": null,
       "completed_at": null,
-      "created_at": "2026-10-23T12:14:10.677Z"
+      "created_at": "2026-10-23T12:14:10.677Z",
+      "checked_in_at": null,
+      "started_at": null
     },
     {
       "id": 9,
@@ -2482,20 +4211,159 @@
       "position": 2,
       "called_at": null,
       "completed_at": null,
-      "created_at": "2026-10-23T12:16:05.288Z"
+      "created_at": "2026-10-23T12:16:05.288Z",
+      "checked_in_at": null,
+      "started_at": null
     },
     {
       "id": 10,
       "appointment_id": 10,
+      "token_no": "DENT-004",
+      "doctor_id": 4,
+      "department_id": 2,
+      "patient_name": "Sanket Linganwar",
+      "status": "missed",
+      "position": 3,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T12:33:26.852Z",
+      "checked_in_at": null,
+      "started_at": null
+    },
+    {
+      "id": 11,
+      "appointment_id": 11,
+      "token_no": "OPHT-002",
+      "doctor_id": 6,
+      "department_id": 5,
+      "patient_name": "Sanket Linganwar",
+      "status": "missed",
+      "position": 1,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T12:57:03.599Z",
+      "checked_in_at": null,
+      "started_at": null
+    },
+    {
+      "id": 12,
+      "appointment_id": 12,
+      "token_no": "DENT-002",
+      "doctor_id": 4,
+      "department_id": 2,
+      "patient_name": "Sanket Linganwar",
+      "status": "waiting",
+      "position": 4,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-23T13:23:28.619Z",
+      "checked_in_at": null,
+      "started_at": null
+    },
+    {
+      "id": 13,
+      "appointment_id": 13,
+      "token_no": "NEUR-002",
+      "doctor_id": 3,
+      "department_id": 4,
+      "patient_name": "Sanket Linganwar",
+      "status": "waiting",
+      "position": 1,
+      "called_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-25T04:52:46.421Z",
+      "checked_in_at": null,
+      "started_at": null
+    },
+    {
+      "id": 14,
+      "appointment_id": 14,
+      "token_no": "DENT-003",
+      "doctor_id": 4,
+      "department_id": 2,
+      "patient_name": "Sanket Linganwar",
+      "status": "waiting",
+      "position": 2,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-25T08:03:20.566Z"
+    },
+    {
+      "id": 15,
+      "appointment_id": 15,
+      "token_no": "CARD-001",
+      "doctor_id": 999,
+      "department_id": 1,
+      "patient_name": "Test Hospital Patient",
+      "status": "waiting",
+      "position": 1,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-25T08:14:26.119Z"
+    },
+    {
+      "id": 16,
+      "appointment_id": 16,
+      "token_no": "CARD-002",
+      "doctor_id": 999,
+      "department_id": 1,
+      "patient_name": "Test Hospital Patient",
+      "status": "missed",
+      "position": 2,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-25T08:15:40.116Z"
+    },
+    {
+      "id": 17,
+      "appointment_id": 16,
+      "token_no": "CARD-002",
+      "doctor_id": 999,
+      "department_id": 1,
+      "patient_name": "Test Hospital Patient",
+      "status": "waiting",
+      "position": 3,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-25T08:16:24.139Z"
+    },
+    {
+      "id": 18,
+      "appointment_id": 16,
       "token_no": "DENT-003",
       "doctor_id": 4,
       "department_id": 2,
       "patient_name": "Sanket Linganwar",
       "status": "waiting",
       "position": 3,
+      "checked_in_at": null,
       "called_at": null,
+      "started_at": null,
       "completed_at": null,
-      "created_at": "2026-10-23T12:33:26.852Z"
+      "created_at": "2026-10-25T10:06:11.700Z"
+    },
+    {
+      "id": 19,
+      "appointment_id": 17,
+      "token_no": "NEUR-001",
+      "doctor_id": 3,
+      "department_id": 4,
+      "patient_name": "Sanket Linganwar",
+      "status": "missed",
+      "position": 2,
+      "checked_in_at": null,
+      "called_at": null,
+      "started_at": null,
+      "completed_at": null,
+      "created_at": "2026-10-29T15:52:34.939Z"
     }
   ],
   "messages": [
@@ -2578,6 +4446,382 @@
       "status": "delivered",
       "error_message": null,
       "sent_at": "2026-10-23T12:33:26.864Z"
+    },
+    {
+      "id": 9,
+      "appointment_id": 11,
+      "recipient_phone": "+919403734023",
+      "message_text": "🏥 [HealPath Hospital] Hello Sanket Linganwar, your appointment with Dr. Sunita Rao is confirmed on 2026-10-24 at 11:00. Token No: OPHT-001. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-23T12:57:03.609Z"
+    },
+    {
+      "id": 10,
+      "appointment_id": 12,
+      "recipient_phone": "+7028393036",
+      "message_text": "🏥 [HealPath Hospital] Hello Sanket Linganwar, your appointment with Dr. Suresh Patil is confirmed on 2026-10-25 at 09:30. Token No: DENT-001. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-23T13:23:28.636Z"
+    },
+    {
+      "id": 11,
+      "appointment_id": 7,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 10:45. You have been automatically shifted to the next available slot on 2026-10-24 at 11:30. Updated Token: DENT-004.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T05:57:01.066Z"
+    },
+    {
+      "id": 12,
+      "appointment_id": 8,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:00. You have been automatically shifted to the next available slot on 2026-10-24 at 11:45. Updated Token: DENT-004.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T05:57:01.716Z"
+    },
+    {
+      "id": 13,
+      "appointment_id": 10,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:15. You have been automatically shifted to the next available slot on 2026-10-24 at 12:00. Updated Token: DENT-004.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T05:57:02.095Z"
+    },
+    {
+      "id": 14,
+      "appointment_id": 11,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:00. You have been automatically shifted to the next available slot on 2026-10-24 at 11:30. Updated Token: OPHT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T05:57:02.430Z"
+    },
+    {
+      "id": 15,
+      "appointment_id": 7,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:30. You have been automatically shifted to the next available slot on 2026-10-24 at 12:15. Updated Token: DENT-004.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T06:11:00.065Z"
+    },
+    {
+      "id": 16,
+      "appointment_id": 11,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:30. You have been automatically shifted to the next available slot on 2026-10-24 at 11:45. Updated Token: OPHT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T06:11:00.123Z"
+    },
+    {
+      "id": 17,
+      "appointment_id": 8,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:45. You have been automatically shifted to the next available slot on 2026-10-24 at 12:30. Updated Token: DENT-004.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T06:26:00.431Z"
+    },
+    {
+      "id": 18,
+      "appointment_id": 11,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:45. You have been automatically shifted to the next available slot on 2026-10-24 at 12:00. Updated Token: OPHT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T06:26:00.447Z"
+    },
+    {
+      "id": 19,
+      "appointment_id": 10,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 12:00. You have been automatically shifted to the next available slot on 2026-10-24 at 12:45. Updated Token: DENT-004.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T06:41:00.619Z"
+    },
+    {
+      "id": 20,
+      "appointment_id": 11,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 12:00. You have been automatically shifted to the next available slot on 2026-10-24 at 12:15. Updated Token: OPHT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T06:41:00.632Z"
+    },
+    {
+      "id": 21,
+      "appointment_id": 7,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 12:15. You have been automatically shifted to the next available slot on 2026-10-24 at 13:00. Updated Token: DENT-004.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T06:56:00.507Z"
+    },
+    {
+      "id": 22,
+      "appointment_id": 11,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 12:15. You have been automatically shifted to the next available slot on 2026-10-24 at 12:30. Updated Token: OPHT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T06:56:00.529Z"
+    },
+    {
+      "id": 23,
+      "appointment_id": 8,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 12:30. You have been automatically shifted to the next available slot on 2026-10-24 at 13:15. Updated Token: DENT-004.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T07:11:00.110Z"
+    },
+    {
+      "id": 24,
+      "appointment_id": 11,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 12:30. You have been automatically shifted to the next available slot on 2026-10-24 at 12:45. Updated Token: OPHT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-24T07:11:00.151Z"
+    },
+    {
+      "id": 25,
+      "appointment_id": 12,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 09:30. You have been automatically shifted to the next available slot on 2026-10-25 at 10:15. Updated Token: DENT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T04:37:00.780Z"
+    },
+    {
+      "id": 26,
+      "appointment_id": 13,
+      "recipient_phone": "+919403734023",
+      "message_text": "🏥 [HealPath Hospital] Hello Sanket Linganwar, your appointment with Dr. Meera Kulkarni is confirmed on 2026-10-25 at 13:30. Token No: NEUR-001. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T04:52:46.441Z"
+    },
+    {
+      "id": 27,
+      "appointment_id": 12,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 10:15. You have been automatically shifted to the next available slot on 2026-10-25 at 10:30. Updated Token: DENT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T04:56:00.358Z"
+    },
+    {
+      "id": 28,
+      "appointment_id": 12,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 10:30. You have been automatically shifted to the next available slot on 2026-10-25 at 10:45. Updated Token: DENT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T05:11:00.971Z"
+    },
+    {
+      "id": 29,
+      "appointment_id": 12,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 10:45. You have been automatically shifted to the next available slot on 2026-10-25 at 11:00. Updated Token: DENT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T05:26:00.621Z"
+    },
+    {
+      "id": 30,
+      "appointment_id": 12,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:00. You have been automatically shifted to the next available slot on 2026-10-25 at 11:15. Updated Token: DENT-002.",
+      "provider": "simulation",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T05:41:00.622Z"
+    },
+    {
+      "id": 31,
+      "appointment_id": 12,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:15. You have been automatically shifted to the next available slot on 2026-10-25 at 11:30. Updated Token: DENT-002.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "auto_shift",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T05:56:00.909Z"
+    },
+    {
+      "id": 32,
+      "appointment_id": 12,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:30. You have been automatically shifted to the next available slot on 2026-10-25 at 11:45. Updated Token: DENT-002.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "auto_shift",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T06:11:00.889Z"
+    },
+    {
+      "id": 33,
+      "appointment_id": 13,
+      "recipient_phone": "+919403734023",
+      "message_text": "🏥 [Sanjeevan Hospital] Reminder: Your appointment with Dr. Meera Kulkarni (Room 201 (Floor 2)) is today at 13:30. Token: NEUR-001. QR Check-in: http://localhost:3000/checkin.html?token=NEUR-001&sig=1a34e2d5335e2990d3b196b7e89821e4388ca62a6d8ea684472457d8aeb1505c Live Queue: http://localhost:3000/queue.html Please arrive 10m early.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "reminder",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T06:13:30.147Z"
+    },
+    {
+      "id": 34,
+      "appointment_id": 12,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 11:45. You have been automatically shifted to the next available slot on 2026-10-25 at 12:00. Updated Token: DENT-002.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "auto_shift",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T06:26:00.109Z"
+    },
+    {
+      "id": 35,
+      "appointment_id": 12,
+      "recipient_phone": "+7028393036",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 12:00. You have been automatically shifted to the next available slot on 2026-10-25 at 13:15. Updated Token: DENT-002.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "auto_shift",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T07:40:00.575Z"
+    },
+    {
+      "id": 36,
+      "appointment_id": 14,
+      "recipient_phone": "+919403734023",
+      "message_text": "🏥 [HealPath Hospital] Hello Sanket Linganwar, your appointment with Dr. Suresh Patil is confirmed on 2026-10-25 at 09:15. Token No: DENT-002. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "booking",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T08:03:20.588Z"
+    },
+    {
+      "id": 37,
+      "appointment_id": 14,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 09:15. You have been automatically shifted to the next available slot on 2026-10-25 at 13:45. Updated Token: DENT-003.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "auto_shift",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T08:04:00.585Z"
+    },
+    {
+      "id": 38,
+      "appointment_id": 13,
+      "recipient_phone": "+919403734023",
+      "message_text": "⚠️ [HealPath Hospital] Hello Sanket Linganwar, you missed your slot at 13:30. You have been automatically shifted to the next available slot on 2026-10-25 at 13:45. Updated Token: NEUR-002.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "auto_shift",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T08:11:01.739Z"
+    },
+    {
+      "id": 39,
+      "appointment_id": 15,
+      "recipient_phone": "+919876543210",
+      "message_text": "🏥 [HealPath Hospital] Hello Test Hospital Patient, your appointment with Dr. Test Specialist is confirmed on 2026-10-26 at 11:00. Token No: CARD-001. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "booking",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T08:14:26.124Z"
+    },
+    {
+      "id": 40,
+      "appointment_id": 16,
+      "recipient_phone": "+919876543210",
+      "message_text": "🏥 [HealPath Hospital] Hello Test Hospital Patient, your appointment with Dr. Test Specialist is confirmed on 2026-10-26 at 11:00. Token No: CARD-002. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "booking",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T08:15:40.120Z"
+    },
+    {
+      "id": 41,
+      "appointment_id": 16,
+      "recipient_phone": "+919876543210",
+      "message_text": "🏥 [HealPath Hospital] Hello Test Hospital Patient, your appointment with Dr. Test Specialist is confirmed on 2026-10-26 at 11:00. Token No: CARD-002. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "booking",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T08:16:24.155Z"
+    },
+    {
+      "id": 42,
+      "appointment_id": 16,
+      "recipient_phone": "+9403734023",
+      "message_text": "🏥 [HealPath Hospital] Hello Sanket Linganwar, your appointment with Dr. Suresh Patil is confirmed on 2026-10-25 at 12:30. Token No: DENT-003. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "booking",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-25T10:06:11.733Z"
+    },
+    {
+      "id": 43,
+      "appointment_id": 17,
+      "recipient_phone": "+9403734023",
+      "message_text": "🏥 [HealPath Hospital] Hello Sanket Linganwar, your appointment with Dr. Meera Kulkarni is confirmed on 2026-10-29 at 12:30. Token No: NEUR-001. Please arrive 10 minutes early. Helpline: +91 95526 25262.",
+      "provider": "simulation",
+      "channel": "whatsapp-sim",
+      "type": "booking",
+      "status": "delivered",
+      "error_message": null,
+      "sent_at": "2026-10-29T15:52:34.977Z"
     }
   ],
   "settings": {
@@ -2585,6 +4829,10 @@
     "grace_period_min": "10",
     "hospital_name": "MediCare Hospital & Medical Center",
     "hospital_phone": "+91 98765 43210",
-    "hospital_email": "contact@medicare.com"
-  }
+    "hospital_email": "contact@medicare.com",
+    "reminder_minutes_before": "60"
+  },
+  "payments": [],
+  "reports": [],
+  "report_logs": []
 }

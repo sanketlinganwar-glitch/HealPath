@@ -1,7 +1,12 @@
+import secrets
+import json
 from datetime import datetime, date, timedelta
 from sqlalchemy.orm import Session
 
-from backend.models import Department, Doctor, User, Patient, Token, Appointment, OTSchedule, Message
+from backend.models import (
+    Department, Doctor, User, Patient, Token, Appointment, OTSchedule, Message,
+    EmergencyAuditLog, NotificationLog, Prescription, Feedback
+)
 from backend.auth import hash_password
 
 DEPARTMENTS_DATA = [
@@ -14,25 +19,29 @@ DEPARTMENTS_DATA = [
 
 DOCTORS_DATA = [
     # General Medicine
-    {"name": "Dr. Rajesh Sharma", "dept_code": "G", "specialization": "General Physician", "room": "Room 101", "status": "available"},
-    {"name": "Dr. Anita Desai", "dept_code": "G", "specialization": "Internal Medicine", "room": "Room 102", "status": "off"},
+    {"name": "Dr. Rajesh Sharma", "dept_code": "G", "specialization": "General Physician", "room": "Room 101", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "17:00"},
+    {"name": "Dr. Anita Desai", "dept_code": "G", "specialization": "Internal Medicine", "room": "Room 102", "status": "off", "duty_status": "off_duty", "shift_start": "14:00", "shift_end": "20:00"},
     # Cardiology
-    {"name": "Dr. Meera Kulkarni", "dept_code": "C", "specialization": "Cardiologist", "room": "Room 201", "status": "available"},
-    {"name": "Dr. Vikram Malhotra", "dept_code": "C", "specialization": "Cardiac Surgeon", "room": "Room 202", "status": "off"},
+    {"name": "Dr. Meera Kulkarni", "dept_code": "C", "specialization": "Cardiologist", "room": "Room 201", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "16:00"},
+    {"name": "Dr. Vikram Malhotra", "dept_code": "C", "specialization": "Cardiac Surgeon", "room": "Room 202", "status": "off", "duty_status": "off_duty", "shift_start": "11:00", "shift_end": "19:00"},
     # Orthopedics
-    {"name": "Dr. Suresh Patil", "dept_code": "O", "specialization": "Orthopedic Surgeon", "room": "Room 301", "status": "available"},
-    {"name": "Dr. Sunita Rao", "dept_code": "O", "specialization": "Spine Specialist", "room": "Room 302", "status": "off"},
+    {"name": "Dr. Suresh Patil", "dept_code": "O", "specialization": "Orthopedic Surgeon", "room": "Room 301", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "17:00"},
+    {"name": "Dr. Sunita Rao", "dept_code": "O", "specialization": "Spine Specialist", "room": "Room 302", "status": "off", "duty_status": "off_duty", "shift_start": "10:00", "shift_end": "18:00"},
     # Pediatrics
-    {"name": "Dr. Priya Nair", "dept_code": "P", "specialization": "Pediatrician", "room": "Room 401", "status": "available"},
-    {"name": "Dr. Amit Verma", "dept_code": "P", "specialization": "Neonatologist", "room": "Room 402", "status": "off"},
+    {"name": "Dr. Priya Nair", "dept_code": "P", "specialization": "Pediatrician", "room": "Room 401", "status": "available", "duty_status": "available", "shift_start": "08:30", "shift_end": "15:30"},
+    {"name": "Dr. Amit Verma", "dept_code": "P", "specialization": "Neonatologist", "room": "Room 402", "status": "off", "duty_status": "off_duty", "shift_start": "13:00", "shift_end": "21:00"},
     # ENT
-    {"name": "Dr. Rohan Joshi", "dept_code": "E", "specialization": "ENT Specialist", "room": "Room 501", "status": "available"},
-    {"name": "Dr. Kavita Iyer", "dept_code": "E", "specialization": "Head & Neck Surgeon", "room": "Room 502", "status": "off"},
+    {"name": "Dr. Rohan Joshi", "dept_code": "E", "specialization": "ENT Specialist", "room": "Room 501", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "18:00"},
+    {"name": "Dr. Kavita Iyer", "dept_code": "E", "specialization": "Head & Neck Surgeon", "room": "Room 502", "status": "off", "duty_status": "off_duty", "shift_start": "12:00", "shift_end": "19:00"},
 ]
 
 def seed_database(db: Session, force_reset: bool = False):
     """Seed initial data if empty or on force_reset."""
     if force_reset:
+        db.query(EmergencyAuditLog).delete()
+        db.query(NotificationLog).delete()
+        db.query(Prescription).delete()
+        db.query(Feedback).delete()
         db.query(Message).delete()
         db.query(Token).delete()
         db.query(Appointment).delete()
@@ -63,7 +72,12 @@ def seed_database(db: Session, force_reset: bool = False):
             department_id=dept_objs[d["dept_code"]].id,
             specialization=d["specialization"],
             room=d["room"],
-            status=d["status"]
+            status=d["status"],
+            duty_status=d.get("duty_status", "available"),
+            shift_start=d.get("shift_start", "09:00"),
+            shift_end=d.get("shift_end", "17:00"),
+            break_start="13:00",
+            break_end="14:00"
         )
         db.add(doctor)
         db.flush()
@@ -124,7 +138,10 @@ def seed_database(db: Session, force_reset: bool = False):
         {
             "name": "Manish Kale", "phone": "9823044444", "age": 29, "gender": "male",
             "dept_code": "G", "priority": "emergency", "symptoms": "Severe acute abdominal cramps",
-            "status": "waiting", "created_offset": -25, "called_offset": None, "completed_offset": None
+            "status": "waiting", "created_offset": -25, "called_offset": None, "completed_offset": None,
+            "emergency_reason": "Acute excruciating abdominal pain and tachycardia",
+            "emergency_flagged_by": "reception",
+            "emergency_verified_by": "Dr. Rajesh Sharma"
         },
         {
             "name": "Lata Joshi", "phone": "9823055555", "age": 68, "gender": "female",
@@ -226,10 +243,27 @@ def seed_database(db: Session, force_reset: bool = False):
             created_at=created_dt,
             called_at=called_dt,
             completed_at=completed_dt,
-            near_notified=False
+            near_notified=False,
+            secure_hash=secrets.token_hex(16),
+            emergency_reason=item.get("emergency_reason"),
+            emergency_flagged_by=item.get("emergency_flagged_by"),
+            emergency_verified_by=item.get("emergency_verified_by"),
+            emergency_flagged_at=created_dt if item.get("emergency_reason") else None
         )
         db.add(token)
         db.flush()
+
+        if item.get("emergency_reason"):
+            db.add(EmergencyAuditLog(
+                token_id=token.id,
+                action="verified",
+                old_priority="normal",
+                new_priority="emergency",
+                staff_username="reception",
+                staff_role="receptionist",
+                reason=item["emergency_reason"],
+                created_at=created_dt
+            ))
 
         # Add initial system messages
         if item["status"] == "in_progress" and doc_id:
@@ -247,8 +281,41 @@ def seed_database(db: Session, force_reset: bool = False):
                 kind="system",
                 created_at=completed_dt or now
             ))
+            # Seed sample prescription for completed consultation
+            if doc_id:
+                sample_meds = [
+                    {"name": "Paracetamol", "dosage": "650mg", "frequency": "1-0-1", "duration": "3 days", "instructions": "After meals"},
+                    {"name": "Cetirizine", "dosage": "10mg", "frequency": "0-0-1", "duration": "5 days", "instructions": "Before sleep"}
+                ]
+                db.add(Prescription(
+                    token_id=token.id,
+                    appointment_id=None,
+                    doctor_id=doc_id,
+                    patient_id=patient.id,
+                    diagnosis="Viral Upper Respiratory Infection",
+                    medicines=json.dumps(sample_meds),
+                    clinical_notes="Patient advised adequate rest and hydration. Monitor temperature.",
+                    tests_recommended="CBC if fever persists beyond 3 days",
+                    follow_up_date=today + timedelta(days=5),
+                    created_at=completed_dt or now,
+                    status="active"
+                ))
+                # Seed sample feedback
+                db.add(Feedback(
+                    token_id=token.id,
+                    patient_id=patient.id,
+                    department_id=dept.id,
+                    doctor_id=doc_id,
+                    rating=5,
+                    wait_time_rating=4,
+                    staff_rating=5,
+                    comments="Doctor Sharma was very thorough and attentive. Excellent queue management!",
+                    is_anonymous=False,
+                    is_moderated=True,
+                    created_at=completed_dt or now
+                ))
 
-    # 5. OT Schedule (4 rows)
+    # 5. OT Schedule
     ot_items = [
         {"theatre": "OT-1 (Major)", "procedure": "Total Knee Replacement", "surgeon": "Dr. Suresh Patil", "start_h": 9, "end_h": 11, "status": "Completed"},
         {"theatre": "Cath Lab", "procedure": "Coronary Angioplasty", "surgeon": "Dr. Meera Kulkarni", "start_h": 11, "end_h": 13, "status": "In Progress"},
@@ -267,25 +334,43 @@ def seed_database(db: Session, force_reset: bool = False):
             status=ot["status"]
         ))
 
-    # 6. Appointments (4 rows)
+    # 6. Appointments with unique codes
     appt_patients = [
-        {"name": "Govind Narang", "phone": "9899011111", "age": 52, "gender": "male", "dept": "C", "hour": 11, "status": "booked"},
-        {"name": "Pooja Hegde", "phone": "9899022222", "age": 27, "gender": "female", "dept": "G", "hour": 12, "status": "checked_in"},
-        {"name": "Siddharth Roy", "phone": "9899033333", "age": 36, "gender": "male", "dept": "O", "hour": 14, "status": "booked"},
-        {"name": "Nandini Sen", "phone": "9899044444", "age": 64, "gender": "female", "dept": "E", "hour": 15, "status": "booked"},
+        {"name": "Govind Narang", "phone": "9899011111", "age": 52, "gender": "male", "dept": "C", "hour": 11, "status": "booked", "doc_idx": 2},
+        {"name": "Pooja Hegde", "phone": "9899022222", "age": 27, "gender": "female", "dept": "G", "hour": 12, "status": "checked_in", "doc_idx": 0},
+        {"name": "Siddharth Roy", "phone": "9899033333", "age": 36, "gender": "male", "dept": "O", "hour": 14, "status": "booked", "doc_idx": 4},
+        {"name": "Nandini Sen", "phone": "9899044444", "age": 64, "gender": "female", "dept": "E", "hour": 15, "status": "booked", "doc_idx": 8},
     ]
     for ap in appt_patients:
         p = Patient(name=ap["name"], phone=ap["phone"], age=ap["age"], gender=ap["gender"], created_at=now)
         db.add(p)
         db.flush()
         slot = datetime(today.year, today.month, today.day, ap["hour"], 30, 0)
+        assigned_doc_id = doc_objs[ap["doc_idx"]].id if "doc_idx" in ap else None
         db.add(Appointment(
             patient_id=p.id,
             department_id=dept_objs[ap["dept"]].id,
-            doctor_id=None,
+            doctor_id=assigned_doc_id,
             slot_time=slot,
             status=ap["status"],
+            appointment_code=f"APT-{dept_objs[ap['dept']].code}-{secrets.token_hex(3).upper()}",
+            notes="Regular outpatient consultation",
+            source="online",
+            payment_status="free",
             created_at=now
         ))
+
+    # 7. Sample Notification Logs
+    db.add(NotificationLog(
+        recipient_phone="9876543210",
+        recipient_name="Ramesh Pawar",
+        channel="whatsapp",
+        event_type="token_created",
+        message_body="Hello Ramesh, your token C-001 has been registered for Cardiology at HealPath.",
+        status="simulated",
+        reference_type="token",
+        reference_id=1,
+        created_at=now - timedelta(minutes=100)
+    ))
 
     db.commit()

@@ -3,176 +3,349 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Hospital Queue & Token Display - HealPath</title>
-  
+  <title>Live OPD Queue Board - Sanjivani Hospital Yavatmal</title>
+  <meta name="description" content="Full-screen live OPD waiting room queue display for Sanjeevan Multispecialty Hospital Yavatmal. Real-time token callouts, consulting doctors, and estimated wait times.">
+  <meta property="og:title" content="Live Queue TV Display - Sanjivani Hospital">
+  <meta property="og:description" content="Real-time live queue tokens and doctor consultation status.">
+  <link rel="icon" type="image/svg+xml" href="images/sanjeevan-logo.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* Fullscreen Hospital TV Display Custom Styles */
+    body.queue-tv-mode {
+      background-color: #0B192C;
+      color: #F8FAFC;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .tv-header-strip {
+      background: #061120;
+      border-bottom: 2px solid var(--teal);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .tv-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .tv-brand-logo {
+      width: 52px;
+      height: 52px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tv-brand-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .tv-brand-sub {
+      font-size: 0.8rem;
+      color: var(--mint);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .tv-stats-bar {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .tv-stat-pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 0.45rem 0.95rem;
+      font-size: 0.88rem;
+      color: #E2E8F0;
+    }
+
+    .tv-stat-pill strong {
+      color: var(--teal);
+      font-size: 1.1rem;
+      margin-left: 4px;
+    }
+
+    .tv-clock-box {
+      background: rgba(20, 187, 166, 0.15);
+      border: 1px solid var(--teal);
+      color: #FFF;
+      padding: 0.45rem 1rem;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .tv-main-container {
+      padding: 2rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .tv-tools-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 1.25rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .tv-checkin-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .live-queue-board {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .queue-doctor-card {
+      background: #0E243A;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .queue-doctor-card h3 {
+      color: #FFFFFF !important;
+      font-size: 1.25rem !important;
+    }
+
+    .now-calling-box {
+      background: linear-gradient(135deg, #091C30 0%, #061524 100%);
+      border: 2px solid var(--teal);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    .now-calling-token {
+      font-size: 3.25rem;
+      font-weight: 800;
+      color: var(--teal);
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      margin: 0.2rem 0;
+      text-shadow: 0 0 20px rgba(20, 187, 166, 0.4);
+    }
+
+    .medicare-table-wrapper {
+      background: #0E243A;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .medicare-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      color: #E2E8F0;
+    }
+
+    .medicare-table th {
+      background: #061524;
+      color: var(--mint);
+      font-weight: 700;
+      padding: 1rem 1.25rem;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .medicare-table td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.95rem;
+    }
+
+    .medicare-table tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tv-bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      background: #061120;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.85rem;
+      color: #94A3B8;
+      margin-top: 2rem;
+    }
+
+    .tv-bottom-bar a {
+      color: var(--teal);
+    }
+  </style>
 </head>
-<body>
+<body class="queue-tv-mode">
 
-  <!-- Pulsing Page Loader -->
-  <div id="page-loader">
-    <div class="pulse-loader-ring"></div>
-    <div style="font-weight: 700; color: var(--deep-blue); font-size: 1.1rem;">
-      <span style="color: var(--deep-blue);">Heal</span><span style="color: var(--teal);">Path</span>
-    </div>
-  </div>
-
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <div class="top-bar-left">
-        <span><i class="fas fa-satellite-dish" style="color: var(--mint); margin-right: 5px;"></i> Real-time Hospital Queue Tracking (Socket.io)</span>
-        <span><i class="fas fa-hospital" style="color: var(--mint); margin-right: 5px; margin-left: 10px;"></i> Yavatmal Facility: <strong>+91 95526 25262</strong> (445001)</span>
+  <!-- TV Display Header (No standard website header or footer) -->
+  <header class="tv-header-strip">
+    <div class="tv-brand">
+      <div class="tv-brand-logo">
+        <img src="images/sanjeevan-logo.svg" alt="Sanjeevan Hospital Logo" width="52" height="52" style="width: 100%; height: 100%; object-fit: contain;">
       </div>
-      <div class="top-bar-right">
-        <div class="online-indicator">
-          <span class="online-dot"></span>
-          <span class="online-status-text">Online</span>
-        </div>
-        <select id="lang-select" class="lang-selector">
-          <option value="en">English (EN)</option>
-          <option value="hi">हिन्दी (HI)</option>
-          <option value="mr">मराठी (MR)</option>
-        </select>
-        <button class="btn btn-sm btn-outline-white" onclick="openHelpModal()">
-          <i class="fas fa-question-circle"></i> Help
-        </button>
+      <div>
+        <h1 class="tv-brand-title">SANJEEVAN HOSPITAL &bull; LIVE OPD QUEUE</h1>
+        <div class="tv-brand-sub">Sanjeevan Multispecialty Hospital, Yavatmal 445001 &bull; Real-time Socket.io Sync</div>
       </div>
     </div>
-  </div>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo">
-        <div class="logo-icon-tile">H</div>
-        <div class="logo-text-box">
-          <span class="logo-text"><span class="heal">Heal</span><span class="path">Path</span></span>
-          <span class="logo-tagline">HEALTH TODAY. BRIGHTER TOMORROW.</span>
-        </div>
-      </a>
+    <div class="tv-stats-bar">
+      <div class="tv-stat-pill">
+        Waiting: <strong id="stat-queue-waiting">0</strong>
+      </div>
+      <div class="tv-stat-pill">
+        Consulting: <strong id="stat-queue-consulting" style="color: #F59E0B;">0</strong>
+      </div>
+      <div class="tv-stat-pill">
+        Completed: <strong id="stat-queue-completed" style="color: #BAE6FD;">0</strong>
+      </div>
 
-      <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="services.html" class="nav-link">Services</a>
-        <a href="doctors.html" class="nav-link">Doctors</a>
-        <a href="queue.html" class="nav-link active" style="color: var(--teal); font-weight: 700;"><i class="fas fa-satellite-dish"></i> Live Queue</a>
-        <a href="booking.html" class="nav-link">Book Appointment</a>
-        <a href="dashboard.html" class="nav-link">Dashboard</a>
-      </nav>
-
-      <div class="header-actions">
-        <div id="header-auth-container"></div>
-        <a href="booking.html" class="btn btn-primary"><i class="fas fa-plus"></i> Book Slot</a>
-        <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+      <div class="tv-clock-box">
+        <i class="fas fa-clock"></i>
+        <span id="tv-live-clock">10:00:00 AM</span>
       </div>
     </div>
   </header>
 
-  <!-- Banner -->
-  <section class="hero-section organic-bg-shapes" style="padding: 3.5rem 0 4rem; text-align: center;">
-    <div class="container" style="position: relative; z-index: 2;">
-      <span class="tag-mint" style="margin-bottom: 0.5rem;"><i class="fas fa-broadcast-tower"></i> Real-time Consultation Flow</span>
-      <h1 style="color: var(--white); font-size: 2.4rem; margin: 0.5rem 0;">Live Hospital Queue Board</h1>
-      <p style="color: rgba(255,255,255,0.85); margin: 0 auto; max-width: 650px;">
-        Track active consultation tokens and estimated waiting times in real time. Patients are automatically notified on WhatsApp when their turn arrives.
-      </p>
+  <!-- TV Main Body Container -->
+  <main class="tv-main-container">
+    
+    <!-- Controls & Patient Arrival Fast Check-In -->
+    <div class="tv-tools-bar">
+      <!-- Filter Doctor -->
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <label for="queue-doctor-filter" style="font-weight: 700; color: var(--mint); font-size: 0.95rem;">
+          <i class="fas fa-filter" style="margin-right: 4px;"></i> Doctor Room:
+        </label>
+        <select id="queue-doctor-filter" class="form-control" style="background: #061524; color: #FFF; border-color: rgba(255,255,255,0.2); width: auto; min-width: 280px;">
+          <option value="">-- All Hospital Doctors & Rooms --</option>
+        </select>
+      </div>
+
+      <!-- Patient Arrival Fast Check-in Input (Preserves #checkin-token-input & handleCheckInByToken) -->
+      <div class="tv-checkin-box">
+        <span style="font-size: 0.88rem; color: #CBD5E1;">
+          <i class="fas fa-qrcode" style="color: var(--teal); margin-right: 4px;"></i> Arrived at Hospital?
+        </span>
+        <input type="text" id="checkin-token-input" class="form-control" placeholder="TOKEN NO (e.g. CARD-001)" style="width: 190px; text-transform: uppercase; background: #061524; color: #FFF; border-color: rgba(255,255,255,0.2);">
+        <button type="button" class="btn btn-primary" onclick="handleCheckInByToken()" style="white-space: nowrap;">
+          <i class="fas fa-check"></i> Check In
+        </button>
+      </div>
+
+      <!-- Navigation Link Back -->
+      <div>
+        <a href="index.html" class="btn btn-outline-white btn-sm" style="font-size: 0.8rem;">
+          <i class="fas fa-arrow-left"></i> Home
+        </a>
+        <a href="booking.html" class="btn btn-primary btn-sm" style="font-size: 0.8rem; margin-left: 0.4rem;">
+          <i class="fas fa-calendar-check"></i> Book Slot
+        </a>
+      </div>
     </div>
-  </section>
 
-  <!-- Main Queue Content -->
-  <section class="section" style="padding: 3.5rem 0 6rem;">
-    <div class="container">
-
-      <!-- Patient Arrival Fast Check-In Card -->
-      <div class="card" style="margin-bottom: 2.5rem; background: #FAFDFD; border-left: 4px solid var(--teal);">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
-          <div>
-            <h3 style="color: var(--deep-blue); font-size: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
-              <i class="fas fa-qrcode" style="color: var(--teal);"></i> Patient Arrival Check-In
-            </h3>
-            <p style="font-size: 0.88rem; margin-top: 0.2rem;">
-              Arrived at the clinic? Enter your Token Number to check in. <strong>This pauses your missed-slot timer!</strong>
-            </p>
-          </div>
-          <div style="display: flex; gap: 0.75rem; max-width: 380px; width: 100%;">
-            <input type="text" id="checkin-token-input" class="form-control" placeholder="e.g. CARD-001" style="text-transform: uppercase;">
-            <button class="btn btn-primary" onclick="handleCheckInByToken()" style="white-space: nowrap;">
-              <i class="fas fa-check"></i> Check In
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Filters & Stats Strip -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <label style="font-size: 0.95rem; font-weight: 700; color: var(--deep-blue);">Filter Doctor:</label>
-          <select id="queue-doctor-filter" class="form-control" style="width: auto; min-width: 250px;">
-            <option value="">-- All Doctors & Departments --</option>
-          </select>
-        </div>
-
-        <div style="display: flex; gap: 1rem;">
-          <div class="tag-mint" style="font-size: 0.85rem; padding: 0.45rem 1rem;">
-            Waiting: <strong id="stat-queue-waiting" style="margin-left: 4px;">0</strong>
-          </div>
-          <div class="tag-mint" style="background: rgba(20,187,166,0.15); color: var(--teal); font-size: 0.85rem; padding: 0.45rem 1rem;">
-            In Consultation: <strong id="stat-queue-consulting" style="margin-left: 4px;">0</strong>
-          </div>
-          <div class="tag-mint" style="background: rgba(15,59,100,0.12); color: var(--deep-blue); font-size: 0.85rem; padding: 0.45rem 1rem;">
-            Completed: <strong id="stat-queue-completed" style="margin-left: 4px;">0</strong>
-          </div>
-        </div>
-      </div>
-
-      <!-- Live Calling Doctor Cards -->
-      <h3 style="font-size: 1.35rem; color: var(--deep-blue); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
-        <i class="fas fa-tv" style="color: var(--teal);"></i> Doctor Consultation Rooms
-      </h3>
-      <div id="queue-live-board" class="live-queue-board" style="margin-bottom: 3.5rem;">
-        <!-- Loaded via JS -->
-      </div>
-
-      <!-- Detailed Queue Table -->
-      <div class="medicare-table-wrapper">
-        <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center;">
-          <h3 style="font-size: 1.15rem; color: var(--deep-blue);">
-            <i class="fas fa-list-ol" style="color: var(--teal);"></i> Today's Full Hospital Queue
-          </h3>
-          <span style="font-size: 0.82rem; color: var(--charcoal-light);">Average wait time: ~15 mins per patient</span>
-        </div>
-
-        <div style="overflow-x: auto;">
-          <table class="medicare-table">
-            <thead>
-              <tr>
-                <th>Token No</th>
-                <th>Patient Name</th>
-                <th>Doctor & Room</th>
-                <th>Scheduled Slot</th>
-                <th>Status</th>
-                <th>Est. Wait Time</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="queue-table-body">
-              <tr><td colspan="7" style="text-align: center; padding: 2.5rem;">Connecting to real-time queue...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
+    <!-- Active Doctor Consultation Cards (Injected by queue.js) -->
+    <div style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+      <h2 style="font-size: 1.35rem; color: #FFFFFF; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+        <i class="fas fa-tv" style="color: var(--teal);"></i> Real-Time Consultation Board
+      </h2>
+      <span style="font-size: 0.82rem; color: var(--mint);">
+        <i class="fas fa-bell"></i> 10-Minute Missed Slot Grace Period Active
+      </span>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-bottom-bar" style="border: none; padding: 0; justify-content: center;">
-        <div>&copy; 2026 HealPath Hospital & Medical Center. Live Queue Powered by Socket.io.</div>
+    <div id="queue-live-board" class="live-queue-board">
+      <!-- Loaded dynamically via fetchQueueData() in queue.js -->
+    </div>
+
+    <!-- Full Detailed Queue Table -->
+    <div class="medicare-table-wrapper">
+      <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <h3 style="font-size: 1.15rem; color: #FFFFFF; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+          <i class="fas fa-list-ol" style="color: var(--teal);"></i> Today's OPD Waiting Queue
+        </h3>
+        <span style="font-size: 0.84rem; color: var(--mint);">Average consultation: ~15 mins per patient</span>
       </div>
+
+      <div style="overflow-x: auto;">
+        <table class="medicare-table">
+          <thead>
+            <tr>
+              <th>Token No</th>
+              <th>Patient Name</th>
+              <th>Doctor & Room</th>
+              <th>Slot Time</th>
+              <th>Status</th>
+              <th>Est. Wait</th>
+              <th>Arrival Check-in</th>
+            </tr>
+          </thead>
+          <tbody id="queue-table-body">
+            <tr><td colspan="7" style="text-align: center; padding: 2.5rem; color: #94A3B8;">Connecting to live hospital queue server...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Clean TV Status Bottom Bar -->
+  <footer class="tv-bottom-bar">
+    <div>
+      Sanjeevan Multispecialty Hospital & Research Institute &bull; Emergency Hotline: <strong>+91 95526 25262</strong>
+    </div>
+    <div>
+      Live Queue Powered by WebSockets &bull; <a href="index.html">Return to Portal</a>
     </div>
   </footer>
 
@@ -181,6 +354,19 @@
   <script type="module" src="js/i18n.js"></script>
   <script src="js/main.js"></script>
   <script src="js/queue.js"></script>
-  <script src="js/chat.js"></script>
+  <script src="js/layout.js"></script>
+
+  <script>
+    // Live digital clock for TV
+    function updateTvClock() {
+      const el = document.getElementById('tv-live-clock');
+      if (el) {
+        const now = new Date();
+        el.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+      }
+    }
+    setInterval(updateTvClock, 1000);
+    updateTvClock();
+  </script>
 </body>
 </html>

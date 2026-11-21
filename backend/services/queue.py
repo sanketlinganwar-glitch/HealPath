@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 
 from backend.models import Department, Doctor, Patient, Token, Message
+from backend.services.notification import notification_service
 
 PRIORITY_MAP = {
     "emergency": 0,
@@ -27,10 +28,11 @@ def format_token_number(dept_code: str, seq: int) -> str:
     return f"{dept_code}-{seq:03d}"
 
 def get_active_doctors_count(db: Session, department_id: int) -> int:
-    """Counts doctors in department whose status in DB is not 'off'."""
+    """Counts doctors in department whose status in DB is not 'off' and not 'off_duty'."""
     return db.query(Doctor).filter(
         Doctor.department_id == department_id,
-        Doctor.status != "off"
+        Doctor.status != "off",
+        Doctor.duty_status.notin_(["off_duty", "on_break"])
     ).count()
 
 def get_avg_consult_minutes(db: Session, department_id: int) -> int:
@@ -79,7 +81,8 @@ def get_waiting_queue_tokens(db: Session, department_id: int) -> List[Token]:
 def trigger_near_turn_notifications(db: Session, department_id: int):
     """
     Checks waiting queue. When a waiting token reaches people_ahead <= 2,
-    creates a system message (once) and sets near_notified = True.
+    creates a system message (once), sets near_notified = True,
+    and dispatches turn approaching notification.
     """
     waiting = get_waiting_queue_tokens(db, department_id)
     for idx, token in enumerate(waiting):
@@ -87,12 +90,19 @@ def trigger_near_turn_notifications(db: Session, department_id: int):
         if people_ahead <= 2 and not token.near_notified:
             msg = Message(
                 token_id=token.id,
-                text="Your turn is near. Please be ready near the consultation room.",
+                text=f"Your turn is near ({people_ahead} patients ahead). Please be ready near the consultation room.",
                 kind="system",
                 created_at=datetime.now()
             )
             db.add(msg)
             token.near_notified = True
+            
+            # Dispatch notification
+            if token.patient:
+                try:
+                    notification_service.notify_turn_approaching(db, token, token.patient, people_ahead)
+                except Exception:
+                    pass
 
 def get_token_position_and_wait(db: Session, token: Token) -> Tuple[Optional[int], Optional[int], Optional[int]]:
     """
@@ -117,18 +127,22 @@ def get_token_position_and_wait(db: Session, token: Token) -> Tuple[Optional[int
 def get_doctor_runtime_status(db: Session, doctor: Doctor) -> str:
     """
     Doctor status:
-    - 'off' if doctor.status in DB is 'off'
-    - 'busy' if doctor currently has an in_progress token
+    - 'off' if doctor.status == 'off' or doctor.duty_status == 'off_duty'
+    - 'on_break' if doctor.duty_status == 'on_break'
+    - 'busy' if doctor currently has an in_progress token or duty_status == 'busy'
     - 'available' otherwise
     """
-    if doctor.status == "off":
+    if doctor.status == "off" or getattr(doctor, "duty_status", None) == "off_duty":
         return "off"
     
+    if getattr(doctor, "duty_status", None) == "on_break":
+        return "off"
+
     in_progress = db.query(Token).filter(
         Token.doctor_id == doctor.id,
         Token.status == "in_progress"
     ).first()
-    if in_progress:
+    if in_progress or getattr(doctor, "duty_status", None) == "busy":
         return "busy"
     return "available"
 
@@ -172,4 +186,8 @@ def serialize_token(
         "called_at": token.called_at.isoformat() if token.called_at else None,
         "completed_at": token.completed_at.isoformat() if token.completed_at else None,
         "room": room,
+        "secure_hash": token.secure_hash,
+        "emergency_reason": token.emergency_reason,
+        "emergency_flagged_by": token.emergency_flagged_by,
+        "emergency_verified_by": token.emergency_verified_by,
     }
