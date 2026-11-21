@@ -15,7 +15,11 @@ from backend.models import User
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 load_dotenv(os.path.join(BASE_DIR, ".env"))
 
-JWT_SECRET = os.getenv("JWT_SECRET", "supersecretdevkeyhackbite2026hospitalqueuecare")
+JWT_SECRET = os.getenv("JWT_SECRET")
+if not JWT_SECRET:
+    import logging
+    logging.getLogger("uvicorn.error").warning("⚠️ [Security Warning] JWT_SECRET is unset in environment. Falling back to default development secret.")
+    JWT_SECRET = "healpath_master_secure_jwt_secret_key_2026_gcoey_hackbite"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 12
 

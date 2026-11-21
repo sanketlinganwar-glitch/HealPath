@@ -18,18 +18,24 @@ DEPARTMENTS_DATA = [
 ]
 
 DOCTORS_DATA = [
-    # General Medicine
-    {"name": "Dr. Rajesh Sharma", "dept_code": "G", "specialization": "General Physician", "room": "Room 101", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "17:00"},
+    # General Medicine / Surgery (Sanjeevan Hospital & Multispecialty)
+    {"name": "Dr. Rajesh Sharma", "dept_code": "G", "specialization": "General Physician & Critical Care", "room": "Room 101", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "17:00"},
     {"name": "Dr. Anita Desai", "dept_code": "G", "specialization": "Internal Medicine", "room": "Room 102", "status": "off", "duty_status": "off_duty", "shift_start": "14:00", "shift_end": "20:00"},
+    {"name": "Dr. Sunil M. Agrawal", "dept_code": "G", "specialization": "Chief Surgeon & Laparoscopy Specialist", "room": "Room 1 (Consultant Suite)", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "14:00"},
+    {"name": "Dr. Vijay S. Kawalkar", "dept_code": "G", "specialization": "Senior Consultant Laparoscopic Surgeon", "room": "Room 2 (Surgical OPD)", "status": "available", "duty_status": "available", "shift_start": "11:00", "shift_end": "14:00"},
+    {"name": "Dr. H. S. Bora", "dept_code": "G", "specialization": "MD General Medicine & Critical Care", "room": "Room 3 (Medicine Wing)", "status": "available", "duty_status": "available", "shift_start": "10:30", "shift_end": "14:30"},
+    {"name": "Dr. Vinay Pande", "dept_code": "G", "specialization": "Chest & Pulmonary Critical Care", "room": "Room 4 (Chest Clinic)", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "14:00"},
     # Cardiology
     {"name": "Dr. Meera Kulkarni", "dept_code": "C", "specialization": "Cardiologist", "room": "Room 201", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "16:00"},
     {"name": "Dr. Vikram Malhotra", "dept_code": "C", "specialization": "Cardiac Surgeon", "room": "Room 202", "status": "off", "duty_status": "off_duty", "shift_start": "11:00", "shift_end": "19:00"},
-    # Orthopedics
+    # Orthopedics & Diagnostic Imaging
     {"name": "Dr. Suresh Patil", "dept_code": "O", "specialization": "Orthopedic Surgeon", "room": "Room 301", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "17:00"},
     {"name": "Dr. Sunita Rao", "dept_code": "O", "specialization": "Spine Specialist", "room": "Room 302", "status": "off", "duty_status": "off_duty", "shift_start": "10:00", "shift_end": "18:00"},
-    # Pediatrics
+    {"name": "Dr. Lalit Paldiwal", "dept_code": "O", "specialization": "MD Radiology & Sonography", "room": "Room 6 (Imaging Suite)", "status": "available", "duty_status": "available", "shift_start": "09:30", "shift_end": "13:30"},
+    # Pediatrics & Maternal Care
     {"name": "Dr. Priya Nair", "dept_code": "P", "specialization": "Pediatrician", "room": "Room 401", "status": "available", "duty_status": "available", "shift_start": "08:30", "shift_end": "15:30"},
     {"name": "Dr. Amit Verma", "dept_code": "P", "specialization": "Neonatologist", "room": "Room 402", "status": "off", "duty_status": "off_duty", "shift_start": "13:00", "shift_end": "21:00"},
+    {"name": "Dr. Sheetal S. Agrawal", "dept_code": "P", "specialization": "MD Obstetrics & Gynecology", "room": "Room 5 (Women Clinic)", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "14:00"},
     # ENT
     {"name": "Dr. Rohan Joshi", "dept_code": "E", "specialization": "ENT Specialist", "room": "Room 501", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "18:00"},
     {"name": "Dr. Kavita Iyer", "dept_code": "E", "specialization": "Head & Neck Surgeon", "room": "Room 502", "status": "off", "duty_status": "off_duty", "shift_start": "12:00", "shift_end": "19:00"},

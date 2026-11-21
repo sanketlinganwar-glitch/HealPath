@@ -4,6 +4,16 @@ import { getDisplay } from '../api/client';
 import { usePolling } from '../hooks/usePolling';
 import { useLanguage } from '../context/LanguageContext';
 
+// Mask patient names for public hospital TV display privacy (HIPAA / Patient Data Protection)
+function maskPatientName(name) {
+  if (!name || typeof name !== 'string') return null;
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) {
+    return parts[0].length > 2 ? `${parts[0].slice(0, 2)}***` : `${parts[0]}*`;
+  }
+  return `${parts[0]} ${parts[parts.length - 1].charAt(0)}***`;
+}
+
 export function DisplayBoard() {
   const [displayData, setDisplayData] = useState([]);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -93,11 +103,12 @@ export function DisplayBoard() {
   // Build announcement phrasing in English, Hindi, or Marathi
   const buildAnnouncementText = useCallback((item, currentLang) => {
     const { tokenNumber, patientName, doctorName, room } = item;
+    const maskedName = maskPatientName(patientName);
 
     if (currentLang === 'hi') {
       let msg = `टोकन नंबर ${tokenNumber}. `;
-      if (patientName) {
-        msg += `मरीज ${patientName}. `;
+      if (maskedName) {
+        msg += `मरीज ${maskedName}. `;
       }
       if (doctorName && room) {
         msg += `कृपया ${room} में ${doctorName} के पास जाएं।`;
@@ -113,8 +124,8 @@ export function DisplayBoard() {
 
     if (currentLang === 'mr') {
       let msg = `टोकन क्रमांक ${tokenNumber}. `;
-      if (patientName) {
-        msg += `रुग्ण ${patientName}. `;
+      if (maskedName) {
+        msg += `रुग्ण ${maskedName}. `;
       }
       if (doctorName && room) {
         msg += `कृपया ${room} मध्ये ${doctorName} यांच्याकडे जावे.`;
@@ -130,8 +141,8 @@ export function DisplayBoard() {
 
     // Default: English
     let msg = `Token number ${tokenNumber}. `;
-    if (patientName) {
-      msg += `Patient ${patientName}. `;
+    if (maskedName) {
+      msg += `Patient ${maskedName}. `;
     }
     if (doctorName && room) {
       msg += `Please proceed to ${doctorName} in ${room}.`;
@@ -339,7 +350,7 @@ export function DisplayBoard() {
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping inline-block" />
             <span className="text-xs sm:text-sm font-extrabold text-emerald-300 font-mono">
               🔊 {t('nowCalling')}: {activeAnnouncement.tokenNumber}
-              {activeAnnouncement.patientName && ` (${activeAnnouncement.patientName})`} &rarr;{' '}
+              {activeAnnouncement.patientName && ` (${maskPatientName(activeAnnouncement.patientName)})`} &rarr;{' '}
               {activeAnnouncement.room}
             </span>
           </div>
@@ -488,7 +499,7 @@ export function DisplayBoard() {
                           {srv.doctor_name}
                           {srv.patient_name && (
                             <span className="text-emerald-400/90 font-medium ml-2">
-                              &bull; {srv.patient_name}
+                              &bull; {maskPatientName(srv.patient_name)}
                             </span>
                           )}
                         </div>

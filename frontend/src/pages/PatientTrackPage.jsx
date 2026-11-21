@@ -132,6 +132,14 @@ export function PatientTrackPage() {
       {/* Real-time sync badge */}
       <div className="flex items-center justify-between text-xs text-slate-500 px-1">
         <div className="flex items-center space-x-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="font-semibold text-slate-700">Live Queue Sync Active</span>
+          <span className="text-slate-400">• Updated every 5s</span>
+        </div>
+        <div className="text-[11px] text-slate-400">
+          Token ID: #{tokenData.id}
+        </div>
+      </div>
       {/* Emergency Priority Alert Banner */}
       {tokenData.priority === 'emergency' && (
         <div className="p-4 rounded-2xl bg-rose-50 border-2 border-rose-300 text-rose-900 flex items-start space-x-3 shadow-md">

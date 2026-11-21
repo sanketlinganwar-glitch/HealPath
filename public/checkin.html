@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart OPD QR Check-In | Sanjeevan Hospital (HealPath)</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Maintained HTML5-QRCode Scanner Library -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --primary-navy: #0F3B64;
+      --primary-teal: #14BBA6;
+      --teal-dark: #0D9488;
+      --accent-green: #10B981;
+      --bg-slate: #F8FAFC;
+      --card-white: #FFFFFF;
+      --text-dark: #0F172A;
+      --text-muted: #64748B;
+      --border-color: #E2E8F0;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(15, 59, 100, 0.1), 0 8px 10px -6px rgba(15, 59, 100, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-slate);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Brand Bar */
+    .top-header {
+      background: var(--primary-navy);
+      color: #FFFFFF;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary-teal), #0284C7);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: #FFF;
+      box-shadow: 0 4px 10px rgba(20, 187, 166, 0.3);
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-title span {
+      color: var(--primary-teal);
+    }
+
+    .brand-facility {
+      font-size: 0.75rem;
+      color: #94A3B8;
+      font-weight: 500;
+    }
+
+    /* Container */
+    .main-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .checkin-card {
+      background: var(--card-white);
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      max-width: 500px;
+      width: 100%;
+      overflow: hidden;
+      border-top: 5px solid var(--primary-teal);
+      transition: all 0.3s ease;
+    }
+
+    .card-header {
+      padding: 1.5rem 1.75rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid #F1F5F9;
+    }
+
+    .partner-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #F0FDFA;
+      border: 1px solid #CCFBF1;
+      color: #0F766E;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--primary-navy);
+      letter-spacing: -0.02em;
+    }
+
+    .card-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Navigation Mode Switcher Tabs */
+    .tab-switcher {
+      display: flex;
+      background: #F1F5F9;
+      border-radius: 12px;
+      padding: 0.25rem;
+      margin: 1.25rem 1.75rem 0;
+      gap: 0.25rem;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 0.6rem 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: #FFFFFF;
+      color: var(--primary-navy);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .card-body {
+      padding: 1.5rem 1.75rem;
+    }
+
+    /* States: Loading, Success, Error, Scanner, Manual */
+    .state-panel {
+      display: none;
+      text-align: center;
+    }
+
+    .state-panel.active {
+      display: block;
+    }
+
+    /* Scanner Viewfinder */
+    .scanner-viewfinder-wrap {
+      position: relative;
+      background: #061120;
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      border: 2px solid #CBD5E1;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #reader {
+      width: 100% !important;
+      border: none !important;
+    }
+
+    #reader video {
+      border-radius: 16px;
+      width: 100% !important;
+      height: auto !important;
+      object-fit: cover;
+    }
+
+    .scanner-placeholder {
+      padding: 2.5rem 1.5rem;
+      color: #94A3B8;
+      text-align: center;
+    }
+
+    .scanner-placeholder-icon {
+      font-size: 3.5rem;
+      color: var(--primary-teal);
+      margin-bottom: 0.75rem;
+      opacity: 0.85;
+    }
+
+    /* Camera controls bar */
+    .camera-ctrl-bar {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    /* Loader */
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #E2E8F0;
+      border-top-color: var(--primary-teal);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 1.5rem auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Success state */
+    .success-icon-wrap {
+      width: 72px;
+      height: 72px;
+      background: #DCFCE7;
+      border: 2px solid #86EFAC;
+      color: #16A34A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0.5rem auto 1rem;
+      animation: scaleIn 0.4s ease-out;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .token-badge {
+      background: linear-gradient(135deg, var(--primary-navy), #1E293B);
+      color: #FFFFFF;
+      padding: 1rem;
+      border-radius: 16px;
+      margin: 1.25rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 16px rgba(15, 59, 100, 0.15);
+    }
+
+    .token-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #93C5FD;
+    }
+
+    .token-number {
+      font-size: 2.75rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      font-family: monospace;
+      color: var(--primary-teal);
+      margin: 0.25rem 0;
+    }
+
+    .token-room {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(20, 187, 166, 0.2);
+      border: 1px solid rgba(20, 187, 166, 0.4);
+      color: #A7F3D0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+    }
+
+    .details-grid {
+      background: #F8FAFC;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      border-bottom: 1px dashed #E2E8F0;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .detail-val {
+      color: var(--text-dark);
+      font-weight: 700;
+    }
+
+    /* Warning / Error icons */
+    .alert-icon-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0.5rem auto 1rem;
+    }
+
+    .alert-icon-wrap.error {
+      background: #FEE2E2;
+      border: 2px solid #FCA5A5;
+      color: #DC2626;
+    }
+
+    .alert-icon-wrap.warning {
+      background: #FEF3C7;
+      border: 2px solid #FCD34D;
+      color: #D97706;
+    }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.85rem 1.25rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--primary-teal);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(20, 187, 166, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--teal-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #F1F5F9;
+      color: var(--text-dark);
+      border: 1px solid #CBD5E1;
+    }
+
+    .btn-secondary:hover {
+      background: #E2E8F0;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+      width: auto;
+    }
+
+    /* Manual Form */
+    .form-group {
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary-teal);
+      box-shadow: 0 0 0 3px rgba(20, 187, 166, 0.15);
+    }
+
+    /* Footer */
+    .footer-note {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-note strong {
+      color: var(--primary-navy);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Header -->
+  <header class="top-header">
+    <a href="/" class="brand-wrap">
+      <div class="brand-logo-icon">
+        <i class="fa-solid fa-hospital"></i>
+      </div>
+      <div>
+        <div class="brand-title">Heal<span>Path</span></div>
+        <div class="brand-facility">Sanjeevan Hospital • Yavatmal 445001</div>
+      </div>
+    </a>
+    <div style="font-size: 0.8rem; font-weight: 600; color: #38BDF8;">
+      <i class="fa-solid fa-qrcode mr-1"></i> QR Arrival Kiosk
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-wrap">
+    <div class="checkin-card">
+      <div class="card-header">
+        <div class="partner-pill">
+          <i class="fa-solid fa-circle-check"></i> Verified OPD Arrival Gate
+        </div>
+        <h1 class="card-title">Hospital Arrival Check-In</h1>
+        <p class="card-subtitle">Self-service arrival confirmation for outpatients</p>
+      </div>
+
+      <!-- Mode Switcher Tabs -->
+      <div id="modeTabs" class="tab-switcher">
+        <button id="tabScanner" type="button" class="tab-btn active" onclick="switchMode('scanner')">
+          <i class="fa-solid fa-camera"></i> Camera Scanner
+        </button>
+        <button id="tabManual" type="button" class="tab-btn" onclick="switchMode('manual')">
+          <i class="fa-solid fa-keyboard"></i> Manual Token
+        </button>
+      </div>
+
+      <div class="card-body">
+        
+        <!-- 1. CAMERA SCANNER PANEL -->
+        <div id="scannerState" class="state-panel active">
+          <div class="scanner-viewfinder-wrap">
+            <div id="scannerPlaceholder" class="scanner-placeholder">
+              <div class="scanner-placeholder-icon">
+                <i class="fa-solid fa-qrcode"></i>
+              </div>
+              <h3 style="font-size: 1rem; font-weight: 700; color: #F1F5F9;">Scan Appointment Pass</h3>
+              <p style="font-size: 0.8rem; color: #94A3B8; margin-top: 0.25rem;">
+                Hold your digital QR pass steadily in front of the camera.
+              </p>
+            </div>
+            <div id="reader"></div>
+          </div>
+
+          <!-- Camera Controls -->
+          <div class="camera-ctrl-bar">
+            <button id="startScanBtn" type="button" class="btn btn-primary btn-sm" onclick="startScanner()">
+              <i class="fa-solid fa-video"></i> Start Camera Scanner
+            </button>
+            <button id="stopScanBtn" type="button" class="btn btn-secondary btn-sm" style="display: none;" onclick="stopScanner()">
+              <i class="fa-solid fa-stop"></i> Pause Camera
+            </button>
+            <button id="switchCamBtn" type="button" class="btn btn-secondary btn-sm" style="display: none;" onclick="switchCamera()">
+              <i class="fa-solid fa-repeat"></i> Flip Cam
+            </button>
+          </div>
+
+          <div id="scannerAlert" style="font-size: 0.8rem; color: var(--text-muted); min-height: 1.5rem;">
+            Ensure adequate lighting and camera permissions are allowed.
+          </div>
+        </div>
+
+        <!-- 2. LOADING STATE -->
+        <div id="loadingState" class="state-panel">
+          <div class="spinner"></div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary-navy);">Verifying Digital Pass...</h3>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+            Confirming your cryptographic token signature with hospital queue engine.
+          </p>
+        </div>
+
+        <!-- 3. SUCCESS STATE -->
+        <div id="successState" class="state-panel">
+          <div class="success-icon-wrap">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <h2 style="font-size: 1.3rem; font-weight: 800; color: #16A34A;">Checked In Successfully!</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+            Your arrival is confirmed. The 10-minute auto-shift timer is stopped.
+          </p>
+
+          <div class="token-badge">
+            <div class="token-label">Your Live OPD Token</div>
+            <div id="resTokenNumber" class="token-number">---</div>
+            <div class="token-room">
+              <i class="fa-solid fa-door-open"></i>
+              <span id="resRoom">Proceed to Assigned Room</span>
+            </div>
+          </div>
+
+          <div class="details-grid">
+            <div class="detail-row">
+              <span class="detail-label">Patient Name</span>
+              <span id="resPatientName" class="detail-val">---</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Consulting Doctor</span>
+              <span id="resDoctor" class="detail-val">---</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Department</span>
+              <span id="resDepartment" class="detail-val">---</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Scheduled Slot</span>
+              <span id="resSlot" class="detail-val">---</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Queue Status</span>
+              <span class="detail-val" style="color: var(--accent-green);">In Waiting Line</span>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <a href="/queue.html" class="btn btn-primary">
+              <i class="fa-solid fa-tv"></i> View Live Queue TV Board
+            </a>
+            <button type="button" onclick="resetToScan()" class="btn btn-secondary">
+              <i class="fa-solid fa-qrcode"></i> Scan Another Pass
+            </button>
+          </div>
+        </div>
+
+        <!-- 4. ALREADY CHECKED IN STATE -->
+        <div id="alreadyCheckedInState" class="state-panel">
+          <div class="alert-icon-wrap warning">
+            <i class="fa-solid fa-user-check"></i>
+          </div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: #B45309;">Already Checked In!</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.35rem 0 1.25rem;">
+            You have already checked in for this turn. Please take a seat in the waiting lobby.
+          </p>
+          <div class="btn-group">
+            <a href="/queue.html" class="btn btn-primary">
+              <i class="fa-solid fa-tv"></i> Monitor Live Queue Board
+            </a>
+            <button type="button" onclick="resetToScan()" class="btn btn-secondary">Scan Another</button>
+          </div>
+        </div>
+
+        <!-- 5. MISSED / CANCELLED STATE -->
+        <div id="missedState" class="state-panel">
+          <div class="alert-icon-wrap error">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </div>
+          <h2 id="missedTitle" style="font-size: 1.25rem; font-weight: 800; color: #DC2626;">Slot Has Expired</h2>
+          <p id="missedDesc" style="font-size: 0.85rem; color: var(--text-muted); margin: 0.35rem 0 1.25rem;">
+            This appointment slot was missed or cancelled past the grace window. Please see the reception desk to reschedule.
+          </p>
+          <div class="btn-group">
+            <a href="/booking.html" class="btn btn-primary">
+              <i class="fa-solid fa-calendar-plus"></i> Book Next Available Slot
+            </a>
+            <button type="button" onclick="resetToScan()" class="btn btn-secondary">Return to Scanner</button>
+          </div>
+        </div>
+
+        <!-- 6. ERROR / INVALID QR STATE -->
+        <div id="errorState" class="state-panel">
+          <div class="alert-icon-wrap error">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: #DC2626;">Verification Failed</h2>
+          <p id="errorMsg" style="font-size: 0.85rem; color: var(--text-muted); margin: 0.35rem 0 1.25rem;">
+            Invalid or expired QR pass signature.
+          </p>
+          <div class="btn-group">
+            <button type="button" onclick="resetToScan()" class="btn btn-primary">
+              <i class="fa-solid fa-rotate-left"></i> Try Scanning Again
+            </button>
+            <button type="button" onclick="switchMode('manual')" class="btn btn-secondary">
+              <i class="fa-solid fa-keyboard"></i> Check-in Manually
+            </button>
+          </div>
+        </div>
+
+        <!-- 7. MANUAL CHECK-IN FORM -->
+        <div id="manualState" class="state-panel">
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+            Enter your token number or registered mobile phone to confirm your hospital arrival.
+          </p>
+          <form id="manualForm" onsubmit="handleManualSubmit(event)">
+            <div class="form-group">
+              <label class="form-label" for="manualToken">Token Number (e.g. CARD-001 or SANJ-101) *</label>
+              <input type="text" id="manualToken" class="form-input" placeholder="e.g. SANJ-101" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="manualPhone">Registered Phone (Last 10 Digits)</label>
+              <input type="tel" id="manualPhone" class="form-input" placeholder="e.g. 9876543210" maxlength="15">
+            </div>
+            <div class="btn-group">
+              <button type="submit" id="manualBtn" class="btn btn-primary">
+                <i class="fa-solid fa-check-circle"></i> Confirm Arrival Now
+              </button>
+              <button type="button" onclick="switchMode('scanner')" class="btn btn-secondary">
+                <i class="fa-solid fa-camera"></i> Use QR Camera Scanner
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer-note">
+    <strong>HealPath Smart Care</strong> • Integrated with Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal 445001 • Helpline: +91 95526 25262
+  </footer>
+
+  <script>
+    let html5QrCode = null;
+    let isScannerRunning = false;
+    let currentFacingMode = "environment"; // Prefer rear environment camera
+
+    // Audio chime upon successful scan
+    function playBeep() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime); // A5 note
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.2);
+      } catch (e) {
+        // Fallback: silent if Web Audio unavailable
+      }
+    }
+
+    // Switch between Scanner Mode & Manual Mode
+    function switchMode(mode) {
+      document.getElementById('tabScanner').classList.toggle('active', mode === 'scanner');
+      document.getElementById('tabManual').classList.toggle('active', mode === 'manual');
+
+      if (mode === 'scanner') {
+        showState('scannerState');
+      } else {
+        stopScanner();
+        showState('manualState');
+      }
+    }
+
+    function showState(stateId) {
+      document.querySelectorAll('.state-panel').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(stateId);
+      if (target) target.classList.add('active');
+
+      // Hide tabs when showing success, error, or loading states
+      const isResultState = ['successState', 'alreadyCheckedInState', 'missedState', 'errorState', 'loadingState'].includes(stateId);
+      document.getElementById('modeTabs').style.display = isResultState ? 'none' : 'flex';
+    }
+
+    function resetToScan() {
+      document.getElementById('modeTabs').style.display = 'flex';
+      switchMode('scanner');
+      startScanner();
+    }
+
+    // Camera Scanner Lifecycle
+    async function startScanner() {
+      const placeholder = document.getElementById('scannerPlaceholder');
+      const startBtn = document.getElementById('startScanBtn');
+      const stopBtn = document.getElementById('stopScanBtn');
+      const switchBtn = document.getElementById('switchCamBtn');
+      const alertBox = document.getElementById('scannerAlert');
+
+      if (isScannerRunning) return;
+
+      try {
+        if (!html5QrCode) {
+          html5QrCode = new Html5Qrcode("reader");
+        }
+
+        placeholder.style.display = 'none';
+        alertBox.textContent = "Camera active. Center the QR pass in the frame.";
+
+        await html5QrCode.start(
+          { facingMode: currentFacingMode },
+          {
+            fps: 10,
+            qrbox: { width: 250, height: 250 }
+          },
+          (decodedText) => {
+            onQrCodeDetected(decodedText);
+          },
+          (errorMessage) => {
+            // Frame parse error (common while searching for QR)
+          }
+        );
+
+        isScannerRunning = true;
+        startBtn.style.display = 'none';
+        stopBtn.style.display = 'inline-flex';
+        switchBtn.style.display = 'inline-flex';
+      } catch (err) {
+        console.error("Camera access error:", err);
+        placeholder.style.display = 'block';
+        alertBox.innerHTML = "<span style='color: #DC2626;'>Camera access denied or unavailable. Please use Manual Token Entry.</span>";
+        startBtn.style.display = 'inline-flex';
+        stopBtn.style.display = 'none';
+        switchBtn.style.display = 'none';
+        isScannerRunning = false;
+      }
+    }
+
+    async function stopScanner() {
+      if (html5QrCode && isScannerRunning) {
+        try {
+          await html5QrCode.stop();
+        } catch (e) {
+          console.warn("Error stopping scanner:", e);
+        }
+        isScannerRunning = false;
+        document.getElementById('startScanBtn').style.display = 'inline-flex';
+        document.getElementById('stopScanBtn').style.display = 'none';
+        document.getElementById('switchCamBtn').style.display = 'none';
+        document.getElementById('scannerPlaceholder').style.display = 'block';
+      }
+    }
+
+    async function switchCamera() {
+      await stopScanner();
+      currentFacingMode = (currentFacingMode === "environment") ? "user" : "environment";
+      await startScanner();
+    }
+
+    // QR Code Detection & Token Parsing
+    async function onQrCodeDetected(decodedText) {
+      playBeep();
+      await stopScanner();
+
+      showState('loadingState');
+
+      let token = null;
+      let sig = null;
+
+      try {
+        // Format 1: Full or Relative URL (/checkin.html?token=...&sig=...)
+        if (decodedText.includes('?') && (decodedText.includes('token=') || decodedText.includes('sig='))) {
+          const urlObj = new URL(decodedText, window.location.origin);
+          token = urlObj.searchParams.get('token');
+          sig = urlObj.searchParams.get('sig');
+        }
+        // Format 2: JSON payload {"token": "...", "sig": "..."}
+        else if (decodedText.startsWith('{') && decodedText.endsWith('}')) {
+          const parsed = JSON.parse(decodedText);
+          token = parsed.token || parsed.token_no;
+          sig = parsed.sig || parsed.signature;
+        }
+        // Format 3: Raw Token string
+        else {
+          token = decodedText.trim();
+        }
+      } catch (e) {
+        token = decodedText.trim();
+      }
+
+      if (token && sig) {
+        verifySelfCheckIn(token, sig);
+      } else if (token) {
+        // Fallback to manual verify if QR lacks HMAC signature
+        verifyManualCheckIn(token, null);
+      } else {
+        document.getElementById('errorMsg').textContent = "Unrecognized QR code format. Please present a valid hospital pass.";
+        showState('errorState');
+      }
+    }
+
+    // Server-side verification dispatch
+    async function verifySelfCheckIn(token, sig) {
+      try {
+        const res = await fetch('/api/checkin/self-verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token, sig })
+        });
+
+        const data = await res.json();
+
+        if (res.status === 200) {
+          populateSuccess(data);
+          showState('successState');
+        } else if (res.status === 409) {
+          showState('alreadyCheckedInState');
+        } else if (res.status === 410) {
+          document.getElementById('missedTitle').textContent = 'Appointment Missed';
+          document.getElementById('missedDesc').textContent = data.message || 'Slot grace period has elapsed. Please see reception.';
+          showState('missedState');
+        } else {
+          document.getElementById('errorMsg').textContent = data.message || 'Invalid or tampered QR pass signature.';
+          showState('errorState');
+        }
+      } catch (err) {
+        document.getElementById('errorMsg').textContent = 'Network error connecting to hospital server. Please try again.';
+        showState('errorState');
+      }
+    }
+
+    async function verifyManualCheckIn(token, phone) {
+      try {
+        const res = await fetch('/api/checkin/manual-verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token, phone })
+        });
+
+        const data = await res.json();
+
+        if (res.status === 200) {
+          populateSuccess(data);
+          showState('successState');
+        } else if (res.status === 409) {
+          showState('alreadyCheckedInState');
+        } else if (res.status === 410) {
+          showState('missedState');
+        } else {
+          document.getElementById('errorMsg').textContent = data.message || 'Verification failed for this token.';
+          showState('errorState');
+        }
+      } catch (err) {
+        document.getElementById('errorMsg').textContent = 'Network error. Please try again or visit reception.';
+        showState('errorState');
+      }
+    }
+
+    function populateSuccess(data) {
+      const p = data.patient || {};
+      document.getElementById('resTokenNumber').textContent = p.token || data.token || 'CONFIRMED';
+      document.getElementById('resPatientName').textContent = p.name || 'Outpatient';
+      document.getElementById('resDoctor').textContent = p.doctor || 'Attending Specialist';
+      document.getElementById('resDepartment').textContent = p.department || 'General OPD';
+      document.getElementById('resRoom').textContent = `Proceed to ${p.room || 'Room 101'}`;
+      document.getElementById('resSlot').textContent = `${p.date || 'Today'} at ${p.time || 'Scheduled Slot'}`;
+    }
+
+    async function handleManualSubmit(e) {
+      e.preventDefault();
+      const token = document.getElementById('manualToken').value.trim();
+      const phone = document.getElementById('manualPhone').value.trim();
+      const btn = document.getElementById('manualBtn');
+
+      if (!token) return;
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking In...';
+
+      try {
+        await verifyManualCheckIn(token, phone);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> Confirm Arrival Now';
+      }
+    }
+
+    // Auto verification on page load if ?token=...&sig=... in URL
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      const sig = urlParams.get('sig');
+
+      if (token && sig) {
+        showState('loadingState');
+        verifySelfCheckIn(token, sig);
+      } else {
+        // Start in scanner mode by default
+        switchMode('scanner');
+      }
+    });
+  </script>
+</body>
+</html>

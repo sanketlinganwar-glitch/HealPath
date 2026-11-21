@@ -4,7 +4,10 @@ import jwt from 'jsonwebtoken';
 import db from '../database/db.js';
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'medicare-super-secret-jwt-key-2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'healpath_master_secure_jwt_secret_key_2026_gcoey_hackbite';
+if (!process.env.JWT_SECRET) {
+  console.warn('⚠️ [Security Warning] JWT_SECRET is not set in environment. Using development secret.');
+}
 
 // Middleware to authenticate JWT token
 export function authenticateToken(req, res, next) {

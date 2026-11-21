@@ -166,20 +166,160 @@ router.get('/qr/:id', async (req, res) => {
 });
 
 /**
+ * Core Arrival Verification Logic
+ */
+async function processArrivalCheckIn(cleanToken, io) {
+  // 1. Lookup appointment by token
+  const appt = db.store.data.appointments.find(
+    a => a.token_no && a.token_no.toUpperCase() === cleanToken.toUpperCase()
+  );
+
+  if (!appt) {
+    return { status: 404, data: { success: false, message: 'Unknown token: appointment not found for this pass' } };
+  }
+
+  // 2. Check if slot is missed or cancelled
+  if (appt.status === 'missed' || appt.status === 'cancelled') {
+    return {
+      status: 410,
+      data: {
+        success: false,
+        message: `Appointment slot has been ${appt.status}. Please visit reception to reschedule your turn.`
+      }
+    };
+  }
+
+  // 3. Check if appointment is in pending_payment status
+  if (appt.status === 'pending_payment') {
+    return {
+      status: 400,
+      data: {
+        success: false,
+        message: 'Cannot check in: online payment for this appointment is still pending.'
+      }
+    };
+  }
+
+  // 4. Check if already checked in
+  if (appt.checked_in || appt.status === 'checked_in' || appt.status === 'in_consultation' || appt.status === 'completed') {
+    return {
+      status: 409,
+      data: {
+        success: false,
+        message: 'Patient is already checked in and in the consultation queue.'
+      }
+    };
+  }
+
+  // 5. Execute check-in logic (halts 10-minute missed-slot countdown)
+  const updated = await queueService.checkInAppointment(appt.id, io);
+  const doctor = db.store.data.doctors.find(d => d.id === appt.doctor_id);
+  const department = doctor ? db.store.data.departments.find(dp => dp.id === doctor.department_id) : null;
+
+  // 6. Emit Socket.io event "patient:checkedin"
+  if (io) {
+    io.emit('patient:checkedin', {
+      appointmentId: appt.id,
+      token: appt.token_no,
+      tokenNo: appt.token_no,
+      patientName: appt.patient_name,
+      doctorName: doctor ? doctor.name : 'Doctor',
+      departmentName: department ? department.name : 'General',
+      roomNo: doctor ? doctor.room_no : '101',
+      time: appt.time,
+      date: appt.date,
+      checkedInAt: new Date().toISOString()
+    });
+  }
+
+  return {
+    status: 200,
+    data: {
+      success: true,
+      message: 'Patient successfully checked in! Arrival confirmed and timer halted.',
+      token: appt.token_no,
+      appointment: updated,
+      patient: {
+        name: appt.patient_name,
+        token: appt.token_no,
+        doctor: doctor ? doctor.name : 'Doctor',
+        department: department ? department.name : 'General OPD',
+        room: doctor ? doctor.room_no : '101',
+        time: appt.time,
+        date: appt.date
+      }
+    }
+  };
+}
+
+/**
+ * POST /api/checkin/self-verify
+ * Public endpoint for QR-code scanner (kiosk or patient mobile camera)
+ * Validates HMAC signature without requiring receptionist login.
+ */
+router.post('/self-verify', async (req, res) => {
+  try {
+    const { token, sig } = req.body;
+    if (!token || !sig) {
+      return res.status(400).json({ success: false, message: 'Token and cryptographic signature are required' });
+    }
+
+    const cleanToken = token.toString().trim();
+    const cleanSig = sig.toString().trim();
+
+    if (!verifyTokenSignature(cleanToken, cleanSig)) {
+      return res.status(400).json({ success: false, message: 'Invalid or tampered QR pass signature' });
+    }
+
+    const result = await processArrivalCheckIn(cleanToken, req.app.get('io'));
+    return res.status(result.status).json(result.data);
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+/**
+ * POST /api/checkin/manual-verify
+ * Manual verification fallback by Token Number and optional phone.
+ */
+router.post('/manual-verify', async (req, res) => {
+  try {
+    const { token, phone } = req.body;
+    if (!token) {
+      return res.status(400).json({ success: false, message: 'Token number is required' });
+    }
+
+    const cleanToken = token.toString().trim().toUpperCase();
+    const appt = db.store.data.appointments.find(
+      a => a.token_no && a.token_no.toUpperCase() === cleanToken
+    );
+
+    if (!appt) {
+      return res.status(404).json({ success: false, message: 'No appointment found matching token number: ' + cleanToken });
+    }
+
+    if (phone) {
+      const cleanPhone = phone.replace(/\D/g, '').slice(-10);
+      const apptPhone = (appt.whatsapp_no || '').replace(/\D/g, '').slice(-10);
+      if (cleanPhone && apptPhone && cleanPhone !== apptPhone) {
+        return res.status(400).json({ success: false, message: 'Mobile number does not match registered token records.' });
+      }
+    }
+
+    const result = await processArrivalCheckIn(cleanToken, req.app.get('io'));
+    return res.status(result.status).json(result.data);
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+/**
  * POST /api/checkin/scan
- * Body: { token, sig }
- * Status codes:
- * - 400: Invalid signature or missing parameters
- * - 404: Unknown token
- * - 409: Already checked in
- * - 410: Slot is missed or cancelled
- * - 200: Successfully checked in
- * Restricts to receptionist and admin roles via JWT
+ * Staff / Reception barcode scanner check-in with JWT protection.
  */
 router.post('/scan', authenticateToken, authorizeRole('receptionist', 'admin'), async (req, res) => {
   try {
     const { token, sig } = req.body;
-
     if (!token || !sig) {
       return res.status(400).json({
         success: false,
@@ -198,78 +338,8 @@ router.post('/scan', authenticateToken, authorizeRole('receptionist', 'admin'), 
       });
     }
 
-    // 2. Lookup appointment by token
-    const appt = db.store.data.appointments.find(
-      a => a.token_no && a.token_no.toUpperCase() === cleanToken.toUpperCase()
-    );
-
-    if (!appt) {
-      return res.status(404).json({
-        success: false,
-        message: 'Unknown token: appointment not found'
-      });
-    }
-
-    // 3. Check if slot is missed or cancelled
-    if (appt.status === 'missed' || appt.status === 'cancelled') {
-      return res.status(410).json({
-        success: false,
-        message: `Appointment slot has been ${appt.status}. Please visit reception to reschedule.`
-      });
-    }
-
-    // 3b. Check if appointment is in pending_payment status
-    if (appt.status === 'pending_payment') {
-      return res.status(400).json({
-        success: false,
-        message: 'Cannot check in: online payment for this appointment is still pending.'
-      });
-    }
-
-    // 4. Check if already checked in
-    if (appt.checked_in || appt.status === 'checked_in' || appt.status === 'in_consultation' || appt.status === 'completed') {
-      return res.status(409).json({
-        success: false,
-        message: 'Patient is already checked in'
-      });
-    }
-
-    // 5. Execute check-in logic (stops the 10-minute missed-slot timer)
-    const io = req.app.get('io');
-    const updated = await queueService.checkInAppointment(appt.id, io);
-
-    const doctor = db.store.data.doctors.find(d => d.id === appt.doctor_id);
-    const department = doctor ? db.store.data.departments.find(dp => dp.id === doctor.department_id) : null;
-
-    // 6. Emit Socket.io event "patient:checkedin"
-    if (io) {
-      io.emit('patient:checkedin', {
-        appointmentId: appt.id,
-        token: appt.token_no,
-        tokenNo: appt.token_no,
-        patientName: appt.patient_name,
-        doctorName: doctor ? doctor.name : 'Doctor',
-        departmentName: department ? department.name : 'General',
-        roomNo: doctor ? doctor.room_no : '101',
-        time: appt.time,
-        date: appt.date,
-        checkedInAt: new Date().toISOString()
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: 'Patient successfully checked in! Timer stopped.',
-      appointment: updated,
-      patient: {
-        name: appt.patient_name,
-        token: appt.token_no,
-        doctor: doctor ? doctor.name : 'Doctor',
-        room: doctor ? doctor.room_no : '101',
-        time: appt.time,
-        date: appt.date
-      }
-    });
+    const result = await processArrivalCheckIn(cleanToken, req.app.get('io'));
+    return res.status(result.status).json(result.data);
   } catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }

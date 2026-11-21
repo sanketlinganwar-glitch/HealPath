@@ -115,6 +115,14 @@ app.get('*', (req, res, next) => {
   res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
+// Startup configuration check
+if (!process.env.JWT_SECRET) {
+  console.warn('⚠️ [Config] JWT_SECRET not set in environment. Loaded development secret.');
+}
+if (!process.env.QR_SECRET) {
+  console.warn('⚠️ [Config] QR_SECRET not set in environment. Loaded default QR HMAC key.');
+}
+
 // Start Server with Port Fallback
 const DEFAULT_PORT = Number(process.env.PORT) || 3000;
 
@@ -131,6 +139,7 @@ function startServer(port) {
 🚀 Server running live at: http://localhost:${port}
 🌐 Public Portal:         http://localhost:${port}/index.html
 📅 Slot Booking:          http://localhost:${port}/booking.html
+📱 QR Self Check-In:      http://localhost:${port}/checkin.html
 📺 Live Hospital Queue:    http://localhost:${port}/queue.html
 📊 Role Dashboards:       http://localhost:${port}/dashboard.html
 💬 FAQ & Voice Assistant: Available on all pages (bottom right)

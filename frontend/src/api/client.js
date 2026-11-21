@@ -97,12 +97,22 @@ export const checkInAppointment = (id) => api.post(`/api/appointments/${id}/chec
 
 // --- Feature 4: Emergency Patient Priority APIs ---
 export const flagEmergency = (tokenId, reason) => api.post(`/api/tokens/${tokenId}/emergency-flag`, { reason }).then(r => r.data);
-export const verifyEmergency = (tokenId, action, clinicalNotes) => api.post(`/api/tokens/${tokenId}/emergency-verify`, { action, clinical_notes: clinicalNotes }).then(r => r.data);
+export const verifyEmergency = (tokenIdOrPayload, actionOrUndefined, clinicalNotes) => {
+  if (typeof tokenIdOrPayload === 'object' && tokenIdOrPayload !== null) {
+    const { token_id, verified, action, clinical_notes } = tokenIdOrPayload;
+    const finalAction = action || (verified ? 'verify_emergency' : 'downgrade_normal');
+    const notes = clinical_notes || 'Clinically evaluated by attending physician.';
+    return api.post(`/api/tokens/${token_id}/emergency-verify`, { action: finalAction, clinical_notes: notes }).then(r => r.data);
+  }
+  return api.post(`/api/tokens/${tokenIdOrPayload}/emergency-verify`, { action: actionOrUndefined, clinical_notes: clinicalNotes || 'Clinically evaluated by attending physician.' }).then(r => r.data);
+};
+export const verifyEmergencyToken = verifyEmergency;
 export const getEmergencyAudit = (tokenId) => api.get(`/api/tokens/${tokenId}/emergency-audit`).then(r => r.data);
 
 // --- Feature 10: Digital Prescription Management APIs ---
 export const createPrescription = (data) => api.post('/api/prescriptions', data).then(r => r.data);
 export const getPrescriptionForToken = (tokenId) => api.get(`/api/prescriptions/token/${tokenId}`).then(r => r.data);
+export const getPrescriptionByToken = getPrescriptionForToken;
 export const getPrescriptionById = (id) => api.get(`/api/prescriptions/${id}`).then(r => r.data);
 
 // --- Feature 9: Patient Feedback and Ratings APIs ---
@@ -110,7 +120,13 @@ export const submitFeedback = (data) => api.post('/api/feedback', data).then(r =
 export const getFeedbackSummary = (deptId) => api.get('/api/feedback/summary', { params: { department_id: deptId } }).then(r => r.data);
 
 // --- Feature 7: Doctor Availability and Duty Roster APIs ---
-export const updateDoctorRoster = (doctorId, data) => api.patch(`/api/doctors/${doctorId}/roster`, data).then(r => r.data);
+export const updateDoctorRoster = (doctorIdOrPayload, dataOrUndefined) => {
+  if (typeof doctorIdOrPayload === 'object' && doctorIdOrPayload !== null) {
+    const { doctor_id, ...rest } = doctorIdOrPayload;
+    return api.patch(`/api/doctors/${doctor_id}/roster`, rest).then(r => r.data);
+  }
+  return api.patch(`/api/doctors/${doctorIdOrPayload}/roster`, dataOrUndefined).then(r => r.data);
+};
 export const reassignDoctorQueue = (doctorId, targetDoctorId) => api.post(`/api/doctors/${doctorId}/reassign-queue`, null, { params: { target_doctor_id: targetDoctorId } }).then(r => r.data);
 
 // --- Feature 5 & 2: Advanced Hospital Analytics & Notification Logs ---

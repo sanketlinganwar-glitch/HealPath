@@ -310,6 +310,106 @@ export async function seedDatabase(force = false) {
     },
     {
       id: 5,
+      name: 'Dr. Meera Kulkarni',
+      email: 'doctor.kulkarni@medicare.com',
+      phone: '+919876543214',
+      password_hash: doctorPass,
+      role: 'doctor',
+      doctor_id: 3,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 6,
+      name: 'Dr. Suresh Patil',
+      email: 'doctor.patil@medicare.com',
+      phone: '+919876543215',
+      password_hash: doctorPass,
+      role: 'doctor',
+      doctor_id: 4,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 7,
+      name: 'Dr. Vikram Malhotra',
+      email: 'doctor.malhotra@medicare.com',
+      phone: '+919876543216',
+      password_hash: doctorPass,
+      role: 'doctor',
+      doctor_id: 5,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 8,
+      name: 'Dr. Sunita Rao',
+      email: 'doctor.rao@medicare.com',
+      phone: '+919876543217',
+      password_hash: doctorPass,
+      role: 'doctor',
+      doctor_id: 6,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 9,
+      name: 'Dr. Sunil M. Agrawal',
+      email: 'doctor.agrawal@medicare.com',
+      phone: '+919552625262',
+      password_hash: doctorPass,
+      role: 'doctor',
+      doctor_id: 101,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 10,
+      name: 'Dr. Vijay S. Kawalkar',
+      email: 'doctor.kawalkar@medicare.com',
+      phone: '+919834287792',
+      password_hash: doctorPass,
+      role: 'doctor',
+      doctor_id: 102,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 11,
+      name: 'Dr. H. S. Bora',
+      email: 'doctor.bora@medicare.com',
+      phone: '+919822334411',
+      password_hash: doctorPass,
+      role: 'doctor',
+      doctor_id: 103,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 12,
+      name: 'Dr. Vinay Pande',
+      email: 'doctor.pande@medicare.com',
+      phone: '+919822334422',
+      password_hash: doctorPass,
+      role: 'doctor',
+      doctor_id: 104,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 13,
+      name: 'Dr. Sheetal S. Agrawal',
+      email: 'doctor.sheetal@medicare.com',
+      phone: '+919822334433',
+      password_hash: doctorPass,
+      role: 'doctor',
+      doctor_id: 105,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 14,
+      name: 'Dr. Lalit Paldiwal',
+      email: 'doctor.paldiwal@medicare.com',
+      phone: '+919822334444',
+      password_hash: doctorPass,
+      role: 'doctor',
+      doctor_id: 106,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 15,
       name: 'Rohan Gupta',
       email: 'patient@medicare.com',
       phone: '+919823011111',

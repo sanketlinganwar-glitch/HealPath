@@ -14,6 +14,21 @@ from backend.db import engine, Base, SessionLocal, migrate_db
 from backend.seed import seed_database
 from backend.routers import auth, public, tokens, staff, ai, demo, appointments, prescriptions, feedback
 
+def validate_security_config():
+    import logging
+    log = logging.getLogger("uvicorn.info")
+    jwt_sec = os.getenv("JWT_SECRET")
+    if not jwt_sec:
+        log.warning("⚠️ [Security] JWT_SECRET not found in environment; using development key.")
+    else:
+        log.info("🔒 [Security] JWT_SECRET loaded and active.")
+    
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    if not gemini_key:
+        log.info("ℹ️ [AI Engine] GEMINI_API_KEY is unset; running in rule-based symptom triage mode.")
+    else:
+        log.info("🧠 [AI Engine] Google Gemini API key configured.")
+
 def init_db():
     Base.metadata.create_all(bind=engine)
     migrate_db(engine)
@@ -22,6 +37,7 @@ def init_db():
         seed_database(db, force_reset=False)
     finally:
         db.close()
+    validate_security_config()
 
 
 # Initialize tables immediately on startup

@@ -25,8 +25,10 @@ import {
   callNext,
   completeToken,
   updateDoctorRoster,
+  verifyEmergency,
   verifyEmergencyToken,
   createPrescription,
+  getPrescriptionForToken,
   getPrescriptionByToken,
   showToast
 } from '../api/client';
@@ -163,7 +165,7 @@ export function DoctorConsole() {
         appointment_id: consoleData.current.appointment_id || undefined,
         diagnosis: prescriptionForm.diagnosis.trim(),
         clinical_notes: prescriptionForm.clinical_notes.trim() || undefined,
-        follow_up_date: prescriptionForm.follow_up_date ? new Date(prescriptionForm.follow_up_date).toISOString() : undefined,
+        follow_up_date: prescriptionForm.follow_up_date || undefined,
         medicines: validMeds
       };
 
