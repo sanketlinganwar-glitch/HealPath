@@ -20,6 +20,8 @@ import { DoctorsInfoPage } from './pages/DoctorsInfoPage';
 import { DemoControlsPage } from './pages/DemoControlsPage';
 import { AppointmentBookingPage } from './pages/AppointmentBookingPage';
 import { VoiceAssistantPage } from './pages/VoiceAssistantPage';
+import { PatientDashboard } from './pages/PatientDashboard';
+import { PrescriptionVerificationPage } from './pages/PrescriptionVerificationPage';
 
 // Protected Route by Role
 function ProtectedRoute({ children, allowedRoles }) {
@@ -58,6 +60,8 @@ function AppLayout() {
           <Route path="/voice" element={<VoiceAssistantPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/patient" element={<PatientRegisterPage />} />
+          <Route path="/patient/dashboard" element={<PatientDashboard />} />
+          <Route path="/verify-rx/:token" element={<PrescriptionVerificationPage />} />
           <Route path="/book-appointment" element={<AppointmentBookingPage />} />
           <Route path="/patient/track/:id" element={<PatientTrackPage />} />
           <Route path="/patient/lookup" element={<PatientLookupPage />} />

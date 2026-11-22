@@ -1,5 +1,6 @@
 import secrets
 import json
+import hashlib
 from datetime import datetime, date, timedelta
 from sqlalchemy.orm import Session
 
@@ -19,26 +20,26 @@ DEPARTMENTS_DATA = [
 
 DOCTORS_DATA = [
     # General Medicine / Surgery (Sanjeevan Hospital & Multispecialty)
-    {"name": "Dr. Rajesh Sharma", "dept_code": "G", "specialization": "General Physician & Critical Care", "room": "Room 101", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "17:00"},
-    {"name": "Dr. Anita Desai", "dept_code": "G", "specialization": "Internal Medicine", "room": "Room 102", "status": "off", "duty_status": "off_duty", "shift_start": "14:00", "shift_end": "20:00"},
-    {"name": "Dr. Sunil M. Agrawal", "dept_code": "G", "specialization": "Chief Surgeon & Laparoscopy Specialist", "room": "Room 1 (Consultant Suite)", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "14:00"},
-    {"name": "Dr. Vijay S. Kawalkar", "dept_code": "G", "specialization": "Senior Consultant Laparoscopic Surgeon", "room": "Room 2 (Surgical OPD)", "status": "available", "duty_status": "available", "shift_start": "11:00", "shift_end": "14:00"},
-    {"name": "Dr. H. S. Bora", "dept_code": "G", "specialization": "MD General Medicine & Critical Care", "room": "Room 3 (Medicine Wing)", "status": "available", "duty_status": "available", "shift_start": "10:30", "shift_end": "14:30"},
-    {"name": "Dr. Vinay Pande", "dept_code": "G", "specialization": "Chest & Pulmonary Critical Care", "room": "Room 4 (Chest Clinic)", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "14:00"},
+    {"name": "Dr. Rajesh Sharma", "dept_code": "G", "specialization": "General Physician & Critical Care", "room": "Room 101", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "17:00", "registration_number": "MMC 62114", "qualification": "M.D. (General Medicine)"},
+    {"name": "Dr. Anita Desai", "dept_code": "G", "specialization": "Internal Medicine", "room": "Room 102", "status": "off", "duty_status": "off_duty", "shift_start": "14:00", "shift_end": "20:00", "registration_number": "MMC 59402", "qualification": "M.B.B.S., D.N.B."},
+    {"name": "Dr. Sunil M. Agrawal", "dept_code": "G", "specialization": "Chief Surgeon & Laparoscopy Specialist", "room": "Room 1 (Consultant Suite)", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "14:00", "registration_number": "MMC 74218", "qualification": "M.S. (Orthopedics & Surgery)"},
+    {"name": "Dr. Vijay S. Kawalkar", "dept_code": "G", "specialization": "Senior Consultant Laparoscopic Surgeon", "room": "Room 2 (Surgical OPD)", "status": "available", "duty_status": "available", "shift_start": "11:00", "shift_end": "14:00", "registration_number": "MMC 65192", "qualification": "M.S. (Gen Surgery), FIAGES"},
+    {"name": "Dr. H. S. Bora", "dept_code": "G", "specialization": "MD General Medicine & Critical Care", "room": "Room 3 (Medicine Wing)", "status": "available", "duty_status": "available", "shift_start": "10:30", "shift_end": "14:30", "registration_number": "MMC 58910", "qualification": "M.D. (Medicine & Critical Care)"},
+    {"name": "Dr. Vinay Pande", "dept_code": "G", "specialization": "Chest & Pulmonary Critical Care", "room": "Room 4 (Chest Clinic)", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "14:00", "registration_number": "MMC 81290", "qualification": "M.D. (Pulmonary Medicine)"},
     # Cardiology
-    {"name": "Dr. Meera Kulkarni", "dept_code": "C", "specialization": "Cardiologist", "room": "Room 201", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "16:00"},
-    {"name": "Dr. Vikram Malhotra", "dept_code": "C", "specialization": "Cardiac Surgeon", "room": "Room 202", "status": "off", "duty_status": "off_duty", "shift_start": "11:00", "shift_end": "19:00"},
+    {"name": "Dr. Meera Kulkarni", "dept_code": "C", "specialization": "Cardiologist", "room": "Room 201", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "16:00", "registration_number": "MMC 71042", "qualification": "M.D., D.M. (Cardiology)"},
+    {"name": "Dr. Vikram Malhotra", "dept_code": "C", "specialization": "Cardiac Surgeon", "room": "Room 202", "status": "off", "duty_status": "off_duty", "shift_start": "11:00", "shift_end": "19:00", "registration_number": "MMC 80112", "qualification": "M.Ch. (Cardiothoracic Surgery)"},
     # Orthopedics & Diagnostic Imaging
-    {"name": "Dr. Suresh Patil", "dept_code": "O", "specialization": "Orthopedic Surgeon", "room": "Room 301", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "17:00"},
-    {"name": "Dr. Sunita Rao", "dept_code": "O", "specialization": "Spine Specialist", "room": "Room 302", "status": "off", "duty_status": "off_duty", "shift_start": "10:00", "shift_end": "18:00"},
-    {"name": "Dr. Lalit Paldiwal", "dept_code": "O", "specialization": "MD Radiology & Sonography", "room": "Room 6 (Imaging Suite)", "status": "available", "duty_status": "available", "shift_start": "09:30", "shift_end": "13:30"},
+    {"name": "Dr. Suresh Patil", "dept_code": "O", "specialization": "Orthopedic Surgeon", "room": "Room 301", "status": "available", "duty_status": "available", "shift_start": "09:00", "shift_end": "17:00", "registration_number": "MMC 64320", "qualification": "M.S. (Orthopedics)"},
+    {"name": "Dr. Sunita Rao", "dept_code": "O", "specialization": "Spine Specialist", "room": "Room 302", "status": "off", "duty_status": "off_duty", "shift_start": "10:00", "shift_end": "18:00", "registration_number": "MMC 73501", "qualification": "M.S. (Ortho), Fellowship Spine"},
+    {"name": "Dr. Lalit Paldiwal", "dept_code": "O", "specialization": "MD Radiology & Sonography", "room": "Room 6 (Imaging Suite)", "status": "available", "duty_status": "available", "shift_start": "09:30", "shift_end": "13:30", "registration_number": "MMC 68904", "qualification": "M.D. (Radiodiagnosis)"},
     # Pediatrics & Maternal Care
-    {"name": "Dr. Priya Nair", "dept_code": "P", "specialization": "Pediatrician", "room": "Room 401", "status": "available", "duty_status": "available", "shift_start": "08:30", "shift_end": "15:30"},
-    {"name": "Dr. Amit Verma", "dept_code": "P", "specialization": "Neonatologist", "room": "Room 402", "status": "off", "duty_status": "off_duty", "shift_start": "13:00", "shift_end": "21:00"},
-    {"name": "Dr. Sheetal S. Agrawal", "dept_code": "P", "specialization": "MD Obstetrics & Gynecology", "room": "Room 5 (Women Clinic)", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "14:00"},
+    {"name": "Dr. Priya Nair", "dept_code": "P", "specialization": "Pediatrician", "room": "Room 401", "status": "available", "duty_status": "available", "shift_start": "08:30", "shift_end": "15:30", "registration_number": "MMC 76240", "qualification": "M.D. (Pediatrics)"},
+    {"name": "Dr. Amit Verma", "dept_code": "P", "specialization": "Neonatologist", "room": "Room 402", "status": "off", "duty_status": "off_duty", "shift_start": "13:00", "shift_end": "21:00", "registration_number": "MMC 83410", "qualification": "M.D. (Pediatrics), Neonatology"},
+    {"name": "Dr. Sheetal S. Agrawal", "dept_code": "P", "specialization": "MD Obstetrics & Gynecology", "room": "Room 5 (Women Clinic)", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "14:00", "registration_number": "MMC 79331", "qualification": "M.D. (Obstetrics & Gynecology)"},
     # ENT
-    {"name": "Dr. Rohan Joshi", "dept_code": "E", "specialization": "ENT Specialist", "room": "Room 501", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "18:00"},
-    {"name": "Dr. Kavita Iyer", "dept_code": "E", "specialization": "Head & Neck Surgeon", "room": "Room 502", "status": "off", "duty_status": "off_duty", "shift_start": "12:00", "shift_end": "19:00"},
+    {"name": "Dr. Rohan Joshi", "dept_code": "E", "specialization": "ENT Specialist", "room": "Room 501", "status": "available", "duty_status": "available", "shift_start": "10:00", "shift_end": "18:00", "registration_number": "MMC 72890", "qualification": "M.S. (ENT)"},
+    {"name": "Dr. Kavita Iyer", "dept_code": "E", "specialization": "Head & Neck Surgeon", "room": "Room 502", "status": "off", "duty_status": "off_duty", "shift_start": "12:00", "shift_end": "19:00", "registration_number": "MMC 69120", "qualification": "M.S. (ENT), Head & Neck Surgery"},
 ]
 
 def seed_database(db: Session, force_reset: bool = False):
@@ -83,7 +84,9 @@ def seed_database(db: Session, force_reset: bool = False):
             shift_start=d.get("shift_start", "09:00"),
             shift_end=d.get("shift_end", "17:00"),
             break_start="13:00",
-            break_end="14:00"
+            break_end="14:00",
+            registration_number=d.get("registration_number", "MMC 74218"),
+            qualification=d.get("qualification", "MBBS, MD")
         )
         db.add(doctor)
         db.flush()
@@ -219,6 +222,9 @@ def seed_database(db: Session, force_reset: bool = False):
             phone=item["phone"],
             age=item["age"],
             gender=item["gender"],
+            uhid=f"SH-445001-{item['phone'][-4:]}",
+            blood_group="B+",
+            allergies="None reported",
             created_at=now + timedelta(minutes=item["created_offset"])
         )
         db.add(patient)
@@ -293,7 +299,13 @@ def seed_database(db: Session, force_reset: bool = False):
                     {"name": "Paracetamol", "dosage": "650mg", "frequency": "1-0-1", "duration": "3 days", "instructions": "After meals"},
                     {"name": "Cetirizine", "dosage": "10mg", "frequency": "0-0-1", "duration": "5 days", "instructions": "Before sleep"}
                 ]
+                rx_count = idx + 1
+                rx_num = f"RX-2026-{rx_count:04d}"
+                v_tok = secrets.token_hex(16)
+                sig_h = hashlib.sha256(f"{rx_num}:{doc_id}:{patient.id}:{v_tok}".encode()).hexdigest()
                 db.add(Prescription(
+                    prescription_number=rx_num,
+                    verification_token=v_tok,
                     token_id=token.id,
                     appointment_id=None,
                     doctor_id=doc_id,
@@ -303,6 +315,9 @@ def seed_database(db: Session, force_reset: bool = False):
                     clinical_notes="Patient advised adequate rest and hydration. Monitor temperature.",
                     tests_recommended="CBC if fever persists beyond 3 days",
                     follow_up_date=today + timedelta(days=5),
+                    is_signed=True,
+                    signed_at=completed_dt or now,
+                    signature_hash=sig_h,
                     created_at=completed_dt or now,
                     status="active"
                 ))

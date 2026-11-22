@@ -166,4 +166,13 @@ export const getDepartmentPredictions = (deptId) =>
 export const demoReset = () => api.post('/api/demo/reset').then(r => r.data);
 export const demoSimulate = (count = 5) => api.post('/api/demo/simulate', { count }).then(r => r.data);
 
+// --- Stage 8: Patient Digital Health Wallet & Prescription PDF APIs ---
+export const patientLogin = (phone, pin = '1234') => api.post('/api/patient/auth/login', { phone, pin }).then(r => r.data);
+export const getPatientProfile = (phone) => api.get('/api/patient/profile', { params: { phone } }).then(r => r.data);
+export const updatePatientProfile = (phone, data) => api.put('/api/patient/profile', data, { params: { phone } }).then(r => r.data);
+export const getPatientWallet = (phone) => api.get('/api/patient/wallet', { params: { phone } }).then(r => r.data);
+export const getMyPrescriptions = (phone) => api.get('/api/prescriptions/patient/my', { params: { phone } }).then(r => r.data);
+export const getPrescriptionPdfUrl = (id) => `${API_BASE}/api/prescriptions/${id}/pdf`;
+export const verifyPrescriptionToken = (token) => api.get(`/api/prescriptions/verify/${token}`).then(r => r.data);
+
 export default api;

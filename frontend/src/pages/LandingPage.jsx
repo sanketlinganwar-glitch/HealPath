@@ -13,7 +13,8 @@ import {
   ArrowRight,
   PhoneCall,
   Calendar,
-  Mic
+  Mic,
+  HeartPulse
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -83,6 +84,13 @@ export function LandingPage() {
             >
               <Ticket className="w-5 h-5" />
               <span>{t('bookAppointment')}</span>
+            </Link>
+            <Link
+              to="/patient/dashboard"
+              className="px-5 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm sm:text-base rounded-xl shadow-lg shadow-emerald-900/30 flex items-center space-x-2 transition transform hover:-translate-y-0.5 border border-emerald-400/30"
+            >
+              <HeartPulse className="w-5 h-5 text-cyan-200" />
+              <span>{t('healthWallet') || 'Health Wallet'}</span>
             </Link>
             <Link
               to="/voice"

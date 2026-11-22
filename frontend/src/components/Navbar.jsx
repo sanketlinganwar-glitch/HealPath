@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Activity, LogIn, LogOut, Monitor, UserCheck, Stethoscope, Globe, Sparkles, Calendar, WifiOff, Mic } from 'lucide-react';
+import { Activity, LogIn, LogOut, Monitor, UserCheck, Stethoscope, Globe, Sparkles, Calendar, WifiOff, Mic, HeartPulse } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -88,6 +88,13 @@ export function Navbar() {
               <span>{t('doctorsInfo')}</span>
             </Link>
             <Link
+              to="/patient/dashboard"
+              className="px-2.5 py-1 rounded-lg text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors flex items-center space-x-1"
+            >
+              <HeartPulse className="w-3.5 h-3.5 text-emerald-600" />
+              <span>{t('healthWallet') || 'Health Wallet'}</span>
+            </Link>
+            <Link
               to="/voice"
               className="px-2.5 py-1 rounded-lg text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 transition-colors flex items-center space-x-1"
             >
@@ -140,7 +147,7 @@ export function Navbar() {
             {isAuthenticated ? (
               <div className="flex items-center space-x-2">
                 <Link
-                  to={user?.role === 'admin' ? '/admin' : user?.role === 'receptionist' ? '/reception' : '/doctor'}
+                  to={user?.role === 'admin' ? '/admin' : user?.role === 'receptionist' ? '/reception' : user?.role === 'doctor' ? '/doctor' : '/patient/dashboard'}
                   className="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-800 text-xs font-bold border border-blue-200 hover:bg-blue-100 transition"
                 >
                   <UserCheck className="w-3.5 h-3.5 text-blue-600" />

@@ -35,6 +35,8 @@ class Doctor(Base):
     break_start = Column(String(10), default="13:00", nullable=False)
     break_end = Column(String(10), default="14:00", nullable=False)
     duty_status = Column(String(20), default="available", nullable=False)  # "available" | "busy" | "on_break" | "off_duty"
+    registration_number = Column(String(50), nullable=True, default="MMC-2015/08/4120")
+    qualification = Column(String(100), nullable=True, default="MBBS, MD")
 
     department = relationship("Department", back_populates="doctors")
     tokens = relationship("Token", back_populates="doctor")
@@ -65,6 +67,10 @@ class Patient(Base):
     phone = Column(String(20), nullable=False, index=True)
     age = Column(Integer, nullable=False)
     gender = Column(String(20), nullable=False)  # "male" | "female" | "other"
+    uhid = Column(String(30), unique=True, index=True, nullable=True)  # e.g. "SH-445001-0042"
+    blood_group = Column(String(10), nullable=True)
+    allergies = Column(String(200), nullable=True)
+    medical_history = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.now, nullable=False)
 
     tokens = relationship("Token", back_populates="patient")
@@ -207,6 +213,8 @@ class Prescription(Base):
     __tablename__ = "prescriptions"
 
     id = Column(Integer, primary_key=True, index=True)
+    prescription_number = Column(String(30), unique=True, index=True, nullable=True)  # e.g. "RX-2026-0004"
+    verification_token = Column(String(64), unique=True, index=True, nullable=True)
     token_id = Column(Integer, ForeignKey("tokens.id"), nullable=True, index=True)
     appointment_id = Column(Integer, ForeignKey("appointments.id"), nullable=True, index=True)
     doctor_id = Column(Integer, ForeignKey("doctors.id"), nullable=False)
@@ -216,6 +224,9 @@ class Prescription(Base):
     clinical_notes = Column(Text, nullable=True)
     tests_recommended = Column(Text, nullable=True)
     follow_up_date = Column(Date, nullable=True)
+    is_signed = Column(Boolean, default=True, nullable=False)
+    signed_at = Column(DateTime, default=datetime.now, nullable=False)
+    signature_hash = Column(String(64), nullable=True)
     status = Column(String(20), default="active", nullable=False)  # "active" | "dispensed" | "archived"
     created_at = Column(DateTime, default=datetime.now, nullable=False)
 
@@ -223,6 +234,21 @@ class Prescription(Base):
     patient = relationship("Patient", back_populates="prescriptions")
     token = relationship("Token", back_populates="prescriptions")
     appointment = relationship("Appointment", back_populates="prescriptions")
+    verification_logs = relationship("PrescriptionVerificationLog", back_populates="prescription", cascade="all, delete-orphan")
+
+
+class PrescriptionVerificationLog(Base):
+    __tablename__ = "prescription_verification_logs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    prescription_id = Column(Integer, ForeignKey("prescriptions.id"), nullable=False, index=True)
+    verification_token = Column(String(64), nullable=False)
+    ip_address = Column(String(50), nullable=True)
+    user_agent = Column(String(200), nullable=True)
+    status = Column(String(20), default="valid", nullable=False)
+    verified_at = Column(DateTime, default=datetime.now, nullable=False)
+
+    prescription = relationship("Prescription", back_populates="verification_logs")
 
 
 class Feedback(Base):

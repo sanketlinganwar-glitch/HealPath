@@ -31,6 +31,10 @@ def migrate_db(eng):
                 conn.execute(text("ALTER TABLE doctors ADD COLUMN break_end VARCHAR(10) DEFAULT '14:00'"))
             if "duty_status" not in cols:
                 conn.execute(text("ALTER TABLE doctors ADD COLUMN duty_status VARCHAR(20) DEFAULT 'available'"))
+            if "registration_number" not in cols:
+                conn.execute(text("ALTER TABLE doctors ADD COLUMN registration_number VARCHAR(50) DEFAULT 'MMC-2015/08/4120'"))
+            if "qualification" not in cols:
+                conn.execute(text("ALTER TABLE doctors ADD COLUMN qualification VARCHAR(100) DEFAULT 'MBBS, MD'"))
 
         # Check tokens table
         res = conn.execute(text("PRAGMA table_info(tokens)")).fetchall()
@@ -65,6 +69,34 @@ def migrate_db(eng):
                 conn.execute(text("ALTER TABLE appointments ADD COLUMN cancellation_reason VARCHAR(200)"))
             if "idempotency_key" not in cols:
                 conn.execute(text("ALTER TABLE appointments ADD COLUMN idempotency_key VARCHAR(64)"))
+
+        # Check patients table
+        res = conn.execute(text("PRAGMA table_info(patients)")).fetchall()
+        cols = {row[1] for row in res}
+        if cols:
+            if "uhid" not in cols:
+                conn.execute(text("ALTER TABLE patients ADD COLUMN uhid VARCHAR(30)"))
+            if "blood_group" not in cols:
+                conn.execute(text("ALTER TABLE patients ADD COLUMN blood_group VARCHAR(10)"))
+            if "allergies" not in cols:
+                conn.execute(text("ALTER TABLE patients ADD COLUMN allergies VARCHAR(200)"))
+            if "medical_history" not in cols:
+                conn.execute(text("ALTER TABLE patients ADD COLUMN medical_history TEXT"))
+
+        # Check prescriptions table
+        res = conn.execute(text("PRAGMA table_info(prescriptions)")).fetchall()
+        cols = {row[1] for row in res}
+        if cols:
+            if "prescription_number" not in cols:
+                conn.execute(text("ALTER TABLE prescriptions ADD COLUMN prescription_number VARCHAR(30)"))
+            if "verification_token" not in cols:
+                conn.execute(text("ALTER TABLE prescriptions ADD COLUMN verification_token VARCHAR(64)"))
+            if "is_signed" not in cols:
+                conn.execute(text("ALTER TABLE prescriptions ADD COLUMN is_signed BOOLEAN DEFAULT 1"))
+            if "signed_at" not in cols:
+                conn.execute(text("ALTER TABLE prescriptions ADD COLUMN signed_at DATETIME"))
+            if "signature_hash" not in cols:
+                conn.execute(text("ALTER TABLE prescriptions ADD COLUMN signature_hash VARCHAR(64)"))
 
         conn.commit()
 

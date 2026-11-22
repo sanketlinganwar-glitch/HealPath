@@ -416,6 +416,17 @@
       "age": null,
       "gender": "unspecified",
       "created_at": "2026-10-23T12:23:51.456Z"
+    },
+    {
+      "id": 11,
+      "name": "jay kumar",
+      "email": "sanketlinganwar40@gmail.com",
+      "phone": "4589631755",
+      "password": "$2a$10$Zr0q5../HXdidIyoXe39xOSogBcw1na/Z9XRSUx3JHrdBK8uJ7msG",
+      "role": "patient",
+      "age": null,
+      "gender": "unspecified",
+      "created_at": "2026-11-22T17:27:27.131Z"
     }
   ],
   "slots": [
@@ -3565,14 +3576,14 @@
       "date": "2026-10-23",
       "time": "10:15",
       "checked_in": true,
-      "status": "in_progress",
+      "status": "completed",
       "created_at": "2026-10-23T09:47:17.675Z",
       "reminder_sent_at": null,
       "reminder_attempts": 0,
       "checked_in_at": null,
       "called_at": null,
       "started_at": null,
-      "completed_at": null,
+      "completed_at": "2026-11-22T17:27:47.068Z",
       "source": "online",
       "auto_shifted": false,
       "payment_mode": "hospital",
@@ -4102,10 +4113,10 @@
       "doctor_id": 1,
       "department_id": 1,
       "patient_name": "Sunita Shinde",
-      "status": "in_progress",
+      "status": "completed",
       "position": 2,
       "called_at": "2026-10-23T12:21:02.690Z",
-      "completed_at": null,
+      "completed_at": "2026-11-22T17:27:47.068Z",
       "created_at": "2026-10-23T09:47:17.675Z",
       "checked_in_at": null,
       "started_at": null

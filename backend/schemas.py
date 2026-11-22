@@ -18,6 +18,10 @@ class PatientBase(BaseModel):
 
 class PatientResponse(PatientBase):
     id: int
+    uhid: Optional[str] = None
+    blood_group: Optional[str] = None
+    allergies: Optional[str] = None
+    medical_history: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -401,17 +405,25 @@ class PrescriptionCreate(BaseModel):
 
 class PrescriptionResponse(BaseModel):
     id: int
+    prescription_number: Optional[str] = None
+    verification_token: Optional[str] = None
     token_id: Optional[int] = None
     appointment_id: Optional[int] = None
     patient: PatientResponse
     doctor_name: str
     doctor_specialization: str
+    doctor_qualification: Optional[str] = None
+    doctor_registration: Optional[str] = None
     doctor_room: str
+    department_name: Optional[str] = None
     diagnosis: str
     medicines: List[MedicineItem]
     clinical_notes: Optional[str] = None
     tests_recommended: Optional[str] = None
     follow_up_date: Optional[str] = None
+    is_signed: Optional[bool] = True
+    signed_at: Optional[str] = None
+    signature_hash: Optional[str] = None
     created_at: str
     status: str
 
@@ -487,3 +499,48 @@ class AdminAnalyticsResponse(BaseModel):
     department_stats: List[DepartmentStat]
     doctor_stats: List[DoctorAnalyticsStat]
     hourly_trends: List[HourlyStat]
+
+# --- Health Wallet & Patient Schemas ---
+class PatientLoginRequest(BaseModel):
+    phone: str = Field(..., min_length=10, max_length=15)
+    pin: Optional[str] = "1234"
+
+class PatientLoginResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    role: str = "patient"
+    patient_id: int
+    name: str
+    phone: str
+    uhid: str
+
+class PatientProfileUpdateRequest(BaseModel):
+    name: Optional[str] = None
+    blood_group: Optional[str] = None
+    allergies: Optional[str] = None
+    medical_history: Optional[str] = None
+
+class PrescriptionVerificationResponse(BaseModel):
+    valid: bool
+    status: str
+    prescription_number: str
+    hospital_name: str
+    hospital_address: str
+    doctor_name: str
+    doctor_qualification: Optional[str] = None
+    doctor_registration: Optional[str] = None
+    department_name: Optional[str] = None
+    issued_date: str
+    is_signed: bool
+    signed_at: Optional[str] = None
+    signature_hash: Optional[str] = None
+    integrity_status: str
+
+class PatientWalletResponse(BaseModel):
+    patient: PatientResponse
+    active_token: Optional[TokenResponse] = None
+    total_visits: int
+    prescriptions: List[PrescriptionResponse]
+    appointments: List[AppointmentResponse]
+    tokens_history: List[TokenResponse]
+    medical_history_summary: List[Dict[str, Any]]

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { login as apiLogin } from '../api/client';
+import { login as apiLogin, patientLogin as apiPatientLogin } from '../api/client';
 
 const AuthContext = createContext(null);
 
@@ -25,6 +25,23 @@ export function AuthProvider({ children }) {
     return userData;
   };
 
+  const patientLogin = async (phone, pin = '1234') => {
+    const res = await apiPatientLogin(phone, pin);
+    const userData = {
+      username: `patient_${res.phone}`,
+      role: 'patient',
+      name: res.name,
+      phone: res.phone,
+      patient_id: res.patient_id,
+      uhid: res.uhid,
+    };
+    setToken(res.access_token);
+    setUser(userData);
+    localStorage.setItem('healpath_token', res.access_token);
+    localStorage.setItem('healpath_user', JSON.stringify(userData));
+    return userData;
+  };
+
   const logout = () => {
     setToken(null);
     setUser(null);
@@ -33,7 +50,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, login, logout, isAuthenticated: !!token }}>
+    <AuthContext.Provider value={{ token, user, login, patientLogin, logout, isAuthenticated: !!token }}>
       {children}
     </AuthContext.Provider>
   );

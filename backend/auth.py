@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 
 from backend.db import get_db
-from backend.models import User
+from backend.models import User, Patient
 
 # Load environment variables safely
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -118,4 +118,75 @@ def get_current_user_optional(
         return db.query(User).filter(User.username == username).first()
     except Exception:
         return None
+
+def get_current_patient(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
+    db: Session = Depends(get_db)
+) -> Patient:
+    """Verify Bearer JWT token and return active Patient object."""
+    if not credentials or not credentials.credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing patient authentication token"
+        )
+    token = credentials.credentials
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[ALGORITHM])
+        role: str = payload.get("role")
+        patient_id: Optional[int] = payload.get("patient_id")
+        phone: Optional[str] = payload.get("phone")
+        if role != "patient" or not patient_id:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid patient credentials"
+            )
+    except jwt.PyJWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate patient credentials"
+        )
+
+    patient = db.query(Patient).filter(Patient.id == patient_id).first()
+    if not patient and phone:
+        patient = db.query(Patient).filter(Patient.phone == phone).first()
+    if not patient:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Patient not found"
+        )
+    return patient
+
+def get_current_actor(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
+    db: Session = Depends(get_db)
+) -> dict:
+    """
+    Returns verified actor:
+    {"type": "staff", "user": User, "role": user.role} OR
+    {"type": "patient", "patient": Patient, "role": "patient"}
+    """
+    if not credentials or not credentials.credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication token required"
+        )
+    token = credentials.credentials
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[ALGORITHM])
+        role: str = payload.get("role")
+        if role == "patient":
+            patient_id = payload.get("patient_id")
+            patient = db.query(Patient).filter(Patient.id == patient_id).first()
+            if not patient:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Patient record not found")
+            return {"type": "patient", "patient": patient, "role": "patient"}
+        else:
+            username = payload.get("sub")
+            user = db.query(User).filter(User.username == username).first()
+            if not user:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Staff record not found")
+            return {"type": "staff", "user": user, "role": user.role}
+    except jwt.PyJWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+
 

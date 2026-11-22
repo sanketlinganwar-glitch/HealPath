@@ -130,6 +130,23 @@ export const translations = {
     submitFeedback: "Submit Feedback",
     feedbackSuccess: "Thank you for your valuable feedback!",
 
+    // Stage 8: Digital Health Wallet
+    healthWallet: "Digital Health Wallet",
+    healthWalletDesc: "Your medical history, verified prescriptions, and health records in one secure place",
+    uhidLabel: "UHID (Hospital ID)",
+    myPrescriptions: "My Prescriptions",
+    medicalHistory: "Medical History & Visits",
+    downloadPdf: "Download Official PDF",
+    verifyPrescription: "Verify Prescription QR",
+    patientLogin: "Patient Health Wallet Login",
+    enterPhonePin: "Enter 10-digit mobile number to view your health records",
+    bloodGroup: "Blood Group",
+    allergies: "Allergies",
+    chronicConditions: "Medical Conditions",
+    signedByDoctor: "Clinically Verified & Digitally Signed",
+    prescriptionDetails: "Prescription Details",
+    hospitalSeal: "Official Sanjeevan Hospital Seal",
+
     // Analytics & Offline
     analytics: "Hospital Analytics",
     exportCsv: "Export CSV Report",
@@ -268,6 +285,23 @@ export const translations = {
     submitFeedback: "प्रतिक्रिया जमा करें",
     feedbackSuccess: "आपकी प्रतिक्रिया के लिए धन्यवाद!",
 
+    // Stage 8: Digital Health Wallet
+    healthWallet: "डिजिटल हेल्थ वॉलेट",
+    healthWalletDesc: "आपका मेडिकल इतिहास, सत्यापित पर्चियां और स्वास्थ्य रिकॉर्ड एक ही सुरक्षित स्थान पर",
+    uhidLabel: "यूएचआईडी (अस्पताल आईडी)",
+    myPrescriptions: "मेरी पर्चियां",
+    medicalHistory: "चिकित्सा इतिहास व परामर्श",
+    downloadPdf: "आधिकारिक पीडीएफ डाउनलोड करें",
+    verifyPrescription: "पर्ची की प्रामाणिकता जांचें",
+    patientLogin: "मरीज हेल्थ वॉलेट लॉगिन",
+    enterPhonePin: "अपने स्वास्थ्य रिकॉर्ड देखने के लिए 10 अंकों का मोबाइल नंबर दर्ज करें",
+    bloodGroup: "रक्त समूह",
+    allergies: "एलर्जी",
+    chronicConditions: "चिकित्सा स्थितियां",
+    signedByDoctor: "डॉक्टर द्वारा सत्यापित एवं डिजिटल हस्ताक्षरित",
+    prescriptionDetails: "पर्ची का विस्तृत विवरण",
+    hospitalSeal: "संजीवन अस्पताल आधिकारिक मुहर",
+
     // Analytics & Offline
     analytics: "अस्पताल एनालिटिक्स",
     exportCsv: "सीएसवी रिपोर्ट डाउनलोड करें",
@@ -405,6 +439,23 @@ export const translations = {
     rateExperience: "तपासणीचा अनुभव नोंदवा",
     submitFeedback: "अभिप्राय पाठवा",
     feedbackSuccess: "आपल्या मौल्यवान अभिप्रायाबद्दल धन्यवाद!",
+
+    // Stage 8: Digital Health Wallet
+    healthWallet: "डिजिटल हेल्थ वॉलेट",
+    healthWalletDesc: "तुमचा वैद्यकीय इतिहास, तपासलेली प्रिस्क्रिप्शन्स आणि आरोग्य नोंदी एकाच सुरक्षित ठिकाणी",
+    uhidLabel: "यूएचआयडी (रुग्णालय ओळख)",
+    myPrescriptions: "माझी प्रिस्क्रिप्शन्स",
+    medicalHistory: "वैद्यकीय इतिहास आणि भेटी",
+    downloadPdf: "अधिकृत पीडीएफ डाउनलोड करा",
+    verifyPrescription: "प्रिस्क्रिप्शन क्यूआर तपासा",
+    patientLogin: "रुग्ण हेल्थ वॉलेट लॉगिन",
+    enterPhonePin: "तुमच्या आरोग्य नोंदी पाहण्यासाठी 10-अंकी मोबाइल नंबर टाका",
+    bloodGroup: "रक्तगट",
+    allergies: "अलर्जी",
+    chronicConditions: "वैद्यकीय स्थिती",
+    signedByDoctor: "डॉक्टरांद्वारे तपासलेले आणि डिजिटल स्वाक्षरीकृत",
+    prescriptionDetails: "प्रिस्क्रिप्शन तपशील",
+    hospitalSeal: "संजीवन रुग्णालय अधिकृत शिक्का",
 
     // Analytics & Offline
     analytics: "रुग्णालय विश्लेषण",
