@@ -46,6 +46,9 @@ class TokenResponse(BaseModel):
     position: Optional[int] = None
     people_ahead: Optional[int] = None
     est_wait_min: Optional[int] = None
+    wait_time_range_min: Optional[List[int]] = None
+    prediction_mode: Optional[str] = "BASELINE"
+    confidence: Optional[str] = "MODERATE"
     created_at: str
     called_at: Optional[str] = None
     completed_at: Optional[str] = None
@@ -157,9 +160,62 @@ class DisplayDepartment(BaseModel):
     next_up: List[str]
     waiting_count: int
     est_wait_min: int
+    wait_time_range_min: Optional[List[int]] = None
+    prediction_mode: Optional[str] = "BASELINE"
 
 class DisplayResponse(BaseModel):
     departments: List[DisplayDepartment]
+
+# --- Stage 6: Predictive Queue Waiting Time AI Schemas ---
+class QueuePredictionResponse(BaseModel):
+    token_id: int
+    token_number: str
+    department_id: int
+    department_name: str
+    doctor_id: Optional[int] = None
+    doctor_name: Optional[str] = None
+    status: str
+    position: Optional[int] = None
+    people_ahead: int
+    estimated_wait_min: int
+    wait_time_range_min: List[int]
+    prediction_mode: Literal["BASELINE", "ML"] = "BASELINE"
+    confidence: Literal["HIGH", "MODERATE", "LOW"] = "MODERATE"
+    active_doctors_count: int
+    emergency_patients_ahead: int
+    is_approximate: bool = True
+    explanation: str
+    last_updated: str
+
+class DoctorQueuePredictionResponse(BaseModel):
+    doctor_id: int
+    doctor_name: str
+    department_id: int
+    department_name: str
+    duty_status: str
+    current_token_number: Optional[str] = None
+    current_consultation_elapsed_min: Optional[int] = None
+    waiting_count: int
+    avg_consult_duration_min: float
+    estimated_clearance_time_min: int
+    clearance_time_range_min: List[int]
+    prediction_mode: Literal["BASELINE", "ML"] = "BASELINE"
+    confidence: Literal["HIGH", "MODERATE", "LOW"] = "MODERATE"
+    last_updated: str
+
+class DepartmentQueuePredictionResponse(BaseModel):
+    department_id: int
+    department_name: str
+    active_doctors_count: int
+    total_waiting_count: int
+    emergency_count: int
+    avg_consult_duration_min: float
+    est_wait_per_new_patient_min: int
+    wait_time_range_min: List[int]
+    prediction_mode: Literal["BASELINE", "ML"] = "BASELINE"
+    confidence: Literal["HIGH", "MODERATE", "LOW"] = "MODERATE"
+    rush_hour_factor: float
+    last_updated: str
 
 # --- Stats Schemas ---
 class DepartmentStat(BaseModel):

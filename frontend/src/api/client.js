@@ -154,6 +154,14 @@ export const resetConversation = (conversationId) => api.post('/api/ai/conversat
 export const chat = (message, language = 'en', tokenId = null, conversationId = null) =>
   api.post('/api/chat', { message, language, token_id: tokenId, conversation_id: conversationId }).then(r => r.data);
 
+// --- Stage 6: Predictive Queue Waiting Time APIs ---
+export const getQueuePrediction = (tokenId, phone = null, secureHash = null) =>
+  api.get(`/api/queue/prediction/${tokenId}`, { params: { phone, secure_hash: secureHash } }).then(r => r.data);
+export const getDoctorPredictions = (doctorId) =>
+  api.get(`/api/queue/doctor-predictions/${doctorId}`).then(r => r.data);
+export const getDepartmentPredictions = (deptId) =>
+  api.get(`/api/queue/department-predictions/${deptId}`).then(r => r.data);
+
 // --- Demo APIs ---
 export const demoReset = () => api.post('/api/demo/reset').then(r => r.data);
 export const demoSimulate = (count = 5) => api.post('/api/demo/simulate', { count }).then(r => r.data);

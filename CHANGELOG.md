@@ -3,6 +3,37 @@
 
 ---
 
+## [v2.4.0] - 2026-11-22 (Stage 6 Milestone: Predictive Queue Waiting Time AI)
+
+### ✨ Features Added & Upgraded
+- **Predictive Waiting Time AI Engine (`backend/services/queue_prediction.py`):**
+  - Designed multi-factor clinical consultation simulation engine factoring in active doctor velocity, current in-progress elapsed consultation time, emergency interruptions, and time-of-day pace coefficients.
+  - Implemented dynamic in-progress deduction: calculates elapsed minutes for all doctors with active consultations, subtracting it from expected completion and eliminating artificial wait-time overestimations.
+  - Built doctor pace and variance analysis (`get_doctor_pace_and_variance`) with empirical Bayesian smoothing for low-sample clinicians.
+  - Built emergency queue shift modeling: quantifies priority queue disruptions (`emergency_patients_ahead`), dynamically adjusting wait times and widening uncertainty boundaries.
+  - Enforced strict statistical integrity: operates in `BASELINE` mode with zero fabricated metrics or synthetic data, with an automated promotion threshold ($\ge 50$ real completed consultations) for ML regression training.
+  - Delivered empirical 90% confidence intervals (`wait_time_range_min`) guaranteeing mathematical consistency ($min \le est \le max$).
+- **Dedicated REST API Endpoints (`backend/routers/queue.py`):**
+  - `GET /api/queue/prediction/{token_id}`: Point estimate, range, confidence tier, and clinical explanation with optional phone/secure_hash ownership validation (HTTP 403 Forbidden on unauthorized access).
+  - `GET /api/queue/doctor-predictions/{doctor_id}`: Doctor workload, active elapsed time, waiting count, and queue clearance forecast.
+  - `GET /api/queue/department-predictions/{department_id}`: Department queue velocity and expected wait time for incoming patients.
+- **Frontend Predictive UI Integration:**
+  - Added responsive **Predictive Queue Waiting Time Card** in `PatientTrackPage.jsx` with estimated turn, expected range, reliability badge, active doctor cabins, explanation text, and refresh trigger.
+  - Upgraded lobby smart TV display (`DisplayBoard.jsx`) to show predicted ranges (e.g., `~15m (12–20m)`) with zero private patient data exposure.
+  - Updated `ReceptionDashboard.jsx` to render wait ranges across mobile cards and data tables.
+  - Exported `getQueuePrediction`, `getDoctorPredictions`, and `getDepartmentPredictions` in `frontend/src/api/client.js`.
+
+### 🧪 QA & Test Metrics
+- Created `backend/test_queue_prediction.py` with 13 automated test cases covering empty queue, single patient, multi-patient scaling, in-progress deduction, emergency shifts, off-duty handling, missing data fallback, 404/403 security, and range integrity.
+- 13/13 Stage 6 tests passed (`backend/test_queue_prediction.py`).
+- 17/17 Stage 5 AI Assistant tests passed (`backend/test_ai_assistant.py`).
+- 17/17 FastAPI smoke tests passed (`backend/smoke_test.py`).
+- 20/20 Express integration tests passed (`test_stage3_4.js`).
+- Total verified tests: **67/67 passing (100%)**.
+- Production Vite PWA build in `frontend/` succeeds with exit code 0 (`dist/` generated with 0 errors).
+
+---
+
 ## [v2.3.0] - 2026-11-21 (Stage 5 Milestone: AI Health Assistant with Gemini 2.5 Flash)
 
 ### ✨ Features Added & Upgraded

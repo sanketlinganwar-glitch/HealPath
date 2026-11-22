@@ -167,6 +167,20 @@ def serialize_token(
 
     room = token.doctor.room if token.doctor else None
 
+    # Calculate range & confidence for serialized representation
+    range_min = None
+    confidence = "MODERATE"
+    if token.status == "waiting" and est_wait_min is not None:
+        sigma = max(1.5, est_wait_min * 0.20)
+        range_min = [max(0, int(round(est_wait_min - sigma))), int(round(est_wait_min + sigma + 2))]
+        if people_ahead is not None and people_ahead <= 1:
+            confidence = "HIGH"
+        elif people_ahead is not None and people_ahead > 5:
+            confidence = "LOW"
+    elif token.status in ["in_progress", "completed"]:
+        range_min = [0, 0]
+        confidence = "HIGH"
+
     return {
         "id": token.id,
         "token_number": token.token_number,
@@ -182,6 +196,9 @@ def serialize_token(
         "position": position,
         "people_ahead": people_ahead,
         "est_wait_min": est_wait_min,
+        "wait_time_range_min": range_min,
+        "prediction_mode": "BASELINE",
+        "confidence": confidence,
         "created_at": token.created_at.isoformat() if token.created_at else "",
         "called_at": token.called_at.isoformat() if token.called_at else None,
         "completed_at": token.completed_at.isoformat() if token.completed_at else None,

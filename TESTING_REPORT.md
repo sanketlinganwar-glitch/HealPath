@@ -1,7 +1,7 @@
 # 🧪 HACKBYTE — TESTING & QUALITY ASSURANCE REPORT
 **Project Name:** HACKBYTE (HealPath / QueueCare)  
 **Partner Hospital:** Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal, Maharashtra, India – 445001  
-**Last Updated:** November 21, 2026 (Stage 5 Complete)
+**Last Updated:** November 22, 2026 (Stage 6 Complete)
 
 ---
 
@@ -11,11 +11,11 @@ Testing was performed across both architectures using automated test suites, pro
 
 ```
 ============================================================
-TEST EXECUTION METRICS (STAGES 1 - 5)
+TEST EXECUTION METRICS (STAGES 1 - 6)
 ============================================================
-Total Test Suites Run:     4
-Total Test Cases Executed: 54
-Tests Passed:              54 (100%)
+Total Test Suites Run:     5
+Total Test Cases Executed: 67
+Tests Passed:              67 (100%)
 Tests Failed:              0  (0%)
 Build Status:              SUCCESS (Exit Code 0)
 Test Health:               100% HEALTHY
@@ -24,29 +24,25 @@ Test Health:               100% HEALTHY
 
 ---
 
-## 2. Test Suite 1: Backend Smoke Tests (`backend/smoke_test.py`)
+## 2. Test Suite 1: Predictive Queue Waiting Time AI (`backend/test_queue_prediction.py`)
 
-Executed with Python 3.13 against FastAPI application endpoints:
+Executed with Python 3.13 validating Stage 6 multi-factor simulation, elapsed time deduction, emergency shifts, and range integrity:
 
 | # | Test Scenario | Method / Route | Expected Result | Actual Result | Status |
 |---|---|---|---|---|:---:|
-| **1** | Health Check | `GET /api/health` | HTTP 200, status: ok | HTTP 200, `{"status":"ok"}` | **PASSED** |
-| **2** | Department Listings | `GET /api/departments` | 5 departments returned | Found 5 departments | **PASSED** |
-| **3** | Staff JWT Auth | `POST /api/auth/login` | Bearer token for admin & doctor1 | Tokens acquired, roles validated | **PASSED** |
-| **4** | Patient Token Creation | `POST /api/tokens` | HTTP 201, token created with secure hash | Generated token with secure_hash | **PASSED** |
-| **5** | Duplicate Phone Check | `POST /api/tokens` | HTTP 409 Conflict | Correctly rejected with 409 | **PASSED** |
-| **6** | Token Tracking & QR Pass | `GET /api/tokens/{id}` | Token details & QR URL | Status waiting, now_serving present | **PASSED** |
-| **7** | Doctor Current State | `GET /api/doctors/{id}/current` | Current consultation payload | Doctor console state retrieved | **PASSED** |
-| **8** | Doctor Call Next | `POST /api/doctors/{id}/call-next` | Oldest waiting token assigned | Token status updated to in_progress | **PASSED** |
-| **9** | Digital Prescription | `POST /api/prescriptions` | HTTP 201, prescription linked | Structured Rx created with 2 meds | **PASSED** |
-| **10**| Complete Consultation | `POST /api/tokens/{id}/complete` | Status completed, completed_at set | Token completed successfully | **PASSED** |
-| **11**| Patient Feedback | `POST /api/feedback` | HTTP 201, feedback aggregated | 5-star rating recorded | **PASSED** |
-| **12**| Emergency Workflow | `POST /emergency-flag & verify` | Audit trail created | Emergency verified with 2 audit logs | **PASSED** |
-| **13**| Online Slot Booking | `GET /slots & POST /book` | 30m slots calculated, APT booked | APT code generated, conflict guarded | **PASSED** |
-| **14**| Appointment Check-in | `POST /appointments/{id}/check-in` | Converted to live queue token | Token generated with source appointment| **PASSED** |
-| **15**| Doctor Duty Roster | `PATCH /doctors/{id}/roster` | Duty status updated | Duty status changed to busy | **PASSED** |
-| **16**| Admin Analytics | `GET /admin/analytics` | Workload metrics & notification logs | 9 notifications tracked | **PASSED** |
-| **17**| AI Triage & Chat | `POST /ai/suggest-department` | Recommends Cardiology for chest pain | Department suggestion verified | **PASSED** |
+| **1** | Empty Queue | `predict_department_queue` | 0 waiting, 0 min wait, HIGH confidence | Wait 0m, range [0, 0], HIGH | **PASSED** |
+| **2** | Single Waiting Patient | `GET /api/queue/prediction/{id}` | Status waiting, range within bounds | Valid wait, range [min, max] verified | **PASSED** |
+| **3** | Multi-Patient Scaling | `GET /api/queue/prediction/{id}` | Sequential wait escalation | p1 <= p2 <= p3 wait times confirmed | **PASSED** |
+| **4** | In-Progress Deduction | `GET /api/queue/prediction/{id}` | Elapsed time deducted from wait | Remaining wait < 10m verified | **PASSED** |
+| **5** | Emergency Interruption Shift | `GET /api/queue/prediction/{id}` | Emergency jumps ahead, range expands | people_ahead increased, range expanded | **PASSED** |
+| **6** | Doctors Off-Duty Handling | `GET /api/queue/prediction/{id}` | 0 active docs, LOW confidence | Handled gracefully with break note | **PASSED** |
+| **7** | Missing Historical Data | `get_doctor_pace_and_variance` | Graceful fallback to dept default | Default 8.0 min returned without error | **PASSED** |
+| **8** | Invalid Token (404) | `GET /api/queue/prediction/999999`| HTTP 404 Token not found | Correctly rejected with 404 | **PASSED** |
+| **9** | Ownership Validation (403)| `GET /api/queue/prediction/{id}` | 403 Forbidden on mismatched phone/hash | Mismatched access rejected with 403 | **PASSED** |
+| **10**| Doctor Prediction API | `GET /api/queue/doctor-predictions/{id}`| Doctor clearance forecast & workload | Doctor clearance range returned | **PASSED** |
+| **11**| Department Prediction API | `GET /api/queue/department-predictions/{id}`| Department rush factors & wait | Velocity and rush-hour factors returned | **PASSED** |
+| **12**| Range Invariant Check | `GET /api/queue/prediction/{id}` | min_range <= est_wait <= max_range | Mathematical invariant verified | **PASSED** |
+| **13**| Prediction Mode Integrity | `get_prediction_mode` | Mode is BASELINE (zero fake ML claims) | BASELINE mode verified | **PASSED** |
 
 ---
 
@@ -76,7 +72,33 @@ Executed with Python 3.13 validating Stage 5 Gemini 2.5 Flash, offline triage, r
 
 ---
 
-## 4. Test Suite 3: Express & QR Check-in Integration (`test_stage3_4.js`)
+## 4. Test Suite 3: Backend Smoke Tests (`backend/smoke_test.py`)
+
+Executed with Python 3.13 against FastAPI application endpoints:
+
+| # | Test Scenario | Method / Route | Expected Result | Actual Result | Status |
+|---|---|---|---|---|:---:|
+| **1** | Health Check | `GET /api/health` | HTTP 200, status: ok | HTTP 200, `{"status":"ok"}` | **PASSED** |
+| **2** | Department Listings | `GET /api/departments` | 5 departments returned | Found 5 departments | **PASSED** |
+| **3** | Staff JWT Auth | `POST /api/auth/login` | Bearer token for admin & doctor1 | Tokens acquired, roles validated | **PASSED** |
+| **4** | Patient Token Creation | `POST /api/tokens` | HTTP 201, token created with secure hash | Generated token with secure_hash | **PASSED** |
+| **5** | Duplicate Phone Check | `POST /api/tokens` | HTTP 409 Conflict | Correctly rejected with 409 | **PASSED** |
+| **6** | Token Tracking & QR Pass | `GET /api/tokens/{id}` | Token details & QR URL | Status waiting, now_serving present | **PASSED** |
+| **7** | Doctor Current State | `GET /api/doctors/{id}/current` | Current consultation payload | Doctor console state retrieved | **PASSED** |
+| **8** | Doctor Call Next | `POST /api/doctors/{id}/call-next` | Oldest waiting token assigned | Token status updated to in_progress | **PASSED** |
+| **9** | Digital Prescription | `POST /api/prescriptions` | HTTP 201, prescription linked | Structured Rx created with 2 meds | **PASSED** |
+| **10**| Complete Consultation | `POST /api/tokens/{id}/complete` | Status completed, completed_at set | Token completed successfully | **PASSED** |
+| **11**| Patient Feedback | `POST /api/feedback` | HTTP 201, feedback aggregated | 5-star rating recorded | **PASSED** |
+| **12**| Emergency Workflow | `POST /emergency-flag & verify` | Audit trail created | Emergency verified with 2 audit logs | **PASSED** |
+| **13**| Online Slot Booking | `GET /slots & POST /book` | 30m slots calculated, APT booked | APT code generated, conflict guarded | **PASSED** |
+| **14**| Appointment Check-in | `POST /appointments/{id}/check-in` | Converted to live queue token | Token generated with source appointment| **PASSED** |
+| **15**| Doctor Duty Roster | `PATCH /doctors/{id}/roster` | Duty status updated | Duty status changed to busy | **PASSED** |
+| **16**| Admin Analytics | `GET /admin/analytics` | Workload metrics & notification logs | 9 notifications tracked | **PASSED** |
+| **17**| AI Triage & Chat | `POST /ai/suggest-department` | Recommends Cardiology for chest pain | Department suggestion verified | **PASSED** |
+
+---
+
+## 5. Test Suite 4: Express & QR Check-in Integration (`test_stage3_4.js`)
 
 Executed with Node.js v20+ testing doctor synchronization, hospital identity, and QR check-in:
 
@@ -92,14 +114,14 @@ Executed with Node.js v20+ testing doctor synchronization, hospital identity, an
 
 ---
 
-## 5. Test Suite 4: Frontend Production Build (`npm run build`)
+## 6. Test Suite 5: Frontend Production Build (`npm run build`)
 
 Executed using Vite 5.4.21 and Tailwind CSS in `frontend/`:
 - **Module Transformation:** 1748 modules transformed cleanly.
-- **Rollup Parse Check:** 0 JSX syntax errors (AIHealthAssistant, ChatWidget, PatientTrackPage, ReceptionDashboard, AdminDashboard clean).
+- **Rollup Parse Check:** 0 JSX syntax errors across all components.
 - **PWA Service Worker:** `dist/sw.js` and `dist/workbox-9c191d2f.js` generated cleanly.
 - **Bundle Output:**
   - `dist/index.html` (1.19 kB)
-  - `dist/assets/index-DIahPNPT.css` (56.03 kB │ gzip: 9.30 kB)
-  - `dist/assets/index-Cbmqg8kV.js` (452.34 kB │ gzip: 129.28 kB)
-- **Exit Code:** 0 (SUCCESS in 35.47s)
+  - `dist/assets/index-CJEmOz9C.css` (56.68 kB │ gzip: 9.44 kB)
+  - `dist/assets/index-BEBohr78.js` (456.64 kB │ gzip: 130.19 kB)
+- **Exit Code:** 0 (SUCCESS in 12.61s)

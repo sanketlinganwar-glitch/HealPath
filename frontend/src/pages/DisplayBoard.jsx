@@ -469,6 +469,9 @@ export function DisplayBoard() {
                 </h2>
                 <span className="text-[11px] text-slate-400 font-bold">
                   {dept.waiting_count} {t('statusWaiting')} &bull; ~{dept.est_wait_min}m{' '}
+                  {dept.wait_time_range_min && dept.wait_time_range_min.length === 2 && dept.est_wait_min > 0
+                    ? `(${dept.wait_time_range_min[0]}–${dept.wait_time_range_min[1]}m) `
+                    : ''}
                   {t('estWait')}
                 </span>
               </div>

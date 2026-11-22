@@ -11,8 +11,8 @@ flowchart TD
     S2 --> S3[Stage 3: Workflow Stabilization ✅]
     S3 --> S4[Stage 4: QR Check-In & Live Queue TV Integration ✅]
     S4 --> S5[Stage 5: AI Health Assistant with Gemini 2.5 Flash ✅]
-    S5 --> S6[Stage 6: Predictive Queue Waiting Time AI ⏳]
-    S6 --> S7[Stage 7: Multilingual Voice Assistant 📋]
+    S5 --> S6[Stage 6: Predictive Queue Waiting Time AI ✅]
+    S6 --> S7[Stage 7: Multilingual Voice Assistant ⏳]
     S7 --> S8[Stage 8: Digital Health Wallet 📋]
     S8 --> S9[Stage 9: Analytics & Omnichannel Notifications 📋]
     S9 --> S10[Stage 10: Database Unification to PostgreSQL 📋]
@@ -94,12 +94,25 @@ flowchart TD
   - Integrated Web Speech API for voice queries and audio playback.
   - Globally mounted in `AppLayout` and aliased through `ChatWidget.jsx`.
 
-### Stage 6: Predictive Queue Waiting Time AI (NEXT TARGET ⏳)
-- Historical consultation duration regression model based on department and time of day.
-- Dynamic turn recalculation when emergency patients are prioritized into the queue.
-- Real-time doctor consultation pace tracking and delay notifications.
+### Stage 6: Predictive Queue Waiting Time AI (COMPLETED ✅)
+- **Multi-Factor Queue Prediction Engine (`backend/services/queue_prediction.py`):**
+  - PII-free historical consultation data extraction (`extract_consultation_history`).
+  - Active in-progress consultation progress deduction (subtracts elapsed time).
+  - Doctor velocity & variance calculation (`get_doctor_pace_and_variance`) with empirical Bayesian smoothing.
+  - Emergency interruption shift modeling and time-of-day pace coefficients.
+  - Multi-server queue simulation yielding point estimates and 90% confidence ranges (`[min, max]`).
+  - Strict non-fabrication guarantee: operates in `BASELINE` mode with zero fabricated accuracy claims.
+- **Prediction REST Endpoints (`backend/routers/queue.py`):**
+  - `GET /api/queue/prediction/{token_id}` with token ownership validation.
+  - `GET /api/queue/doctor-predictions/{doctor_id}` for doctor queue clearance forecasts.
+  - `GET /api/queue/department-predictions/{department_id}` for department throughput.
+- **Frontend Predictive Integration:**
+  - Responsive **Predictive Queue Waiting Time Card** in `PatientTrackPage.jsx`.
+  - Range display in lobby TV screens (`DisplayBoard.jsx`) and `ReceptionDashboard.jsx`.
+- **Testing & Quality Assurance:**
+  - 13 automated test cases in `backend/test_queue_prediction.py` passing 100%.
 
-### Stage 7: Multilingual Voice Assistant (FUTURE 📋)
+### Stage 7: Multilingual Voice Assistant (NEXT TARGET ⏳)
 - Low-latency voice interaction in English, Hindi, and Marathi using Gemini Live API / Web Speech API.
 - Dialect handling for Vidarbha regional Marathi.
 

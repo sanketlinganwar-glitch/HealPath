@@ -95,3 +95,10 @@
 | `POST` | `/api/ai/triage` | Public | Stage 5 structured clinical symptom triage powered by Gemini 2.5 Flash with urgency scoring (`ROUTINE`, `MODERATE`, `URGENT`, `EMERGENCY`), hospital next steps, and automatic deterministic offline fallback. |
 | `POST` | `/api/ai/conversation/reset` | Public | Resets multi-turn conversation session, clearing context history for user privacy. |
 | `POST` | `/api/chat` | Public | Multilingual multi-turn conversational AI assistant (EN/HI/MR) with 20 req/min rate limiting, live token context injection, and emergency red-flag override. |
+
+### J. Predictive Queue Waiting Time AI (Stage 6 Upgraded)
+| Method | Path | Auth | Description |
+|---|---|---|---|
+| `GET` | `/api/queue/prediction/{token_id}` | Public / Verified | Retrieves multi-factor estimated wait time, dynamic uncertainty range `[min, max]`, reliability confidence, and clinical explanation for an individual patient token. Accepts optional `phone` or `secure_hash` query parameters to validate token ownership. |
+| `GET` | `/api/queue/doctor-predictions/{doctor_id}` | Public / Staff | Forecasts doctor's current consultation elapsed duration, active queue workload, historical average consultation velocity, and estimated queue clearance time. |
+| `GET` | `/api/queue/department-predictions/{department_id}` | Public | Forecasts department queue velocity, rush-hour multiplier, active doctor count, and estimated wait for an incoming patient registering now. |

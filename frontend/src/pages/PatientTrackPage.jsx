@@ -15,9 +15,11 @@ import {
   Phone,
   Star,
   QrCode,
-  ShieldAlert
+  ShieldAlert,
+  Sparkles,
+  Info
 } from 'lucide-react';
-import { getToken, rescheduleToken, getTokenMessages, submitFeedback, showToast } from '../api/client';
+import { getToken, rescheduleToken, getTokenMessages, submitFeedback, getQueuePrediction, showToast } from '../api/client';
 import { usePolling } from '../hooks/usePolling';
 import { useLanguage } from '../context/LanguageContext';
 import { ChatWidget } from '../components/ChatWidget';
@@ -26,6 +28,7 @@ import { QRCodeCard } from '../components/QRCodeCard';
 export function PatientTrackPage() {
   const { id } = useParams();
   const [tokenData, setTokenData] = useState(null);
+  const [predictionData, setPredictionData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [rescheduling, setRescheduling] = useState(false);
@@ -60,6 +63,12 @@ export function PatientTrackPage() {
     try {
       const data = await getToken(id);
       setTokenData(data);
+      try {
+        const pred = await getQueuePrediction(data.id, null, data.secure_hash);
+        setPredictionData(pred);
+      } catch (pErr) {
+        // Fallback to data fields if standalone endpoint fails
+      }
       const msgs = await getTokenMessages(id);
       setMessages(msgs);
     } catch (err) {
@@ -243,7 +252,7 @@ export function PatientTrackPage() {
               {t('estWait')}
             </span>
             <span className="text-2xl sm:text-3xl font-extrabold text-cyan-300">
-              {isWaiting ? `~${tokenData.est_wait_min}m` : '0m'}
+              {isWaiting ? `~${predictionData?.estimated_wait_min ?? tokenData.est_wait_min ?? 0}m` : '0m'}
             </span>
           </div>
 
@@ -257,6 +266,86 @@ export function PatientTrackPage() {
           </div>
         </div>
       </div>
+
+      {/* Stage 6: AI Predictive Queue Waiting Time Forecast */}
+      {isWaiting && (
+        <div className="p-5 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-2xl shadow-md border border-blue-700/40 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
+            <div className="flex items-center space-x-2.5">
+              <div className="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <div>
+                <div className="flex items-center space-x-2">
+                  <h4 className="text-sm font-bold text-white">Predictive Queue Waiting Time</h4>
+                  <span className="text-[10px] bg-cyan-400/20 text-cyan-200 font-mono font-bold px-2 py-0.5 rounded-full">
+                    {predictionData?.prediction_mode || tokenData.prediction_mode || 'BASELINE'} Mode
+                  </span>
+                </div>
+                <p className="text-[11px] text-blue-200">
+                  Dynamic multi-factor clinical consultation forecast
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider ${
+                (predictionData?.confidence || tokenData.confidence) === 'HIGH'
+                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                  : (predictionData?.confidence || tokenData.confidence) === 'LOW'
+                  ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                  : 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+              }`}>
+                {(predictionData?.confidence || tokenData.confidence || 'MODERATE')} Reliability
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+            <div className="p-3 bg-white/5 rounded-xl border border-white/10">
+              <span className="text-[10px] uppercase font-bold text-blue-200 block mb-0.5">Estimated Turn</span>
+              <div className="text-xl sm:text-2xl font-black text-cyan-300">
+                ~{predictionData?.estimated_wait_min ?? tokenData.est_wait_min ?? 0}m
+              </div>
+            </div>
+            <div className="p-3 bg-white/5 rounded-xl border border-white/10">
+              <span className="text-[10px] uppercase font-bold text-blue-200 block mb-0.5">Expected Range</span>
+              <div className="text-xl sm:text-2xl font-black text-white">
+                {predictionData?.wait_time_range_min
+                  ? `${predictionData.wait_time_range_min[0]}–${predictionData.wait_time_range_min[1]}m`
+                  : tokenData.wait_time_range_min
+                  ? `${tokenData.wait_time_range_min[0]}–${tokenData.wait_time_range_min[1]}m`
+                  : '—'}
+              </div>
+            </div>
+            <div className="p-3 bg-white/5 rounded-xl border border-white/10">
+              <span className="text-[10px] uppercase font-bold text-blue-200 block mb-0.5">Active Doctor Cabin(s)</span>
+              <div className="text-xl sm:text-2xl font-black text-emerald-300">
+                {predictionData?.active_doctors_count ?? 1} On Duty
+              </div>
+            </div>
+          </div>
+
+          <p className="text-xs text-blue-100/90 leading-relaxed mb-2">
+            {predictionData?.explanation || 'Prediction factors doctor historical velocity, in-progress consultation progress, and department triage load.'}
+          </p>
+
+          <div className="flex items-center justify-between text-[10px] text-blue-300/70 pt-2 border-t border-white/10">
+            <span className="flex items-center space-x-1">
+              <Info className="w-3 h-3 text-cyan-400 shrink-0" />
+              <span>Approximate estimate. Critical emergency cases receive immediate clinical priority.</span>
+            </span>
+            <button
+              type="button"
+              onClick={fetchTokenData}
+              className="hover:text-white flex items-center space-x-1 transition underline cursor-pointer"
+            >
+              <RefreshCw className="w-2.5 h-2.5" />
+              <span>Refresh</span>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Action Controls: WhatsApp & Reschedule */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

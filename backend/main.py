@@ -12,7 +12,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 from backend.db import engine, Base, SessionLocal, migrate_db
 from backend.seed import seed_database
-from backend.routers import auth, public, tokens, staff, ai, demo, appointments, prescriptions, feedback
+from backend.routers import auth, public, tokens, staff, ai, demo, appointments, prescriptions, feedback, queue
 
 def validate_security_config():
     import logging
@@ -86,6 +86,7 @@ app.include_router(feedback.router)
 app.include_router(staff.router)
 app.include_router(ai.router)
 app.include_router(demo.router)
+app.include_router(queue.router)
 
 if __name__ == "__main__":
     import uvicorn

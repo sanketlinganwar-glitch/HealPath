@@ -110,6 +110,7 @@ def get_display_board(
         active_docs = get_active_doctors_count(db, dept.id)
         avg_consult = get_avg_consult_minutes(db, dept.id)
         est_wait = round((waiting_count * avg_consult) / max(active_docs, 1)) if waiting_count > 0 else 0
+        range_min = [max(0, int(round(est_wait * 0.8))), int(round(est_wait * 1.25 + 2))] if est_wait > 0 else [0, 0]
 
         dept_displays.append({
             "department_id": dept.id,
@@ -118,6 +119,8 @@ def get_display_board(
             "next_up": next_up,
             "waiting_count": waiting_count,
             "est_wait_min": est_wait,
+            "wait_time_range_min": range_min,
+            "prediction_mode": "BASELINE",
         })
 
     return {"departments": dept_displays}

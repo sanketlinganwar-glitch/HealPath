@@ -435,7 +435,7 @@ export function ReceptionDashboard() {
                   )}
                 </div>
                 <span className="text-xs font-extrabold text-blue-700">
-                  ~{t.est_wait_min}m wait
+                  ~{t.est_wait_min}m {t.wait_time_range_min ? `(${t.wait_time_range_min[0]}–${t.wait_time_range_min[1]}m)` : 'wait'}
                 </span>
               </div>
 
@@ -627,7 +627,7 @@ export function ReceptionDashboard() {
                     </span>
                   </td>
                   <td className="py-3 px-4 font-semibold text-blue-700">
-                    ~{t.est_wait_min}m
+                    ~{t.est_wait_min}m {t.wait_time_range_min ? `(${t.wait_time_range_min[0]}–${t.wait_time_range_min[1]}m)` : ''}
                   </td>
                   <td className="py-3 px-4 text-right space-x-1.5 whitespace-nowrap">
                     {t.priority !== 'emergency' && (

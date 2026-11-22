@@ -149,6 +149,7 @@ Core transaction table tracking real-time outpatient queuing.
 - `created_at` (DATETIME): Queue entry timestamp.
 - `called_at` (DATETIME, NULLABLE): Timestamp when doctor clicked "Call Next".
 - `completed_at` (DATETIME, NULLABLE): Timestamp when consultation concluded.
+*(Note: `called_at` and `completed_at` timestamps serve as the mathematical foundation for Stage 6 Predictive Queue Waiting Time AI to compute actual clinical durations and train regression models without PII.)*
 
 ### Table 4: `prescriptions`
 Stores signed digital medical prescriptions.
