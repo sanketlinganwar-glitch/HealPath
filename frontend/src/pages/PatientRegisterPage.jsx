@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Ticket,
   Sparkles,
@@ -11,7 +11,10 @@ import {
   Stethoscope,
   HeartPulse,
   ShieldAlert,
-  ArrowRight
+  ArrowRight,
+  CheckCircle2,
+  Lock,
+  PhoneCall
 } from 'lucide-react';
 import { getDepartments, getDoctors, createToken, suggestDepartment } from '../api/client';
 import { useLanguage } from '../context/LanguageContext';
@@ -31,21 +34,32 @@ export function PatientRegisterPage() {
     preferred_slot: '10:30',
     source: 'online'
   });
+  const [consentGiven, setConsentGiven] = useState(true);
   const [loading, setLoading] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiSuggestion, setAiSuggestion] = useState(null);
   const [errors, setErrors] = useState({});
   const { lang, t } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const deptParam = params.get('dept');
+    const docParam = params.get('doctor');
+
     getDepartments().then((data) => {
       setDepartments(data);
       if (data.length > 0) {
-        setFormData((prev) => ({ ...prev, department_id: data[0].id }));
+        const initialDept = deptParam ? parseInt(deptParam, 10) : data[0].id;
+        setFormData((prev) => ({
+          ...prev,
+          department_id: initialDept,
+          doctor_id: docParam ? parseInt(docParam, 10) : ''
+        }));
       }
     }).catch(console.error);
-  }, []);
+  }, [location.search]);
 
   useEffect(() => {
     if (formData.department_id) {
@@ -99,6 +113,9 @@ export function PatientRegisterPage() {
     if (!formData.department_id) {
       errs.department_id = 'Please select a hospital department';
     }
+    if (!consentGiven) {
+      errs.consent = 'Please provide digital consent for OPD token registration.';
+    }
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -115,6 +132,7 @@ export function PatientRegisterPage() {
         age: parseInt(formData.age, 10),
         gender: formData.gender,
         department_id: parseInt(formData.department_id, 10),
+        doctor_id: formData.doctor_id ? parseInt(formData.doctor_id, 10) : undefined,
         priority: formData.priority,
         symptoms: formData.symptoms.trim() || null,
         source: 'online'
@@ -130,21 +148,32 @@ export function PatientRegisterPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
-      <div className="bg-white rounded-3xl shadow-xl border border-slate-200/80 overflow-hidden">
+    <div className="max-w-3xl mx-auto px-4 py-10 sm:py-16">
+      <div className="bg-white rounded-3xl shadow-xl border border-slate-200/90 overflow-hidden">
         {/* Banner Header */}
-        <div className="bg-gradient-to-r from-blue-800 via-blue-700 to-cyan-600 p-6 sm:p-8 text-white">
+        <div className="bg-gradient-to-r from-teal-800 via-teal-700 to-emerald-700 p-6 sm:p-8 text-white">
           <div className="flex items-center space-x-3 mb-2">
             <div className="p-2.5 rounded-xl bg-white/20 backdrop-blur-md">
-              <Ticket className="w-6 h-6 text-cyan-200" />
+              <Ticket className="w-6 h-6 text-teal-200" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-extrabold">{t('bookAppointment')}</h1>
-              <p className="text-xs text-blue-100">
-                Register for outpatient consultation and receive real-time queue tracking
+              <h1 className="text-xl sm:text-2xl font-black">{t('bookAppointment') || 'Register for OPD Consultation'}</h1>
+              <p className="text-xs text-teal-100">
+                Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Emergency Notice */}
+        <div className="bg-rose-50 border-b border-rose-100 p-4 px-6 sm:px-8 flex items-center justify-between text-xs text-rose-800">
+          <div className="flex items-center space-x-2">
+            <ShieldAlert className="w-4 h-4 text-rose-600 shrink-0" />
+            <span>Severe chest pain, breathlessness, or trauma? Contact 24/7 Emergency immediately:</span>
+          </div>
+          <a href="tel:+919552625262" className="font-black text-rose-700 underline shrink-0 ml-2">
+            +91 95526 25262
+          </a>
         </div>
 
         {/* Form Body */}
@@ -169,8 +198,8 @@ export function PatientRegisterPage() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="e.g. Ramesh Pawar"
-                    className="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
+                    placeholder="e.g. Ramesh Rathod"
+                    className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition"
                   />
                 </div>
                 {errors.name && <p className="text-rose-600 text-[11px] mt-1">{errors.name}</p>}
@@ -191,7 +220,7 @@ export function PatientRegisterPage() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '') })}
                     placeholder="9876543210"
-                    className="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
+                    className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition"
                   />
                 </div>
                 {errors.phone && <p className="text-rose-600 text-[11px] mt-1">{errors.phone}</p>}
@@ -211,7 +240,7 @@ export function PatientRegisterPage() {
                   value={formData.age}
                   onChange={(e) => handleAgeChange(e.target.value)}
                   placeholder="e.g. 45"
-                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
+                  className="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition"
                 />
                 {errors.age && <p className="text-rose-600 text-[11px] mt-1">{errors.age}</p>}
               </div>
@@ -223,7 +252,7 @@ export function PatientRegisterPage() {
                 <select
                   value={formData.gender}
                   onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                  className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
+                  className="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition font-medium"
                 >
                   <option value="male">{t('male')}</option>
                   <option value="female">{t('female')}</option>
@@ -238,7 +267,7 @@ export function PatientRegisterPage() {
                 <select
                   value={formData.priority}
                   onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                  className={`w-full px-3 py-2 text-sm font-semibold rounded-xl border transition ${
+                  className={`w-full px-3 py-2.5 text-sm font-semibold rounded-xl border transition ${
                     formData.priority === 'emergency'
                       ? 'bg-rose-50 border-rose-300 text-rose-700'
                       : formData.priority === 'senior'
@@ -247,61 +276,17 @@ export function PatientRegisterPage() {
                   }`}
                 >
                   <option value="normal">{t('normal')}</option>
-                  <option value="senior">{t('senior')}</option>
+                  <option value="senior">{t('senior')} (60+ yrs)</option>
                   <option value="emergency">{t('emergency')}</option>
                 </select>
               </div>
             </div>
           </div>
 
-          {/* Section: Symptoms & AI Triage */}
-          <div className="space-y-3 pt-3 border-t border-slate-100">
-            <div className="flex items-center justify-between">
-              <label className="block text-xs font-bold text-slate-700">
-                {t('symptoms')}
-              </label>
-              <button
-                type="button"
-                onClick={handleAiSuggest}
-                disabled={aiLoading}
-                className="inline-flex items-center space-x-1.5 px-3 py-1 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white rounded-lg text-xs font-bold shadow-xs transition"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-cyan-200" />
-                <span>{aiLoading ? 'Analyzing...' : t('aiTriageBtn')}</span>
-              </button>
-            </div>
-
-            <textarea
-              rows={2}
-              maxLength={300}
-              value={formData.symptoms}
-              onChange={(e) => setFormData({ ...formData, symptoms: e.target.value })}
-              placeholder="e.g. Mild chest pain after climbing stairs, persistent dry cough..."
-              className="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
-            />
-            {errors.symptoms && <p className="text-rose-600 text-[11px]">{errors.symptoms}</p>}
-
-            {/* AI Recommendation Alert */}
-            {aiSuggestion && (
-              <div className="p-3.5 bg-cyan-50/80 border border-cyan-200 rounded-2xl space-y-1.5 animate-slide-up">
-                <div className="flex items-center space-x-2 text-cyan-900 font-bold text-xs">
-                  <Sparkles className="w-4 h-4 text-cyan-600" />
-                  <span>AI Recommendation: {aiSuggestion.department_name}</span>
-                </div>
-                <p className="text-xs text-cyan-800 leading-relaxed">
-                  {aiSuggestion.reason}
-                </p>
-                <p className="text-[10px] text-cyan-700 italic border-t border-cyan-200/60 pt-1">
-                  {aiSuggestion.disclaimer}
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Section: Department & Doctor Preference */}
-          <div className="space-y-4 pt-3 border-t border-slate-100">
+          {/* Section: Department & Doctor */}
+          <div className="space-y-4 pt-4 border-t border-slate-100">
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-              2. Hospital Department & Preferred Time
+              2. Hospital Department & Doctor Selection
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -311,15 +296,18 @@ export function PatientRegisterPage() {
                 </label>
                 <select
                   value={formData.department_id}
-                  onChange={(e) => setFormData({ ...formData, department_id: e.target.value })}
-                  className="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
+                  onChange={(e) => setFormData({ ...formData, department_id: e.target.value, doctor_id: '' })}
+                  className="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition font-medium"
                 >
                   {departments.map((dept) => (
                     <option key={dept.id} value={dept.id}>
-                      {dept.name} ({dept.code}) - {dept.waiting_count} Waiting (~{dept.est_wait_min}m)
+                      {dept.name} ({dept.code})
                     </option>
                   ))}
                 </select>
+                {errors.department_id && (
+                  <p className="text-rose-600 text-[11px] mt-1">{errors.department_id}</p>
+                )}
               </div>
 
               <div>
@@ -329,73 +317,95 @@ export function PatientRegisterPage() {
                 <select
                   value={formData.doctor_id}
                   onChange={(e) => setFormData({ ...formData, doctor_id: e.target.value })}
-                  className="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
+                  className="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition font-medium"
                 >
-                  <option value="">{t('anyDoctor')}</option>
+                  <option value="">Any Available Specialist</option>
                   {doctors.map((doc) => (
                     <option key={doc.id} value={doc.id}>
-                      {doc.name} ({doc.specialization} - {doc.status})
+                      {doc.name} ({doc.room} - {doc.status})
                     </option>
                   ))}
                 </select>
               </div>
             </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  {t('preferredSlot')}
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                    <Clock className="w-4 h-4" />
-                  </div>
-                  <select
-                    value={formData.preferred_slot}
-                    onChange={(e) => setFormData({ ...formData, preferred_slot: e.target.value })}
-                    className="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
-                  >
-                    <option value="10:00">10:00 AM - 10:15 AM</option>
-                    <option value="10:30">10:30 AM - 10:45 AM</option>
-                    <option value="11:15">11:15 AM - 11:30 AM</option>
-                    <option value="12:00">12:00 PM - 12:15 PM</option>
-                    <option value="14:00">02:00 PM - 02:15 PM</option>
-                    <option value="15:30">03:30 PM - 03:45 PM</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  {t('langPreference')}
-                </label>
-                <input
-                  type="text"
-                  readOnly
-                  value={lang === 'hi' ? 'Hindi (हिंदी)' : lang === 'mr' ? 'Marathi (मराठी)' : 'English'}
-                  className="w-full px-3 py-2 text-sm bg-slate-100 border border-slate-200 rounded-xl text-slate-600 cursor-not-allowed"
-                />
-              </div>
-            </div>
           </div>
 
-          {/* Medical Notice */}
-          <div className="p-3 bg-amber-50/80 border border-amber-200/80 rounded-xl flex items-start space-x-2.5 text-xs text-amber-900">
-            <ShieldAlert className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
-            <p className="leading-relaxed">
-              {t('disclaimer')}
-            </p>
+          {/* Section: AI Triage & Symptoms */}
+          <div className="space-y-3 pt-4 border-t border-slate-100">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                3. Symptoms & Smart Routing (Optional)
+              </h3>
+              <button
+                type="button"
+                onClick={handleAiSuggest}
+                disabled={aiLoading}
+                className="inline-flex items-center space-x-1.5 text-xs font-bold text-teal-700 bg-teal-50 hover:bg-teal-100 px-3 py-1.5 rounded-xl border border-teal-200 transition"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+                <span>{aiLoading ? 'Analyzing...' : 'AI Department Triage'}</span>
+              </button>
+            </div>
+
+            <textarea
+              rows={2}
+              value={formData.symptoms}
+              onChange={(e) => setFormData({ ...formData, symptoms: e.target.value })}
+              placeholder="e.g. Fever with chills, chest tightness, severe cough for 3 days..."
+              className="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white transition"
+            />
+            {errors.symptoms && (
+              <p className="text-rose-600 text-[11px] mt-1">{errors.symptoms}</p>
+            )}
+
+            {aiSuggestion && (
+              <div className="p-3.5 bg-teal-50 border border-teal-200 rounded-2xl text-xs space-y-1">
+                <div className="flex items-center space-x-1.5 text-teal-800 font-bold">
+                  <Sparkles className="w-4 h-4 text-teal-600" />
+                  <span>AI Recommended: {aiSuggestion.department_name}</span>
+                </div>
+                <p className="text-teal-700 text-[11px] leading-relaxed">{aiSuggestion.explanation}</p>
+              </div>
+            )}
+          </div>
+
+          {/* Consent Checkbox */}
+          <div className="pt-2">
+            <label className="flex items-start space-x-2.5 text-xs text-slate-600 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={consentGiven}
+                onChange={(e) => setConsentGiven(e.target.checked)}
+                className="mt-0.5 rounded text-teal-600 focus:ring-teal-500"
+              />
+              <span>
+                I consent to digital OPD queue registration under the Digital Personal Data Protection (DPDP) Act, 2023 and agree to receive queue status SMS/WhatsApp updates.
+              </span>
+            </label>
+            {errors.consent && <p className="text-rose-600 text-[11px] mt-1">{errors.consent}</p>}
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3.5 px-4 bg-gradient-to-r from-blue-700 to-cyan-600 hover:from-blue-800 hover:to-cyan-700 disabled:opacity-50 text-white font-bold text-sm sm:text-base rounded-2xl shadow-lg shadow-blue-600/20 flex items-center justify-center space-x-2 transition"
-          >
-            <span>{loading ? 'Generating Token...' : t('generateTokenBtn')}</span>
-            <ArrowRight className="w-5 h-5" />
-          </button>
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-4 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white font-extrabold text-sm sm:text-base rounded-2xl transition shadow-lg shadow-teal-600/30 flex items-center justify-center space-x-2 touch-target"
+            >
+              {loading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span>Issuing Token...</span>
+                </>
+              ) : (
+                <>
+                  <Ticket className="w-5 h-5" />
+                  <span>Generate OPD Token & QR Pass</span>
+                  <ArrowRight className="w-5 h-5 ml-1" />
+                </>
+              )}
+            </button>
+          </div>
         </form>
       </div>
     </div>

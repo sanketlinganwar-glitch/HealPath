@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Activity, Lock, User, Key, ArrowRight, ShieldCheck, HeartPulse, Phone, QrCode } from 'lucide-react';
+import { Activity, Lock, User, Key, ArrowRight, ShieldCheck, HeartPulse, Phone, QrCode, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -74,176 +74,89 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-[82vh] flex items-center justify-center px-4 py-10">
-      <div className="max-w-md w-full bg-white rounded-3xl shadow-xl border border-slate-200/80 p-6 sm:p-8 space-y-6">
+    <div className="min-h-[82vh] flex items-center justify-center px-4 py-12">
+      <div className="max-w-md w-full bg-white rounded-3xl shadow-xl border border-slate-200/90 p-6 sm:p-8 space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-blue-700 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/25">
+          <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-teal-600 to-emerald-500 flex items-center justify-center text-white shadow-lg shadow-teal-500/25">
             <Activity className="w-8 h-8 stroke-[2.5]" />
           </div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-            HealPath Access Portal
+          <h2 className="text-2xl font-black text-slate-900 tracking-tight">
+            Sanjeevan Hospital Portal
           </h2>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 font-medium">
             Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal
           </p>
         </div>
 
         {/* Tab Switcher */}
-        <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-2xl border border-slate-200/70 text-xs font-bold">
+        <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-2xl border border-slate-200 text-xs font-bold">
           <button
             type="button"
             onClick={() => { setActiveTab('patient'); setErrorMsg(''); }}
-            className={`py-2 px-3 rounded-xl transition-all flex items-center justify-center space-x-1.5 ${
+            className={`py-2.5 px-3 rounded-xl transition-all flex items-center justify-center space-x-1.5 touch-target ${
               activeTab === 'patient'
-                ? 'bg-white text-blue-700 shadow-sm'
+                ? 'bg-teal-600 text-white shadow-md shadow-teal-600/20'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <HeartPulse className="w-4 h-4 text-emerald-600" />
+            <HeartPulse className="w-4 h-4" />
             <span>Health Wallet</span>
           </button>
+
           <button
             type="button"
             onClick={() => { setActiveTab('staff'); setErrorMsg(''); }}
-            className={`py-2 px-3 rounded-xl transition-all flex items-center justify-center space-x-1.5 ${
+            className={`py-2.5 px-3 rounded-xl transition-all flex items-center justify-center space-x-1.5 touch-target ${
               activeTab === 'staff'
-                ? 'bg-white text-blue-700 shadow-sm'
+                ? 'bg-teal-600 text-white shadow-md shadow-teal-600/20'
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <ShieldCheck className="w-4 h-4 text-blue-600" />
+            <Lock className="w-4 h-4" />
             <span>Staff Portal</span>
           </button>
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs font-medium">
+          <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium rounded-xl animate-shake">
             {errorMsg}
           </div>
         )}
 
-        {/* PATIENT LOGIN FORM */}
-        {activeTab === 'patient' && (
+        {/* TAB 1: PATIENT HEALTH WALLET LOGIN */}
+        {activeTab === 'patient' ? (
           <form onSubmit={handlePatientLogin} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                {t('phoneNumber') || 'Mobile Number'}
-              </label>
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700">Mobile Number (Registered)</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Phone className="w-4 h-4" />
+                  <Phone className="w-4 h-4 text-teal-600" />
                 </div>
                 <input
                   type="tel"
                   maxLength={10}
                   value={phone}
                   onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                  placeholder="e.g. 9876543210"
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
+                  placeholder="9876543210"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white font-medium"
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                Security PIN / OTP
-              </label>
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700">Access PIN / OTP</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Lock className="w-4 h-4" />
+                  <Key className="w-4 h-4 text-teal-600" />
                 </div>
                 <input
                   type="password"
                   maxLength={6}
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
-                  placeholder="1234"
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
-                />
-              </div>
-              <p className="text-[11px] text-slate-400 mt-1">Default instant OTP for demo: 1234</p>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading || phone.length !== 10}
-              className="w-full py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 disabled:opacity-50 text-white font-bold text-sm rounded-xl shadow-md shadow-emerald-600/20 flex items-center justify-center space-x-2 transition"
-            >
-              <span>{loading ? 'Verifying & Loading Wallet...' : 'Open Digital Health Wallet'}</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            {/* Quick Demo Patients */}
-            <div className="pt-3 border-t border-slate-100">
-              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">
-                Demo Patient Records
-              </p>
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  type="button"
-                  onClick={() => autoFillPatient('9876543210')}
-                  className="py-1.5 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-lg border border-emerald-200/60 transition truncate"
-                  title="Ramesh Pawar (Cardiology)"
-                >
-                  Ramesh (Cards)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => autoFillPatient('9899011111')}
-                  className="py-1.5 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-lg border border-emerald-200/60 transition truncate"
-                  title="Govind Narang (Appointment)"
-                >
-                  Govind (Appt)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => autoFillPatient('9811122233')}
-                  className="py-1.5 px-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-lg border border-emerald-200/60 transition truncate"
-                  title="Balkrishna Gite (Senior)"
-                >
-                  Balkrishna (Sr)
-                </button>
-              </div>
-            </div>
-          </form>
-        )}
-
-        {/* STAFF LOGIN FORM */}
-        {activeTab === 'staff' && (
-          <form onSubmit={handleStaffLogin} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                Staff Username
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <User className="w-4 h-4" />
-                </div>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="e.g. admin, reception, doctor1"
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                  <Lock className="w-4 h-4" />
-                </div>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 focus:bg-white transition"
+                  placeholder="Default PIN: 1234"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white font-medium"
                 />
               </div>
             </div>
@@ -251,43 +164,136 @@ export function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 disabled:opacity-50 text-white font-bold text-sm rounded-xl shadow-md shadow-blue-600/20 flex items-center justify-center space-x-2 transition"
+              className="w-full py-3.5 px-4 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white font-extrabold text-sm rounded-xl transition shadow-md shadow-teal-600/30 flex items-center justify-center space-x-2 touch-target"
             >
-              <span>{loading ? 'Authenticating...' : 'Sign In to Staff Console'}</span>
-              <ArrowRight className="w-4 h-4" />
+              {loading ? (
+                <span>Authenticating Patient...</span>
+              ) : (
+                <>
+                  <HeartPulse className="w-4 h-4" />
+                  <span>Access Health Wallet</span>
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </>
+              )}
             </button>
 
-            {/* Quick Demo Staff */}
-            <div className="pt-3 border-t border-slate-100">
-              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2 text-center">
-                Quick Demo Staff Roles
+            {/* Demo Quick Fill for Registered Patients */}
+            <div className="pt-2 border-t border-slate-100">
+              <p className="text-[11px] font-bold text-slate-400 mb-2 uppercase tracking-wider text-center">
+                One-Click Registered Patients (Demo)
               </p>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-1.5 text-[11px]">
+                <button
+                  type="button"
+                  onClick={() => autoFillPatient('9876543210')}
+                  className="p-1.5 bg-slate-50 hover:bg-teal-50 hover:text-teal-800 border border-slate-200 rounded-lg text-slate-700 font-semibold text-center transition"
+                >
+                  Ramesh (General)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => autoFillPatient('9876543211')}
+                  className="p-1.5 bg-slate-50 hover:bg-teal-50 hover:text-teal-800 border border-slate-200 rounded-lg text-slate-700 font-semibold text-center transition"
+                >
+                  Govind (Ortho)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => autoFillPatient('9876543213')}
+                  className="p-1.5 bg-slate-50 hover:bg-teal-50 hover:text-teal-800 border border-slate-200 rounded-lg text-slate-700 font-semibold text-center transition"
+                >
+                  Balkrishna (Senior)
+                </button>
+              </div>
+            </div>
+          </form>
+        ) : (
+          /* TAB 2: HOSPITAL STAFF LOGIN */
+          <form onSubmit={handleStaffLogin} className="space-y-4">
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700">Staff Username</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <User className="w-4 h-4 text-teal-600" />
+                </div>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="e.g. admin, receptionist, doctor1"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white font-medium"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-slate-700">Password</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                  <Key className="w-4 h-4 text-teal-600" />
+                </div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-600 focus:bg-white font-medium"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3.5 px-4 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white font-extrabold text-sm rounded-xl transition shadow-md flex items-center justify-center space-x-2 touch-target"
+            >
+              {loading ? (
+                <span>Verifying Credentials...</span>
+              ) : (
+                <>
+                  <Lock className="w-4 h-4" />
+                  <span>Sign In as Staff</span>
+                  <ArrowRight className="w-4 h-4 ml-1" />
+                </>
+              )}
+            </button>
+
+            {/* Quick Demo Pre-fill for Testing */}
+            <div className="pt-2 border-t border-slate-100">
+              <p className="text-[11px] font-bold text-slate-400 mb-2 uppercase tracking-wider text-center">
+                Staff Quick Fill (Demo)
+              </p>
+              <div className="grid grid-cols-3 gap-1.5 text-[11px]">
                 <button
                   type="button"
                   onClick={() => autoFillStaff('admin', 'admin123')}
-                  className="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition"
+                  className="p-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 font-semibold text-center transition"
                 >
                   Admin
                 </button>
                 <button
                   type="button"
-                  onClick={() => autoFillStaff('reception', 'reception123')}
-                  className="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition"
+                  onClick={() => autoFillStaff('receptionist', 'reception123')}
+                  className="p-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 font-semibold text-center transition"
                 >
                   Reception
                 </button>
                 <button
                   type="button"
                   onClick={() => autoFillStaff('doctor1', 'doctor123')}
-                  className="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition"
+                  className="p-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-slate-700 font-semibold text-center transition"
                 >
-                  Dr. Sharma
+                  Dr. Rajesh
                 </button>
               </div>
             </div>
           </form>
         )}
+
+        <div className="pt-2 flex items-center justify-center space-x-1 text-slate-400 text-xs">
+          <ShieldCheck className="w-4 h-4 text-teal-600" />
+          <span>PBKDF2-SHA256 & DPDP Act 2023 Compliant</span>
+        </div>
       </div>
     </div>
   );

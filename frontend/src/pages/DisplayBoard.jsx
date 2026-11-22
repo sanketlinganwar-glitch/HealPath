@@ -331,15 +331,15 @@ export function DisplayBoard() {
       <header className="flex flex-col xl:flex-row xl:items-center justify-between pb-6 border-b border-slate-800 gap-4">
         {/* Brand Title */}
         <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20 flex-shrink-0">
+          <div className="w-12 h-12 rounded-2xl bg-teal-600 flex items-center justify-center shadow-lg shadow-teal-500/20 flex-shrink-0">
             <Activity className="w-7 h-7 text-white stroke-[2.5]" />
           </div>
           <div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight bg-gradient-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight bg-gradient-to-r from-teal-400 via-emerald-300 to-white bg-clip-text text-transparent">
               {t('displayBoard')}
             </h1>
             <p className="text-xs text-slate-400 font-semibold tracking-wide">
-              {t('tagline')} &bull; Live Hospital Waiting Room Display
+              Sanjeevan Multispecialty Hospital, Yavatmal &bull; Live OPD Queue Display
             </p>
           </div>
         </div>

@@ -180,10 +180,10 @@ export function PatientTrackPage() {
         isInProgress
           ? 'bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-950 text-white border-emerald-500/50 shadow-emerald-500/10'
           : isCompleted
-          ? 'bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white border-slate-700'
+          ? 'bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 text-white border-slate-700'
           : isSkipped
           ? 'bg-gradient-to-br from-slate-800 via-rose-950 to-slate-900 text-white border-rose-800'
-          : 'bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 text-white border-blue-500/30'
+          : 'bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 text-white border-teal-500/30'
       }`}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
           <div>
@@ -269,8 +269,8 @@ export function PatientTrackPage() {
 
       {/* Stage 6: AI Predictive Queue Waiting Time Forecast */}
       {isWaiting && (
-        <div className="p-5 bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-2xl shadow-md border border-blue-700/40 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="p-5 bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white rounded-2xl shadow-md border border-teal-700/40 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-white/10">
             <div className="flex items-center space-x-2.5">
               <div className="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center">
