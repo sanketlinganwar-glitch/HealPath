@@ -193,8 +193,29 @@ def hospital_chat(payload: ChatRequest, request: Request, db: Session = Depends(
 
     # Retrieve real token context if provided
     token_context = None
-    if payload.token_id:
-        token_obj = db.query(Token).filter(Token.id == payload.token_id).first()
+    token_id_to_use = payload.token_id
+    if not token_id_to_use:
+        import re
+        from backend.models import Patient
+        tok_match = re.search(r'\b([A-Za-z]{1,4}-\d{1,4})\b', payload.message)
+        if tok_match:
+            found_token = db.query(Token).filter(Token.token_number == tok_match.group(1).upper()).first()
+            if found_token:
+                token_id_to_use = found_token.id
+        else:
+            phone_match = re.search(r'\b\d{10}\b', payload.message)
+            if phone_match:
+                pat = db.query(Patient).filter(Patient.phone == phone_match.group(0)).first()
+                if pat:
+                    found_token = db.query(Token).filter(
+                        Token.patient_id == pat.id,
+                        Token.status.in_(["waiting", "in_progress"])
+                    ).order_by(Token.id.desc()).first()
+                    if found_token:
+                        token_id_to_use = found_token.id
+
+    if token_id_to_use:
+        token_obj = db.query(Token).filter(Token.id == token_id_to_use).first()
         if token_obj:
             pos, ahead, est_wait = get_token_position_and_wait(db, token_obj)
             room_str = token_obj.doctor.room if token_obj.doctor else "Consultation room"
@@ -215,6 +236,8 @@ def hospital_chat(payload: ChatRequest, request: Request, db: Session = Depends(
         language=payload.language or "en",
         token_context=token_context,
         client_ip=client_ip,
-        departments=departments
+        departments=departments,
+        db=db,
+        token_id=token_id_to_use
     )
     return result

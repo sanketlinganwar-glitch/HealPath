@@ -15,10 +15,16 @@ import os
 import json
 import time
 import uuid
+import re
 import logging
 from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
+from sqlalchemy.orm import Session
+
+from backend.models import Department, Doctor, Patient, Token
+from backend.services.queue_prediction import queue_prediction_service
+from backend.services.queue import get_token_position_and_wait
 
 logger = logging.getLogger(__name__)
 
@@ -40,22 +46,26 @@ OFFLINE_DISCLAIMER = (
 RED_FLAG_CONDITIONS = {
     "cardiac": [
         "chest pain", "crushing chest pain", "heart attack", "radiating pain to left arm",
-        "chest tightness", "severe palpitations", "छाती में दर्द", "हार्ट अटैक", "हृदयविकार", "छातीत तीव्र वेदना"
+        "chest tightness", "severe palpitations", "छाती में दर्द", "हार्ट अटैक", "हृदयविकार", "छातीत तीव्र वेदना",
+        "छातीत दुखणे", "छातीवर दबाव", "हार्टअटॅक", "छातीत धडधडणे"
     ],
     "respiratory": [
         "shortness of breath", "severe dyspnea", "gasping for air", "choking", "turning blue",
-        "cyanosis", "unable to breathe", "सांस लेने में तकलीफ", "दम घुटना", "श्वास घेण्यास त्रास", "श्वास कोंडणे"
+        "cyanosis", "unable to breathe", "सांस लेने में तकलीफ", "दम घुटना", "श्वास घेण्यास त्रास", "श्वास कोंडणे",
+        "श्वास लागत आहे", "दम लागणे", "श्वास घेता येत नाही", "सांस फूलना"
     ],
     "neurological": [
         "stroke", "facial drooping", "slurred speech", "sudden paralysis", "loss of consciousness",
-        "unconscious", "passed out", "seizure", "convulsions", "बेहोश", "दौरा", "पक्षाघात", "अचानक अर्धांगवायू"
+        "unconscious", "passed out", "seizure", "convulsions", "बेहोश", "दौरा", "पक्षाघात", "अचानक अर्धांगवायू",
+        "बेशुद्ध", "चक्कर येऊन पडणे", "शुद्ध हरपणे", "हात पाय थरथरणे"
     ],
     "trauma_bleeding": [
         "severe bleeding", "uncontrolled bleeding", "head injury", "arterial bleed", "major accident",
-        "deep wound", "रक्तस्राव", "गंभीर जखम", "रक्त वाहणे"
+        "deep wound", "रक्तस्राव", "गंभीर जखम", "रक्त वाहणे", "रक्ताची उलटी", "रक्त उलटी", "खूप रक्त येणे", "अपघात"
     ],
     "poison_burns": [
-        "poisoning", "chemical ingestion", "snake bite", "severe burns", "विषबाधा", "साप चावणे", "भाजणे"
+        "poisoning", "chemical ingestion", "snake bite", "severe burns", "विषबाधा", "साप चावणे", "भाजणे",
+        "साप चावला", "कीटकनाशक", "विष पिणे", "जळणे"
     ]
 }
 
@@ -437,29 +447,531 @@ def triage_symptoms_with_gemini(
         )
 
 
+def build_spoken_text(text: str) -> str:
+    """Strips markdown, links, and emojis for clean, natural speech synthesis."""
+    if not text:
+        return ""
+    clean = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', text)
+    clean = re.sub(r'[*_#`~]', '', clean)
+    clean = re.sub(r'[\U00010000-\U0010ffff]', '', clean, flags=re.UNICODE)
+    clean = re.sub(r'[\u2600-\u27bf]', '', clean)
+    clean = clean.replace("⚠️", "").replace("🚨", "").replace("📞", "").replace("📅", "").replace("🎫", "").replace("👨‍⚕️", "").replace("⏳", "")
+    clean = re.sub(r'\s+', ' ', clean).strip()
+    return clean
+
+
+def classify_voice_intent(message: str) -> str:
+    """
+    Classifies patient query into structured hospital intents
+    supporting English, Hindi, and Marathi.
+    """
+    msg_lower = message.lower().strip()
+
+    is_emergency, _, _ = detect_emergency_red_flags(msg_lower)
+    if is_emergency:
+        return "emergency"
+
+    # 1. Patient Registration / New Token (Checked before contact so phone number in registration doesn't misclassify)
+    if any(k in msg_lower for k in [
+        "register", "registration", "new patient", "make token", "generate token", "create token", "walk in", "token please",
+        "नाव नोंदणी", "नोंदणी", "नवीन टोकन", "टोकन काढा", "नाव नोंदवा", "टोकन द्या",
+        "पंजीकरण", "नया टोकन", "रजिस्ट्रेशन", "नाम लिखाना", "टोकन चाहिए"
+    ]):
+        return "patient_registration"
+
+    # 2. Hospital Timings & OPD Hours (Checked before contact so 'hospital' doesn't conflict)
+    if any(k in msg_lower for k in [
+        "timing", "timings", "hours", "open", "close", "opd time", "when open", "schedule",
+        "वेळ", "ओपीडी वेळ", "दवाखाना कधी", "वेळापत्रक", "रुग्णालयाची वेळ", "सुरू कधी",
+        "समय", "ओपीडी समय", "कब खुलता है", "टाइमिंग", "अस्पताल का समय"
+    ]):
+        return "hospital_timings"
+
+    # 3. Hospital Location & Contact
+    has_contact_word = any(k in msg_lower for k in [
+        "address", "location", "contact", "where is", "how to reach", "helpline", "emergency number",
+        "पत्ता", "संपर्क", "कुठे आहे", "कसा पोहोचायचा", "आपत्कालीन नंबर", "दवाखाना कुठे",
+        "कहाँ है", "संपर्क नंबर", "आपातकालीन नंबर", "अस्पताल का पता", "फोन नंबर", "phone number"
+    ]) or bool(re.search(r'(?<!अस्)पता\b', msg_lower)) or ("फोन" in msg_lower and "नंबर" in msg_lower)
+    if has_contact_word:
+        return "hospital_contact"
+
+    # Doctor Availability & Specialists on Duty
+    if any(k in msg_lower for k in [
+        "doctor available", "which doctor", "doctor list", "doctor timing", "specialist", "doctors on duty",
+        "डॉक्टर उपस्थित", "कोणते डॉक्टर", "डॉक्टर कधी", "डॉक्टर उपलब्ध", "तज्ज्ञ डॉक्टर",
+        "डॉक्टर हैं क्या", "कौन से डॉक्टर", "डॉक्टर की सूची", "डॉक्टर उपलब्ध हैं"
+    ]):
+        return "doctor_availability"
+
+    # Department Information
+    if any(k in msg_lower for k in [
+        "department", "departments", "speciality", "specialities", "wards",
+        "विभाग", "कोणते विभाग", "विशेषज्ञता",
+        "विभाग कौन से", "अस्पताल के विभाग"
+    ]):
+        return "department_info"
+
+    # Token Status / Queue Position / Waiting Time
+    if any(k in msg_lower for k in [
+        "token", "queue", "wait", "position", "turn", "how many ahead", "how many waiting", "people ahead",
+        "माझा नंबर", "किती रुग्ण", "किती वेळ", "कधी नंबर येईल", "रांग", "प्रतीक्षा", "टोकन नंबर",
+        "मेरा नंबर", "कितने मरीज", "कितना समय", "कब नंबर आएगा", "कतार", "टोकन की स्थिति"
+    ]):
+        if any(k in msg_lower for k in ["register", "new token", "make token", "generate token", "नवीन टोकन", "नोंदणी", "नया टोकन", "पंजीकरण"]):
+            return "patient_registration"
+        return "queue_status"
+
+    # Patient Registration / New Token
+    if any(k in msg_lower for k in [
+        "register", "registration", "new patient", "make token", "generate token", "create token", "walk in", "token please",
+        "नाव नोंदणी", "नोंदणी", "नवीन टोकन", "टोकन काढा", "नाव नोंदवा", "टोकन द्या",
+        "पंजीकरण", "नया टोकन", "रजिस्ट्रेशन", "नाम लिखाना", "टोकन चाहिए"
+    ]):
+        return "patient_registration"
+
+    # Appointment Booking
+    if any(k in msg_lower for k in [
+        "appointment", "book appointment", "book slot", "schedule", "doctor visit",
+        "अपॉइंटमेंट", "तारीख बुक", "भेट", "वेळ हवी", "अपॉइंटमेंट बुक",
+        "अपॉइंटमेंट लेनी", "तारीख लेनी"
+    ]):
+        return "appointment_booking"
+
+    # General FAQ & Diagnostic Facilities
+    if any(k in msg_lower for k in [
+        "ayushman", "mediclaim", "cashless", "insurance", "xray", "x-ray", "sonography", "lab", "pharmacy", "medical store",
+        "आयुष्मान", "कॅशलेस", "विमा", "सोनोग्राफी", "लॅब", "औषधे", "एक्स-रे", "रक्त तपासणी", "सुविधा",
+        "आयुष्मान कार्ड", "कैशलेस", "बीमा", "सोनोग्राफी", "दवा की दुकान", "खून की जांच", "सुविधाएं"
+    ]):
+        return "general_faq"
+
+    return "general"
+
+
+def get_deterministic_operational_reply(
+    intent: str,
+    message: str,
+    language: str = "en",
+    db: Optional[Session] = None,
+    token_context: Optional[str] = None,
+    token_id: Optional[int] = None
+) -> Optional[Dict[str, Any]]:
+    """
+    Constructs deterministic, verified hospital operational answers for Sanjeevan Hospital, Yavatmal.
+    Guarantees that operational data (token status, waiting time, doctor schedules, hospital timings)
+    is mathematically accurate and never hallucinated.
+    """
+    msg_clean = message.strip()
+    msg_lower = msg_clean.lower()
+
+    # 1. Hospital Location & Contact
+    if intent == "hospital_contact":
+        if language == "mr":
+            reply = (
+                "संजीवन मल्टीस्पेशालिटी हॉस्पिटल, महादेव मंदिर रोड, रतनलाल प्लॉट्स, यवतमाळ - 445001 (४४५००१). "
+                "आपत्कालीन कक्ष २४ तास सुरू आहे. आपत्कालीन दूरध्वनी: +91 95526 25262 (+९१ ९५५२६ २५२६२), रिसेप्शन: 07232-244222."
+            )
+        elif language == "hi":
+            reply = (
+                "संजीवन मल्टीस्पेशलिटी अस्पताल, महादेव मंदिर रोड, रतनलाल प्लॉट्स, यवतमाल - 445001 (४४५००१)। "
+                "आपातकालीन सेवा २४ घंटे चालू है। आपातकालीन फोन: +91 95526 25262 (+९१ ९५५२६ २५२६२), रिसेप्शन: 07232-244222।"
+            )
+        else:
+            reply = (
+                "Sanjeevan Multispecialty Hospital & Research Institute is located at Mahadev Mandir Road, "
+                "Ratanlal Plots, Yavatmal, Maharashtra 445001. 24/7 Emergency Hotline: +91 95526 25262, "
+                "Reception: 07232-244222."
+            )
+        return {
+            "reply": reply,
+            "intent": "hospital_contact",
+            "suggested_actions": [
+                {"label": "🚨 Call Emergency (+91 95526 25262)", "action": "call_emergency"},
+                {"label": "🗺️ Open Hospital Map", "action": "open_map"},
+                {"label": "📅 Book Appointment", "action": "book_appointment"}
+            ],
+            "structured_data": {
+                "type": "hospital_contact",
+                "name": "Sanjeevan Multispecialty Hospital & Research Institute",
+                "address": "Mahadev Mandir Road, Ratanlal Plots, Yavatmal, Maharashtra 445001",
+                "emergency_phone": "+91 95526 25262",
+                "reception_phone": "07232-244222"
+            },
+            "spoken_text": build_spoken_text(reply)
+        }
+
+    # 2. Hospital Timings & OPD Hours
+    if intent == "hospital_timings":
+        if language == "mr":
+            reply = (
+                "संजीवन रुग्णालयाची ओपीडी वेळ: सकाळी 08:30 ते दुपारी 01:30 आणि संध्याकाळी 04:30 ते रात्री 08:30 (सोमवार ते शनिवार). "
+                "आपत्कालीन कक्ष (Casualty), अतिदक्षता विभाग (ICU) आणि ॲम्ब्युलन्स २४ तास अविरत सुरू असतात."
+            )
+        elif language == "hi":
+            reply = (
+                "संजीवन अस्पताल की ओपीडी का समय: सुबह 08:30 से दोपहर 01:30 और शाम 04:30 से रात 08:30 बजे तक (सोमवार से शनिवार)। "
+                "इमरजेंसी (Casualty), आईसीयू और एम्बुलेंस सेवाएं २४ घंटे चालू हैं।"
+            )
+        else:
+            reply = (
+                "Sanjeevan Hospital OPD consultation timings are 08:30 AM to 01:30 PM and 04:30 PM to 08:30 PM (Monday to Saturday). "
+                "Emergency Casualty, ICU, and Ambulance services operate 24 hours a day, 7 days a week."
+            )
+        return {
+            "reply": reply,
+            "intent": "hospital_timings",
+            "suggested_actions": [
+                {"label": "📅 Book Appointment", "action": "book_appointment"},
+                {"label": "🎫 Take Digital Token", "action": "register"}
+            ],
+            "structured_data": {
+                "type": "hospital_timings",
+                "opd_morning": "08:30 AM - 01:30 PM",
+                "opd_evening": "04:30 PM - 08:30 PM",
+                "emergency": "24 Hours Open (Ground Floor)"
+            },
+            "spoken_text": build_spoken_text(reply)
+        }
+
+    # 3. Doctor Availability
+    if intent == "doctor_availability":
+        doc_list = []
+        if db:
+            docs = db.query(Doctor).all()
+            for d in docs:
+                dept_name = d.department.name if d.department else "General"
+                doc_list.append({
+                    "id": d.id,
+                    "name": d.name,
+                    "department": dept_name,
+                    "room": d.room,
+                    "status": d.status
+                })
+        
+        if doc_list:
+            top_docs = [f"{d['name']} ({d['department']} - Room {d['room']})" for d in doc_list[:5]]
+            if language == "mr":
+                reply = "संजीवन रुग्णालयात उपस्थित तज्ज्ञ डॉक्टर्स: " + ", ".join([f"{d['name']} ({d['department']}, रूम {d['room']})" for d in doc_list[:4]]) + ". आपण ऑनलाइन किंवा ओपीडी काऊंटरवर अपॉइंटमेंट घेऊ शकता."
+            elif language == "hi":
+                reply = "संजीवन अस्पताल के विशेषज्ञ डॉक्टर: " + ", ".join([f"{d['name']} ({d['department']}, कमरा {d['room']})" for d in doc_list[:4]]) + "। आप तुरंत अपॉइंटमेंट बुक कर सकते हैं।"
+            else:
+                reply = "Specialist doctors at Sanjeevan Hospital: " + ", ".join(top_docs[:4]) + ". You can book an appointment or visit the OPD desk."
+        else:
+            if language == "mr":
+                reply = "संजीवन रुग्णालयात जनरल मेडिसिन, कार्डिओलॉजी, ऑर्थोपेडिक्स, पेडियाट्रिक्स आणि ईएनटी विभागांचे विशेषज्ञ डॉक्टर्स उपलब्ध आहेत."
+            elif language == "hi":
+                reply = "संजीवन अस्पताल में जनरल मेडिसिन, कार्डियोलॉजी, ऑर्थोपेडिक्स, पीडियाट्रिक्स और ईएनटी के विशेषज्ञ डॉक्टर उपलब्ध हैं।"
+            else:
+                reply = "Sanjeevan Hospital has specialists available in General Medicine, Cardiology, Orthopedics, Pediatrics, and ENT."
+
+        return {
+            "reply": reply,
+            "intent": "doctor_availability",
+            "suggested_actions": [
+                {"label": "📅 Book Consultation", "action": "book_appointment"},
+                {"label": "👨‍⚕️ View Doctor Roster", "action": "view_doctors"}
+            ],
+            "structured_data": {
+                "type": "doctor_availability",
+                "doctors": doc_list
+            },
+            "spoken_text": build_spoken_text(reply)
+        }
+
+    # 4. Department Information
+    if intent == "department_info":
+        dept_names = ["General Medicine", "Cardiology", "Orthopedics", "Pediatrics", "ENT"]
+        if db:
+            all_depts = db.query(Department).all()
+            if all_depts:
+                dept_names = [d.name for d in all_depts]
+
+        if language == "mr":
+            reply = f"संजीवन रुग्णालयातील प्रमुख विभाग: {', '.join(dept_names)}. सर्व विभागांत तज्ज्ञ डॉक्टर्स आणि सुसज्ज तपासणी कक्ष उपलब्ध आहेत."
+        elif language == "hi":
+            reply = f"संजीवन अस्पताल के मुख्य विभाग: {', '.join(dept_names)}। सभी विभागों में योग्य विशेषज्ञ डॉक्टर और जांच सुविधाएं उपलब्ध हैं।"
+        else:
+            reply = f"Sanjeevan Hospital clinical departments include: {', '.join(dept_names)}, equipped with advanced diagnostic and inpatient care."
+
+        return {
+            "reply": reply,
+            "intent": "department_info",
+            "suggested_actions": [
+                {"label": "💡 AI Symptom Triage", "action": "ai_triage"},
+                {"label": "📅 Book Appointment", "action": "book_appointment"}
+            ],
+            "structured_data": {"type": "department_info", "departments": dept_names},
+            "spoken_text": build_spoken_text(reply)
+        }
+
+    # 5. Token Status / Queue Position / Waiting Time
+    if intent in ["queue_status", "queue_position", "waiting_time"]:
+        token_obj = None
+        if token_id and db:
+            token_obj = db.query(Token).filter(Token.id == token_id).first()
+        elif db:
+            tok_match = re.search(r'\b([A-Za-z]{1,4}-\d{1,4})\b', message)
+            if tok_match:
+                token_obj = db.query(Token).filter(Token.token_number == tok_match.group(1).upper()).first()
+            else:
+                phone_match = re.search(r'\b\d{10}\b', message)
+                if phone_match:
+                    p = db.query(Patient).filter(Patient.phone == phone_match.group(0)).first()
+                    if p:
+                        token_obj = db.query(Token).filter(Token.patient_id == p.id, Token.status.in_(["waiting", "in_progress"])).order_by(Token.id.desc()).first()
+
+        if token_obj and db:
+            pred = queue_prediction_service.predict_token_waiting_time(db, token_obj)
+            est_wait = pred.get("est_wait_min", 0)
+            wait_range = pred.get("wait_time_range_min", [est_wait, est_wait + 5])
+            ahead = pred.get("people_ahead", 0)
+            room = token_obj.doctor.room if token_obj.doctor else "Consultation Cabin"
+
+            if language == "mr":
+                st_mr = "तपासणी सुरू आहे" if token_obj.status == "in_progress" else "रांगेत प्रतीक्षेत" if token_obj.status == "waiting" else "पूर्ण झाली"
+                reply = (
+                    f"टोकन क्रमांक {token_obj.token_number} ({token_obj.department.name}). स्थिती: {st_mr}. "
+                    f"तुमच्यापुढे {ahead} रुग्ण आहेत. अंदाजे प्रतीक्षा वेळ: ~{est_wait} मिनिटे ({wait_range[0]}–{wait_range[1]} मिनिटे). "
+                    f"डॉक्टर कक्ष: {room}."
+                )
+            elif language == "hi":
+                st_hi = "परामर्श चालू है" if token_obj.status == "in_progress" else "कतार में प्रतीक्षारत" if token_obj.status == "waiting" else "पूर्ण"
+                reply = (
+                    f"टोकन नंबर {token_obj.token_number} ({token_obj.department.name})। स्थिति: {st_hi}। "
+                    f"आपके आगे {ahead} मरीज हैं। अनुमानित प्रतीक्षा समय: ~{est_wait} मिनट ({wait_range[0]}–{wait_range[1]} मिनट)। "
+                    f"डॉक्टर कमरा: {room}।"
+                )
+            else:
+                reply = (
+                    f"Token {token_obj.token_number} ({token_obj.department.name}). Status: {token_obj.status}. "
+                    f"There are {ahead} patient(s) ahead of you. Estimated wait: ~{est_wait} mins ({wait_range[0]}–{wait_range[1]} mins). "
+                    f"Doctor Cabin: {room}."
+                )
+
+            return {
+                "reply": reply,
+                "intent": "queue_status",
+                "suggested_actions": [
+                    {"label": "🎫 View Token Card", "action": "track_token"},
+                    {"label": "📺 Lobby TV Display", "action": "view_display"}
+                ],
+                "structured_data": {
+                    "type": "token_status",
+                    "token_id": token_obj.id,
+                    "token_number": token_obj.token_number,
+                    "department": token_obj.department.name,
+                    "status": token_obj.status,
+                    "people_ahead": ahead,
+                    "est_wait_min": est_wait,
+                    "wait_time_range_min": wait_range,
+                    "room": room
+                },
+                "spoken_text": build_spoken_text(reply)
+            }
+        elif token_context:
+            if language == "mr":
+                reply = f"थेट टोकन माहिती: {token_context}"
+            elif language == "hi":
+                reply = f"लाइव टोकन जानकारी: {token_context}"
+            else:
+                reply = f"Live Token Information: {token_context}"
+
+            return {
+                "reply": reply,
+                "intent": "queue_status",
+                "suggested_actions": [
+                    {"label": "🎫 Track Token", "action": "track_token"},
+                    {"label": "📺 Display Board", "action": "view_display"}
+                ],
+                "structured_data": {"type": "token_context", "context": token_context},
+                "spoken_text": build_spoken_text(reply)
+            }
+        else:
+            if language == "mr":
+                reply = "आपल्या टोकनची थेट रांग स्थिती आणि प्रतीक्षा वेळ जाणून घेण्यासाठी कृपया आपला १० अंकी मोबाईल नंबर किंवा टोकन नंबर सांगा (उदा. GM-001)."
+            elif language == "hi":
+                reply = "अपने टोकन की लाइव स्थिति और प्रतीक्षा समय जानने के लिए कृपया अपना १० अंकों का मोबाइल नंबर या टोकन नंबर बताएं (उदा. GM-001)।"
+            else:
+                reply = "To check your live queue turn and estimated wait time, please state or enter your 10-digit mobile number or Token ID (e.g. GM-001)."
+
+            return {
+                "reply": reply,
+                "intent": "queue_status",
+                "suggested_actions": [
+                    {"label": "🔍 Track by Phone", "action": "track_token"},
+                    {"label": "📺 Display Board", "action": "view_display"}
+                ],
+                "structured_data": {"type": "token_prompt"},
+                "spoken_text": build_spoken_text(reply)
+            }
+
+    # 6. Patient Registration Intent
+    if intent == "patient_registration":
+        cand_name = None
+        cand_age = None
+        cand_phone = None
+        cand_dept_id = 1
+        cand_dept_name = "General Medicine"
+
+        age_match = re.search(r'(?:age|वय|उम्र|आयु)\s*[:=]?\s*(\d{1,3})', msg_lower)
+        if not age_match:
+            age_match = re.search(r'\b(\d{1,3})\s*(?:years|वर्षे|साल)\b', msg_lower)
+        if age_match:
+            try:
+                cand_age = int(age_match.group(1))
+            except ValueError:
+                pass
+
+        phone_match = re.search(r'\b\d{10}\b', message)
+        if phone_match:
+            cand_phone = phone_match.group(0)
+
+        if any(k in msg_lower for k in ["cardio", "heart", "हृदय", "छाती"]):
+            cand_dept_id = 2
+            cand_dept_name = "Cardiology"
+        elif any(k in msg_lower for k in ["ortho", "bone", "joint", "हड्डी", "सांधे"]):
+            cand_dept_id = 3
+            cand_dept_name = "Orthopedics"
+        elif any(k in msg_lower for k in ["pediatric", "child", "baby", "लहान मूल", "बाळ", "बच्चा"]):
+            cand_dept_id = 4
+            cand_dept_name = "Pediatrics"
+        elif any(k in msg_lower for k in ["ent", "ear", "nose", "throat", "कान", "नाक", "घसा"]):
+            cand_dept_id = 5
+            cand_dept_name = "ENT"
+
+        name_match = re.search(r'(?:my name is|name is|i am|नाव आहे|नाव|नाम है|नाम)\s+([A-Za-z\u0900-\u097F\s]{2,30})', message, re.IGNORECASE)
+        if name_match:
+            cand_name = name_match.group(1).strip().title()
+
+        ready = bool(cand_name and cand_age and cand_phone)
+        priority = "senior" if (cand_age and cand_age >= 60) else "normal"
+
+        if ready:
+            if language == "mr":
+                reply = (
+                    f"कृपया नोंदणी माहितीची खात्री करा: नाव: {cand_name}, वय: {cand_age}, "
+                    f"विभाग: {cand_dept_name}, मोबाईल: {cand_phone}. माहिती बरोबर असल्यास 'हो' म्हणा किंवा टोकन कन्फर्म करा."
+                )
+            elif language == "hi":
+                reply = (
+                    f"कृपया पंजीकरण विवरण की पुष्टि करें: नाम: {cand_name}, आयु: {cand_age}, "
+                    f"विभाग: {cand_dept_name}, मोबाइल: {cand_phone}। यदि यह सही है तो 'हाँ' कहें या टोकन कन्फर्म करें।"
+                )
+            else:
+                reply = (
+                    f"Please confirm your registration: Name: {cand_name}, Age: {cand_age}, "
+                    f"Department: {cand_dept_name}, Phone: {cand_phone}. If correct, confirm to generate token."
+                )
+        else:
+            if language == "mr":
+                reply = "नवीन डिजिटल टोकन नोंदणीसाठी कृपया तुमचे पूर्ण नाव, वय आणि विभाग सांगा (उदा. रमेश पाटील, वय ४०, जनरल मेडिसिन)."
+            elif language == "hi":
+                reply = "नया डिजिटल टोकन बनाने के लिए कृपया अपना पूरा नाम, आयु और विभाग बताएं (उदा. रमेश पाटिल, उम्र ४०, जनरल मेडिसिन)।"
+            else:
+                reply = "To register for a digital OPD token, please tell me your Full Name, Age, Department, and Mobile Number."
+
+        return {
+            "reply": reply,
+            "intent": "patient_registration",
+            "suggested_actions": [
+                {"label": "📝 Confirm & Create Token", "action": "voice_register"},
+                {"label": "📅 Book Appointment Instead", "action": "book_appointment"}
+            ],
+            "structured_data": {
+                "type": "patient_registration_draft",
+                "name": cand_name,
+                "age": cand_age,
+                "department_id": cand_dept_id,
+                "department_name": cand_dept_name,
+                "phone": cand_phone,
+                "priority": priority,
+                "ready_to_confirm": ready
+            },
+            "spoken_text": build_spoken_text(reply)
+        }
+
+    # 7. Appointment Booking Intent
+    if intent == "appointment_booking":
+        if language == "mr":
+            reply = "संजीवन रुग्णालयात तज्ज्ञ डॉक्टरांची अपॉइंटमेंट घेण्यासाठी आपण विभाग, डॉक्टर आणि सोयीस्कर तारीख-वेळ निवडू शकता."
+        elif language == "hi":
+            reply = "संजीवन अस्पताल में विशेषज्ञ डॉक्टर से परामर्श के लिए आप विभाग, डॉक्टर और पसंदीदा समय स्लॉट चुन सकते हैं।"
+        else:
+            reply = "You can schedule a consultation at Sanjeevan Hospital by choosing your specialty department, doctor, and preferred time slot."
+
+        return {
+            "reply": reply,
+            "intent": "appointment_booking",
+            "suggested_actions": [
+                {"label": "📅 Book Appointment", "action": "book_appointment"},
+                {"label": "👨‍⚕️ View Doctors", "action": "view_doctors"}
+            ],
+            "structured_data": {"type": "appointment_booking"},
+            "spoken_text": build_spoken_text(reply)
+        }
+
+    # 8. General FAQ / Diagnostic Facilities
+    if intent == "general_faq":
+        if language == "mr":
+            reply = (
+                "संजीवन रुग्णालयात कॅशलेस मेडिक्लेम, महात्मा ज्योतिराव फुले जन आरोग्य योजना (MJPJAY), "
+                "२४ तास डिजिटल एक्स-रे, २डी इको, सोनोग्राफी, पॅथॉलॉजी लॅब आणि मेडिकल स्टोअर उपलब्ध आहे."
+            )
+        elif language == "hi":
+            reply = (
+                "संजीवन अस्पताल में कैशलेस मेडिक्लेम, आयुष्मान भारत / एमजीपीजेएवाई योजना, "
+                "२४ घंटे डिजिटल एक्स-रे, सोनोग्राफी, पूरी तरह से ऑटोमेटेड लैब और दवा की दुकान उपलब्ध है।"
+            )
+        else:
+            reply = (
+                "Sanjeevan Hospital provides Cashless Mediclaim assistance, government health schemes (MJPJAY / Ayushman Bharat), "
+                "24/7 Digital X-Ray, 2D Echo, Ultrasound Sonography, Automated Pathology Lab, and In-house Pharmacy."
+            )
+
+        return {
+            "reply": reply,
+            "intent": "general_faq",
+            "suggested_actions": [
+                {"label": "📅 Book Appointment", "action": "book_appointment"},
+                {"label": "🎫 Take Token", "action": "register"}
+            ],
+            "structured_data": {"type": "hospital_faq"},
+            "spoken_text": build_spoken_text(reply)
+        }
+
+    return None
+
+
 def chat_turn_with_gemini(
     message: str,
     conversation_id: Optional[str] = None,
     language: str = "en",
     token_context: Optional[str] = None,
     client_ip: Optional[str] = None,
-    departments: Optional[List[Any]] = None
+    departments: Optional[List[Any]] = None,
+    db: Optional[Session] = None,
+    token_id: Optional[int] = None
 ) -> Dict[str, Any]:
     """
     Handles a conversational turn with Google Gemini 2.5 Flash, maintaining multi-turn context,
     conversation isolation, rate limiting, and hospital action suggestions.
     """
     session = conversation_store.get_or_create(conv_id=conversation_id, client_ip=client_ip)
+    if token_id:
+        session.token_id = token_id
 
     # 1. Rate Limiting Check (20 req / min per session)
     if session.is_rate_limited(max_requests=20, window_seconds=60):
+        reply = "You are sending messages too quickly. Please pause a moment before asking another question."
         return {
-            "reply": "You are sending messages too quickly. Please pause a moment before asking another question.",
+            "reply": reply,
             "intent": "general",
             "suggested_actions": [{"label": "⏳ Wait a moment", "action": "wait"}],
             "conversation_id": session.conversation_id,
             "urgency": "ROUTINE",
-            "is_offline_fallback": True
+            "is_offline_fallback": True,
+            "spoken_text": reply
         }
 
     clean_msg = message.strip()
@@ -486,8 +998,28 @@ def chat_turn_with_gemini(
             ],
             "conversation_id": session.conversation_id,
             "urgency": "EMERGENCY",
-            "is_offline_fallback": False
+            "is_offline_fallback": False,
+            "spoken_text": build_spoken_text(reply)
         }
+
+    # 2.5 Structured Operational Intent Evaluation (Deterministic & Live Data)
+    op_intent = classify_voice_intent(clean_msg)
+    if op_intent != "general":
+        op_reply = get_deterministic_operational_reply(
+            intent=op_intent,
+            message=clean_msg,
+            language=language,
+            db=db,
+            token_context=token_context,
+            token_id=session.token_id or token_id
+        )
+        if op_reply:
+            session.add_message("user", clean_msg)
+            session.add_message("model", op_reply["reply"])
+            op_reply["conversation_id"] = session.conversation_id
+            op_reply["urgency"] = "ROUTINE"
+            op_reply["is_offline_fallback"] = False
+            return op_reply
 
     # 3. Gemini Generative Turn
     client = get_gemini_client()
@@ -544,7 +1076,8 @@ def chat_turn_with_gemini(
                 "suggested_actions": actions,
                 "conversation_id": session.conversation_id,
                 "urgency": "ROUTINE",
-                "is_offline_fallback": False
+                "is_offline_fallback": False,
+                "spoken_text": build_spoken_text(ai_reply)
             }
         except Exception as e:
             logger.warning(f"Gemini conversational turn failed ({e}); using offline fallback response.")
@@ -612,5 +1145,6 @@ def chat_turn_with_gemini(
         "suggested_actions": actions,
         "conversation_id": session.conversation_id,
         "urgency": "ROUTINE",
-        "is_offline_fallback": True
+        "is_offline_fallback": True,
+        "spoken_text": build_spoken_text(reply)
     }

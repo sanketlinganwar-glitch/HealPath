@@ -316,14 +316,17 @@ class ChatRequest(BaseModel):
     language: Optional[Literal["en", "hi", "mr"]] = "en"
     token_id: Optional[int] = None
     conversation_id: Optional[str] = None
+    voice_mode: Optional[bool] = False
 
 class ChatResponse(BaseModel):
     reply: str
-    intent: Literal["queue_status", "department_help", "general", "emergency"]
+    intent: str = "general"
     suggested_actions: List[SuggestedAction]
     conversation_id: Optional[str] = None
     urgency: Optional[Literal["ROUTINE", "MODERATE", "URGENT", "EMERGENCY"]] = "ROUTINE"
     is_offline_fallback: Optional[bool] = False
+    structured_data: Optional[Dict[str, Any]] = None
+    spoken_text: Optional[str] = None
 
 # --- Demo Schemas ---
 class DemoSimulateRequest(BaseModel):

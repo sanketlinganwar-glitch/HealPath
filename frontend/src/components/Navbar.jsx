@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Activity, LogIn, LogOut, Monitor, UserCheck, Stethoscope, Globe, Sparkles, Calendar, WifiOff } from 'lucide-react';
+import { Activity, LogIn, LogOut, Monitor, UserCheck, Stethoscope, Globe, Sparkles, Calendar, WifiOff, Mic } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -86,6 +86,13 @@ export function Navbar() {
             >
               <Stethoscope className="w-4 h-4 text-slate-500" />
               <span>{t('doctorsInfo')}</span>
+            </Link>
+            <Link
+              to="/voice"
+              className="px-2.5 py-1 rounded-lg text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 transition-colors flex items-center space-x-1"
+            >
+              <Mic className="w-3.5 h-3.5 text-purple-600 animate-pulse" />
+              <span>{t('voiceAssistantTitle') || 'Voice Assistant'}</span>
             </Link>
             <Link
               to="/demo"

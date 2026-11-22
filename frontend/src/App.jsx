@@ -19,6 +19,7 @@ import { DisplayBoard } from './pages/DisplayBoard';
 import { DoctorsInfoPage } from './pages/DoctorsInfoPage';
 import { DemoControlsPage } from './pages/DemoControlsPage';
 import { AppointmentBookingPage } from './pages/AppointmentBookingPage';
+import { VoiceAssistantPage } from './pages/VoiceAssistantPage';
 
 // Protected Route by Role
 function ProtectedRoute({ children, allowedRoles }) {
@@ -44,6 +45,7 @@ function AppLayout() {
   const location = useLocation();
   const isDisplayBoard = location.pathname.startsWith('/display');
   const isPatientTrack = location.pathname.startsWith('/patient/track');
+  const isVoicePage = location.pathname.startsWith('/voice');
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
@@ -53,6 +55,7 @@ function AppLayout() {
         <Routes>
           {/* Public Pages */}
           <Route path="/" element={<LandingPage />} />
+          <Route path="/voice" element={<VoiceAssistantPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/patient" element={<PatientRegisterPage />} />
           <Route path="/book-appointment" element={<AppointmentBookingPage />} />
@@ -94,7 +97,7 @@ function AppLayout() {
       </main>
 
       {!isDisplayBoard && <Footer />}
-      {!isDisplayBoard && !isPatientTrack && <AIHealthAssistant />}
+      {!isDisplayBoard && !isPatientTrack && !isVoicePage && <AIHealthAssistant />}
       <ToastContainer />
     </div>
   );

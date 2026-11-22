@@ -12,7 +12,8 @@ import {
   CheckCircle2,
   ArrowRight,
   PhoneCall,
-  Calendar
+  Calendar,
+  Mic
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -82,6 +83,13 @@ export function LandingPage() {
             >
               <Ticket className="w-5 h-5" />
               <span>{t('bookAppointment')}</span>
+            </Link>
+            <Link
+              to="/voice"
+              className="px-5 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm sm:text-base rounded-xl shadow-lg shadow-purple-900/30 flex items-center space-x-2 transition transform hover:-translate-y-0.5 border border-purple-400/30"
+            >
+              <Mic className="w-5 h-5 text-amber-300 animate-pulse" />
+              <span>{t('voiceAssistantTitle') || 'Voice Assistant'}</span>
             </Link>
             <Link
               to="/display"
