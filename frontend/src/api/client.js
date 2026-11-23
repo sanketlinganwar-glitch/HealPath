@@ -175,4 +175,17 @@ export const getMyPrescriptions = (phone) => api.get('/api/prescriptions/patient
 export const getPrescriptionPdfUrl = (id) => `${API_BASE}/api/prescriptions/${id}/pdf`;
 export const verifyPrescriptionToken = (token) => api.get(`/api/prescriptions/verify/${token}`).then(r => r.data);
 
+// --- Stage 9: Advanced Analytics & Omnichannel WhatsApp / Hardware Calling APIs ---
+export const getDepartmentHeatmap = (params = {}) => api.get('/api/analytics/department-heatmap', { params }).then(r => r.data);
+export const getConsultationVelocity = (params = {}) => api.get('/api/analytics/consultation-velocity', { params }).then(r => r.data);
+export const getAnalyticsSummary = (range = 'today') => api.get('/api/analytics/summary', { params: { range } }).then(r => r.data);
+export const getNotificationStatus = () => api.get('/api/notifications/status').then(r => r.data);
+export const optOutNotification = (phone, reason) => api.post('/api/notifications/opt-out', { phone, reason }).then(r => r.data);
+export const optInNotification = (phone) => api.post('/api/notifications/opt-in', { phone }).then(r => r.data);
+export const retryNotification = (id) => api.post(`/api/notifications/${id}/retry`).then(r => r.data);
+export const getHardwareDevices = () => api.get('/api/hardware/devices').then(r => r.data);
+export const getHardwareHistory = () => api.get('/api/hardware/events/history').then(r => r.data);
+export const simulateHardwareCall = (data) => api.post('/api/hardware/simulate-call', data).then(r => r.data);
+export const registerHardwareDevice = (data) => api.post('/api/hardware/devices/register', data).then(r => r.data);
+
 export default api;

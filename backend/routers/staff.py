@@ -289,6 +289,19 @@ def call_next_patient(
     except Exception:
         pass
 
+    # Dispatch hardware display event for LED 7-segment cabin displays
+    try:
+        from backend.services.hardware_gateway import hardware_gateway
+        cabin = doctor.room.replace("Room ", "").replace("Cabin ", "").strip() if doctor and doctor.room else "101"
+        hardware_gateway.dispatch_display_event(
+            event_type="CALL_NEXT",
+            token_number=token.token_number,
+            cabin_id=cabin,
+            department_id=doctor.department_id if doctor else None
+        )
+    except Exception:
+        pass
+
     return {
         "token": serialize_token(token, db),
         "message": f"Calling {token.token_number}"
@@ -328,6 +341,13 @@ def complete_consultation(
     trigger_near_turn_notifications(db, token.department_id)
     db.commit()
     db.refresh(token)
+
+    # Dispatch consultation completed notification to patient
+    try:
+        if token.patient:
+            notification_service.notify_consultation_completed(db, token, token.patient)
+    except Exception:
+        pass
 
     return serialize_token(token, db)
 

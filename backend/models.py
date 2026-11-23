@@ -71,6 +71,8 @@ class Patient(Base):
     blood_group = Column(String(10), nullable=True)
     allergies = Column(String(200), nullable=True)
     medical_history = Column(Text, nullable=True)
+    whatsapp_consent = Column(Boolean, default=True, nullable=False)
+    opted_out_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.now, nullable=False)
 
     tokens = relationship("Token", back_populates="patient")
@@ -206,7 +208,27 @@ class NotificationLog(Base):
     reference_type = Column(String(20), nullable=True)  # "token" | "appointment"
     reference_id = Column(Integer, nullable=True)
     error_detail = Column(Text, nullable=True)
+    meta_message_id = Column(String(100), nullable=True, index=True)
+    delivery_status = Column(String(30), default="sent", nullable=False)  # "simulated" | "sent" | "delivered" | "read" | "failed"
+    delivered_at = Column(DateTime, nullable=True)
+    read_at = Column(DateTime, nullable=True)
+    is_opted_out = Column(Boolean, default=False, nullable=False)
+    language = Column(String(10), default="en", nullable=False)
     created_at = Column(DateTime, default=datetime.now, nullable=False)
+
+
+class HardwareDevice(Base):
+    __tablename__ = "hardware_devices"
+
+    id = Column(Integer, primary_key=True, index=True)
+    device_id = Column(String(50), unique=True, index=True, nullable=False)
+    department_id = Column(Integer, ForeignKey("departments.id"), nullable=True)
+    cabin_id = Column(String(30), nullable=True)
+    device_type = Column(String(50), default="led_7segment", nullable=False)
+    status = Column(String(20), default="online", nullable=False)  # "online" | "offline"
+    last_heartbeat = Column(DateTime, default=datetime.now, nullable=False)
+    firmware_version = Column(String(20), default="v1.0.0", nullable=False)
+    ip_address = Column(String(50), nullable=True)
 
 
 class Prescription(Base):

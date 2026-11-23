@@ -82,6 +82,27 @@ def migrate_db(eng):
                 conn.execute(text("ALTER TABLE patients ADD COLUMN allergies VARCHAR(200)"))
             if "medical_history" not in cols:
                 conn.execute(text("ALTER TABLE patients ADD COLUMN medical_history TEXT"))
+            if "whatsapp_consent" not in cols:
+                conn.execute(text("ALTER TABLE patients ADD COLUMN whatsapp_consent BOOLEAN DEFAULT 1"))
+            if "opted_out_at" not in cols:
+                conn.execute(text("ALTER TABLE patients ADD COLUMN opted_out_at DATETIME"))
+
+        # Check notification_logs table
+        res = conn.execute(text("PRAGMA table_info(notification_logs)")).fetchall()
+        cols = {row[1] for row in res}
+        if cols:
+            if "meta_message_id" not in cols:
+                conn.execute(text("ALTER TABLE notification_logs ADD COLUMN meta_message_id VARCHAR(100)"))
+            if "delivery_status" not in cols:
+                conn.execute(text("ALTER TABLE notification_logs ADD COLUMN delivery_status VARCHAR(30) DEFAULT 'sent'"))
+            if "delivered_at" not in cols:
+                conn.execute(text("ALTER TABLE notification_logs ADD COLUMN delivered_at DATETIME"))
+            if "read_at" not in cols:
+                conn.execute(text("ALTER TABLE notification_logs ADD COLUMN read_at DATETIME"))
+            if "is_opted_out" not in cols:
+                conn.execute(text("ALTER TABLE notification_logs ADD COLUMN is_opted_out BOOLEAN DEFAULT 0"))
+            if "language" not in cols:
+                conn.execute(text("ALTER TABLE notification_logs ADD COLUMN language VARCHAR(10) DEFAULT 'en'"))
 
         # Check prescriptions table
         res = conn.execute(text("PRAGMA table_info(prescriptions)")).fetchall()
