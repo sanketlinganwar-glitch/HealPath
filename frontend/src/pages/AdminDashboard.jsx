@@ -48,6 +48,7 @@ import {
   showToast
 } from '../api/client';
 import { usePolling } from '../hooks/usePolling';
+import { resolveAssetUrl } from '../utils/assets';
 
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -1157,7 +1158,7 @@ export function AdminDashboard() {
                       {doc.image_url ? (
                         <div className="w-12 h-14 rounded-xl overflow-hidden border border-slate-200 shrink-0 bg-slate-100 shadow-xs">
                           <img
-                            src={doc.image_url}
+                            src={resolveAssetUrl(doc.image_url)}
                             alt={doc.name}
                             loading="lazy"
                             className="w-full h-full object-cover object-top"

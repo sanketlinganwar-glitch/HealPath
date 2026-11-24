@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { getDepartments, getDoctors } from '../api/client';
 import { useLanguage } from '../context/LanguageContext';
+import { resolveAssetUrl } from '../utils/assets';
 
 // Helper to extract clean initials for neutral placeholder
 function getDoctorInitials(name) {
@@ -288,7 +289,7 @@ export function DoctorsInfoPage() {
                     {doc.image_url ? (
                       <div className="relative w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden shadow-md border-2 border-teal-500/20 group-hover:border-teal-500 group-hover:shadow-lg transition-all bg-slate-100 shrink-0">
                         <img
-                          src={doc.image_url}
+                          src={resolveAssetUrl(doc.image_url)}
                           alt={doc.name}
                           loading="lazy"
                           className="w-full h-full object-cover object-top"
@@ -413,7 +414,7 @@ export function DoctorsInfoPage() {
               {selectedDoctorProfile.image_url ? (
                 <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden border-2 border-teal-500/30 shadow-md shrink-0 bg-slate-100">
                   <img
-                    src={selectedDoctorProfile.image_url}
+                    src={resolveAssetUrl(selectedDoctorProfile.image_url)}
                     alt={selectedDoctorProfile.name}
                     className="w-full h-full object-cover object-top"
                   />

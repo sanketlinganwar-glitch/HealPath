@@ -29,6 +29,7 @@ import {
 } from '../api/client';
 import { useLanguage } from '../context/LanguageContext';
 import { QRCodeCard } from '../components/QRCodeCard';
+import { resolveAssetUrl } from '../utils/assets';
 
 // Helper to extract initials for placeholder
 function getDoctorInitials(name) {
@@ -379,7 +380,7 @@ export function AppointmentBookingPage() {
                         {doc.image_url ? (
                           <div className="w-12 h-14 rounded-xl overflow-hidden border border-teal-200 shrink-0 mt-0.5 bg-slate-100 shadow-xs">
                             <img
-                              src={doc.image_url}
+                              src={resolveAssetUrl(doc.image_url)}
                               alt={doc.name}
                               loading="lazy"
                               className="w-full h-full object-cover object-top"

@@ -34,6 +34,7 @@ import {
 } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import { usePolling } from '../hooks/usePolling';
+import { resolveAssetUrl } from '../utils/assets';
 
 export function DoctorConsole() {
   const { user } = useAuth();
@@ -224,7 +225,7 @@ export function DoctorConsole() {
           <div className="w-16 h-18 sm:w-18 sm:h-20 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 overflow-hidden shrink-0">
             {doctor?.image_url ? (
               <img
-                src={doctor.image_url}
+                src={resolveAssetUrl(doctor.image_url)}
                 alt={doctor.name}
                 loading="lazy"
                 className="w-full h-full object-cover object-top"

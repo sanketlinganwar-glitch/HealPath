@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { getDepartments, getDoctors } from '../api/client';
+import { resolveAssetUrl } from '../utils/assets';
 
 export function LandingPage() {
   const [lookupPhone, setLookupPhone] = useState('');
@@ -83,18 +84,18 @@ export function LandingPage() {
               loop
               playsInline
               preload="metadata"
-              poster="/videos/hospital-hero-poster.jpg"
+              poster={resolveAssetUrl('/videos/hospital-hero-poster.jpg')}
               onError={() => setVideoFailed(true)}
               className="w-full h-full object-cover object-center scale-105 motion-reduce:hidden transition-opacity duration-1000"
             >
-              <source src="/videos/hospital-hero.mp4" type="video/mp4" />
+              <source src={resolveAssetUrl('/videos/hospital-hero.mp4')} type="video/mp4" />
               Your browser does not support video playback.
             </video>
           )}
 
           {/* High-Quality Poster Fallback (active on reduced motion, error, or fallback) */}
           <img
-            src="/videos/hospital-hero-poster.jpg"
+            src={resolveAssetUrl('/videos/hospital-hero-poster.jpg')}
             alt="Sanjeevan Multispecialty Hospital Infrastructure"
             className={`w-full h-full object-cover object-center ${
               videoFailed ? 'block' : 'hidden motion-reduce:block'
@@ -214,7 +215,7 @@ export function LandingPage() {
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 rounded-xl overflow-hidden border border-teal-400/30 flex-shrink-0 bg-teal-950/40">
                       <img
-                        src="/images/doctors/dr_sunil_agrawal.jpg"
+                        src={resolveAssetUrl('/images/doctors/dr_sunil_agrawal.jpg')}
                         alt="Dr. Sunil M. Agrawal"
                         loading="lazy"
                         className="w-full h-full object-cover object-top"
@@ -234,7 +235,7 @@ export function LandingPage() {
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 rounded-xl overflow-hidden border border-teal-400/30 flex-shrink-0 bg-teal-950/40">
                       <img
-                        src="/images/doctors/dr_vijay_kawalkar.jpg"
+                        src={resolveAssetUrl('/images/doctors/dr_vijay_kawalkar.jpg')}
                         alt="Dr. Vijay S. Kawalkar"
                         loading="lazy"
                         className="w-full h-full object-cover object-top"
@@ -254,7 +255,7 @@ export function LandingPage() {
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 rounded-xl overflow-hidden border border-teal-400/30 flex-shrink-0 bg-teal-950/40">
                       <img
-                        src="/images/doctors/dr_vinay_pande.jpg"
+                        src={resolveAssetUrl('/images/doctors/dr_vinay_pande.jpg')}
                         alt="Dr. Vinay Pande"
                         loading="lazy"
                         className="w-full h-full object-cover object-top"
