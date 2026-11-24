@@ -64,6 +64,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Production HTTP Security Headers
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
+
 # Custom validation error handler matching {"detail": "..."} contract
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
@@ -95,4 +105,6 @@ app.include_router(hardware.router)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
+    port = int(os.getenv("PORT", 8000))
+    reload = os.getenv("ENV", "development").lower() == "development"
+    uvicorn.run("backend.main:app", host="0.0.0.0", port=port, reload=reload)
