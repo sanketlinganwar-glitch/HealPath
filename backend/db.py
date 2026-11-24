@@ -35,6 +35,8 @@ def migrate_db(eng):
                 conn.execute(text("ALTER TABLE doctors ADD COLUMN registration_number VARCHAR(50) DEFAULT 'MMC-2015/08/4120'"))
             if "qualification" not in cols:
                 conn.execute(text("ALTER TABLE doctors ADD COLUMN qualification VARCHAR(100) DEFAULT 'MBBS, MD'"))
+            if "image_url" not in cols:
+                conn.execute(text("ALTER TABLE doctors ADD COLUMN image_url VARCHAR(255)"))
 
         # Check tokens table
         res = conn.execute(text("PRAGMA table_info(tokens)")).fetchall()

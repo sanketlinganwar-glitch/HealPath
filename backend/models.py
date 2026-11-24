@@ -37,6 +37,7 @@ class Doctor(Base):
     duty_status = Column(String(20), default="available", nullable=False)  # "available" | "busy" | "on_break" | "off_duty"
     registration_number = Column(String(50), nullable=True, default="MMC-2015/08/4120")
     qualification = Column(String(100), nullable=True, default="MBBS, MD")
+    image_url = Column(String(255), nullable=True, default=None)
 
     department = relationship("Department", back_populates="doctors")
     tokens = relationship("Token", back_populates="doctor")

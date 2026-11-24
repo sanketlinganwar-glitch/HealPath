@@ -37,6 +37,7 @@ export function LandingPage() {
   const [departments, setDepartments] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [videoFailed, setVideoFailed] = useState(false);
   const { t } = useLanguage();
   const navigate = useNavigate();
 
@@ -71,35 +72,66 @@ export function LandingPage() {
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
-      {/* SECTION B: HERO SECTION (Apollo-Inspired Healthcare Hero) */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 text-white py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-teal-900/30">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(13,148,136,0.25),transparent_60%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20 pointer-events-none" />
+      {/* SECTION B: HERO SECTION (Apollo-Inspired Healthcare Cinematic Video Hero) */}
+      <section className="relative min-h-[85vh] sm:min-h-[88vh] flex items-center overflow-hidden bg-slate-950 text-white py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-b border-teal-900/30">
+        {/* Full-Screen Autoplay Background Video */}
+        <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
+          {!videoFailed && (
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster="/videos/hospital-hero-poster.jpg"
+              onError={() => setVideoFailed(true)}
+              className="w-full h-full object-cover object-center scale-105 motion-reduce:hidden transition-opacity duration-1000"
+            >
+              <source src="/videos/hospital-hero.mp4" type="video/mp4" />
+              Your browser does not support video playback.
+            </video>
+          )}
 
-        <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* High-Quality Poster Fallback (active on reduced motion, error, or fallback) */}
+          <img
+            src="/videos/hospital-hero-poster.jpg"
+            alt="Sanjeevan Multispecialty Hospital Infrastructure"
+            className={`w-full h-full object-cover object-center ${
+              videoFailed ? 'block' : 'hidden motion-reduce:block'
+            }`}
+          />
+
+          {/* Dark Navy Transparent Gradient Overlays for High-Contrast Readable White Typography */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/85 to-slate-900/80 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-transparent to-slate-950/50 z-10" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(13,148,136,0.18),transparent_60%)] z-10" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-15 z-10" />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-20 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Hero Left Content */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-teal-500/10 border border-teal-400/30 text-teal-300 text-xs sm:text-sm font-semibold backdrop-blur-md">
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-teal-500/15 border border-teal-400/30 text-teal-300 text-xs sm:text-sm font-bold tracking-wider uppercase backdrop-blur-md shadow-lg shadow-teal-950/40">
               <Sparkles className="w-4 h-4 text-emerald-400" />
-              <span>Sanjeevan Multispecialty Hospital & Research Institute, Yavatmal</span>
+              <span>SANJEEVAN MULTISPECIALTY HOSPITAL</span>
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight sm:leading-tight">
-              World-Class Healthcare,{' '}
+              Your Health.{' '}
               <span className="bg-gradient-to-r from-teal-300 via-emerald-300 to-teal-100 bg-clip-text text-transparent">
-                Zero Endless Waiting
+                Our Priority.
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
-              Experience modern, patient-first clinical excellence. Consult top medical specialists, reserve guaranteed OPD appointment slots, track your live queue turn from your phone, and access your digital medical records anytime.
+            <p className="text-base sm:text-lg text-slate-200 max-w-2xl leading-relaxed font-normal">
+              Advanced healthcare, trusted specialists, and compassionate care — all in one place.
             </p>
 
             {/* Quick Find My Token Search Bar */}
             <div className="pt-2 max-w-xl mx-auto lg:mx-0">
               <form
                 onSubmit={handlePhoneLookup}
-                className="flex items-center bg-white p-2 rounded-2xl shadow-2xl border border-teal-500/30 text-slate-900"
+                className="flex items-center bg-white/95 backdrop-blur-md p-2 rounded-2xl shadow-2xl border border-teal-500/30 text-slate-900"
               >
                 <div className="pl-3 text-slate-400">
                   <Search className="w-5 h-5 text-teal-600" />
@@ -121,7 +153,7 @@ export function LandingPage() {
                   {t('trackToken') || 'Track Turn'}
                 </button>
               </form>
-              <p className="text-[11px] text-teal-200/70 mt-2 pl-2">
+              <p className="text-[11px] text-teal-200/80 mt-2 pl-2">
                 Already registered? Track your live queue token, doctor room, and estimated waiting time instantly.
               </p>
             </div>
@@ -130,23 +162,23 @@ export function LandingPage() {
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
               <Link
                 to="/book-appointment"
-                className="px-6 py-3.5 bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-400 hover:to-emerald-500 text-white font-bold text-sm sm:text-base rounded-xl shadow-lg shadow-teal-500/25 flex items-center space-x-2 transition transform hover:-translate-y-0.5 touch-target"
+                className="px-6 py-3.5 bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-400 hover:to-emerald-500 text-white font-bold text-sm sm:text-base rounded-xl shadow-lg shadow-teal-500/30 flex items-center space-x-2 transition transform hover:-translate-y-0.5 touch-target tracking-wide uppercase"
               >
                 <Calendar className="w-5 h-5" />
-                <span>{t('bookAppointment') || 'Book Appointment'}</span>
+                <span>BOOK APPOINTMENT</span>
               </Link>
 
-              <Link
-                to="/doctors-info"
-                className="px-5 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-sm sm:text-base rounded-xl border border-white/20 backdrop-blur-md flex items-center space-x-2 transition touch-target"
+              <a
+                href="#services"
+                className="px-5 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold text-sm sm:text-base rounded-xl border border-white/25 backdrop-blur-md flex items-center space-x-2 transition touch-target tracking-wide uppercase"
               >
                 <Stethoscope className="w-5 h-5 text-teal-300" />
-                <span>{t('findDoctor') || 'Find a Doctor'}</span>
-              </Link>
+                <span>EXPLORE SERVICES</span>
+              </a>
 
               <Link
                 to="/patient/dashboard"
-                className="px-5 py-3.5 bg-slate-800/80 hover:bg-slate-700 text-teal-300 font-bold text-sm sm:text-base rounded-xl border border-teal-500/30 backdrop-blur-md flex items-center space-x-2 transition touch-target"
+                className="px-5 py-3.5 bg-slate-900/80 hover:bg-slate-800 text-teal-300 font-bold text-sm sm:text-base rounded-xl border border-teal-500/40 backdrop-blur-md flex items-center space-x-2 transition touch-target"
               >
                 <HeartPulse className="w-5 h-5 text-emerald-400" />
                 <span>{t('healthWallet') || 'Health Wallet'}</span>
@@ -165,11 +197,11 @@ export function LandingPage() {
 
           {/* Hero Right Card: Live Hospital Snapshot */}
           <div className="lg:col-span-5">
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 sm:p-8 shadow-2xl text-white space-y-6">
+            <div className="bg-slate-900/80 backdrop-blur-xl border border-white/20 rounded-3xl p-6 sm:p-8 shadow-2xl text-white space-y-6">
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <div className="flex items-center space-x-2">
                   <div className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
-                  <span className="text-xs uppercase tracking-wider font-extrabold text-emerald-300">OPD OPD Status Live</span>
+                  <span className="text-xs uppercase tracking-wider font-extrabold text-emerald-300">OPD Status Live</span>
                 </div>
                 <span className="text-xs text-slate-300 font-semibold">Yavatmal OPD Hub</span>
               </div>
@@ -178,10 +210,15 @@ export function LandingPage() {
               <div className="space-y-3">
                 <p className="text-xs uppercase tracking-wider text-slate-400 font-bold">Featured Hospital Specialists</p>
                 
-                <div className="bg-white/5 rounded-2xl p-3.5 border border-white/10 flex items-center justify-between">
+                <div className="bg-white/5 rounded-2xl p-3 border border-white/10 flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center font-bold">
-                      <Stethoscope className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-xl overflow-hidden border border-teal-400/30 flex-shrink-0 bg-teal-950/40">
+                      <img
+                        src="/images/doctors/dr_sunil_agrawal.jpg"
+                        alt="Dr. Sunil M. Agrawal"
+                        loading="lazy"
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-white">Dr. Sunil M. Agrawal</h4>
@@ -193,10 +230,15 @@ export function LandingPage() {
                   </span>
                 </div>
 
-                <div className="bg-white/5 rounded-2xl p-3.5 border border-white/10 flex items-center justify-between">
+                <div className="bg-white/5 rounded-2xl p-3 border border-white/10 flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center font-bold">
-                      <Stethoscope className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-xl overflow-hidden border border-teal-400/30 flex-shrink-0 bg-teal-950/40">
+                      <img
+                        src="/images/doctors/dr_vijay_kawalkar.jpg"
+                        alt="Dr. Vijay S. Kawalkar"
+                        loading="lazy"
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-white">Dr. Vijay S. Kawalkar</h4>
@@ -208,10 +250,15 @@ export function LandingPage() {
                   </span>
                 </div>
 
-                <div className="bg-white/5 rounded-2xl p-3.5 border border-white/10 flex items-center justify-between">
+                <div className="bg-white/5 rounded-2xl p-3 border border-white/10 flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center font-bold">
-                      <Stethoscope className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-xl overflow-hidden border border-teal-400/30 flex-shrink-0 bg-teal-950/40">
+                      <img
+                        src="/images/doctors/dr_vinay_pande.jpg"
+                        alt="Dr. Vinay Pande"
+                        loading="lazy"
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                     <div>
                       <h4 className="text-sm font-bold text-white">Dr. Vinay Pande</h4>
@@ -245,7 +292,7 @@ export function LandingPage() {
       </section>
 
       {/* SECTION C: QUICK SERVICES (Apollo-Inspired 5-Card Action Grid) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-14 relative z-20">
+      <section id="services" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-14 relative z-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {/* Card 1: Book Appointment */}
           <Link

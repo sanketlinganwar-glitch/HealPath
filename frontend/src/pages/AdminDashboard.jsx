@@ -1152,11 +1152,41 @@ export function AdminDashboard() {
                 className="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-3"
               >
                 <div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-extrabold text-sm text-slate-900">{doc.name}</span>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center space-x-3">
+                      {doc.image_url ? (
+                        <div className="w-12 h-14 rounded-xl overflow-hidden border border-slate-200 shrink-0 bg-slate-100 shadow-xs">
+                          <img
+                            src={doc.image_url}
+                            alt={doc.name}
+                            loading="lazy"
+                            className="w-full h-full object-cover object-top"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                              if (e.currentTarget.nextElementSibling) {
+                                e.currentTarget.nextElementSibling.style.display = 'flex';
+                              }
+                            }}
+                          />
+                          <div className="w-full h-full hidden items-center justify-center bg-teal-100 text-teal-800 font-bold text-xs">
+                            {doc.name.replace(/^Dr\.\s*/i, '').slice(0, 2).toUpperCase()}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="w-12 h-14 rounded-xl bg-teal-50/80 border border-teal-200 text-teal-700 flex flex-col items-center justify-center shrink-0 shadow-xs">
+                          <span className="font-extrabold text-xs">{doc.name.replace(/^Dr\.\s*/i, '').slice(0, 2).toUpperCase()}</span>
+                          <span className="text-[8px] uppercase font-bold text-teal-600">Doc</span>
+                        </div>
+                      )}
+                      <div>
+                        <span className="font-extrabold text-sm text-slate-900 block">{doc.name}</span>
+                        <p className="text-xs text-blue-600 font-semibold">{doc.specialization}</p>
+                        <p className="text-xs text-slate-500 mt-0.5">{doc.department_name} &bull; Room {doc.room}</p>
+                      </div>
+                    </div>
                     <button
                       onClick={() => handleToggleDoctorStatus(doc)}
-                      className="cursor-pointer"
+                      className="cursor-pointer shrink-0 mt-1"
                       title="Toggle duty status"
                     >
                       {doc.status === 'off' ? (
@@ -1166,8 +1196,6 @@ export function AdminDashboard() {
                       )}
                     </button>
                   </div>
-                  <p className="text-xs text-blue-600 font-semibold">{doc.specialization}</p>
-                  <p className="text-xs text-slate-500 mt-1">{doc.department_name} &bull; Room {doc.room}</p>
                 </div>
 
                 <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-xs">

@@ -58,7 +58,8 @@ const SANJIVANI_HOSPITAL_DATA = {
       opd_timing: "10:00 AM - 02:00 PM & 06:00 PM - 08:30 PM",
       room: "Room 1 (Consultant Suite)",
       consultation_fee: 500,
-      avatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400",
+      avatar: "/images/doctors/dr_sunil_agrawal.jpg",
+      image_url: "/images/doctors/dr_sunil_agrawal.jpg",
       status: "available"
     },
     {
@@ -70,7 +71,8 @@ const SANJIVANI_HOSPITAL_DATA = {
       opd_timing: "11:00 AM - 02:00 PM",
       room: "Room 2",
       consultation_fee: 500,
-      avatar: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=400",
+      avatar: "/images/doctors/dr_vijay_kawalkar.jpg",
+      image_url: "/images/doctors/dr_vijay_kawalkar.jpg",
       status: "available"
     },
     {
@@ -82,7 +84,8 @@ const SANJIVANI_HOSPITAL_DATA = {
       opd_timing: "10:30 AM - 01:30 PM & 06:00 PM - 08:30 PM",
       room: "Room 3",
       consultation_fee: 400,
-      avatar: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400",
+      avatar: "/images/doctors/dr_hs_bora.jpg",
+      image_url: "/images/doctors/dr_hs_bora.jpg",
       status: "available"
     },
     {
@@ -94,7 +97,8 @@ const SANJIVANI_HOSPITAL_DATA = {
       opd_timing: "11:00 AM - 02:00 PM",
       room: "Room 4",
       consultation_fee: 450,
-      avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400",
+      avatar: "/images/doctors/dr_vinay_pande.jpg",
+      image_url: "/images/doctors/dr_vinay_pande.jpg",
       status: "available"
     },
     {
@@ -106,7 +110,8 @@ const SANJIVANI_HOSPITAL_DATA = {
       opd_timing: "10:00 AM - 01:30 PM & 05:30 PM - 07:30 PM",
       room: "Room 5",
       consultation_fee: 400,
-      avatar: "https://images.unsplash.com/photo-1594824813580-ff67fbf9303d?auto=format&fit=crop&q=80&w=400",
+      avatar: "/images/doctors/dr_sheetal_agrawal.jpg",
+      image_url: "/images/doctors/dr_sheetal_agrawal.jpg",
       status: "available"
     },
     {
@@ -118,7 +123,8 @@ const SANJIVANI_HOSPITAL_DATA = {
       opd_timing: "09:30 AM - 02:30 PM",
       room: "Ultrasound & Imaging Suite",
       consultation_fee: 500,
-      avatar: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&q=80&w=400",
+      avatar: "/images/doctors/dr_lalit_paldiwal.jpg",
+      image_url: "/images/doctors/dr_lalit_paldiwal.jpg",
       status: "available"
     }
   ]

@@ -221,8 +221,24 @@ export function DoctorConsole() {
       {/* Doctor Profile & Duty Roster Banner */}
       <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center space-x-4">
-          <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20">
-            <Stethoscope className="w-8 h-8 text-cyan-300" />
+          <div className="w-16 h-18 sm:w-18 sm:h-20 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 overflow-hidden shrink-0">
+            {doctor?.image_url ? (
+              <img
+                src={doctor.image_url}
+                alt={doctor.name}
+                loading="lazy"
+                className="w-full h-full object-cover object-top"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  if (e.currentTarget.nextElementSibling) {
+                    e.currentTarget.nextElementSibling.style.display = 'flex';
+                  }
+                }}
+              />
+            ) : null}
+            <div className={`w-full h-full ${doctor?.image_url ? 'hidden' : 'flex'} items-center justify-center`}>
+              <Stethoscope className="w-8 h-8 text-cyan-300" />
+            </div>
           </div>
           <div>
             <div className="flex items-center space-x-2">
@@ -240,7 +256,7 @@ export function DoctorConsole() {
               </span>
             </div>
             <p className="text-xs text-blue-200 mt-0.5">
-              {doctor?.specialization} • {doctor?.department_name} (Room: {doctor?.room})
+              {doctor?.qualification ? `${doctor.qualification} • ` : ''}{doctor?.specialization} • {doctor?.department_name} (Room: {doctor?.room})
             </p>
           </div>
         </div>

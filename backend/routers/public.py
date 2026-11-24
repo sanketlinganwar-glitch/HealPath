@@ -71,6 +71,14 @@ def get_doctors(
             "specialization": doc.specialization,
             "room": doc.room,
             "status": rt_status,
+            "duty_status": getattr(doc, "duty_status", "available"),
+            "shift_start": getattr(doc, "shift_start", "09:00"),
+            "shift_end": getattr(doc, "shift_end", "17:00"),
+            "break_start": getattr(doc, "break_start", "13:00"),
+            "break_end": getattr(doc, "break_end", "14:00"),
+            "registration_number": getattr(doc, "registration_number", None),
+            "qualification": getattr(doc, "qualification", None),
+            "image_url": getattr(doc, "image_url", None),
         })
     return result
 

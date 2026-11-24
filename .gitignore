@@ -10,6 +10,8 @@ frontend/dist/
 
 # SQLite / Local databases
 backend/queuecare.db
+*.db
+backend/backups/
 
 # Environment files
 .env

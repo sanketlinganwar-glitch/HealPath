@@ -118,6 +118,9 @@ class DoctorResponse(BaseModel):
     shift_end: Optional[str] = "17:00"
     break_start: Optional[str] = "13:00"
     break_end: Optional[str] = "14:00"
+    registration_number: Optional[str] = None
+    qualification: Optional[str] = None
+    image_url: Optional[str] = None
 
 class DoctorStatusUpdate(BaseModel):
     status: Literal["available", "off"]

@@ -216,6 +216,9 @@ def get_doctor_current_console(
         "shift_end": getattr(doctor, "shift_end", "17:00"),
         "break_start": getattr(doctor, "break_start", "13:00"),
         "break_end": getattr(doctor, "break_end", "14:00"),
+        "registration_number": getattr(doctor, "registration_number", None),
+        "qualification": getattr(doctor, "qualification", None),
+        "image_url": getattr(doctor, "image_url", None),
     }
 
     return {

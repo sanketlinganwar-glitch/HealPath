@@ -30,6 +30,17 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 import { QRCodeCard } from '../components/QRCodeCard';
 
+// Helper to extract initials for placeholder
+function getDoctorInitials(name) {
+  if (!name) return 'DR';
+  const clean = name.replace(/^Dr\.?\s+/i, '').trim();
+  const parts = clean.split(/\s+/);
+  if (parts.length >= 2) {
+    return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+  }
+  return clean.slice(0, 2).toUpperCase();
+}
+
 export function AppointmentBookingPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
@@ -365,9 +376,30 @@ export function AppointmentBookingPage() {
                       }`}
                     >
                       <div className="flex items-start space-x-3">
-                        <div className="w-10 h-10 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center shrink-0 mt-0.5">
-                          <Stethoscope className="w-5 h-5" />
-                        </div>
+                        {doc.image_url ? (
+                          <div className="w-12 h-14 rounded-xl overflow-hidden border border-teal-200 shrink-0 mt-0.5 bg-slate-100 shadow-xs">
+                            <img
+                              src={doc.image_url}
+                              alt={doc.name}
+                              loading="lazy"
+                              className="w-full h-full object-cover object-top"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                                if (e.currentTarget.nextElementSibling) {
+                                  e.currentTarget.nextElementSibling.style.display = 'flex';
+                                }
+                              }}
+                            />
+                            <div className="w-full h-full hidden items-center justify-center bg-teal-100 text-teal-800 font-bold text-xs">
+                              {getDoctorInitials(doc.name)}
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="w-12 h-14 rounded-xl bg-gradient-to-br from-teal-50 to-teal-100/70 border border-teal-200 text-teal-800 flex flex-col items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                            <span className="font-black text-xs">{getDoctorInitials(doc.name)}</span>
+                            <span className="text-[8px] uppercase font-bold text-teal-600">MD</span>
+                          </div>
+                        )}
                         <div>
                           <h4 className="text-sm font-bold text-slate-900">{doc.name}</h4>
                           <p className="text-xs text-teal-700 font-semibold">{doc.specialization}</p>

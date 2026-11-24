@@ -1,0 +1,210 @@
+[
+  {
+    "index": 1,
+    "name": "Dr. SUNIL M. AGRAWAL",
+    "qualification": "MBBS, MS (General Surgeon)",
+    "other": [],
+    "department_section": "SURGERY",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/fWXGZBiNPKwap8F3OQrbt3rzHMeo24RdxQHn7UlL.jpg"
+  },
+  {
+    "index": 2,
+    "name": "Dr. VIJAY S. KAWALKAR",
+    "qualification": "MBBS,MS,FAGES,FACRSI,DFSI,FMAS",
+    "other": [],
+    "department_section": "Dr. SUNIL M. AGRAWAL",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/tFZqNsshKyd5ozqjpCc3Iavi7YO66I3ENipz8QNN.jpg"
+  },
+  {
+    "index": 3,
+    "name": "Dr. AMOL DESHPANDE",
+    "qualification": "MBBS, MS, D.N.B., F.M.A.S.",
+    "other": [],
+    "department_section": "Dr. VIJAY S. KAWALKAR",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/02/TqiJMyzmv3Z7XXmQNyzSTfBsAoHFC4FucRcFgzyQ.jpg"
+  },
+  {
+    "index": 4,
+    "name": "Dr. RAJENDRA KADUKAR",
+    "qualification": "MBBS, MS, F.M.A.S.",
+    "other": [],
+    "department_section": "Dr. AMOL DESHPANDE",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/02/xn5GT4NB3UrCq2S18UlZ5YhQ3AuPzigcJnWu992z.jpg"
+  },
+  {
+    "index": 5,
+    "name": "Dr. H. S. BORA",
+    "qualification": "MBBS, MD (Medicine)",
+    "other": [],
+    "department_section": "MEDICINE",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/aEmZevqEkR0tNYnAAnPxmskcVpKZbxuNGNuAoewR.jpg"
+  },
+  {
+    "index": 6,
+    "name": "Dr. DURGESH MAHAJAN",
+    "qualification": "MBBS, MD (Medicine)",
+    "other": [],
+    "department_section": "Dr. H. S. BORA",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/H0dXiJnQln2g9QYIEvGr4y0Scyq0WM2HFppKwaHR.jpg"
+  },
+  {
+    "index": 7,
+    "name": "Dr. VINAY PANDE",
+    "qualification": "MBBS, TDD, PGDCE Chest Physician, TB Specialist",
+    "other": [],
+    "department_section": "Dr. DURGESH MAHAJAN",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/6OMa8QgLYGcAYzaKLR1PzGG4tqfayZFMen3sbuHN.jpg"
+  },
+  {
+    "index": 8,
+    "name": "Dr. SHEETAL S. AGRAWAL",
+    "qualification": "MBBS, MD(Obst & Gyn)",
+    "other": [],
+    "department_section": "OBSTETRICS & GYNAECOLOGY",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/EpkAqkTpjpu1t32GYO0xWE89QaTSquF7ww0G8kuU.jpg"
+  },
+  {
+    "index": 9,
+    "name": "Dr. REKHA MUNDHADA",
+    "qualification": "MBBS, MD (Obstetrics & Gynecology)",
+    "other": [],
+    "department_section": "Dr. SHEETAL S. AGRAWAL",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/01/ToDY9jjpXs450QvEMtRVSROlfbbSUZWZNNnVO8j9.jpg"
+  },
+  {
+    "index": 10,
+    "name": "Dr. PIYUSH KALANTRI",
+    "qualification": "MBBS, MD (Medicine), DM (Cardiology)",
+    "other": [],
+    "department_section": "CARDIOLOGY",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/10/QRhIxo2Pm5AfReCSVBhi0A19yuWYLKhfgS7C7Gqz.jpg"
+  },
+  {
+    "index": 11,
+    "name": "Dr. S. MUNDHADA",
+    "qualification": "MBBS , MD(Anesthesiology)",
+    "other": [],
+    "department_section": "ANESTHESIOLOGY",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/j2uZQ7MrHxO26ahzfmxf2sjdYpDV3qBD0OcAJC1B.jpg"
+  },
+  {
+    "index": 12,
+    "name": "Dr. PRADIP BHOJNE",
+    "qualification": "MBBS, MD (Anesthesia)",
+    "other": [],
+    "department_section": "Dr. S. MUNDHADA",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/8RyWMCJqtGXp67Mtf5HAtmIMmotBZWUvert87nP5.jpg"
+  },
+  {
+    "index": 13,
+    "name": "Dr. GAURI BULE",
+    "qualification": "MBBS, MD (Anesthesia)",
+    "other": [],
+    "department_section": "Dr. PRADIP BHOJNE",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/01/HoTOLzqkiEVTW9k629kM9oc0MdKTNCM6HUEw1p3Y.jpg"
+  },
+  {
+    "index": 14,
+    "name": "Dr. ANIL LOYA",
+    "qualification": "MBBS, D.C.H.",
+    "other": [],
+    "department_section": "PEDIATRICS",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/JFyzG9JGHbxEhHTnZdRaaj1Vf9IFoJt35oiWKwYU.jpg"
+  },
+  {
+    "index": 15,
+    "name": "Dr. LALIT PALDIWAL NIMODIA",
+    "qualification": "MBBS, MD (Radiodiagnosis)",
+    "other": [],
+    "department_section": "RADIOLOGY",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/gB906leZHlMEz2q340tYQ2XJl1BvOnUXz6eGl9OD.jpg"
+  },
+  {
+    "index": 16,
+    "name": "Dr. TUSHAR CHHATTANI",
+    "qualification": "MBBS., M.S. (Ortho) FIJR, FIAIS, FIRJR",
+    "other": [],
+    "department_section": "ORTHOPEDICS",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/FNdanL7QQFFjnlrpbVKdxqKq5VRURRQbo7KVIX5h.jpg"
+  },
+  {
+    "index": 17,
+    "name": "Dr. CHETAN SINGHANIA",
+    "qualification": "MBBS, MS (ORTHOPAEDICS), FIJR, FIAS",
+    "other": [],
+    "department_section": "Dr. TUSHAR CHHATTANI",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/01/Wq9up9JEZFS4miFitTwwyQOZpkSYO9wFH5c1MHkF.jpg"
+  },
+  {
+    "index": 18,
+    "name": "Dr. VIJAYA KAWALKAR",
+    "qualification": "MBBS, MD (Pathology)",
+    "other": [],
+    "department_section": "PATHOLOGY",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/tKRl8x6bg6D8DurCA8yjWkySjCGKNLFT0BTfEdRj.jpg"
+  },
+  {
+    "index": 19,
+    "name": "Dr. VIRENDRA BUBNA",
+    "qualification": "MBBS, MD (Biochemistry)",
+    "other": [],
+    "department_section": "Dr. VIJAYA KAWALKAR",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/01/5otEc8hiEGrrJg5s7U2TdkiTMPZlx8kbAZyVofS7.jpg"
+  },
+  {
+    "index": 20,
+    "name": "Dr. TRUPTI SARASWAT",
+    "qualification": "MBBS, Diploma in Pathology & Bacteriology",
+    "other": [],
+    "department_section": "Dr. VIRENDRA BUBNA",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/02/Qhub36RXPeSX0kjQHsWrJCbIdSWLgEi6gwvwDYTE.jpg"
+  },
+  {
+    "index": 21,
+    "name": "Dr. ASHISH POTPHODE",
+    "qualification": "MBBS, MS (OPTHAL)",
+    "other": [],
+    "department_section": "OPTHALMOLOGY",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/01/dupJgcVgImnXEhl3HlSF50ytmqlFlPO0esTXXc2J.jpg"
+  },
+  {
+    "index": 22,
+    "name": "Dr. PRAMOD JETHWANI",
+    "qualification": "MBBS, DNB (General Surgeon), DrNB(SS) (Urologist), MNAMS",
+    "other": [],
+    "department_section": "UROLOGY",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/02/6ZrTCJ0xs7TfqAPYcjQUHwkkbgzFj838sadWVsYm.jpg"
+  },
+  {
+    "index": 23,
+    "name": "Dr. NAVIN CHHATTANI",
+    "qualification": "MBBS, DNB (Medicine), DNB (Nephrology)",
+    "other": [],
+    "department_section": "NEPHROLOGY",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/02/Z3APHYDJtkrMsF2RrMo9QbDLdgzLt5Y9ZP0Vw9fn.jpg"
+  },
+  {
+    "index": 24,
+    "name": "Dr. Kalyani Gandhi (Patil)",
+    "qualification": "BDS, MDS, Prosthodontist, Implantologist",
+    "other": [],
+    "department_section": "DENTAL",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/06/s7E3uAXVT5XOp1P4ImQPx2w4qSaaH0RebXHSQnUb.jpg"
+  },
+  {
+    "index": 25,
+    "name": "Dr. ANKUSH M. SUNE",
+    "qualification": "BDS, MDS",
+    "other": [],
+    "department_section": "Dr. Kalyani Gandhi (Patil)",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2023/12/Jqu9ILzXBrbG1KawD71F0dwtSTpWJRLQYLWE2k8A.jpg"
+  },
+  {
+    "index": 26,
+    "name": "Dr. HITESH DUDHE",
+    "qualification": "MBBS, (DNB Medicine), Fellowship in Advance Endoscopy, DrNB (S.S.) (Medical Gastroentrology)",
+    "other": [],
+    "department_section": "MEDICAL GASTROENTROLOGY",
+    "img_url": "http://sanjeevanhospitalytml.com/public/storage/sanjeevan/director/2024/02/jPD5pOn6wJiInNCOI1wQalAm3ydQKAWf63qN53Tu.jpg"
+  }
+]
