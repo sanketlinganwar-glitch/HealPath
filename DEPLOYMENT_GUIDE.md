@@ -1,139 +1,138 @@
-# 🚀 HACKBYTE — DEPLOYMENT & OPERATIONS GUIDE
+# 🚀 HACKBYTE / HealPath — Full Deployment & Operations Guide
+
+This guide details the complete deployment lifecycle for **HealPath (QueueCare)** across both **Cloud Production (Public Web)** and **Local Development (Offline / Demo)**.
 
 ---
 
-## 1. Prerequisites
+## 🏗️ Production Architecture Overview
 
-- **Node.js:** v18.x or v20.x LTS
-- **Python:** v3.11, v3.12, or v3.13
-- **Package Managers:** `npm` (v9+) and `pip` (v23+)
-- **OS:** Windows 10/11, macOS, or Ubuntu 22.04 LTS
+The system operates across a decoupled two-tier architecture:
 
----
+```mermaid
+flowchart LR
+    subgraph Client["Frontend Tier (Free Hosting)"]
+        GH["GitHub Pages<br/>sanketlinganwar-glitch.github.io/HealPath/"]
+        Vercel["Vercel<br/>healpath.vercel.app"]
+    end
 
-## 2. Environment Configuration
+    subgraph Backend["Cloud Backend Tier (Render.com)"]
+        FastAPI["FastAPI Web Service<br/>healpath-api.onrender.com"]
+        DB[(SQLite / PostgreSQL<br/>queuecare.db)]
+        AI["Gemini 2.5 Flash<br/>Symptom Triage API"]
+    end
 
-### Root `.env` (Express Application)
-Create or verify `.env` in the project root:
-```env
-PORT=3000
-NODE_ENV=development
-JWT_SECRET=healpath_master_secure_jwt_secret_key_2026_gcoey_hackbite
-QR_SECRET=healpath_qr_checkin_secret_key_2026
-
-# Meta WhatsApp Cloud API (Optional - operates in Simulation Mode if unset)
-WHATSAPP_CLOUD_TOKEN=
-WHATSAPP_PHONE_ID=
-
-# Twilio WhatsApp API (Alternative provider)
-TWILIO_ACCOUNT_SID=
-TWILIO_AUTH_TOKEN=
-TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
-
-# Fast2SMS API (Optional - simulation mode if unset)
-FAST2SMS_API_KEY=
-
-# Razorpay Test Mode (Must start with rzp_test_)
-RAZORPAY_KEY_ID=
-RAZORPAY_KEY_SECRET=
-RAZORPAY_WEBHOOK_SECRET=
-```
-
-### Backend `.env` (`backend/.env` - FastAPI Application)
-```env
-JWT_SECRET=healpath_master_secure_jwt_secret_key_2026_gcoey_hackbite
-GEMINI_MODEL=gemini-2.5-flash
-# Optional: Set your Google Gemini API key to activate live LLM symptom triage
-GEMINI_API_KEY=
+    GH -->|HTTPS / REST API| FastAPI
+    Vercel -->|HTTPS / REST API| FastAPI
+    FastAPI --> DB
+    FastAPI --> AI
 ```
 
 ---
 
-## 3. Running the Platform Locally
+## 🌐 PART 1: CLOUD PRODUCTION DEPLOYMENT
 
-### A. Start the Express Real-Time Server (Port 3000)
-```bash
-# In project root
-npm install
-npm run seed       # Seeds initial hospital departments, doctors, and demo appointments
-npm start          # Runs on http://localhost:3000
+### Step 1: Deploy FastAPI Backend on Render.com (100% Free)
+
+Render runs Python 3 web services natively with automatic Git pushes and free SSL.
+
+1. **Sign In:** Go to [render.com](https://render.com) and log in using your GitHub account (`sanketlinganwar-glitch`).
+2. **New Service:** Click **"New +"** $\rightarrow$ **"Web Service"**.
+3. **Select Repo:** Connect `sanketlinganwar-glitch/HealPath`.
+4. **Configure Parameters:**
+   - **Name:** `healpath-api`
+   - **Region:** `Singapore (Southeast Asia)` or `Frankfurt`
+   - **Branch:** `main`
+   - **Runtime:** `Python 3`
+   - **Build Command:** `pip install -r backend/requirements.txt`
+   - **Start Command:** `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
+   - **Instance Type:** `Free`
+5. **Environment Variables:**
+   - `PYTHONUNBUFFERED`: `1`
+   - `JWT_SECRET`: `healpath_master_production_jwt_secret_2026_gcoey`
+   - `GEMINI_MODEL`: `gemini-2.5-flash`
+   - `GEMINI_API_KEY`: *(Optional Google Gemini API key)*
+6. **Launch:** Click **"Create Web Service"**.
+   - Your live API link will be: `https://healpath-api.onrender.com`
+   - Test health check: `https://healpath-api.onrender.com/api/health`
+   - View interactive docs: `https://healpath-api.onrender.com/docs`
+
+---
+
+### Step 2: Connect Frontend to Cloud Backend
+
+Once your backend is live, configure the frontend to talk to it:
+
+#### For GitHub Pages:
+In `.github/workflows/deploy.yml`, set the backend URL:
+```yaml
+      - name: Build React SPA
+        run: cd frontend && npm run build
+        env:
+          VITE_BASE: /HealPath/
+          VITE_API_URL: https://healpath-api.onrender.com
 ```
-- **Public Portal:** `http://localhost:3000/index.html`
-- **Slot Reservation:** `http://localhost:3000/booking.html`
-- **QR Self Check-In:** `http://localhost:3000/checkin.html`
-- **Live Queue TV Screen:** `http://localhost:3000/queue.html`
-- **Role Portals:** `http://localhost:3000/dashboard.html`
 
-### B. Start the FastAPI Clinical Backend (Port 8000)
-```bash
-# In backend virtual environment
-.\backend\venv\Scripts\activate   # On Windows
-pip install -r backend/requirements.txt
-python backend/main.py            # Runs on http://localhost:8000
-```
-- **Interactive OpenAPI Docs:** `http://localhost:8000/docs`
-- **Health Check:** `http://localhost:8000/api/health`
+#### For Vercel:
+1. Go to [vercel.com](https://vercel.com) $\rightarrow$ Import `sanketlinganwar-glitch/HealPath`.
+2. In Project Settings $\rightarrow$ Environment Variables:
+   - Add `VITE_API_URL` = `https://healpath-api.onrender.com`.
+3. Click **Deploy**.
 
-### C. Start the React 18 SPA (Port 5173)
+---
+
+## 💻 PART 2: LOCAL DEVELOPMENT & OFFLINE DEMO RUN
+
+If presenting in an offline hackathon or local judging environment:
+
+### Port Allocations
+
+| Port | Service | Tech Stack | Local Link |
+| :--- | :--- | :--- | :--- |
+| **5173** | React Patient Platform | React 18, Vite, Tailwind | [http://localhost:5173](http://localhost:5173) |
+| **8000** | Clinical & AI Backend | Python 3, FastAPI, Uvicorn | [http://localhost:8000/docs](http://localhost:8000/docs) |
+| **3000** | Express Queue & Kiosk | Node.js, Express, Socket.io | [http://localhost:3000/index.html](http://localhost:3000/index.html) |
+
+### Starting All Services Locally
+
 ```bash
+# Terminal 1: FastAPI Backend
+.\backend\venv\Scripts\python.exe -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
+
+# Terminal 2: React Frontend (PWA)
 cd frontend
-npm install
-npm run dev                       # Runs on http://localhost:5173
+npm run dev -- --host 127.0.0.1 --port 5173
+
+# Terminal 3: Express Queue & Check-In Server
+node server.js
 ```
-- **PWA Portal:** `http://localhost:5173`
-- **Build Production:** `npm run build`
 
-### D. Automated Quality Assurance & Verification
+---
+
+## 🧪 PART 3: AUTOMATED TESTING & VERIFICATION
+
+Execute the comprehensive test suites before committing or presenting:
+
 ```bash
-# 1. Run Stage 5 AI Assistant Test Suite (17 tests)
-.\backend\venv\Scripts\python.exe -m unittest backend/test_ai_assistant.py
-
-# 2. Run Comprehensive FastAPI Smoke Tests (17 tests)
+# 1. Run Comprehensive FastAPI Smoke Tests (17 tests)
 .\backend\venv\Scripts\python.exe backend/smoke_test.py
 
-# 3. Run Express & QR Check-In Integration Tests (20 tests)
-node test_stage3_4.js
+# 2. Run AI Assistant Unit Tests (17 tests)
+.\backend\venv\Scripts\python.exe -m unittest backend/test_ai_assistant.py
+
+# 3. Run Queue Prediction & Analytics Tests (20 tests)
+.\backend\venv\Scripts\python.exe -m unittest backend/test_stage9_analytics_whatsapp.py
+
+# 4. Run Frontend Build Check
+cd frontend && npm run build
 ```
-Total verified automated tests: **54/54 passing (100%)**.
 
 ---
 
-## 4. Production Containerization Blueprint (Docker Compose)
+## 📋 Production Verification Matrix
 
-```yaml
-version: '3.8'
-
-services:
-  fastapi-backend:
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
-    ports:
-      - "8000:8000"
-    environment:
-      - JWT_SECRET=${JWT_SECRET}
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-    restart: unless-stopped
-
-  express-server:
-    build:
-      context: .
-      dockerfile: Dockerfile.express
-    ports:
-      - "3000:3000"
-    environment:
-      - JWT_SECRET=${JWT_SECRET}
-      - QR_SECRET=${QR_SECRET}
-    restart: unless-stopped
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.frontend
-    ports:
-      - "80:80"
-    depends_on:
-      - fastapi-backend
-      - express-server
-    restart: unless-stopped
-```
+- [x] Frontend compiled with zero errors (Vite v5.4.21).
+- [x] All 26 doctor portraits verified and served with HTTP 200.
+- [x] Base path `/HealPath/` verified for GitHub Pages.
+- [x] CORS middleware configured for full-domain accessibility in `backend/main.py`.
+- [x] PWA manifest and service worker registered.
+- [x] SQLite backups excluded from Git tracking via `.gitignore`.
