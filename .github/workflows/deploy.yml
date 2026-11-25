@@ -35,6 +35,7 @@ jobs:
         run: cd frontend && npm run build
         env:
           VITE_BASE: /HealPath/
+          VITE_API_URL: https://healpath-2.onrender.com
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

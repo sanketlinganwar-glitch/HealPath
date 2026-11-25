@@ -14,7 +14,9 @@
 | :--- | :--- | :--- | :--- |
 | **Production Cloud** | **Frontend (GitHub Pages)** | **[https://sanketlinganwar-glitch.github.io/HealPath/](https://sanketlinganwar-glitch.github.io/HealPath/)** | 🟢 **ACTIVE & SERVING** |
 | **Production Cloud** | **Frontend (Vercel Ready)** | Pre-configured via `vercel.json` | 🟢 **Ready for 1-click import** |
-| **Production Cloud** | **Backend (Render Blueprint)** | Pre-configured via `render.yaml` (`https://healpath-api.onrender.com`) | 🟢 **Blueprint Ready** |
+| **Production Cloud** | **Backend (Render Live)** | **[https://healpath-2.onrender.com](https://healpath-2.onrender.com)** | 🟢 **ACTIVE & SERVING** |
+| **Production Cloud** | **API Documentation** | **[https://healpath-2.onrender.com/docs](https://healpath-2.onrender.com/docs)** | 🟢 **INTERACTIVE SWAGGER** |
+| **Production Cloud** | **API Health Check** | **[https://healpath-2.onrender.com/api/health](https://healpath-2.onrender.com/api/health)** | 🟢 **HTTP 200 OK** |
 | **Production Cloud** | **Docker Container** | `Dockerfile` (Python 3.11-slim) | 🟢 **Ready for Railway/Fly/AWS** |
 | **Local Offline** | **Frontend SPA** | [http://localhost:5173](http://localhost:5173) | 🟢 **Running (Daemon)** |
 | **Local Offline** | **FastAPI Backend & Docs** | [http://localhost:8000/docs](http://localhost:8000/docs) | 🟢 **Running (Daemon)** |
