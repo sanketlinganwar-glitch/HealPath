@@ -29,7 +29,12 @@ def validate_security_config():
     else:
         log.info("🧠 [AI Engine] Google Gemini API key configured.")
 
+_db_initialized = False
+
 def init_db():
+    global _db_initialized
+    if _db_initialized:
+        return
     Base.metadata.create_all(bind=engine)
     migrate_db(engine)
     db = SessionLocal()
@@ -38,6 +43,7 @@ def init_db():
     finally:
         db.close()
     validate_security_config()
+    _db_initialized = True
 
 
 # Initialize tables immediately on startup

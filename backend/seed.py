@@ -216,6 +216,7 @@ def seed_database(db: Session, force_reset: bool = False):
     ]
 
     dept_seq_counters = {code: 0 for code in dept_objs.keys()}
+    rx_counter = 0
 
     for item in sample_patients_tokens:
         patient = Patient(
@@ -300,8 +301,8 @@ def seed_database(db: Session, force_reset: bool = False):
                     {"name": "Paracetamol", "dosage": "650mg", "frequency": "1-0-1", "duration": "3 days", "instructions": "After meals"},
                     {"name": "Cetirizine", "dosage": "10mg", "frequency": "0-0-1", "duration": "5 days", "instructions": "Before sleep"}
                 ]
-                rx_count = idx + 1
-                rx_num = f"RX-2026-{rx_count:04d}"
+                rx_counter += 1
+                rx_num = f"RX-2026-{rx_counter:04d}"
                 v_tok = secrets.token_hex(16)
                 sig_h = hashlib.sha256(f"{rx_num}:{doc_id}:{patient.id}:{v_tok}".encode()).hexdigest()
                 db.add(Prescription(
